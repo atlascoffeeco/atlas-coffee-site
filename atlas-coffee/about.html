@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>About Atlas Coffee</title>
+  <meta name="description" content="Learn about Atlas Coffee, a small-batch artisan coffee roaster focused on single-origin coffee and local collection from Redditch." />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="site-header">
+    <div class="container nav-shell">
+      <a class="brand" href="./index.html" aria-label="Atlas Coffee home">
+        <img src="./assets/logo.jpg" alt="Atlas Coffee logo" width="80" height="80" loading="eager" />
+        <span class="brand-lockup"><span>Atlas Coffee</span><small>Small-batch single-origin artisan coffee</small></span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="./index.html">Home</a>
+        <a href="./about.html" aria-current="page">About</a>
+        <a href="./products.html">Products</a>
+        <a href="./contact.html">Contact</a>
+      </nav>
+      <div class="actions">
+        <a class="button" href="./products.html">Shop coffee</a>
+        <button class="mobile-menu-toggle" type="button" data-mobile-toggle aria-expanded="false" aria-label="Open menu">Menu</button>
+      </div>
+    </div>
+    <div class="container mobile-panel" data-mobile-panel>
+      <a href="./index.html">Home</a>
+      <a href="./about.html">About</a>
+      <a href="./products.html">Products</a>
+      <a href="./contact.html">Contact</a>
+      <a class="button" href="./products.html">Shop coffee</a>
+    </div>
+  </header>
+
+  <main id="content">
+    <section class="page-hero">
+      <div class="container">
+        <div class="card reveal">
+          <span class="eyebrow">About Atlas Coffee</span>
+          <h1 style="font-size:var(--text-3xl);margin-top:1rem;max-width:12ch;">A small-batch roaster with a focus on single-origin coffee.</h1>
+          <p style="margin-top:1rem;color:var(--muted);">Atlas Coffee is built around a simple idea: roast carefully, source coffees with character, and make it easy for people to enjoy fresh coffee at home. The focus is on single-origin coffees that show balance, clarity and a distinct sense of place.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container about-layout">
+        <div class="card reveal">
+          <h3>How Atlas Coffee roasts</h3>
+          <p>Each coffee is roasted in small batches with the goal of bringing out sweetness, balance and the best qualities of the origin. The intention is not to hide the coffee behind the roast, but to let the cup stay expressive, clean and approachable.</p>
+          <div class="timeline" style="margin-top:1.5rem;">
+            <div class="timeline-item"><strong>Single-origin selection</strong><p class="muted">Coffees are chosen for flavour, quality and traceability.</p></div>
+            <div class="timeline-item"><strong>Careful roasting</strong><p class="muted">Small-batch roasting helps keep each release fresh and consistent.</p></div>
+            <div class="timeline-item"><strong>Simple ordering</strong><p class="muted">Customers can order for delivery or local collection from Church Hill North, Redditch.</p></div>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <h3>What the brand stands for</h3>
+          <p>Atlas Coffee aims to feel modern, independent and straightforward. The brand is about good coffee without unnecessary clutter: clear tasting notes, thoughtful roasting, and a buying experience that feels easy from first visit to first brew.</p>
+          <p class="muted" style="margin-top:1rem;">As the range grows, this page can also introduce your sourcing philosophy, roast style and the story behind how the roastery began.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="brand">
+          <img src="./assets/logo.jpg" alt="Atlas Coffee logo" width="80" height="80" loading="lazy" />
+          <span class="brand-lockup">
+            <span>Atlas Coffee</span>
+            <small>Freshly roasted single-origin coffee for delivery or local collection.</small>
+          </span>
+        </div>
+        <p class="legal" style="margin-top:1rem;">Small-batch artisan coffee roasted for clarity, balance and character. Order online for delivery or choose local collection from Church Hill North, Redditch.</p>
+      </div>
+      <div>
+        <strong>Pages</strong>
+        <ul style="display:grid;gap:.6rem;margin-top:1rem;list-style:none;">
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./about.html">About</a></li>
+          <li><a href="./products.html">Products</a></li>
+          <li><a href="./contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <strong>Ordering</strong>
+        <ul style="display:grid;gap:.6rem;margin-top:1rem;list-style:none;">
+          <li>UK delivery available.</li>
+          <li>Local collection from Church Hill North, Redditch.</li>
+          <li>Stripe checkout ready.</li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>
