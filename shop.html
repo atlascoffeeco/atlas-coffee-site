@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Shop Atlas Coffee</title>
+  <link rel="icon" type="image/jpeg" href="./assets/logo.jpg">
+  <meta
+    name="description"
+    content="Browse Atlas Coffee single-origin coffees and order for delivery or local collection in Redditch."
+  />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Work+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <script>
+  document.documentElement.classList.add("js");
+</script>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container nav-shell">
+      <a class="brand" href="./index.html" aria-label="Atlas Coffee home">
+        <img
+          src="./assets/logo.jpg"
+          alt="Atlas Coffee logo"
+          width="80"
+          height="80"
+          loading="eager"
+        />
+        <span class="brand-lockup">
+          <span>Atlas Coffee Company</span>
+          <small>Independent coffee roasters</small>
+        </span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="./index.html">Home</a>
+        <a href="./why-atlas.html">Why Atlas</a>
+        <a href="./shop.html">Shop</a>
+        <a href="./contact.html">Contact</a>
+      </nav>
+
+      <div class="actions">
+        <a class="button" href="./shop.html">Shop coffee</a>
+        <button
+          class="mobile-menu-toggle"
+          type="button"
+          data-mobile-toggle
+          aria-expanded="false"
+          aria-label="Open menu"
+        >
+          Menu
+        </button>
+      </div>
+    </div>
+
+    <div class="container mobile-panel" data-mobile-panel>
+      <a href="./index.html">Home</a>
+      <a href="./why-atlas.html">Why Atlas</a>
+      <a href="./shop.html" aria-current="page">Shop</a>
+      <a href="./contact.html">Contact</a>
+      <a class="button" href="./shop.html">Shop coffee</a>
+    </div>
+  </header>
+
+  <main id="content">
+    <section class="products-hero">
+      <div class="container products-hero-shell reveal">
+        <div class="section-head products-hero-copy">
+          <span class="eyebrow">Current lineup</span>
+          <h1>A focused coffee lineup, roasted properly.</h1>
+          <p>
+            Atlas Coffee is starting with a focused offering rather than a crowded catalogue.
+            Serra Negra is available now, with more coffees to follow soon.
+          </p>
+        </div>
+
+        <!-- <div class="products-hero-note">
+          <strong>Available now</strong>
+          <span>UK delivery or free local collection from Church Hill North, Redditch.</span>
+        </div> -->
+      </div>
+    </section>
+
+    <section class="featured-product-section">
+      <div class="container featured-product-layout">
+        <article class="featured-product-copy card reveal" id="serra-negra-product">
+          <span class="eyebrow">Featured coffee</span>
+
+          <div class="featured-product-image-wrap">
+            <img
+              src="./assets/serra-negra-bag.png"
+              alt="Atlas Coffee Company Serra Negra 250g coffee bag"
+              class="featured-product-image"
+              width="900"
+              height="1125"
+              loading="eager"
+            />
+          </div>
+
+          <div class="featured-product-head">
+            <div>
+              <p class="product-hero-label">Single Origin Brazil</p>
+              <h2>Serra Negra</h2>
+            </div>
+            <div class="price" id="serra-price-display">£10.95</div>
+          </div>
+
+          <p class="featured-product-lead">
+            A naturally processed Brazilian single origin with praline sweetness,
+            soft milk chocolate character, and a bright yet balanced finish.
+          </p>
+
+          <div class="featured-spec-grid">
+            <div class="featured-spec">
+              <span>Origin</span>
+              <strong>Brazil</strong>
+            </div>
+            <div class="featured-spec">
+              <span>Process</span>
+              <strong>Natural</strong>
+            </div>
+            <div class="featured-spec">
+              <span>Variety</span>
+              <strong>Bourbon &amp; Catimor</strong>
+            </div>
+          </div>
+
+          <div class="featured-notes-block">
+            <div>
+              <span class="featured-label">Best for</span>
+              <p>An easy everyday brew with enough character to stay interesting.</p>
+            </div>
+          </div>
+
+          <div class="featured-product-story">
+            <h3>Built for everyday brewing.</h3>
+            <p>
+              Serra Negra is the kind of coffee that feels easy to come back to — sweet,
+              approachable, and versatile enough for espresso, filter, or slower weekend brews.
+            </p>
+          </div>
+        </article>
+
+        <aside class="featured-product-buy card reveal">
+          <span class="eyebrow">Order Serra Negra</span>
+          <h2>Choose your bag and grind.</h2>
+          <p class="muted">
+            Order online for UK delivery or select free local collection in Redditch.
+          </p>
+
+          <form id="coffee-form" class="coffee-form">
+            <div class="field-group">
+              <label for="weight">Weight</label>
+              <select id="weight" name="weight" required>
+                <option value="250g">250g — £10.95</option>
+                <option value="500g">500g — £19.50</option>
+                <option value="1kg">1kg — £35.95</option>
+              </select>
+            </div>
+
+            <div class="field-group">
+              <label for="grind">Grind</label>
+              <select id="grind" name="grind" required>
+                <option value="whole_bean">Whole bean</option>
+                <option value="coarse">Coarse</option>
+                <option value="medium">Medium</option>
+                <option value="fine">Fine</option>
+              </select>
+            </div>
+
+            <div class="field-group">
+              <label for="fulfilment">Fulfilment</label>
+              <select
+                id="fulfilment"
+                name="fulfilment"
+                required
+                aria-describedby="fulfilment-help"
+              >
+                <option value="delivery">Delivery</option>
+                <option value="collection">Collection</option>
+              </select>
+              <p id="fulfilment-help" class="field-help">
+                Choose delivery for UK postage or collection for free local pickup in Redditch.
+              </p>
+            </div>
+
+            <div class="field-group">
+              <label for="quantity">Quantity</label>
+              <input
+                id="quantity"
+                name="quantity"
+                type="number"
+                min="1"
+                max="10"
+                value="1"
+                required
+              />
+            </div>
+
+            <div class="buy-box buy-box-premium">
+              <div class="buy-box-head">
+                <span class="featured-label">Your selection</span>
+                <strong id="serra-total">Subtotal: £10.95</strong>
+              </div>
+
+              <p id="serra-summary" class="buy-box-summary">
+                250g · Whole bean · Delivery · Qty 1
+              </p>
+
+              <p id="serra-fulfilment-note" class="checkout-note">
+                Delivery: £3.95 postage and packaging is added at checkout for delivery orders only. Collection is always free.
+              </p>
+
+              <div class="buy-box-actions">
+                <button class="button" type="submit" id="buy-button">Buy Serra Negra</button>
+                <!-- <p class="buy-box-reassurance">
+                  Delivery is added at checkout, collection stays free.
+                </p> -->
+                <p class="muted" style="margin-top:.75rem;">
+  <a href="./delivery-returns.html">Delivery &amp; Returns</a>
+</p>
+              </div>
+
+              <p id="purchase-message" style="margin-top:.75rem;display:none;"></p>
+            </div>
+          </form>
+        </aside>
+      </div>
+    </section>
+
+    <section class="coming-soon-band">
+      <div class="container coming-soon-shell">
+        <div class="section-head reveal section-head-compact">
+          <span class="eyebrow">Coming soon</span>
+          <h2>More coffees are on the way.</h2>
+          <p>
+            Atlas Coffee will grow gradually, with new single origins and seasonal releases
+            added when they are ready.
+          </p>
+        </div>
+
+        <div class="coming-soon-grid">
+          <article class="coming-soon-card reveal">
+            <strong>Next single origin</strong>
+            <p>
+              A fresh coffee release will be added here as soon as the next lot arrives and
+              is ready to roast.
+            </p>
+          </article>
+
+          <article class="coming-soon-card reveal">
+            <strong>Seasonal releases</strong>
+            <p>
+              Expect small-batch coffees and rotating lots as the range expands over time.
+            </p>
+          </article>
+
+          <article class="coming-soon-card reveal">
+            <strong>Stay in the loop</strong>
+            <p>
+              Check back soon or get in touch if you’d like to know what is coming next.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="notice products-fulfilment">
+      <div class="container cards-2">
+        <div class="card reveal">
+          <span class="eyebrow">Delivery</span>
+          <h3>UK delivery for £3.95.</h3>
+          <p>
+            Orders can be shipped across the UK for a flat postage and packaging charge,
+            added securely at checkout.
+          </p>
+        </div>
+
+        <div class="card reveal">
+          <span class="eyebrow">Collection</span>
+          <h3>Free local collection in Redditch.</h3>
+          <p>
+            Collection is available from Church Hill North, Redditch.
+            Collection details are shared after payment.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="brand">
+          <img src="./assets/logo.jpg" alt="Atlas Coffee logo" width="80" height="80" loading="lazy" />
+          <span class="brand-lockup">
+            <span>Atlas Coffee</span>
+            <small>Freshly roasted single-origin coffee for delivery or local collection.</small>
+          </span>
+        </div>
+      </div>
+
+      <div>
+        <strong>Pages</strong>
+        <ul style="display:grid;gap:.6rem;margin-top:1rem;list-style:none;">
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./why-atlas.html">Why Atlas</a></li>
+          <li><a href="./shop.html">Shop</a></li>
+          <li><a href="./contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <strong>Legal</strong>
+        <ul style="display:grid;gap:.6rem;margin-top:1rem;list-style:none;">
+          <li><a href="./privacy.html">Privacy Policy</a></li>
+          <li><a href="./terms.html">Terms &amp; Conditions</a></li>
+          <li><a href="./delivery-returns.html">Delivery &amp; Returns</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>

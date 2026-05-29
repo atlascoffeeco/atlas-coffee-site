@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Contact Atlas Coffee</title>
+  <link rel="icon" type="image/jpeg" href="./assets/logo.jpg">
+  <meta name="description" content="Contact Atlas Coffee for order enquiries, delivery questions and local collection details in Redditch." />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    document.documentElement.classList.add("js");
+  </script>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container nav-shell">
+      <a class="brand" href="./index.html" aria-label="Atlas Coffee home">
+        <img src="./assets/logo.jpg" alt="Atlas Coffee logo" width="80" height="80" loading="eager" />
+        <span class="brand-lockup">
+          <span>Atlas Coffee Company</span>
+          <small>Independent coffee roasters</small>
+        </span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="./index.html">Home</a>
+        <a href="./why-atlas.html">Why Atlas</a>
+        <a href="./shop.html">Shop</a>
+        <a href="./contact.html" aria-current="page">Contact</a>
+      </nav>
+
+      <div class="actions">
+        <a class="button" href="./shop.html">Shop coffee</a>
+        <button class="mobile-menu-toggle" type="button" data-mobile-toggle aria-expanded="false" aria-label="Open menu">Menu</button>
+      </div>
+    </div>
+
+    <div class="container mobile-panel" data-mobile-panel>
+      <a href="./index.html">Home</a>
+      <a href="./why-atlas.html">Why Atlas</a>
+      <a href="./shop.html">Shop</a>
+      <a href="./contact.html" aria-current="page">Contact</a>
+      <a class="button" href="./shop.html">Shop coffee</a>
+    </div>
+  </header>
+
+  <main id="content">
+    <section class="page-hero">
+      <div class="container contact-layout">
+        <div class="card reveal contact-intro-card">
+          <span class="eyebrow">Contact</span>
+          <h1 class="contact-title">Get in touch.</h1>
+          <p class="contact-lead">For orders, delivery questions, or local collection in Redditch.</p>
+<!--
+          <div class="contact-points">
+            <div class="timeline-item">
+              <strong>Email</strong>
+              <p class="muted">atlascoffeeroasters@gmail.com</p>
+            </div>
+            <div class="timeline-item">
+              <strong>Collection</strong>
+              <p class="muted">Church Hill North, Redditch</p>
+            </div>
+          </div>
+-->
+        </div>
+
+        <div class="card reveal contact-form-card">
+          <h2 class="contact-form-title">Send a message</h2>
+
+          <form class="form-grid contact-form-grid" id="contact-form" novalidate>
+            <label>
+              Name
+              <input class="input" type="text" name="name" placeholder="Your name" required />
+            </label>
+
+            <label>
+              Email
+              <input class="input" type="email" name="email" placeholder="you@example.com" required />
+            </label>
+
+            <label>
+              Subject
+              <input class="input" type="text" name="subject" placeholder="Order, delivery or general question" required />
+            </label>
+
+            <label>
+              Message
+              <textarea class="input" name="message" rows="6" placeholder="How can I help?" required></textarea>
+            </label>
+            <button type="submit" class="button" id="contact-submit">Send message</button>
+            <p class="muted contact-status" id="contact-status" aria-live="polite"></p>
+<p class="muted" style="font-size:var(--text-sm);margin-top:.35rem;">
+  By sending this message, you agree to the handling of your data as set out in our
+  <a href="./privacy.html">Privacy Policy</a>.
+</p>
+            <p class="muted contact-status" id="contact-status" aria-live="polite"></p>
+          </form>
+          
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-support-section">
+      <div class="container">
+        <div class="reveal">
+          <div class="section-head">
+            <span class="eyebrow">FAQ</span>
+            <h2>Helpful information.</h2>
+          </div>
+
+          <div class="faq">
+            <details open>
+              <summary>Where is collection available?</summary>
+              <p style="margin-top:1rem;color:var(--muted);">Collection is available from Church Hill North, Redditch. Exact pickup details can be shared after order confirmation.</p>
+            </details>
+
+            <details>
+              <summary>Do you offer delivery?</summary>
+              <p style="margin-top:1rem;color:var(--muted);">Yes. Atlas Coffee offers UK delivery alongside free local collection.</p>
+            </details>
+
+            <details>
+              <summary>What kind of coffee do you roast?</summary>
+              <p style="margin-top:1rem;color:var(--muted);">Small-batch, single-origin coffees roasted for clarity, balance and character.</p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+<footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="brand">
+          <img src="./assets/logo.jpg" alt="Atlas Coffee logo" width="80" height="80" loading="lazy" />
+          <span class="brand-lockup">
+            <span>Atlas Coffee</span>
+            <small>Freshly roasted single-origin coffee for delivery or local collection.</small>
+          </span>
+        </div>
+      </div>
+
+      <div>
+        <strong>Pages</strong>
+        <ul style="display:grid;gap:.6rem;margin-top:1rem;list-style:none;">
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./why-atlas.html">Why Atlas</a></li>
+          <li><a href="./shop.html">Shop</a></li>
+          <li><a href="./contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <strong>Legal</strong>
+        <ul style="display:grid;gap:.6rem;margin-top:1rem;list-style:none;">
+          <li><a href="./privacy.html">Privacy Policy</a></li>
+          <li><a href="./terms.html">Terms &amp; Conditions</a></li>
+          <li><a href="./delivery-returns.html">Delivery &amp; Returns</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>
