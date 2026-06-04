@@ -1,44 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://atlascoffee.uk/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://www.atlascoffee.uk/</loc>
   </url>
   <url>
-    <loc>https://atlascoffee.uk/why-atlas</loc>
-    <lastmod>2026-05-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://www.atlascoffee.uk/why-atlas</loc>
   </url>
   <url>
-    <loc>https://atlascoffee.uk/shop</loc>
-    <lastmod>2026-05-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://www.atlascoffee.uk/shop</loc>
   </url>
   <url>
-    <loc>https://atlascoffee.uk/contact</loc>
-    <lastmod>2026-05-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://www.atlascoffee.uk/contact</loc>
   </url>
   <url>
-    <loc>https://atlascoffee.uk/privacy</loc>
-    <lastmod>2026-05-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://www.atlascoffee.uk/privacy</loc>
   </url>
   <url>
-    <loc>https://atlascoffee.uk/terms</loc>
-    <lastmod>2026-05-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://www.atlascoffee.uk/terms</loc>
   </url>
   <url>
-    <loc>https://atlascoffee.uk/delivery-returns</loc>
-    <lastmod>2026-05-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://www.atlascoffee.uk/delivery-returns</loc>
   </url>
 </urlset>
