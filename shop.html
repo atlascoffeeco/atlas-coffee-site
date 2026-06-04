@@ -17,11 +17,11 @@
     rel="stylesheet"
   />
   <script>
-  document.documentElement.classList.add("js");
-</script>
+    document.documentElement.classList.add("js");
+  </script>
   <link rel="stylesheet" href="./styles.css" />
 </head>
-<body>
+<body class="shop-page">
   <a class="skip-link" href="#content">Skip to content</a>
 
   <header class="site-header">
@@ -43,7 +43,7 @@
       <nav class="nav-links" aria-label="Primary navigation">
         <a href="./index.html">Home</a>
         <a href="./why-atlas.html">Why Atlas</a>
-        <a href="./shop.html">Shop</a>
+        <a href="./shop.html" aria-current="page">Shop</a>
         <a href="./contact.html">Contact</a>
       </nav>
 
@@ -81,11 +81,6 @@
             Serra Negra is available now, with more coffees to follow soon.
           </p>
         </div>
-
-        <!-- <div class="products-hero-note">
-          <strong>Available now</strong>
-          <span>UK delivery or free local collection from Church Hill North, Redditch.</span>
-        </div> -->
       </div>
     </section>
 
@@ -118,7 +113,7 @@
             soft milk chocolate character, and a bright yet balanced finish.
           </p>
 
-          <div class="featured-spec-grid">
+          <div class="featured-spec-grid featured-spec-grid-compact">
             <div class="featured-spec">
               <span>Origin</span>
               <strong>Brazil</strong>
@@ -128,8 +123,8 @@
               <strong>Natural</strong>
             </div>
             <div class="featured-spec">
-              <span>Variety</span>
-              <strong>Bourbon &amp; Catimor</strong>
+              <span>Taste notes</span>
+              <strong>Praline, milk chocolate, bright finish</strong>
             </div>
           </div>
 
@@ -149,8 +144,14 @@
           </div>
         </article>
 
-        <aside class="featured-product-buy card reveal">
+        <aside class="featured-product-buy card reveal" id="buy-panel">
           <span class="eyebrow">Order Serra Negra</span>
+
+          <p class="buy-panel-intro">
+            A naturally processed Brazilian single origin with praline sweetness,
+            soft milk chocolate character, and a bright yet balanced finish.
+          </p>
+
           <h2>Choose your bag and grind.</h2>
           <p class="muted">
             Order online for UK delivery or select free local collection in Redditch.
@@ -221,12 +222,9 @@
 
               <div class="buy-box-actions">
                 <button class="button" type="submit" id="buy-button">Buy Serra Negra</button>
-                <!-- <p class="buy-box-reassurance">
-                  Delivery is added at checkout, collection stays free.
-                </p> -->
                 <p class="muted" style="margin-top:.75rem;">
-  <a href="./delivery-returns.html">Delivery &amp; Returns</a>
-</p>
+                  <a href="./delivery-returns.html">Delivery &amp; Returns</a>
+                </p>
               </div>
 
               <p id="purchase-message" style="margin-top:.75rem;display:none;"></p>
@@ -296,6 +294,18 @@
     </section>
   </main>
 
+  <div class="mobile-buy-bar" aria-label="Quick buy bar">
+    <div class="container mobile-buy-bar__inner">
+      <div class="mobile-buy-bar__meta">
+        <strong id="mobile-serra-total">£10.95</strong>
+        <span id="mobile-serra-summary">250g · Whole bean</span>
+      </div>
+      <button class="button mobile-buy-bar__button" type="button" id="mobile-buy-button">
+        Buy now
+      </button>
+    </div>
+  </div>
+
   <footer class="site-footer">
     <div class="container footer-grid">
       <div>
@@ -329,6 +339,70 @@
     </div>
   </footer>
 
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const total = document.getElementById("serra-total");
+      const summary = document.getElementById("serra-summary");
+      const mobileTotal = document.getElementById("mobile-serra-total");
+      const mobileSummary = document.getElementById("mobile-serra-summary");
+      const mobileBuyButton = document.getElementById("mobile-buy-button");
+      const buyButton = document.getElementById("buy-button");
+      const coffeeForm = document.getElementById("coffee-form");
+
+      const syncMobileBar = () => {
+        if (total && mobileTotal) {
+          mobileTotal.textContent = total.textContent.replace("Subtotal: ", "");
+        }
+
+        if (summary && mobileSummary) {
+          const compact = summary.textContent
+            .replace(/\s*·\s*Delivery/i, "")
+            .replace(/\s*·\s*Collection/i, "")
+            .replace(/\s*·\s*Qty\s*\d+/i, "")
+            .trim();
+
+          mobileSummary.textContent = compact;
+        }
+      };
+
+      if (mobileBuyButton && buyButton && coffeeForm) {
+        mobileBuyButton.addEventListener("click", () => {
+          if (typeof coffeeForm.reportValidity === "function" && !coffeeForm.reportValidity()) {
+            const firstInvalid = coffeeForm.querySelector(":invalid");
+            if (firstInvalid) {
+              firstInvalid.scrollIntoView({ behavior: "smooth", block: "center" });
+              firstInvalid.focus({ preventScroll: true });
+            } else {
+              document.getElementById("buy-panel")?.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+            return;
+          }
+
+          buyButton.click();
+        });
+      }
+
+      syncMobileBar();
+
+      const observer = new MutationObserver(syncMobileBar);
+
+      if (total) {
+        observer.observe(total, {
+          childList: true,
+          subtree: true,
+          characterData: true
+        });
+      }
+
+      if (summary) {
+        observer.observe(summary, {
+          childList: true,
+          subtree: true,
+          characterData: true
+        });
+      }
+    });
+  </script>
   <script src="./app.js" defer></script>
 </body>
 </html>
