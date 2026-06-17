@@ -415,73 +415,109 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     });
   </script>
 
-<script>
-  window.dataLayer = window.dataLayer || [];
+  <script>
+    window.dataLayer = window.dataLayer || [];
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const weightSelect = document.getElementById("weight");
-    const quantityInput = document.getElementById("quantity");
-    const featuredProduct = document.getElementById("serra-negra-product");
+    document.addEventListener("DOMContentLoaded", () => {
+      const weightSelect = document.getElementById("weight");
+      const quantityInput = document.getElementById("quantity");
+      const featuredProduct = document.getElementById("serra-negra-product");
+      const buyButton = document.getElementById("buy-button");
+      const coffeeForm = document.getElementById("coffee-form");
 
-    if (!weightSelect || !quantityInput || !featuredProduct) return;
+      if (!weightSelect || !quantityInput || !featuredProduct || !buyButton || !coffeeForm) return;
 
-    const getSelectedPrice = () => {
-      const selectedText = weightSelect.options[weightSelect.selectedIndex]?.text || "";
-      const match = selectedText.match(/£\s*([\d.]+)/);
-      return match ? parseFloat(match[1]) : 10.95;
-    };
+      const getSelectedPrice = () => {
+        const selectedText = weightSelect.options[weightSelect.selectedIndex]?.text || "";
+        const match = selectedText.match(/£\s*([0-9]+(?:\.[0-9]{1,2})?)/);
+        return match ? parseFloat(match[1]) : 10.95;
+      };
 
-    const getSelectedWeight = () => {
-      return weightSelect.value || "250g";
-    };
+      const getSelectedWeight = () => {
+        return weightSelect.value || "250g";
+      };
 
-    const getSelectedQuantity = () => {
-      const qty = parseInt(quantityInput.value, 10);
-      return Number.isFinite(qty) && qty > 0 ? qty : 1;
-    };
+      const getSelectedQuantity = () => {
+        const qty = parseInt(quantityInput.value, 10);
+        return Number.isFinite(qty) && qty > 0 ? qty : 1;
+      };
 
-    const pushViewItem = () => {
-      const price = getSelectedPrice();
-      const quantity = getSelectedQuantity();
-      const weight = getSelectedWeight();
+      const buildEcommerceData = () => {
+        const price = getSelectedPrice();
+        const quantity = getSelectedQuantity();
+        const weight = getSelectedWeight();
 
-      window.dataLayer.push({
-        event: "view_item",
-        ecommerce: {
-          currency: "GBP",
+        return {
+          price,
+          quantity,
           value: +(price * quantity).toFixed(2),
-          items: [
-            {
-              item_id: `serra-negra-${weight}`,
-              item_name: "Serra Negra",
-              item_brand: "Atlas Coffee",
-              item_category: "Coffee",
-              item_variant: weight,
-              price: price,
-              quantity: quantity
-            }
-          ]
+          item: {
+            item_id: `serra-negra-${weight}`,
+            item_name: "Serra Negra",
+            item_brand: "Atlas Coffee",
+            item_category: "Coffee",
+            item_variant: weight,
+            price: price,
+            quantity: quantity
+          }
+        };
+      };
+
+      const pushViewItem = () => {
+        const { value, item } = buildEcommerceData();
+
+        window.dataLayer.push({
+          event: "view_item",
+          ecommerce: {
+            currency: "GBP",
+            value: value,
+            items: [item]
+          }
+        });
+      };
+
+      const pushBeginCheckout = () => {
+        const { value, item } = buildEcommerceData();
+
+        window.dataLayer.push({
+          event: "begin_checkout",
+          ecommerce: {
+            currency: "GBP",
+            value: value,
+            items: [item]
+          }
+        });
+      };
+
+      let hasFiredViewItem = false;
+      let hasFiredBeginCheckout = false;
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasFiredViewItem) {
+            hasFiredViewItem = true;
+            pushViewItem();
+            observer.disconnect();
+          }
+        });
+      }, {
+        threshold: 0.5
+      });
+
+      observer.observe(featuredProduct);
+
+      buyButton.addEventListener("click", () => {
+        if (typeof coffeeForm.reportValidity === "function" && !coffeeForm.reportValidity()) {
+          return;
+        }
+
+        if (!hasFiredBeginCheckout) {
+          hasFiredBeginCheckout = true;
+          pushBeginCheckout();
         }
       });
-    };
-
-    let hasFired = false;
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting && !hasFired) {
-          hasFired = true;
-          pushViewItem();
-          observer.disconnect();
-        }
-      });
-    }, {
-      threshold: 0.5
     });
-
-    observer.observe(featuredProduct);
-  });
-</script>
+  </script>
 
   <script src="./app.js" defer></script>
 </body>
