@@ -60,7 +60,7 @@ if (coffeeForm) {
     "1kg": { amount: 35.95 }
   };
 
-  const DELIVERY_FEE = 3.95;
+  const DELIVERY_FEE = 4.50;
 
   const weight = document.getElementById("weight");
   const grind = document.getElementById("grind");
