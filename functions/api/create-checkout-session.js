@@ -128,7 +128,7 @@ export async function onRequest(context) {
       params.append("shipping_address_collection[allowed_countries][0]", "GB");
 
       params.append("shipping_options[0][shipping_rate_data][type]", "fixed_amount");
-      params.append("shipping_options[0][shipping_rate_data][fixed_amount][amount]", "395");
+      params.append("shipping_options[0][shipping_rate_data][fixed_amount][amount]", "450");
       params.append("shipping_options[0][shipping_rate_data][fixed_amount][currency]", "gbp");
       params.append("shipping_options[0][shipping_rate_data][display_name]", "UK delivery");
       params.append("shipping_options[0][shipping_rate_data][delivery_estimate][minimum][unit]", "business_day");
