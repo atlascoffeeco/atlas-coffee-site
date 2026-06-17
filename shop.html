@@ -414,6 +414,75 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       }
     });
   </script>
+
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const weightSelect = document.getElementById("weight");
+    const quantityInput = document.getElementById("quantity");
+    const featuredProduct = document.getElementById("serra-negra-product");
+
+    if (!weightSelect || !quantityInput || !featuredProduct) return;
+
+    const getSelectedPrice = () => {
+      const selectedText = weightSelect.options[weightSelect.selectedIndex]?.text || "";
+      const match = selectedText.match(/£\s*([\d.]+)/);
+      return match ? parseFloat(match[1]) : 10.95;
+    };
+
+    const getSelectedWeight = () => {
+      return weightSelect.value || "250g";
+    };
+
+    const getSelectedQuantity = () => {
+      const qty = parseInt(quantityInput.value, 10);
+      return Number.isFinite(qty) && qty > 0 ? qty : 1;
+    };
+
+    const pushViewItem = () => {
+      const price = getSelectedPrice();
+      const quantity = getSelectedQuantity();
+      const weight = getSelectedWeight();
+
+      window.dataLayer.push({
+        event: "view_item",
+        ecommerce: {
+          currency: "GBP",
+          value: +(price * quantity).toFixed(2),
+          items: [
+            {
+              item_id: `serra-negra-${weight}`,
+              item_name: "Serra Negra",
+              item_brand: "Atlas Coffee",
+              item_category: "Coffee",
+              item_variant: weight,
+              price: price,
+              quantity: quantity
+            }
+          ]
+        }
+      });
+    };
+
+    let hasFired = false;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !hasFired) {
+          hasFired = true;
+          pushViewItem();
+          observer.disconnect();
+        }
+      });
+    }, {
+      threshold: 0.5
+    });
+
+    observer.observe(featuredProduct);
+  });
+</script>
+
   <script src="./app.js" defer></script>
 </body>
 </html>
