@@ -105,7 +105,10 @@ export async function onRequestPost(context) {
 
     if (!turnstileResponse.ok || !turnstileData.success) {
       return Response.json(
-        { error: "Spam check failed. Please try again." },
+        {
+          error: "Spam check failed. Please try again.",
+          details: turnstileData["error-codes"] || []
+        },
         { status: 400 }
       );
     }

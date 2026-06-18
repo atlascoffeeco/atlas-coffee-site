@@ -60,7 +60,7 @@ if (coffeeForm) {
     "1kg": { amount: 35.95 }
   };
 
-  const DELIVERY_FEE = 4.50;
+  const DELIVERY_FEE = 4.5;
 
   const weight = document.getElementById("weight");
   const grind = document.getElementById("grind");
@@ -174,6 +174,14 @@ if (contactForm) {
   const status = document.getElementById("contact-status");
   const submitButton = document.getElementById("contact-submit");
 
+  function getTurnstileToken() {
+    return (
+      contactForm.querySelector('input[name="cf-turnstile-response"]')?.value?.trim() ||
+      document.querySelector('input[name="cf-turnstile-response"]')?.value?.trim() ||
+      ""
+    );
+  }
+
   contactForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
@@ -185,8 +193,21 @@ if (contactForm) {
       message: formData.get("message")?.toString().trim() || ""
     };
 
+    const honeypot = formData.get("website")?.toString().trim() || "";
+    const turnstileToken = getTurnstileToken();
+
+    if (honeypot) {
+      status.textContent = "Submission blocked.";
+      return;
+    }
+
     if (!payload.name || !payload.email || !payload.subject || !payload.message) {
       status.textContent = "Please complete all fields.";
+      return;
+    }
+
+    if (!turnstileToken) {
+      status.textContent = "Please complete the spam check.";
       return;
     }
 
@@ -200,7 +221,11 @@ if (contactForm) {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify({
+          ...payload,
+          website: honeypot,
+          turnstileToken
+        })
       });
 
       const result = await response.json();
@@ -211,8 +236,16 @@ if (contactForm) {
 
       contactForm.reset();
       status.textContent = "Thanks — your message has been sent.";
+
+      if (window.turnstile) {
+        window.turnstile.reset();
+      }
     } catch (error) {
       status.textContent = error.message || "Something went wrong. Please try again.";
+
+      if (window.turnstile) {
+        window.turnstile.reset();
+      }
     } finally {
       submitButton.disabled = false;
       submitButton.textContent = "Send message";
