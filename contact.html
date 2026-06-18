@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google Tag Manager -->
+  <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
   })(window,document,'script','dataLayer','GTM-TMRKXCQQ');</script>
   <!-- End Google Tag Manager -->
+
   <title>Contact Atlas Coffee</title>
   <link rel="icon" type="image/jpeg" href="./assets/logo.jpg">
   <meta name="description" content="Contact Atlas Coffee for order enquiries, delivery questions and local collection details in Redditch." />
@@ -20,13 +21,15 @@
   <script>
     document.documentElement.classList.add("js");
   </script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TMRKXCQQ"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TMRKXCQQ"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
   <a class="skip-link" href="#content">Skip to content</a>
 
   <header class="site-header">
@@ -105,15 +108,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               Message
               <textarea class="input" name="message" rows="6" placeholder="How can I help?" required></textarea>
             </label>
+
+            <div style="position:absolute;left:-9999px;opacity:0;pointer-events:none;" aria-hidden="true">
+              <label>
+                Leave this field empty
+                <input type="text" name="website" tabindex="-1" autocomplete="off" />
+              </label>
+            </div>
+
+            <div class="cf-turnstile" data-sitekey="0x4AAAAAADnTEMxXKo1A2TQ5" data-theme="auto"></div>
+
             <button type="submit" class="button" id="contact-submit">Send message</button>
             <p class="muted contact-status" id="contact-status" aria-live="polite"></p>
-<p class="muted" style="font-size:var(--text-sm);margin-top:.35rem;">
-  By sending this message, you agree to the handling of your data as set out in our
-  <a href="./privacy.html">Privacy Policy</a>.
-</p>
-            <p class="muted contact-status" id="contact-status" aria-live="polite"></p>
+
+            <p class="muted" style="font-size:var(--text-sm);margin-top:.35rem;">
+              By sending this message, you agree to the handling of your data as set out in our
+              <a href="./privacy.html">Privacy Policy</a>.
+            </p>
           </form>
-          
         </div>
       </div>
     </section>
@@ -147,7 +159,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </section>
   </main>
 
-<footer class="site-footer">
+  <footer class="site-footer">
     <div class="container footer-grid">
       <div>
         <div class="brand">

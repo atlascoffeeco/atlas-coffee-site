@@ -9,7 +9,21 @@ export async function onRequestPost(context) {
       );
     }
 
-    const { name, email, subject, message } = await context.request.json();
+    const {
+      name,
+      email,
+      subject,
+      message,
+      website,
+      turnstileToken
+    } = await context.request.json();
+
+    if (website) {
+      return Response.json(
+        { error: "Spam detected." },
+        { status: 400 }
+      );
+    }
 
     if (!name || !email || !subject || !message) {
       return Response.json(
@@ -25,14 +39,23 @@ export async function onRequestPost(context) {
       );
     }
 
+    if (!turnstileToken) {
+      return Response.json(
+        { error: "Please complete the spam check." },
+        { status: 400 }
+      );
+    }
+
     const resendKey = context.env.RESEND_API_KEY;
     const contactTo = context.env.CONTACT_TO_EMAIL;
     const contactFrom = context.env.CONTACT_FROM_EMAIL;
+    const turnstileSecret = context.env.TURNSTILE_SECRET_KEY;
 
     const missingEnv = [];
     if (!resendKey) missingEnv.push("RESEND_API_KEY");
     if (!contactTo) missingEnv.push("CONTACT_TO_EMAIL");
     if (!contactFrom) missingEnv.push("CONTACT_FROM_EMAIL");
+    if (!turnstileSecret) missingEnv.push("TURNSTILE_SECRET_KEY");
 
     if (missingEnv.length) {
       return Response.json(
@@ -41,7 +64,54 @@ export async function onRequestPost(context) {
       );
     }
 
+    const ip =
+      context.request.headers.get("CF-Connecting-IP") ||
+      context.request.headers.get("x-forwarded-for") ||
+      "";
+
+    let turnstileResponse;
+    let turnstileData;
+
+    try {
+      turnstileResponse = await fetch(
+        "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: new URLSearchParams({
+            secret: turnstileSecret,
+            response: turnstileToken,
+            remoteip: ip
+          })
+        }
+      );
+    } catch (fetchError) {
+      return Response.json(
+        { error: "Failed to verify spam protection." },
+        { status: 502 }
+      );
+    }
+
+    try {
+      turnstileData = await turnstileResponse.json();
+    } catch (jsonError) {
+      return Response.json(
+        { error: "Invalid response from spam protection service." },
+        { status: 502 }
+      );
+    }
+
+    if (!turnstileResponse.ok || !turnstileData.success) {
+      return Response.json(
+        { error: "Spam check failed. Please try again." },
+        { status: 400 }
+      );
+    }
+
     let resendResponse, resendData;
+
     try {
       resendResponse = await fetch("https://api.resend.com/emails", {
         method: "POST",
