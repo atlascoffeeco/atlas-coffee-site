@@ -1,34 +1,43 @@
 <!DOCTYPE html>
-<html lang="en" class="js">
+<html lang="en" class="js-disabled">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shop | Atlas Coffee Roasters</title>
-  <meta
-    name="description"
-    content="Shop Atlas Coffee Roasters coffees roasted in small batches for clarity, balance, and character."
-  >
-
   <!-- Google Tag Manager -->
   <script>
-  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-TMRKXCQQ');
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TMRKXCQQ');
   </script>
   <!-- End Google Tag Manager -->
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop | Atlas Coffee</title>
+  <meta
+    name="description"
+    content="Shop Atlas Coffee single-origin releases, roasted in small batches for delivery or collection in Redditch."
+  />
+  <meta name="robots" content="index,follow" />
+
+  <link rel="icon" type="image/jpeg" href="./assets/logo.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Work+Sans:wght@400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Work+Sans:wght@300;400;500;600;700&display=swap"
     rel="stylesheet"
-  >
-  <link rel="stylesheet" href="styles.css">
-  <link rel="icon" type="image/png" href="./assets/AtlasLogoInstagram.jpg">
+  />
+
+  <link rel="stylesheet" href="./styles.css" />
+
+  <script>
+    document.documentElement.classList.remove("js-disabled");
+    document.documentElement.classList.add("js");
+    window.dataLayer = window.dataLayer || [];
+  </script>
 </head>
-<body class="shop-page shop-page-premium">
+<body class="shop-page">
   <!-- Google Tag Manager (noscript) -->
   <noscript>
     <iframe
@@ -40,7 +49,7 @@
   </noscript>
   <!-- End Google Tag Manager (noscript) -->
 
-  <a class="skip-link" href="#main-content">Skip to content</a>
+  <a class="skip-link" href="#content">Skip to content</a>
 
   <header class="site-header">
     <div class="container nav-shell">
@@ -60,154 +69,154 @@
       </nav>
 
       <div class="actions">
+        <a class="ghost-button basket-link" href="#basket" aria-label="View basket">
+          Basket <span id="basket-count">0</span>
+        </a>
         <button
-          class="ghost-button cart-trigger"
+          class="mobile-menu-toggle"
           type="button"
-          data-cart-open
-          aria-controls="cart-drawer"
+          data-mobile-toggle
           aria-expanded="false"
+          aria-label="Open menu"
         >
-          Basket
-          <span class="cart-trigger__count" id="cart-count-pill">0</span>
-        </button>
-
-        <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-label="Open menu">
           Menu
         </button>
       </div>
     </div>
 
     <div class="container mobile-panel" data-mobile-panel>
-      <a href="index.html">Home</a>
-      <a href="shop.html" aria-current="page">Shop</a>
-      <a href="why-atlas.html">Why Atlas</a>
-      <a href="contact.html">Contact</a>
+      <a href="./index.html">Home</a>
+      <a href="./why-atlas.html">Why Atlas</a>
+      <a href="./shop.html" aria-current="page">Shop</a>
+      <a href="./contact.html">Contact</a>
+      <a class="button" href="#basket">View basket</a>
     </div>
   </header>
 
-  <div class="cart-backdrop" id="cart-backdrop" hidden></div>
-
-  <aside
-    class="cart-drawer"
-    id="cart-drawer"
-    aria-labelledby="cart-drawer-title"
-    aria-hidden="true"
-    tabindex="-1"
-  >
-    <div class="cart-drawer__header">
-      <div>
-        <span class="eyebrow">Your basket</span>
-        <h2 id="cart-drawer-title">A few good coffees, chosen with intent.</h2>
-      </div>
-      <button class="cart-drawer__close" type="button" data-cart-close aria-label="Close basket">
-        ×
-      </button>
-    </div>
-
-    <div class="cart-drawer__body">
-      <div class="basket-empty" id="basket-empty">
-        <h3>Your basket is empty.</h3>
-        <p>Add a coffee below and build your order at your own pace.</p>
-      </div>
-
-      <div class="basket-lines" id="basket-lines" hidden></div>
-    </div>
-
-    <div class="cart-drawer__footer">
-      <div class="basket-fulfilment">
-        <label for="basket-fulfilment">Fulfilment</label>
-        <select id="basket-fulfilment" name="basket-fulfilment">
-          <option value="delivery">UK delivery</option>
-          <option value="collection">Local collection</option>
-        </select>
-        <p class="checkout-note" id="basket-fulfilment-note">
-          Collection is available from Church Hill North, Redditch. Delivery is added securely at checkout.
-        </p>
-      </div>
-
-      <div class="basket-summary">
-        <div class="basket-summary__row">
-          <span>Items</span>
-          <strong id="basket-item-count">0</strong>
-        </div>
-        <div class="basket-summary__row basket-summary__row--total">
-          <span>Subtotal</span>
-          <strong id="basket-subtotal">£0.00</strong>
-        </div>
-      </div>
-
-      <button class="button basket-checkout-button" id="basket-checkout-button" type="button" disabled>
-        Checkout
-      </button>
-    </div>
-  </aside>
-
-  <main id="main-content">
-    <section class="shop-intro shop-intro-compact">
+  <main id="content">
+    <section class="shop-hero-redesign">
       <div class="container">
-        <div class="shop-intro-shell reveal">
-          <div class="shop-intro-copy">
+        <div class="shop-hero-redesign__shell reveal">
+          <div class="shop-hero-redesign__copy">
             <span class="eyebrow">Shop</span>
-            <h1>Coffees with balance, clarity, and character.</h1>
-            <p>
-              Atlas is built around small-batch coffees chosen with intent and roasted to feel refined,
-              approachable, and easy to come back to.
+            <h1>Coffees chosen for balance, clarity, and repeat drinking.</h1>
+            <p class="shop-hero-redesign__lead">
+              A small Atlas line-up of approachable single-origin coffees, roasted in short batches and
+              packed for local collection or UK delivery.
             </p>
+
+            <div class="shop-hero-redesign__points" aria-label="Shopping highlights">
+              <span>Small-batch roasted</span>
+              <span>UK delivery available</span>
+              <span>Local collection in Redditch</span>
+              <span>Simple checkout</span>
+            </div>
           </div>
 
-          <div class="shop-intro-note">
-            <span class="featured-label">Collection & delivery</span>
-            <p>UK delivery available, alongside local collection in Redditch.</p>
-            <button
-              class="ghost-button shop-inline-cart-button"
-              type="button"
-              data-cart-open
-              aria-controls="cart-drawer"
-              aria-expanded="false"
-            >
-              View basket
-              <span class="cart-trigger__count" id="cart-count-inline">0</span>
-            </button>
-          </div>
+          <aside class="shop-hero-redesign__utility" aria-label="Shop guidance">
+            <div class="shop-utility-card">
+              <strong>Collection & delivery</strong>
+              <p>Dispatch is handled from the checkout details you provide. Collection can be arranged locally after purchase.</p>
+            </div>
+            <div class="shop-utility-card">
+              <strong>Buying with confidence</strong>
+              <p>Choose bag size, grind style, and quantity directly from each product card with one clear basket action.</p>
+            </div>
+            <a class="ghost-button shop-utility-link" href="#basket">View basket</a>
+          </aside>
         </div>
       </div>
     </section>
 
-    <section class="shop-products shop-products-tight">
+    <section class="shop-reassurance-band">
       <div class="container">
-        <div class="shop-grid shop-grid-simple">
-          <article class="coffee-card coffee-card-simple reveal" data-product-card>
-            <div class="coffee-card__media coffee-card__media-simple">
-              <span class="coffee-card__country">Brazil</span>
-              <img
-                src="./assets/AtlasLogoInstagram.jpg"
-                alt="Atlas Coffee Roasters bag placeholder for Serra Negra"
-                width="420"
-                height="420"
-                loading="lazy"
-              >
+        <ul class="shop-reassurance-band__grid" role="list">
+          <li>
+            <strong>Freshly roasted</strong>
+            <span>Prepared in small runs rather than held as broad catalogue stock.</span>
+          </li>
+          <li>
+            <strong>Simple range</strong>
+            <span>A tighter line-up designed to be easier to choose from and easier to come back to.</span>
+          </li>
+          <li>
+            <strong>Support if needed</strong>
+            <span>Questions about delivery, grind, or collection can be handled directly through Atlas.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="shop-products-redesign">
+      <div class="container">
+        <div class="shop-products-redesign__head reveal">
+          <div>
+            <span class="eyebrow">Current coffees</span>
+            <h2>Available now</h2>
+          </div>
+          <p>
+            Each coffee card is organised to help with quick comparison first, then configuration and basket
+            add second.
+          </p>
+        </div>
+
+        <div class="shop-product-grid-redesign">
+          <article class="shop-product-card reveal" id="serra-negra">
+            <div class="shop-product-card__media">
+              <div class="shop-product-card__badges">
+                <span class="shop-origin-pill">Brazil</span>
+                <span class="shop-roast-pill">Single origin</span>
+              </div>
+
+              <div class="shop-product-card__image-frame" aria-hidden="true">
+                <img
+                  src="./assets/serra-negra.png"
+                  alt="Serra Negra coffee bag"
+                  width="720"
+                  height="720"
+                  loading="lazy"
+                  class="shop-product-card__image"
+                  onerror="this.style.display='none'; this.parentNode.classList.add('is-fallback');"
+                />
+                <div class="shop-product-card__image-fallback">
+                  <span>Atlas</span>
+                  <strong>Serra Negra</strong>
+                </div>
+              </div>
             </div>
 
-            <div class="coffee-card__content coffee-card__content-simple">
-              <div class="coffee-card__head coffee-card__head-simple">
+            <div class="shop-product-card__body">
+              <div class="shop-product-card__topline">
                 <div>
-                  <span class="coffee-card__kicker">Single origin</span>
-                  <h2>Serra Negra</h2>
+                  <p class="shop-product-card__kicker">Single origin</p>
+                  <h3>Serra Negra</h3>
                 </div>
-                <div class="coffee-card__price">
+                <div class="shop-product-card__price-block">
                   <span>From</span>
                   <strong>£10.95</strong>
                 </div>
               </div>
 
-              <p class="coffee-card__lead">
-                Praline sweetness, soft milk chocolate, and an easy, balanced finish.
+              <p class="shop-product-card__lead">
+                Praline sweetness, soft milk chocolate, and an easy, balanced finish built for everyday brewing.
               </p>
 
-              <form class="coffee-card__form" data-coffee-form data-product="Serra Negra">
-                <input type="hidden" name="product" value="Serra Negra">
+              <ul class="shop-product-card__meta" role="list" aria-label="Serra Negra highlights">
+                <li>Natural process</li>
+                <li>Espresso or filter</li>
+                <li>Comforting, sweet profile</li>
+              </ul>
 
-                <div class="coffee-card__controls">
+              <div class="shop-product-card__story">
+                <strong>Why choose it</strong>
+                <p>
+                  Serra Negra is the most approachable cup in the line-up, with enough character to stay
+                  interesting without becoming heavy or fussy.
+                </p>
+              </div>
+
+              <form class="shop-buy-panel" data-product="Serra Negra">
+                <div class="shop-buy-panel__controls">
                   <div class="field-group">
                     <label for="serra-weight">Bag size</label>
                     <select id="serra-weight" name="weight">
@@ -227,75 +236,91 @@
                     </select>
                   </div>
 
-                  <div class="field-group field-group--qty">
+                  <div class="field-group">
                     <label for="serra-quantity">Qty</label>
-                    <input id="serra-quantity" name="quantity" type="number" min="1" max="10" step="1" value="1">
+                    <input id="serra-quantity" name="quantity" type="number" min="1" max="10" step="1" value="1" />
                   </div>
                 </div>
 
-                <div class="coffee-card__purchase coffee-card__purchase-simple">
-                  <div class="coffee-card__selection">
-                    <span class="featured-label">Selected</span>
-                    <strong data-selected-price>£10.95</strong>
-                    <p data-selection-summary>250g · Whole bean · Qty 1</p>
+                <div class="shop-buy-panel__summary">
+                  <div>
+                    <span class="shop-buy-panel__label">Selected</span>
+                    <strong id="serra-summary-line">250g · Whole bean · Qty 1</strong>
                   </div>
+                  <div class="shop-buy-panel__price">
+                    <span>Subtotal</span>
+                    <strong id="serra-price">£10.95</strong>
+                  </div>
+                </div>
 
-                  <button class="button coffee-card__submit" type="submit">
+                <div class="shop-buy-panel__footer">
+                  <p class="shop-buy-panel__note" id="serra-note">
+                    Delivery is added securely at checkout. Collection is available as an alternative.
+                  </p>
+                  <button class="button shop-buy-panel__button" type="button" data-add-to-basket="serra">
                     Add to basket
                   </button>
                 </div>
               </form>
-
-              <details class="coffee-card__details">
-                <summary>More about this coffee</summary>
-                <div class="coffee-card__details-inner">
-                  <p>
-                    Serra Negra is a naturally processed Brazilian coffee with a rounded sweetness and a softer,
-                    more comfortable profile that suits everyday brewing.
-                  </p>
-                  <ul class="coffee-card__details-list">
-                    <li><strong>Origin:</strong> Brazil</li>
-                    <li><strong>Process:</strong> Natural</li>
-                    <li><strong>Taste notes:</strong> Praline, milk chocolate, bright finish</li>
-                    <li><strong>Best for:</strong> Espresso, filter, cafetière</li>
-                  </ul>
-                </div>
-              </details>
             </div>
           </article>
 
-          <article class="coffee-card coffee-card-simple reveal" data-product-card>
-            <div class="coffee-card__media coffee-card__media-simple coffee-card__media--alt">
-              <span class="coffee-card__country">Peru</span>
-              <img
-                src="./assets/AtlasLogoInstagram.jpg"
-                alt="Atlas Coffee Roasters bag placeholder for Peru Cajamarca"
-                width="420"
-                height="420"
-                loading="lazy"
-              >
+          <article class="shop-product-card reveal" id="peru-cajamarca">
+            <div class="shop-product-card__media">
+              <div class="shop-product-card__badges">
+                <span class="shop-origin-pill">Peru</span>
+                <span class="shop-roast-pill">Single origin</span>
+              </div>
+
+              <div class="shop-product-card__image-frame" aria-hidden="true">
+                <img
+                  src="./assets/peru-cajamarca.png"
+                  alt="Peru Cajamarca coffee bag"
+                  width="720"
+                  height="720"
+                  loading="lazy"
+                  class="shop-product-card__image"
+                  onerror="this.style.display='none'; this.parentNode.classList.add('is-fallback');"
+                />
+                <div class="shop-product-card__image-fallback">
+                  <span>Atlas</span>
+                  <strong>Peru Cajamarca</strong>
+                </div>
+              </div>
             </div>
 
-            <div class="coffee-card__content coffee-card__content-simple">
-              <div class="coffee-card__head coffee-card__head-simple">
+            <div class="shop-product-card__body">
+              <div class="shop-product-card__topline">
                 <div>
-                  <span class="coffee-card__kicker">Single origin</span>
-                  <h2>Peru Cajamarca</h2>
+                  <p class="shop-product-card__kicker">Single origin</p>
+                  <h3>Peru Cajamarca</h3>
                 </div>
-                <div class="coffee-card__price">
+                <div class="shop-product-card__price-block">
                   <span>From</span>
                   <strong>£11.95</strong>
                 </div>
               </div>
 
-              <p class="coffee-card__lead">
-                Cleaner and brighter in the cup, with layered sweetness and a more lifted feel.
+              <p class="shop-product-card__lead">
+                Cleaner and brighter in the cup, with layered sweetness and a more lifted feel from first sip to finish.
               </p>
 
-              <form class="coffee-card__form" data-coffee-form data-product="Peru Cajamarca">
-                <input type="hidden" name="product" value="Peru Cajamarca">
+              <ul class="shop-product-card__meta" role="list" aria-label="Peru Cajamarca highlights">
+                <li>Clean profile</li>
+                <li>Higher brightness</li>
+                <li>Structured everyday filter</li>
+              </ul>
 
-                <div class="coffee-card__controls">
+              <div class="shop-product-card__story">
+                <strong>Why choose it</strong>
+                <p>
+                  Peru Cajamarca is for customers who want more sparkle and definition while still keeping the cup
+                  balanced and easy to return to.
+                </p>
+              </div>
+
+              <form class="shop-buy-panel" data-product="Peru Cajamarca">
+                <div class="shop-buy-panel__controls">
                   <div class="field-group">
                     <label for="peru-weight">Bag size</label>
                     <select id="peru-weight" name="weight">
@@ -315,62 +340,79 @@
                     </select>
                   </div>
 
-                  <div class="field-group field-group--qty">
+                  <div class="field-group">
                     <label for="peru-quantity">Qty</label>
-                    <input id="peru-quantity" name="quantity" type="number" min="1" max="10" step="1" value="1">
+                    <input id="peru-quantity" name="quantity" type="number" min="1" max="10" step="1" value="1" />
                   </div>
                 </div>
 
-                <div class="coffee-card__purchase coffee-card__purchase-simple">
-                  <div class="coffee-card__selection">
-                    <span class="featured-label">Selected</span>
-                    <strong data-selected-price>£11.95</strong>
-                    <p data-selection-summary>250g · Whole bean · Qty 1</p>
+                <div class="shop-buy-panel__summary">
+                  <div>
+                    <span class="shop-buy-panel__label">Selected</span>
+                    <strong id="peru-summary-line">250g · Whole bean · Qty 1</strong>
                   </div>
+                  <div class="shop-buy-panel__price">
+                    <span>Subtotal</span>
+                    <strong id="peru-price">£11.95</strong>
+                  </div>
+                </div>
 
-                  <button class="button coffee-card__submit" type="submit">
+                <div class="shop-buy-panel__footer">
+                  <p class="shop-buy-panel__note" id="peru-note">
+                    Delivery is added securely at checkout. Collection is available as an alternative.
+                  </p>
+                  <button class="button shop-buy-panel__button" type="button" data-add-to-basket="peru">
                     Add to basket
                   </button>
                 </div>
               </form>
-
-              <details class="coffee-card__details">
-                <summary>More about this coffee</summary>
-                <div class="coffee-card__details-inner">
-                  <p>
-                    Peru Cajamarca is the brighter of the two coffees, offering more clarity and lift while still
-                    staying balanced and approachable.
-                  </p>
-                  <ul class="coffee-card__details-list">
-                    <li><strong>Origin:</strong> Peru</li>
-                    <li><strong>Region:</strong> Cajamarca</li>
-                    <li><strong>Profile:</strong> Cleaner, brighter, layered sweetness</li>
-                    <li><strong>Best for:</strong> Filter, espresso, slower brews</li>
-                  </ul>
-                </div>
-              </details>
             </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="shop-assurance-section">
+      <div class="container">
+        <div class="shop-assurance-section__grid reveal">
+          <article class="shop-assurance-card">
+            <span class="eyebrow">Delivery</span>
+            <h2>Straightforward fulfilment.</h2>
+            <p>
+              If delivery is selected, the checkout address is used for dispatch. If collection is selected,
+              arrangements can be confirmed directly after payment.
+            </p>
+          </article>
+
+          <article class="shop-assurance-card" id="basket">
+            <span class="eyebrow">Basket</span>
+            <h2>Your selected coffees.</h2>
+            <div id="basket-items" class="shop-basket-list" aria-live="polite">
+              <p class="shop-basket-empty">Your basket is currently empty.</p>
+            </div>
+            <div class="shop-basket-footer">
+              <div>
+                <span class="shop-basket-total-label">Estimated total</span>
+                <strong id="basket-total">£0.00</strong>
+              </div>
+              <button class="button" type="button" id="checkout-button">Proceed to checkout</button>
+            </div>
+            <p class="shop-basket-note">
+              Checkout is handled securely. Delivery charges are added where relevant during checkout.
+            </p>
           </article>
         </div>
       </div>
     </section>
   </main>
 
-  <div class="basket-sticky-bar" id="basket-sticky-bar" hidden>
-    <div class="container basket-sticky-bar__inner">
-      <div class="basket-sticky-bar__meta">
-        <strong id="basket-sticky-count">0 items</strong>
-        <span id="basket-sticky-subtotal">£0.00 subtotal</span>
+  <div class="mobile-buy-bar" aria-hidden="true">
+    <div class="container mobile-buy-bar__inner">
+      <div class="mobile-buy-bar__meta">
+        <strong>Atlas basket</strong>
+        <span id="mobile-basket-summary">No items selected yet</span>
       </div>
-      <button
-        class="button basket-sticky-bar__button"
-        type="button"
-        data-cart-open
-        aria-controls="cart-drawer"
-        aria-expanded="false"
-      >
-        View basket
-      </button>
+      <a class="button mobile-buy-bar__button" href="#basket">View basket</a>
     </div>
   </div>
 
@@ -407,6 +449,202 @@
     </div>
   </footer>
 
-  <script src="app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const mobileToggle = document.querySelector("[data-mobile-toggle]");
+      const mobilePanel = document.querySelector("[data-mobile-panel]");
+
+      if (mobileToggle && mobilePanel) {
+        const setMobileMenu = (open) => {
+          mobileToggle.setAttribute("aria-expanded", String(open));
+          mobilePanel.classList.toggle("is-open", open);
+          mobileToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+        };
+
+        mobileToggle.addEventListener("click", () => {
+          const isOpen = mobileToggle.getAttribute("aria-expanded") === "true";
+          setMobileMenu(!isOpen);
+        });
+
+        mobilePanel.querySelectorAll("a").forEach((link) => {
+          link.addEventListener("click", () => setMobileMenu(false));
+        });
+
+        window.addEventListener("resize", () => {
+          if (window.innerWidth > 860) setMobileMenu(false);
+        });
+      }
+
+      const revealItems = document.querySelectorAll(".reveal");
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (!prefersReducedMotion && "IntersectionObserver" in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("revealed");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
+
+        revealItems.forEach((item) => observer.observe(item));
+      } else {
+        revealItems.forEach((item) => item.classList.add("revealed"));
+      }
+
+      const PRODUCTS = {
+        serra: {
+          id: "serra",
+          name: "Serra Negra",
+          prices: { "250g": 10.95, "500g": 19.5, "1kg": 35.95 }
+        },
+        peru: {
+          id: "peru",
+          name: "Peru Cajamarca",
+          prices: { "250g": 11.95, "500g": 21.5, "1kg": 38.95 }
+        }
+      };
+
+      const basket = [];
+      const basketCountEls = document.querySelectorAll("#basket-count");
+      const basketItemsEl = document.getElementById("basket-items");
+      const basketTotalEl = document.getElementById("basket-total");
+      const mobileBasketSummaryEl = document.getElementById("mobile-basket-summary");
+
+      function formatMoney(value) {
+        return new Intl.NumberFormat("en-GB", {
+          style: "currency",
+          currency: "GBP"
+        }).format(value);
+      }
+
+      function prettyGrind(value) {
+        return {
+          whole_bean: "Whole bean",
+          coarse: "Coarse",
+          medium: "Medium",
+          fine: "Fine"
+        }[value] || value;
+      }
+
+      function updateProductPanel(prefix, priceMap) {
+        const weightEl = document.getElementById(`${prefix}-weight`);
+        const grindEl = document.getElementById(`${prefix}-grind`);
+        const quantityEl = document.getElementById(`${prefix}-quantity`);
+        const summaryEl = document.getElementById(`${prefix}-summary-line`);
+        const priceEl = document.getElementById(`${prefix}-price`);
+        const noteEl = document.getElementById(`${prefix}-note`);
+
+        if (!weightEl || !grindEl || !quantityEl || !summaryEl || !priceEl) return;
+
+        const quantity = Math.max(1, Math.min(10, Number(quantityEl.value) || 1));
+        quantityEl.value = quantity;
+
+        const unitPrice = priceMap[weightEl.value];
+        const subtotal = unitPrice * quantity;
+
+        summaryEl.textContent = `${weightEl.value} · ${prettyGrind(grindEl.value)} · Qty ${quantity}`;
+        priceEl.textContent = formatMoney(subtotal);
+        if (noteEl) {
+          noteEl.textContent = "Delivery is added securely at checkout. Collection is available as an alternative.";
+        }
+      }
+
+      function renderBasket() {
+        const count = basket.reduce((sum, item) => sum + item.quantity, 0);
+        const total = basket.reduce((sum, item) => sum + item.lineTotal, 0);
+
+        basketCountEls.forEach((el) => {
+          el.textContent = String(count);
+        });
+
+        if (!basket.length) {
+          basketItemsEl.innerHTML = '<p class="shop-basket-empty">Your basket is currently empty.</p>';
+          basketTotalEl.textContent = formatMoney(0);
+          mobileBasketSummaryEl.textContent = "No items selected yet";
+          return;
+        }
+
+        basketItemsEl.innerHTML = basket.map((item, index) => `
+          <div class="shop-basket-item">
+            <div class="shop-basket-item__copy">
+              <strong>${item.product}</strong>
+              <span>${item.weight} · ${prettyGrind(item.grind)} · Qty ${item.quantity}</span>
+            </div>
+            <div class="shop-basket-item__actions">
+              <strong>${formatMoney(item.lineTotal)}</strong>
+              <button type="button" class="shop-basket-remove" data-remove-index="${index}">Remove</button>
+            </div>
+          </div>
+        `).join("");
+
+        basketTotalEl.textContent = formatMoney(total);
+        mobileBasketSummaryEl.textContent = `${count} item${count === 1 ? "" : "s"} · ${formatMoney(total)}`;
+
+        basketItemsEl.querySelectorAll("[data-remove-index]").forEach((button) => {
+          button.addEventListener("click", () => {
+            basket.splice(Number(button.dataset.removeIndex), 1);
+            renderBasket();
+          });
+        });
+      }
+
+      [["serra", PRODUCTS.serra.prices], ["peru", PRODUCTS.peru.prices]].forEach(([prefix, prices]) => {
+        ["weight", "grind", "quantity"].forEach((field) => {
+          const el = document.getElementById(`${prefix}-${field}`);
+          if (el) {
+            el.addEventListener(field === "quantity" ? "input" : "change", () => {
+              updateProductPanel(prefix, prices);
+            });
+          }
+        });
+        updateProductPanel(prefix, prices);
+      });
+
+      document.querySelectorAll("[data-add-to-basket]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const key = button.getAttribute("data-add-to-basket");
+          const product = PRODUCTS[key];
+          if (!product) return;
+
+          const prefix = key === "serra" ? "serra" : "peru";
+          const weight = document.getElementById(`${prefix}-weight`).value;
+          const grind = document.getElementById(`${prefix}-grind`).value;
+          const quantity = Math.max(1, Math.min(10, Number(document.getElementById(`${prefix}-quantity`).value) || 1));
+          const unitPrice = product.prices[weight];
+
+          basket.push({
+            product: product.name,
+            weight,
+            grind,
+            quantity,
+            unitPrice,
+            lineTotal: unitPrice * quantity
+          });
+
+          renderBasket();
+          button.textContent = "Added";
+          window.setTimeout(() => {
+            button.textContent = "Add to basket";
+          }, 1200);
+        });
+      });
+
+      document.getElementById("checkout-button").addEventListener("click", () => {
+        if (!basket.length) {
+          basketItemsEl.innerHTML = '<p class="shop-basket-empty">Add at least one coffee before proceeding to checkout.</p>';
+          return;
+        }
+
+        basketItemsEl.insertAdjacentHTML(
+          "beforeend",
+          '<p class="shop-basket-checkout-note">Basket captured for front-end review. Next step is wiring this redesigned basket to your checkout session endpoint.</p>'
+        );
+      });
+
+      renderBasket();
+    });
+  </script>
 </body>
 </html>

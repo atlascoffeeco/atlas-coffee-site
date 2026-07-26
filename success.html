@@ -88,17 +88,16 @@
   <!-- =========================================================
        Main content
        ========================================================= -->
-  <main id="content">
-    <!-- Top confirmation block -->
-    <section class="confirmation-hero">
-      <div class="container confirmation-shell">
-        <div class="confirmation-card reveal">
+<main id="content">
+  <section class="confirmation-hero">
+    <div class="container">
+      <div class="confirmation-top-layout">
+        <article class="confirmation-card confirmation-card--message">
           <span class="eyebrow">Order confirmed</span>
-
-          <h1>Thanks — your coffee order is in.</h1>
-
+          <h1>Thank you — your coffee order is locked in.</h1>
           <p class="confirmation-lead">
-            Your payment has been received successfully. We’ll use the checkout details to prepare your order for delivery or collection.
+            Your order has been received successfully. Leave it to us to prepare your
+            order for delivery or collection.
           </p>
 
           <div class="confirmation-actions">
@@ -106,87 +105,94 @@
             <a class="ghost-button" href="./contact.html">Contact Atlas</a>
           </div>
 
-          <!-- Updated dynamically after session lookup -->
-          <p class="confirmation-status" id="confirmation-status" aria-live="polite">
-            Loading order details…
+          <p class="confirmation-status" id="confirmation-status">
+            Order details loaded successfully.
           </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Lower content section -->
-    <section class="confirmation-grid-section">
-      <div class="container confirmation-grid-layout">
-        <!-- Order summary -->
-        <article class="confirmation-panel reveal">
-          <span class="eyebrow">Order details</span>
-          <h2>Your checkout summary</h2>
-
-          <p>
-            This page gives a simple confirmation of what Stripe received. If you selected delivery, the shipping details from checkout will be used for dispatch.
-          </p>
-
-          <dl class="confirmation-meta" id="confirmation-meta">
-            <div class="confirmation-meta-row">
-              <dt>Payment status</dt>
-              <dd id="order-payment-status">Confirmed</dd>
-            </div>
-
-            <div class="confirmation-meta-row">
-              <dt>Fulfilment</dt>
-              <dd id="order-fulfilment">Loading…</dd>
-            </div>
-
-            <div class="confirmation-meta-row">
-              <dt>Order total</dt>
-              <dd id="order-total">Loading…</dd>
-            </div>
-
-            <div class="confirmation-meta-row">
-              <dt>Order reference</dt>
-              <dd id="order-reference">Loading…</dd>
-            </div>
-          </dl>
-
-          <ul class="confirmation-items" id="order-items">
-            <li>
-              <strong>Loading order items…</strong>
-              <span>Please wait while the checkout summary is retrieved.</span>
-            </li>
-          </ul>
         </article>
 
-        <!-- Next steps -->
-        <aside class="confirmation-note reveal">
-          <span class="eyebrow">What happens next</span>
-          <h2>We’ll take it from here.</h2>
+        <aside
+          class="confirmation-panel confirmation-panel--summary"
+          aria-labelledby="order-summary-title"
+        >
+          <span class="eyebrow">Order details</span>
+          <h2 id="order-summary-title">Your checkout summary</h2>
+          <!-- <p>
+            This page gives a simple confirmation of what Stripe received. If you selected
+            delivery, the shipping details from checkout will be used for dispatch.
+          </p> -->
 
-          <p>
-            Everything has gone through correctly. The next step is simply us preparing the order based on the choices submitted at checkout.
+          <div class="confirmation-meta">
+            <div class="confirmation-meta-row">
+              <span>Payment status</span>
+              <strong id="payment-status">Confirmed</strong>
+            </div>
+            <div class="confirmation-meta-row">
+              <span>Fulfilment</span>
+              <strong id="fulfilment-method">Loading…</strong>
+            </div>
+            <div class="confirmation-meta-row">
+              <span>Order total</span>
+              <strong id="order-total">Loading…</strong>
+            </div>
+            <div class="confirmation-meta-row">
+              <span>Order reference</span>
+              <strong id="order-reference">Loading…</strong>
+            </div>
+          </div>
+
+          <ul class="confirmation-items" id="order-items">
+            <li>Loading order items…</li>
+          </ul>
+
+          <p class="checkout-note">
+            Please wait while the checkout summary is retrieved.
           </p>
+        </aside>
+      </div>
+    </div>
+  </section>
 
+  <section class="confirmation-grid-section">
+    <div class="container">
+      <div class="confirmation-bottom-layout">
+        <article
+          class="confirmation-note confirmation-note--full"
+          aria-labelledby="what-next-title"
+        >
+          <span class="eyebrow">What happens next</span>
+          <h2 id="what-next-title">We’ll take it from here.</h2>
+          <p>
+            Everything has gone through correctly. Leave it to us, we'll get your beans roasted and packed, and then delivered or ready for collection.
           <ul class="confirmation-checklist">
             <li>
               <strong>Order review</strong>
-              <span>Your order details are checked against the information submitted through Stripe.</span>
+              <span>
+                Your order details are checked and confirmed ahead of roasting.
+              </span>
             </li>
             <li>
               <strong>Roasting and packing</strong>
-              <span>Coffee is prepared according to the selected bag size, grind, and fulfilment option.</span>
+              <span>
+                Coffee is prepared according to your selected coffee, grind, and fulfilment option.
+              </span>
             </li>
             <li>
               <strong>Delivery or collection</strong>
-              <span>If you selected collection, details can be arranged directly. If you selected delivery, the checkout address will be used.</span>
+              <span>
+                If you selected collection, we will contact you to arrange pickup. If you selected
+                delivery, we will aim to dispatch your order within 1-3 business days, excluding weekends or public holidays.
+              </span>
             </li>
           </ul>
 
-          <div class="confirmation-actions" style="margin-top: var(--space-6);">
-            <a class="ghost-button" href="./delivery-returns.html">Delivery & Returns</a>
+          <div class="confirmation-actions confirmation-actions--secondary">
+            <a class="ghost-button" href="./delivery-returns.html">Delivery &amp; Returns</a>
           </div>
-        </aside>
+        </article>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
+</main>
 
   <!-- =========================================================
        Shared Atlas footer
