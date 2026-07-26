@@ -69,16 +69,28 @@
       </nav>
 
       <div class="actions">
-        <button
-          class="ghost-button basket-link"
-          type="button"
-          id="basket-toggle"
-          aria-haspopup="dialog"
-          aria-expanded="false"
-          aria-controls="basket-popover"
-        >
-          Basket <span id="basket-count">0</span>
-        </button>
+<button
+  class="ghost-button basket-link"
+  type="button"
+  id="basket-toggle"
+  aria-haspopup="dialog"
+  aria-expanded="false"
+  aria-controls="basket-popover"
+  data-has-items="false"
+>
+  <span class="basket-link__icon-wrap" aria-hidden="true">
+    <img
+      src="./assets/basket-outlined-shopping-svgrepo-com.svg"
+      alt=""
+      class="basket-link__icon"
+      width="20"
+      height="20"
+    />
+    <span class="basket-link__dot" aria-hidden="true"></span>
+  </span>
+  <span class="basket-link__label">Basket</span>
+  <span class="basket-link__count" id="basket-count">0</span>
+</button>
 
         <button
           class="mobile-menu-toggle"
@@ -126,259 +138,268 @@
 
     <section class="shop-grid-section">
       <div class="container">
-<div class="shop-product-grid-redesign shop-product-grid-redesign--first">
-  <article class="product-card product-card--detailed reveal" id="serra-negra">
-    <div class="product-top">
-      <div class="meta">
-        <span class="product-tag">Brazil</span>
-        <span>Single origin</span>
-      </div>
-      <div class="price">From £10.95</div>
-    </div>
+        <div class="shop-product-grid-redesign shop-product-grid-redesign--first">
+          <article class="product-card product-card--detailed reveal" id="serra-negra">
+            <div class="product-top">
+              <div class="meta">
+                <span class="product-tag">Brazil</span>
+                <span>Single origin</span>
+              </div>
+              <div class="price">From £10.95</div>
+            </div>
 
-    <div class="featured-product-image-wrap">
-      <img
-        src="./assets/serra-negra-bag.png"
-        alt="Atlas Coffee Company Serra Negra coffee bag"
-        class="featured-product-image"
-        width="900"
-        height="1125"
-        loading="lazy"
-        onerror="this.style.display='none'; this.parentNode.classList.add('is-fallback');"
-      />
-      <div class="shop-product-card__image-fallback">
-        <span>Atlas</span>
-        <strong>Serra Negra</strong>
-      </div>
-    </div>
+            <div class="featured-product-image-wrap">
+              <img
+                src="./assets/serra-negra.png"
+                alt="Atlas Coffee Company Serra Negra coffee bag"
+                class="featured-product-image"
+                width="900"
+                height="1125"
+                loading="lazy"
+                onerror="this.style.display='none'; this.parentNode.classList.add('is-fallback');"
+              />
+              <div class="shop-product-card__image-fallback">
+                <span>Atlas</span>
+                <strong>Serra Negra</strong>
+              </div>
+            </div>
 
-    <div class="product-card__content">
-      <div class="product-card__intro">
-        <p class="product-hero-label">Brazil • Serra Negra</p>
-        <h2 id="serra-title">Serra Negra</h2>
-        <p class="featured-product-lead">
-          Praline and mellow milk chocolate in the cup, with mild acidity, sweetness,
-          and the kind of easy balance that makes it effortless to come back to.
-        </p>
-      </div>
+            <div class="product-card__content">
+              <div class="product-card__intro">
+                <p class="product-hero-label">Brazil • Serra Negra</p>
+                <h2 id="serra-title">Serra Negra</h2>
+                <p class="featured-product-lead">
+                  Praline and mellow milk chocolate in the cup, with mild acidity, sweetness,
+                  and the kind of easy balance that makes it effortless to come back to.
+                </p>
+              </div>
 
-      <section class="featured-notes-block" aria-labelledby="serra-cup-title">
-        <div>
-          <span class="featured-label" id="serra-cup-title">The Cup</span>
-          <p>
-            Praline with mellow milk chocolate flavours and a softly sweet finish
-            with mild acidity.
-          </p>
+              <div class="product-accordion-group" aria-label="Serra Negra information">
+                <details class="product-disclosure" open>
+                  <summary>The Cup</summary>
+                  <div class="product-disclosure__content">
+                    <p>
+                      Praline with mellow milk chocolate flavours and a softly sweet finish
+                      with mild acidity.
+                    </p>
+                  </div>
+                </details>
+
+                <details class="product-disclosure">
+                  <summary>Coffee Details</summary>
+                  <div class="product-disclosure__content">
+                    <p class="product-disclosure__story">
+                      Serra Negra is a classic Minas Gerais profile and one of the earliest coffees
+                      on the Atlas menu, kept on for its dependable sweetness, approachable body,
+                      and everyday versatility.
+                    </p>
+
+                    <dl class="product-facts" aria-label="Serra Negra coffee details">
+                      <div class="product-fact">
+                        <dt>Process</dt>
+                        <dd>Natural</dd>
+                      </div>
+                      <div class="product-fact">
+                        <dt>Variety</dt>
+                        <dd>Common Brazilian varieties</dd>
+                      </div>
+                      <div class="product-fact">
+                        <dt>Elevation</dt>
+                        <dd>750–1100 MASL</dd>
+                      </div>
+                      <!-- <div class="product-fact">
+                        <dt>Harvest</dt>
+                        <dd>May–August</dd>
+                      </div>
+                      <div class="product-fact">
+                        <dt>Country</dt>
+                        <dd>Brazil</dd>
+                      </div> -->
+                    </dl>
+                  </div>
+                </details>
+              </div>
+            </div>
+
+            <form class="coffee-form" aria-labelledby="serra-title" data-product="Serra Negra">
+              <div class="field-group">
+                <label for="serra-weight">Bag size</label>
+                <select id="serra-weight" name="weight" required>
+                  <option value="250g">250g</option>
+                  <option value="500g">500g</option>
+                  <option value="1kg">1kg</option>
+                </select>
+              </div>
+
+              <div class="field-group">
+                <label for="serra-grind">Grind</label>
+                <select id="serra-grind" name="grind" required>
+                  <option value="whole_bean">Whole bean</option>
+                  <option value="coarse">Coarse</option>
+                  <option value="medium">Medium</option>
+                  <option value="fine">Fine</option>
+                </select>
+              </div>
+
+              <div class="field-group">
+                <label for="serra-quantity">Quantity</label>
+                <input
+                  id="serra-quantity"
+                  name="quantity"
+                  type="number"
+                  min="1"
+                  max="10"
+                  step="1"
+                  value="1"
+                  required
+                />
+              </div>
+
+              <div class="buy-box">
+                <span class="featured-label">Selected</span>
+                <p class="buy-box-summary" id="serra-summary-line">250g · Whole bean · Qty 1</p>
+                <p class="checkout-note" id="serra-note">
+                  Delivery is added at checkout. Local collection is also available.
+                </p>
+                <div class="buy-box-price-row">
+                  <span>Subtotal</span>
+                  <strong id="serra-price">£10.95</strong>
+                </div>
+                <button class="button" type="button" data-add-to-basket="serra">Add to basket</button>
+              </div>
+            </form>
+          </article>
+
+          <article class="product-card product-card--detailed reveal" id="peru-product">
+            <div class="product-top">
+              <div class="meta">
+                <span class="product-tag">Peru</span>
+                <span>Single origin</span>
+              </div>
+              <div class="price">From £11.95</div>
+            </div>
+
+            <div class="featured-product-image-wrap">
+              <img
+                src="./assets/peru-cajamarca-bag.png"
+                alt="Atlas Coffee Company Peru Cajamarca 250g coffee bag"
+                class="featured-product-image"
+                width="900"
+                height="1125"
+                loading="lazy"
+                onerror="this.style.display='none'; this.parentNode.classList.add('is-fallback');"
+              />
+              <div class="shop-product-card__image-fallback">
+                <span>Atlas</span>
+                <strong>Peru Cajamarca</strong>
+              </div>
+            </div>
+
+            <div class="product-card__content">
+              <div class="product-card__intro">
+                <p class="product-hero-label">Peru • Cajamarca</p>
+                <h2 id="peru-title">Peru Cajamarca</h2>
+                <p class="featured-product-lead">
+                  Clean and brighter in the cup, with mellow panela, vanilla, cooked citrus,
+                  and fresh fruit flavours alongside mild winey acidity and sweetness.
+                </p>
+              </div>
+
+              <div class="product-accordion-group" aria-label="Peru Cajamarca information">
+                <details class="product-disclosure" open>
+                  <summary>The Cup</summary>
+                  <div class="product-disclosure__content">
+                    <p>
+                      Mellow panela, vanilla, cooked citrus, and fresh fruit flavours with
+                      mild winey acidity and sweetness.
+                    </p>
+                  </div>
+                </details>
+
+                <details class="product-disclosure">
+                  <summary>Coffee Details</summary>
+                  <div class="product-disclosure__content">
+                    <p class="product-disclosure__story">
+                      A washed Cajamarca lot with a cleaner, more lifted profile, bringing
+                      layered sweetness and a brighter finish without losing balance.
+                    </p>
+
+                    <dl class="product-facts" aria-label="Peru coffee details">
+                      <div class="product-fact">
+                        <dt>Process</dt>
+                        <dd>Washed</dd>
+                      </div>
+                      <div class="product-fact">
+                        <dt>Variety</dt>
+                        <dd>Catimor, Caturra, Bourbon, Typica</dd>
+                      </div>
+                      <div class="product-fact">
+                        <dt>Elevation</dt>
+                        <dd>1600–1900 MASL</dd>
+                      </div>
+                      <!-- <div class="product-fact">
+                        <dt>Region</dt>
+                        <dd>Cajamarca</dd>
+                      </div>
+                      <div class="product-fact">
+                        <dt>Country</dt>
+                        <dd>Peru</dd>
+                      </div> -->
+                    </dl>
+                  </div>
+                </details>
+              </div>
+            </div>
+
+            <form class="coffee-form" aria-labelledby="peru-title" data-product="Peru Cajamarca">
+              <div class="field-group">
+                <label for="peru-weight">Bag size</label>
+                <select id="peru-weight" name="weight" required>
+                  <option value="250g">250g</option>
+                  <option value="500g">500g</option>
+                  <option value="1kg">1kg</option>
+                </select>
+              </div>
+
+              <div class="field-group">
+                <label for="peru-grind">Grind</label>
+                <select id="peru-grind" name="grind" required>
+                  <option value="whole_bean">Whole bean</option>
+                  <option value="coarse">Coarse</option>
+                  <option value="medium">Medium</option>
+                  <option value="fine">Fine</option>
+                </select>
+              </div>
+
+              <div class="field-group">
+                <label for="peru-quantity">Quantity</label>
+                <input
+                  id="peru-quantity"
+                  name="quantity"
+                  type="number"
+                  min="1"
+                  max="10"
+                  step="1"
+                  value="1"
+                  required
+                />
+              </div>
+
+              <div class="buy-box">
+                <span class="featured-label">Selected</span>
+                <p class="buy-box-summary" id="peru-summary-line">250g · Whole bean · Qty 1</p>
+                <p class="checkout-note" id="peru-note">
+                  Delivery is added at checkout. Local collection is also available.
+                </p>
+                <div class="buy-box-price-row">
+                  <span>Subtotal</span>
+                  <strong id="peru-price">£11.95</strong>
+                </div>
+                <button class="button" type="button" data-add-to-basket="peru">Add to basket</button>
+              </div>
+            </form>
+          </article>
         </div>
-      </section>
-
-      <section class="featured-notes-block featured-notes-block--story" aria-labelledby="serra-story-title">
-        <div>
-          <span class="featured-label" id="serra-story-title">The Coffee</span>
-          <p>
-            Serra Negra is a classic Minas Gerais profile and one of the earliest coffees
-            on the Atlas menu, kept on for its dependable sweetness, approachable body,
-            and everyday versatility.
-          </p>
-        </div>
-      </section>
-
-      <dl class="product-facts" aria-label="Serra Negra coffee details">
-        <div class="product-fact">
-          <dt>Process</dt>
-          <dd>Natural</dd>
-        </div>
-        <div class="product-fact">
-          <dt>Variety</dt>
-          <dd>Common Brazilian varieties</dd>
-        </div>
-        <div class="product-fact">
-          <dt>Elevation</dt>
-          <dd>750–1100 MASL</dd>
-        </div>
-        <div class="product-fact">
-          <dt>Harvest</dt>
-          <dd>May–August</dd>
-        </div>
-        <div class="product-fact">
-          <dt>Country</dt>
-          <dd>Brazil</dd>
-        </div>
-      </dl>
-    </div>
-
-    <form class="coffee-form" aria-labelledby="serra-title" data-product="Serra Negra">
-      <div class="field-group">
-        <label for="serra-weight">Bag size</label>
-        <select id="serra-weight" name="weight" required>
-          <option value="250g">250g</option>
-          <option value="500g">500g</option>
-          <option value="1kg">1kg</option>
-        </select>
-      </div>
-
-      <div class="field-group">
-        <label for="serra-grind">Grind</label>
-        <select id="serra-grind" name="grind" required>
-          <option value="whole_bean">Whole bean</option>
-          <option value="coarse">Coarse</option>
-          <option value="medium">Medium</option>
-          <option value="fine">Fine</option>
-        </select>
-      </div>
-
-      <div class="field-group">
-        <label for="serra-quantity">Qty</label>
-        <input
-          id="serra-quantity"
-          name="quantity"
-          type="number"
-          min="1"
-          max="10"
-          step="1"
-          value="1"
-          required
-        />
-      </div>
-
-      <div class="buy-box">
-        <span class="featured-label">Selected</span>
-        <p class="buy-box-summary" id="serra-summary-line">250g · Whole bean · Qty 1</p>
-        <p class="checkout-note" id="serra-note">
-          Delivery is added at checkout. Local collection is also available.
-        </p>
-        <div class="buy-box-price-row">
-          <span>Subtotal</span>
-          <strong id="serra-price">£10.95</strong>
-        </div>
-        <button class="button" type="button" data-add-to-basket="serra">Add to basket</button>
-      </div>
-    </form>
-  </article>
-
-  <article class="product-card product-card--detailed reveal" id="peru-product">
-    <div class="product-top">
-      <div class="meta">
-        <span class="product-tag">Peru</span>
-        <span>Single origin</span>
-      </div>
-      <div class="price">From £11.95</div>
-    </div>
-
-    <div class="featured-product-image-wrap">
-      <img
-        src="./assets/cajamarca-bag.png"
-        alt="Atlas Coffee Company Peru Cajamarca 250g coffee bag"
-        class="featured-product-image"
-        width="900"
-        height="1125"
-        loading="lazy"
-      />
-    </div>
-
-    <div class="product-card__content">
-      <div class="product-card__intro">
-        <p class="product-hero-label">Peru • Cajamarca</p>
-        <h2 id="peru-title">Peru Cajamarca</h2>
-        <p class="featured-product-lead">
-          Clean and brighter in the cup, with mellow panela, vanilla, cooked citrus,
-          and fresh fruit flavours alongside mild winey acidity and sweetness.
-        </p>
-      </div>
-
-      <section class="featured-notes-block" aria-labelledby="peru-cup-title">
-        <div>
-          <span class="featured-label" id="peru-cup-title">The Cup</span>
-          <p>
-            Mellow panela, vanilla, cooked citrus, and fresh fruit flavours with
-            mild winey acidity and sweetness.
-          </p>
-        </div>
-      </section>
-
-      <section class="featured-notes-block featured-notes-block--story" aria-labelledby="peru-story-title">
-        <div>
-          <span class="featured-label" id="peru-story-title">The Coffee</span>
-          <p>
-            A washed Cajamarca lot with a cleaner, more lifted profile, bringing
-            layered sweetness and a brighter finish without losing balance.
-          </p>
-        </div>
-      </section>
-
-      <dl class="product-facts" aria-label="Peru coffee details">
-        <div class="product-fact">
-          <dt>Process</dt>
-          <dd>Washed</dd>
-        </div>
-        <div class="product-fact">
-          <dt>Variety</dt>
-          <dd>Catimor, Caturra, Bourbon, Typica</dd>
-        </div>
-        <div class="product-fact">
-          <dt>Elevation</dt>
-          <dd>1600–1900 MASL</dd>
-        </div>
-        <div class="product-fact">
-          <dt>Region</dt>
-          <dd>Cajamarca</dd>
-        </div>
-        <div class="product-fact">
-          <dt>Country</dt>
-          <dd>Peru</dd>
-        </div>
-      </dl>
-    </div>
-
-    <form class="coffee-form" aria-labelledby="peru-title" data-product="Peru Cajamarca">
-      <div class="field-group">
-        <label for="peru-weight">Bag size</label>
-        <select id="peru-weight" name="weight" required>
-          <option value="250g">250g</option>
-          <option value="500g">500g</option>
-          <option value="1kg">1kg</option>
-        </select>
-      </div>
-
-      <div class="field-group">
-        <label for="peru-grind">Grind</label>
-        <select id="peru-grind" name="grind" required>
-          <option value="whole_bean">Whole bean</option>
-          <option value="coarse">Coarse</option>
-          <option value="medium">Medium</option>
-          <option value="fine">Fine</option>
-        </select>
-      </div>
-
-      <div class="field-group">
-        <label for="peru-quantity">Qty</label>
-        <input
-          id="peru-quantity"
-          name="quantity"
-          type="number"
-          min="1"
-          max="10"
-          step="1"
-          value="1"
-          required
-        />
-      </div>
-
-      <div class="buy-box">
-        <span class="featured-label">Selected</span>
-        <p class="buy-box-summary" id="peru-summary-line">250g · Whole bean · Qty 1</p>
-        <p class="checkout-note" id="peru-note">
-          Delivery is added at checkout. Local collection is also available.
-        </p>
-        <div class="buy-box-price-row">
-          <span>Subtotal</span>
-          <strong id="peru-price">£11.95</strong>
-        </div>
-        <button class="button" type="button" data-add-to-basket="peru">Add to basket</button>
-      </div>
-    </form>
-  </article>
-</div>
       </div>
     </section>
 
@@ -628,6 +649,10 @@
         basketCountEls.forEach((el) => {
           el.textContent = String(count);
         });
+
+        if (basketToggle) {
+          basketToggle.setAttribute("data-has-items", count > 0 ? "true" : "false");
+      }
 
         if (!basket.length) {
           basketItemsEl.innerHTML = '<p class="shop-basket-empty">Your basket is currently empty.</p>';
