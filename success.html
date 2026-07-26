@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="js-disabled">
 <head>
   <!-- Google Tag Manager -->
   <script>
@@ -11,42 +11,51 @@
   </script>
   <!-- End Google Tag Manager -->
 
-  <title>Order Confirmed | Atlas Coffee</title>
-  <link rel="icon" type="image/jpeg" href="./assets/logo.jpg">
+  <!-- Basic metadata -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirmed | Atlas Coffee</title>
   <meta name="description" content="Your Atlas Coffee order has been received and confirmed.">
   <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/jpeg" href="./assets/logo.jpg">
 
   <!-- Shared brand fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- Global site bootstrapping -->
-  <script>
-    document.documentElement.classList.add('js');
-    window.dataLayer = window.dataLayer || [];
-  </script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Work+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
 
   <!-- Shared site stylesheet -->
   <link rel="stylesheet" href="./styles.css">
+
+  <!-- Global site bootstrapping -->
+  <script>
+    document.documentElement.classList.remove('js-disabled');
+    document.documentElement.classList.add('js');
+    window.dataLayer = window.dataLayer || [];
+  </script>
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
   <noscript>
-    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TMRKXCQQ" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    <iframe
+      src="https://www.googletagmanager.com/ns.html?id=GTM-TMRKXCQQ"
+      height="0"
+      width="0"
+      style="display:none;visibility:hidden"
+    ></iframe>
   </noscript>
   <!-- End Google Tag Manager (noscript) -->
 
   <!-- Accessibility shortcut -->
   <a class="skip-link" href="#content">Skip to content</a>
 
-  <!-- =========================================================
-       Shared Atlas header
-       ========================================================= -->
+  <!-- Shared Atlas header -->
   <header class="site-header">
     <div class="container nav-shell">
+      <!-- Brand -->
       <a class="brand" href="./index.html" aria-label="Atlas Coffee home">
         <img src="./assets/logo.jpg" alt="Atlas Coffee logo" width="80" height="80" loading="eager">
         <span class="brand-lockup">
@@ -55,6 +64,7 @@
         </span>
       </a>
 
+      <!-- Primary navigation -->
       <nav class="nav-links" aria-label="Primary navigation">
         <a href="./index.html">Home</a>
         <a href="./why-atlas.html">Why Atlas</a>
@@ -62,6 +72,7 @@
         <a href="./contact.html">Contact</a>
       </nav>
 
+      <!-- Success page keeps a simple CTA instead of a basket trigger -->
       <div class="actions">
         <a class="button" href="./shop.html">Shop coffee</a>
         <button
@@ -69,7 +80,8 @@
           type="button"
           data-mobile-toggle
           aria-expanded="false"
-          aria-label="Open menu">
+          aria-label="Open menu"
+        >
           Menu
         </button>
       </div>
@@ -85,118 +97,116 @@
     </div>
   </header>
 
-  <!-- =========================================================
-       Main content
-       ========================================================= -->
-<main id="content">
-  <section class="confirmation-hero">
-    <div class="container">
-      <div class="confirmation-top-layout">
-        <article class="confirmation-card confirmation-card--message">
-          <span class="eyebrow">Order confirmed</span>
-          <h1>Thank you — your coffee order is locked in.</h1>
-          <p class="confirmation-lead">
-            Your order has been received successfully. Leave it to us to prepare your
-            order for delivery or collection.
-          </p>
+  <!-- Main content -->
+  <main id="content">
+    <section class="confirmation-hero">
+      <div class="container">
+        <div class="confirmation-top-layout">
+          <!-- Main confirmation message -->
+          <article class="confirmation-card confirmation-card--message reveal">
+            <span class="eyebrow">Order confirmed</span>
+            <h1>Thank you — your coffee order is locked in.</h1>
+            <p class="confirmation-lead">
+              Your order has been received successfully. Leave it to us to prepare your
+              order for delivery or collection.
+            </p>
 
-          <div class="confirmation-actions">
-            <a class="button" href="./shop.html">Back to shop</a>
-            <a class="ghost-button" href="./contact.html">Contact Atlas</a>
-          </div>
-
-          <p class="confirmation-status" id="confirmation-status">
-            Order details loaded successfully.
-          </p>
-        </article>
-
-        <aside
-          class="confirmation-panel confirmation-panel--summary"
-          aria-labelledby="order-summary-title"
-        >
-          <span class="eyebrow">Order details</span>
-          <h2 id="order-summary-title">Your checkout summary</h2>
-          <!-- <p>
-            This page gives a simple confirmation of what Stripe received. If you selected
-            delivery, the shipping details from checkout will be used for dispatch.
-          </p> -->
-
-          <div class="confirmation-meta">
-            <div class="confirmation-meta-row">
-              <span>Payment status</span>
-              <strong id="payment-status">Confirmed</strong>
+            <div class="confirmation-actions">
+              <a class="button" href="./shop.html">Back to shop</a>
+              <a class="ghost-button" href="./contact.html">Contact Atlas</a>
             </div>
-            <div class="confirmation-meta-row">
-              <span>Fulfilment</span>
-              <strong id="fulfilment-method">Loading…</strong>
-            </div>
-            <div class="confirmation-meta-row">
-              <span>Order total</span>
-              <strong id="order-total">Loading…</strong>
-            </div>
-            <div class="confirmation-meta-row">
-              <span>Order reference</span>
-              <strong id="order-reference">Loading…</strong>
-            </div>
-          </div>
 
-          <ul class="confirmation-items" id="order-items">
-            <li>Loading order items…</li>
-          </ul>
+            <p class="confirmation-status" id="confirmation-status">
+              Order details loaded successfully.
+            </p>
+          </article>
 
-          <p class="checkout-note">
-            Please wait while the checkout summary is retrieved.
-          </p>
-        </aside>
+          <!-- Order summary panel -->
+          <aside
+            class="confirmation-panel confirmation-panel--summary reveal"
+            aria-labelledby="order-summary-title"
+          >
+            <span class="eyebrow">Order details</span>
+            <h2 id="order-summary-title">Your checkout summary</h2>
+
+            <div class="confirmation-meta">
+              <div class="confirmation-meta-row">
+                <span>Payment status</span>
+                <strong id="payment-status">Confirmed</strong>
+              </div>
+              <div class="confirmation-meta-row">
+                <span>Fulfilment</span>
+                <strong id="fulfilment-method">Loading…</strong>
+              </div>
+              <div class="confirmation-meta-row">
+                <span>Order total</span>
+                <strong id="order-total">Loading…</strong>
+              </div>
+              <div class="confirmation-meta-row">
+                <span>Order reference</span>
+                <strong id="order-reference">Loading…</strong>
+              </div>
+            </div>
+
+            <ul class="confirmation-items" id="order-items">
+              <li>Loading order items…</li>
+            </ul>
+
+            <p class="checkout-note">
+              Please wait while the checkout summary is retrieved.
+            </p>
+          </aside>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="confirmation-grid-section">
-    <div class="container">
-      <div class="confirmation-bottom-layout">
-        <article
-          class="confirmation-note confirmation-note--full"
-          aria-labelledby="what-next-title"
-        >
-          <span class="eyebrow">What happens next</span>
-          <h2 id="what-next-title">We’ll take it from here.</h2>
-          <p>
-            Everything has gone through correctly. Leave it to us, we'll get your beans roasted and packed, and then delivered or ready for collection.
-          <ul class="confirmation-checklist">
-            <li>
-              <strong>Order review</strong>
-              <span>
-                Your order details are checked and confirmed ahead of roasting.
-              </span>
-            </li>
-            <li>
-              <strong>Roasting and packing</strong>
-              <span>
-                Coffee is prepared according to your selected coffee, grind, and fulfilment option.
-              </span>
-            </li>
-            <li>
-              <strong>Delivery or collection</strong>
-              <span>
-                If you selected collection, we will contact you to arrange pickup. If you selected
-                delivery, we will aim to dispatch your order within 1-3 business days, excluding weekends or public holidays.
-              </span>
-            </li>
-          </ul>
+    <section class="confirmation-grid-section">
+      <div class="container">
+        <div class="confirmation-bottom-layout">
+          <!-- Next steps -->
+          <article
+            class="confirmation-note confirmation-note--full reveal"
+            aria-labelledby="what-next-title"
+          >
+            <span class="eyebrow">What happens next</span>
+            <h2 id="what-next-title">We’ll take it from here.</h2>
+            <p>
+              Everything has gone through correctly. Leave it to us, we'll get your beans
+              roasted and packed, and then delivered or ready for collection.
+            </p>
 
-          <div class="confirmation-actions confirmation-actions--secondary">
-            <a class="ghost-button" href="./delivery-returns.html">Delivery &amp; Returns</a>
-          </div>
-        </article>
+            <ul class="confirmation-checklist">
+              <li>
+                <strong>Order review</strong>
+                <span>
+                  Your order details are checked and confirmed ahead of roasting.
+                </span>
+              </li>
+              <li>
+                <strong>Roasting and packing</strong>
+                <span>
+                  Coffee is prepared according to your selected coffee, grind, and fulfilment option.
+                </span>
+              </li>
+              <li>
+                <strong>Delivery or collection</strong>
+                <span>
+                  If you selected collection, we will contact you to arrange pickup. If you selected
+                  delivery, we will aim to dispatch your order within 1-3 business days, excluding weekends or public holidays.
+                </span>
+              </li>
+            </ul>
+
+            <div class="confirmation-actions confirmation-actions--secondary">
+              <a class="ghost-button" href="./delivery-returns.html">Delivery &amp; Returns</a>
+            </div>
+          </article>
+        </div>
       </div>
-    </div>
-  </section>
-</main>
+    </section>
+  </main>
 
-  <!-- =========================================================
-       Shared Atlas footer
-       ========================================================= -->
+  <!-- Shared Atlas footer -->
   <footer class="site-footer">
     <div class="container footer-grid">
       <div>
@@ -223,23 +233,19 @@
         <strong>Legal</strong>
         <ul style="display:grid;gap:.6rem;margin-top:1rem;list-style:none;">
           <li><a href="./privacy.html">Privacy Policy</a></li>
-          <li><a href="./terms.html">Terms & Conditions</a></li>
-          <li><a href="./delivery-returns.html">Delivery & Returns</a></li>
+          <li><a href="./terms.html">Terms &amp; Conditions</a></li>
+          <li><a href="./delivery-returns.html">Delivery &amp; Returns</a></li>
         </ul>
       </div>
     </div>
   </footer>
 
-  <!-- =========================================================
-       Shared page interactions
-       Mobile menu + reveal animation
-       ========================================================= -->
+  <!-- Shared page interactions -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const mobileToggle = document.querySelector('[data-mobile-toggle]');
       const mobilePanel = document.querySelector('[data-mobile-panel]');
 
-      // Mobile menu behaviour
       if (mobileToggle && mobilePanel) {
         const mobileLinks = mobilePanel.querySelectorAll('a');
 
@@ -265,7 +271,6 @@
         });
       }
 
-      // Shared reveal-on-scroll behaviour
       const revealItems = document.querySelectorAll('.reveal');
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -286,31 +291,24 @@
     });
   </script>
 
-  <!-- =========================================================
-       Stripe Checkout session lookup
-       Loads the order summary from the URL session_id and
-       pushes purchase data into GTM once loaded.
-       ========================================================= -->
+  <!-- Stripe Checkout session lookup -->
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
       const statusEl = document.getElementById('confirmation-status');
-      const fulfilmentEl = document.getElementById('order-fulfilment');
+      const fulfilmentEl = document.getElementById('fulfilment-method');
       const totalEl = document.getElementById('order-total');
       const referenceEl = document.getElementById('order-reference');
-      const paymentStatusEl = document.getElementById('order-payment-status');
+      const paymentStatusEl = document.getElementById('payment-status');
       const itemsEl = document.getElementById('order-items');
 
-      // Read Stripe session_id from the current page URL
       const url = new URL(window.location.href);
       const sessionId = url.searchParams.get('session_id');
 
-      // Helper for status messaging
       const setStatus = (message, isError = false) => {
         statusEl.textContent = message;
         statusEl.classList.toggle('error', isError);
       };
 
-      // Helper for currency formatting
       const formatMoney = (amount, currency = 'GBP') => {
         return new Intl.NumberFormat('en-GB', {
           style: 'currency',
@@ -318,12 +316,12 @@
         }).format(amount || 0);
       };
 
-      // Handle missing session_id gracefully
       if (!sessionId) {
         setStatus('Order reference missing. If you need help, please contact Atlas Coffee.', true);
         fulfilmentEl.textContent = 'Unavailable';
         totalEl.textContent = 'Unavailable';
         referenceEl.textContent = 'Unavailable';
+        paymentStatusEl.textContent = 'Unavailable';
         itemsEl.innerHTML = `
           <li>
             <strong>We could not load this order.</strong>
@@ -334,7 +332,6 @@
       }
 
       try {
-        // Request order summary from the Cloudflare Pages function
         const response = await fetch(`/api/get-checkout-session?session_id=${encodeURIComponent(sessionId)}`);
         const order = await response.json();
 
@@ -342,13 +339,11 @@
           throw new Error(order?.error || 'Unable to load checkout session.');
         }
 
-        // Populate summary fields
         paymentStatusEl.textContent = order.paymentStatus || 'Confirmed';
         fulfilmentEl.textContent = order.fulfilment || 'Delivery';
         totalEl.textContent = formatMoney(order.value || 0, order.currency || 'GBP');
         referenceEl.textContent = order.transactionId || sessionId;
 
-        // Render purchased items
         if (Array.isArray(order.items) && order.items.length > 0) {
           itemsEl.innerHTML = order.items.map((item) => `
             <li>
@@ -369,10 +364,8 @@
           `;
         }
 
-        // Update status line after successful data load
         setStatus('Order details loaded successfully.');
 
-        // Push purchase event to GTM
         window.dataLayer.push({
           event: 'purchase',
           ecommerce: {
@@ -387,11 +380,11 @@
       } catch (error) {
         console.error('Error loading checkout session:', error);
 
-        // Fallback if summary cannot be loaded
         setStatus('Your payment succeeded, but we could not load the full order summary here. If needed, contact Atlas Coffee.', true);
         fulfilmentEl.textContent = 'Confirmed at checkout';
         totalEl.textContent = 'Confirmed at checkout';
         referenceEl.textContent = sessionId;
+        paymentStatusEl.textContent = 'Confirmed';
         itemsEl.innerHTML = `
           <li>
             <strong>Order confirmed</strong>

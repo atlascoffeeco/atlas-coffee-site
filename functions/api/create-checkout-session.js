@@ -20,12 +20,15 @@ export async function onRequest(context) {
     return json({ error: "Missing STRIPE_SECRET_KEY environment variable." }, 500);
   }
 
-  // Use PUBLIC_SITE_URL if it exists.
-  // Otherwise, fall back to the current request origin.
-  // This is especially helpful for changing Cloudflare preview/staging URLs.
-  const origin = env.PUBLIC_SITE_URL
-    ? new URL(env.PUBLIC_SITE_URL).origin
-    : new URL(request.url).origin;
+  // Use PUBLIC_SITE_URL if it exists, otherwise fall back to the current request origin
+  let origin;
+  try {
+    origin = env.PUBLIC_SITE_URL
+      ? new URL(env.PUBLIC_SITE_URL).origin
+      : new URL(request.url).origin;
+  } catch {
+    return json({ error: "Unable to determine site origin." }, 500);
+  }
 
   let body;
 
@@ -43,6 +46,16 @@ export async function onRequest(context) {
     return json({ error: "Your basket is empty." }, 400);
   }
 
+  // Prevent unexpectedly large basket payloads
+  if (items.length > 20) {
+    return json({ error: "Basket is too large." }, 400);
+  }
+
+  // Only allow supported fulfilment values
+  if (!["delivery", "collection"].includes(fulfilment)) {
+    return json({ error: "Invalid fulfilment option." }, 400);
+  }
+
   // Server-side price map in pence
   // Never trust prices from the browser
   const PRICE_MAP = {
@@ -52,14 +65,16 @@ export async function onRequest(context) {
       "1kg": 3595
     },
     "Peru Cajamarca": {
-      "250g": 1395, // pence = £13.95
-      "500g": 2695, // pence = £26.95
-      "1kg": 4995   // pence = £49.95
+      "250g": 1395,
+      "500g": 2695,
+      "1kg": 4995
     }
   };
 
+  // Normalize grind values from the frontend into readable labels
   const GRIND_LABELS = {
     whole_bean: "Whole bean",
+    wholebean: "Whole bean",
     coarse: "Coarse",
     medium: "Medium",
     fine: "Fine"
@@ -68,17 +83,20 @@ export async function onRequest(context) {
   const DELIVERY_FEE = 450;
 
   try {
-    // Build Stripe line items from the validated basket items
+    // Build Stripe line items from validated basket items
     const lineItems = items.map((item) => {
       const product = typeof item?.product === "string" ? item.product.trim() : "";
       const weight = typeof item?.weight === "string" ? item.weight.trim() : "";
-      const grind = typeof item?.grind === "string" ? item.grind.trim() : "";
+      const rawGrind = typeof item?.grind === "string" ? item.grind.trim() : "";
+      const grind = rawGrind.toLowerCase();
       const quantity = Math.max(1, Math.min(10, Number(item?.quantity) || 1));
 
       const unitAmount = PRICE_MAP[product]?.[weight];
 
       if (!product || !weight || !unitAmount) {
-        throw new Error(`Invalid product selection: ${product || "unknown"} / ${weight || "unknown"}`);
+        throw new Error(
+          `Invalid product selection: ${product || "unknown"} / ${weight || "unknown"}`
+        );
       }
 
       return {
@@ -86,7 +104,7 @@ export async function onRequest(context) {
           currency: "gbp",
           product_data: {
             name: `${product} — ${weight}`,
-            description: `Grind: ${GRIND_LABELS[grind] || grind || "Not specified"}`
+            description: `Grind: ${GRIND_LABELS[grind] || rawGrind || "Not specified"}`
           },
           unit_amount: unitAmount
         },
@@ -94,7 +112,7 @@ export async function onRequest(context) {
       };
     });
 
-    // Add delivery as a separate Stripe line item
+    // Add delivery as a separate Stripe line item when needed
     if (fulfilment === "delivery") {
       lineItems.push({
         price_data: {
@@ -109,15 +127,15 @@ export async function onRequest(context) {
       });
     }
 
-    // Stripe expects form-encoded payloads for this direct API call
+    // Stripe expects form-encoded payloads for direct API calls
     const formData = new URLSearchParams();
 
     formData.set("mode", "payment");
     formData.set("success_url", `${origin}/success.html?session_id={CHECKOUT_SESSION_ID}`);
-    formData.set("cancel_url", `${origin}/cancel.html`);
+    formData.set("cancel_url", `${origin}/shop.html`);
     formData.set("billing_address_collection", "required");
 
-    // Store fulfilment choice on the payment intent metadata
+    // Store fulfilment choice in metadata
     formData.set("payment_intent_data[metadata][fulfilment]", fulfilment);
 
     // Only collect shipping addresses for delivery orders

@@ -1,32 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="js-disabled">
 <head>
-    <!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-TMRKXCQQ');</script>
+  <!-- Google Tag Manager -->
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TMRKXCQQ');
+  </script>
   <!-- End Google Tag Manager -->
-  <title>Terms & Conditions | Atlas Coffee</title>
-  <meta name="description" content="Terms and Conditions for Atlas Coffee." />
+
+  <!-- Page metadata -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms &amp; Conditions | Atlas Coffee</title>
+  <meta name="description" content="Terms and Conditions for Atlas Coffee." />
   <link rel="icon" type="image/jpeg" href="./assets/logo.jpg">
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Work+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Main stylesheet -->
   <link rel="stylesheet" href="./styles.css" />
+
+  <!-- JS-ready class hooks -->
+  <script>
+    document.documentElement.classList.remove("js-disabled");
+    document.documentElement.classList.add("js");
+    window.dataLayer = window.dataLayer || [];
+  </script>
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TMRKXCQQ"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+  <noscript>
+    <iframe
+      src="https://www.googletagmanager.com/ns.html?id=GTM-TMRKXCQQ"
+      height="0"
+      width="0"
+      style="display:none;visibility:hidden"
+    ></iframe>
+  </noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <!-- Accessibility shortcut -->
   <a class="skip-link" href="#content">Skip to content</a>
 
+  <!-- Site header -->
   <header class="site-header">
     <div class="container nav-shell">
+      <!-- Brand -->
       <a class="brand" href="./index.html" aria-label="Atlas Coffee home">
         <img src="./assets/logo.jpg" alt="Atlas Coffee logo" width="80" height="80" loading="eager" />
         <span class="brand-lockup">
@@ -34,18 +62,87 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <small>Independent coffee roasters</small>
         </span>
       </a>
+
+      <!-- Primary navigation -->
       <nav class="nav-links" aria-label="Primary navigation">
         <a href="./index.html">Home</a>
         <a href="./why-atlas.html">Why Atlas</a>
         <a href="./shop.html">Shop</a>
         <a href="./contact.html">Contact</a>
       </nav>
+
+      <!-- Header actions -->
       <div class="actions">
-        <a class="button" href="./shop.html">Shop coffee</a>
+        <!-- Shared basket trigger -->
+        <button
+          class="ghost-button basket-link"
+          type="button"
+          data-basket-trigger
+          data-has-items="false"
+          aria-haspopup="dialog"
+          aria-expanded="false"
+          aria-controls="basket-popover"
+        >
+          <span class="basket-link__icon-wrap" aria-hidden="true">
+            <img
+              src="./assets/basket-outlined-shopping-svgrepo-com.svg"
+              alt=""
+              class="basket-link__icon"
+              width="20"
+              height="20"
+            />
+            <span class="basket-link__dot" aria-hidden="true"></span>
+          </span>
+          <span class="basket-link__label">Basket</span>
+          <span class="basket-link__count" data-basket-count>0</span>
+        </button>
+
+        <!-- Mobile menu toggle -->
+        <button
+          class="mobile-menu-toggle"
+          type="button"
+          data-mobile-toggle
+          aria-expanded="false"
+          aria-label="Open menu"
+        >
+          Menu
+        </button>
       </div>
+    </div>
+
+    <!-- Mobile navigation panel -->
+    <div class="container mobile-panel" data-mobile-panel>
+      <a href="./index.html">Home</a>
+      <a href="./why-atlas.html">Why Atlas</a>
+      <a href="./shop.html">Shop</a>
+      <a href="./contact.html">Contact</a>
+
+      <!-- Mobile basket trigger -->
+      <button
+        class="button mobile-panel-basket"
+        type="button"
+        data-basket-trigger
+        data-has-items="false"
+        aria-controls="basket-popover"
+        aria-expanded="false"
+      >
+        <span class="basket-link__icon-wrap" aria-hidden="true">
+          <img
+            src="./assets/basket-outlined-shopping-svgrepo-com.svg"
+            alt=""
+            class="basket-link__icon"
+            width="20"
+            height="20"
+          />
+          <span class="basket-link__dot" aria-hidden="true"></span>
+        </span>
+        <span>Basket</span>
+        <span class="basket-link__count" data-basket-count>0</span>
+      </button>
     </div>
   </header>
 
+  <!-- Main content -->
   <main id="content">
     <section class="page-hero">
       <div class="container">
@@ -58,7 +155,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <h2>Who we are</h2>
             <p>Atlas Coffee is a small-batch coffee business based in the United Kingdom. In these terms, “we”, “us” and “our” refer to Atlas Coffee.</p>
             <p>Contact email: atlascoffeeroasters@gmail.com</p>
-            <p>Business address: 52 Snowshill Close, Redditch, Worcestershire</p>
+            <p>Business address: Snowshill Close, Redditch, Worcestershire</p>
             <p>Business status: Sole Trader</p>
 
             <h2>Using this website</h2>
@@ -101,13 +198,71 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <p>These terms are governed by the laws of England and Wales. If you are a consumer, you may also have the benefit of any mandatory laws in the part of the UK where you live.</p>
 
             <h2>Contact</h2>
-            <p>If you have questions about these Terms &amp; Conditions, please contact atlascoffeeroasters@gmail.com.</p>
+            <p>
+              If you have questions about these Terms &amp; Conditions, please contact
+              <a href="mailto:atlascoffeeroasters@gmail.com">atlascoffeeroasters@gmail.com</a>.
+            </p>
           </div>
         </div>
       </div>
     </section>
   </main>
 
+  <!-- Shared basket drawer -->
+  <div class="shop-basket-popover" id="basket-popover" aria-hidden="true">
+    <button
+      class="shop-basket-popover__backdrop"
+      type="button"
+      data-basket-close
+      tabindex="-1"
+      aria-label="Close basket"
+    ></button>
+
+    <aside
+      class="shop-basket-drawer"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="basket-title"
+    >
+      <div class="shop-basket-drawer__header">
+        <div>
+          <span class="eyebrow">Basket</span>
+          <h2 id="basket-title">Your selected coffees.</h2>
+        </div>
+        <button
+          class="shop-basket-drawer__close"
+          type="button"
+          data-basket-close
+          aria-label="Close basket"
+        >
+          Close
+        </button>
+      </div>
+
+      <div class="shop-basket-drawer__body">
+        <div id="basket-items" class="shop-basket-list" aria-live="polite">
+          <p class="shop-basket-empty">Your basket is currently empty.</p>
+        </div>
+      </div>
+
+      <div class="shop-basket-drawer__footer">
+        <div class="shop-basket-total">
+          <span class="shop-basket-total-label">Estimated total</span>
+          <strong id="basket-total">£0.00</strong>
+        </div>
+
+        <button class="button shop-basket-checkout" type="button" id="checkout-button">
+          Proceed to checkout
+        </button>
+
+        <p class="shop-basket-note">
+          Delivery is calculated at checkout. Local collection is also available.
+        </p>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Footer -->
   <footer class="site-footer">
     <div class="container footer-grid">
       <div>
@@ -134,11 +289,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <strong>Legal</strong>
         <ul style="display:grid;gap:.6rem;margin-top:1rem;list-style:none;">
           <li><a href="./privacy.html">Privacy Policy</a></li>
-          <li><a href="./terms.html">Terms &amp; Conditions</a></li>
+          <li><a href="./terms.html" aria-current="page">Terms &amp; Conditions</a></li>
           <li><a href="./delivery-returns.html">Delivery &amp; Returns</a></li>
         </ul>
       </div>
     </div>
   </footer>
+
+  <!-- Shared site logic -->
+  <script src="./app.js" defer></script>
 </body>
 </html>
