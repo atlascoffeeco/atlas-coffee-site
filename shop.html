@@ -150,8 +150,8 @@
 
             <div class="featured-product-image-wrap">
               <img
-                src="./assets/serra-negra.png"
-                alt="Atlas Coffee Company Serra Negra coffee bag"
+                src="./assets/serra-negra-bag.png"
+                alt="Atlas Coffee Company Serra Negra 250g coffee bag"
                 class="featured-product-image"
                 width="900"
                 height="1125"
@@ -166,10 +166,10 @@
 
             <div class="product-card__content">
               <div class="product-card__intro">
-                <p class="product-hero-label">Brazil • Serra Negra</p>
+                <!-- <p class="product-hero-label">Brazil • Serra Negra</p> -->
                 <h2 id="serra-title">Serra Negra</h2>
                 <p class="featured-product-lead">
-                  Praline and mellow milk chocolate in the cup, with mild acidity, sweetness,
+                  Mild acidity, sweetness,
                   and the kind of easy balance that makes it effortless to come back to.
                 </p>
               </div>
@@ -179,8 +179,7 @@
                   <summary>The Cup</summary>
                   <div class="product-disclosure__content">
                     <p>
-                      Praline with mellow milk chocolate flavours and a softly sweet finish
-                      with mild acidity.
+                      Praline, caramel, milk chocolate.
                     </p>
                   </div>
                 </details>
@@ -201,7 +200,7 @@
                       </div>
                       <div class="product-fact">
                         <dt>Variety</dt>
-                        <dd>Common Brazilian varieties</dd>
+                        <dd>Bourbon, Maracaturra, Catuai</dd>
                       </div>
                       <div class="product-fact">
                         <dt>Elevation</dt>
@@ -257,7 +256,7 @@
 
               <div class="buy-box">
                 <span class="featured-label">Selected</span>
-                <p class="buy-box-summary" id="serra-summary-line">250g · Whole bean · Qty 1</p>
+                <p class="buy-box-summary" id="serra-summary-line">250g · Whole bean · Quantity: 1</p>
                 <p class="checkout-note" id="serra-note">
                   Delivery is added at checkout. Local collection is also available.
                 </p>
@@ -274,14 +273,14 @@
             <div class="product-top">
               <div class="meta">
                 <span class="product-tag">Peru</span>
-                <span>Single origin</span>
+                <span>Blend</span>
               </div>
-              <div class="price">From £11.95</div>
+              <div class="price">From £13.95</div>
             </div>
 
             <div class="featured-product-image-wrap">
               <img
-                src="./assets/peru-cajamarca-bag.png"
+                src="./assets/cajamarca-bag.png"
                 alt="Atlas Coffee Company Peru Cajamarca 250g coffee bag"
                 class="featured-product-image"
                 width="900"
@@ -297,11 +296,10 @@
 
             <div class="product-card__content">
               <div class="product-card__intro">
-                <p class="product-hero-label">Peru • Cajamarca</p>
+                <!-- <p class="product-hero-label">Peru • Cajamarca</p> -->
                 <h2 id="peru-title">Peru Cajamarca</h2>
                 <p class="featured-product-lead">
-                  Clean and brighter in the cup, with mellow panela, vanilla, cooked citrus,
-                  and fresh fruit flavours alongside mild winey acidity and sweetness.
+                  Clean and bright in the cup, with fresh fruit flavours alongside mild winey acidity and sweetness.
                 </p>
               </div>
 
@@ -310,8 +308,7 @@
                   <summary>The Cup</summary>
                   <div class="product-disclosure__content">
                     <p>
-                      Mellow panela, vanilla, cooked citrus, and fresh fruit flavours with
-                      mild winey acidity and sweetness.
+                      Mellow panela, vanilla, cooked citrus.
                     </p>
                   </div>
                 </details>
@@ -387,13 +384,13 @@
 
               <div class="buy-box">
                 <span class="featured-label">Selected</span>
-                <p class="buy-box-summary" id="peru-summary-line">250g · Whole bean · Qty 1</p>
+                <p class="buy-box-summary" id="peru-summary-line">250g · Whole bean · Quantity: 1</p>
                 <p class="checkout-note" id="peru-note">
                   Delivery is added at checkout. Local collection is also available.
                 </p>
                 <div class="buy-box-price-row">
                   <span>Subtotal</span>
-                  <strong id="peru-price">£11.95</strong>
+                  <strong id="peru-price">£13.95</strong>
                 </div>
                 <button class="button" type="button" data-add-to-basket="peru">Add to basket</button>
               </div>
@@ -455,7 +452,7 @@
         </button>
 
         <p class="shop-basket-note">
-          Checkout is handled securely. Delivery charges are added where relevant during checkout.
+          Delivery is calculated at checkout. Local collection is also available.
         </p>
       </div>
     </aside>
@@ -592,7 +589,7 @@
         peru: {
           id: "peru",
           name: "Peru Cajamarca",
-          prices: { "250g": 11.95, "500g": 21.5, "1kg": 38.95 }
+          prices: { "250g": 13.95, "500g": 26.95, "1kg": 49.95 }
         }
       };
 
@@ -634,7 +631,7 @@
         const unitPrice = priceMap[weightEl.value];
         const subtotal = unitPrice * quantity;
 
-        summaryEl.textContent = `${weightEl.value} · ${prettyGrind(grindEl.value)} · Qty ${quantity}`;
+        summaryEl.textContent = `${weightEl.value} · ${prettyGrind(grindEl.value)} · Quantity: ${quantity}`;
         priceEl.textContent = formatMoney(subtotal);
 
         if (noteEl) {
@@ -665,7 +662,7 @@
           <div class="shop-basket-item">
             <div class="shop-basket-item__copy">
               <strong>${item.product}</strong>
-              <span>${item.weight} · ${prettyGrind(item.grind)} · Qty ${item.quantity}</span>
+              <span>${item.weight} · ${prettyGrind(item.grind)} · Quantity ${item.quantity}</span>
             </div>
             <div class="shop-basket-item__actions">
               <strong>${formatMoney(item.lineTotal)}</strong>
