@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Tag Manager -->
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer' ? '&l='+l : '';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TMRKXCQQ');
+  </script>
+  <!-- End Google Tag Manager -->
+
+  <title>Order Confirmed | Atlas Coffee</title>
+  <link rel="icon" type="image/jpeg" href="./assets/logo.jpg">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Your Atlas Coffee order has been received and confirmed.">
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Shared brand fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Global site bootstrapping -->
+  <script>
+    document.documentElement.classList.add('js');
+    window.dataLayer = window.dataLayer || [];
+  </script>
+
+  <!-- Shared site stylesheet -->
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TMRKXCQQ" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <!-- Accessibility shortcut -->
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <!-- =========================================================
+       Shared Atlas header
+       ========================================================= -->
+  <header class="site-header">
+    <div class="container nav-shell">
+      <a class="brand" href="./index.html" aria-label="Atlas Coffee home">
+        <img src="./assets/logo.jpg" alt="Atlas Coffee logo" width="80" height="80" loading="eager">
+        <span class="brand-lockup">
+          <span>Atlas Coffee Company</span>
+          <small>Independent coffee roasters</small>
+        </span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="./index.html">Home</a>
+        <a href="./why-atlas.html">Why Atlas</a>
+        <a href="./shop.html">Shop</a>
+        <a href="./contact.html">Contact</a>
+      </nav>
+
+      <div class="actions">
+        <a class="button" href="./shop.html">Shop coffee</a>
+        <button
+          class="mobile-menu-toggle"
+          type="button"
+          data-mobile-toggle
+          aria-expanded="false"
+          aria-label="Open menu">
+          Menu
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile navigation panel -->
+    <div class="container mobile-panel" data-mobile-panel>
+      <a href="./index.html">Home</a>
+      <a href="./why-atlas.html">Why Atlas</a>
+      <a href="./shop.html">Shop</a>
+      <a href="./contact.html">Contact</a>
+      <a class="button" href="./shop.html">Shop coffee</a>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       Main content
+       ========================================================= -->
+  <main id="content">
+    <!-- Top confirmation block -->
+    <section class="confirmation-hero">
+      <div class="container confirmation-shell">
+        <div class="confirmation-card reveal">
+          <span class="eyebrow">Order confirmed</span>
+
+          <h1>Thanks — your coffee order is in.</h1>
+
+          <p class="confirmation-lead">
+            Your payment has been received successfully. We’ll use the checkout details to prepare your order for delivery or collection.
+          </p>
+
+          <div class="confirmation-actions">
+            <a class="button" href="./shop.html">Back to shop</a>
+            <a class="ghost-button" href="./contact.html">Contact Atlas</a>
+          </div>
+
+          <!-- Updated dynamically after session lookup -->
+          <p class="confirmation-status" id="confirmation-status" aria-live="polite">
+            Loading order details…
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lower content section -->
+    <section class="confirmation-grid-section">
+      <div class="container confirmation-grid-layout">
+        <!-- Order summary -->
+        <article class="confirmation-panel reveal">
+          <span class="eyebrow">Order details</span>
+          <h2>Your checkout summary</h2>
+
+          <p>
+            This page gives a simple confirmation of what Stripe received. If you selected delivery, the shipping details from checkout will be used for dispatch.
+          </p>
+
+          <dl class="confirmation-meta" id="confirmation-meta">
+            <div class="confirmation-meta-row">
+              <dt>Payment status</dt>
+              <dd id="order-payment-status">Confirmed</dd>
+            </div>
+
+            <div class="confirmation-meta-row">
+              <dt>Fulfilment</dt>
+              <dd id="order-fulfilment">Loading…</dd>
+            </div>
+
+            <div class="confirmation-meta-row">
+              <dt>Order total</dt>
+              <dd id="order-total">Loading…</dd>
+            </div>
+
+            <div class="confirmation-meta-row">
+              <dt>Order reference</dt>
+              <dd id="order-reference">Loading…</dd>
+            </div>
+          </dl>
+
+          <ul class="confirmation-items" id="order-items">
+            <li>
+              <strong>Loading order items…</strong>
+              <span>Please wait while the checkout summary is retrieved.</span>
+            </li>
+          </ul>
+        </article>
+
+        <!-- Next steps -->
+        <aside class="confirmation-note reveal">
+          <span class="eyebrow">What happens next</span>
+          <h2>We’ll take it from here.</h2>
+
+          <p>
+            Everything has gone through correctly. The next step is simply us preparing the order based on the choices submitted at checkout.
+          </p>
+
+          <ul class="confirmation-checklist">
+            <li>
+              <strong>Order review</strong>
+              <span>Your order details are checked against the information submitted through Stripe.</span>
+            </li>
+            <li>
+              <strong>Roasting and packing</strong>
+              <span>Coffee is prepared according to the selected bag size, grind, and fulfilment option.</span>
+            </li>
+            <li>
+              <strong>Delivery or collection</strong>
+              <span>If you selected collection, details can be arranged directly. If you selected delivery, the checkout address will be used.</span>
+            </li>
+          </ul>
+
+          <div class="confirmation-actions" style="margin-top: var(--space-6);">
+            <a class="ghost-button" href="./delivery-returns.html">Delivery & Returns</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <!-- =========================================================
+       Shared Atlas footer
+       ========================================================= -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="brand">
+          <img src="./assets/logo.jpg" alt="Atlas Coffee logo" width="80" height="80" loading="lazy">
+          <span class="brand-lockup">
+            <span>Atlas Coffee</span>
+            <small>Freshly roasted single-origin coffee for delivery or local collection.</small>
+          </span>
+        </div>
+      </div>
+
+      <div>
+        <strong>Pages</strong>
+        <ul style="display:grid;gap:.6rem;margin-top:1rem;list-style:none;">
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./why-atlas.html">Why Atlas</a></li>
+          <li><a href="./shop.html">Shop</a></li>
+          <li><a href="./contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <strong>Legal</strong>
+        <ul style="display:grid;gap:.6rem;margin-top:1rem;list-style:none;">
+          <li><a href="./privacy.html">Privacy Policy</a></li>
+          <li><a href="./terms.html">Terms & Conditions</a></li>
+          <li><a href="./delivery-returns.html">Delivery & Returns</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================
+       Shared page interactions
+       Mobile menu + reveal animation
+       ========================================================= -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const mobileToggle = document.querySelector('[data-mobile-toggle]');
+      const mobilePanel = document.querySelector('[data-mobile-panel]');
+
+      // Mobile menu behaviour
+      if (mobileToggle && mobilePanel) {
+        const mobileLinks = mobilePanel.querySelectorAll('a');
+
+        const setMobileMenu = (open) => {
+          mobileToggle.setAttribute('aria-expanded', String(open));
+          mobileToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+          mobilePanel.classList.toggle('is-open', open);
+        };
+
+        mobileToggle.addEventListener('click', () => {
+          const isOpen = mobileToggle.getAttribute('aria-expanded') === 'true';
+          setMobileMenu(!isOpen);
+        });
+
+        mobileLinks.forEach((link) => {
+          link.addEventListener('click', () => setMobileMenu(false));
+        });
+
+        window.addEventListener('resize', () => {
+          if (window.innerWidth > 860) {
+            setMobileMenu(false);
+          }
+        });
+      }
+
+      // Shared reveal-on-scroll behaviour
+      const revealItems = document.querySelectorAll('.reveal');
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (!prefersReducedMotion && 'IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('revealed');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
+
+        revealItems.forEach((item) => observer.observe(item));
+      } else {
+        revealItems.forEach((item) => item.classList.add('revealed'));
+      }
+    });
+  </script>
+
+  <!-- =========================================================
+       Stripe Checkout session lookup
+       Loads the order summary from the URL session_id and
+       pushes purchase data into GTM once loaded.
+       ========================================================= -->
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const statusEl = document.getElementById('confirmation-status');
+      const fulfilmentEl = document.getElementById('order-fulfilment');
+      const totalEl = document.getElementById('order-total');
+      const referenceEl = document.getElementById('order-reference');
+      const paymentStatusEl = document.getElementById('order-payment-status');
+      const itemsEl = document.getElementById('order-items');
+
+      // Read Stripe session_id from the current page URL
+      const url = new URL(window.location.href);
+      const sessionId = url.searchParams.get('session_id');
+
+      // Helper for status messaging
+      const setStatus = (message, isError = false) => {
+        statusEl.textContent = message;
+        statusEl.classList.toggle('error', isError);
+      };
+
+      // Helper for currency formatting
+      const formatMoney = (amount, currency = 'GBP') => {
+        return new Intl.NumberFormat('en-GB', {
+          style: 'currency',
+          currency
+        }).format(amount || 0);
+      };
+
+      // Handle missing session_id gracefully
+      if (!sessionId) {
+        setStatus('Order reference missing. If you need help, please contact Atlas Coffee.', true);
+        fulfilmentEl.textContent = 'Unavailable';
+        totalEl.textContent = 'Unavailable';
+        referenceEl.textContent = 'Unavailable';
+        itemsEl.innerHTML = `
+          <li>
+            <strong>We could not load this order.</strong>
+            <span>The page was opened without a valid checkout session reference.</span>
+          </li>
+        `;
+        return;
+      }
+
+      try {
+        // Request order summary from the Cloudflare Pages function
+        const response = await fetch(`/api/get-checkout-session?session_id=${encodeURIComponent(sessionId)}`);
+        const order = await response.json();
+
+        if (!response.ok) {
+          throw new Error(order?.error || 'Unable to load checkout session.');
+        }
+
+        // Populate summary fields
+        paymentStatusEl.textContent = order.paymentStatus || 'Confirmed';
+        fulfilmentEl.textContent = order.fulfilment || 'Delivery';
+        totalEl.textContent = formatMoney(order.value || 0, order.currency || 'GBP');
+        referenceEl.textContent = order.transactionId || sessionId;
+
+        // Render purchased items
+        if (Array.isArray(order.items) && order.items.length > 0) {
+          itemsEl.innerHTML = order.items.map((item) => `
+            <li>
+              <strong>${item.item_name || 'Atlas Coffee item'}</strong>
+              <span>
+                Qty ${item.quantity || 1}
+                ${item.item_variant ? ` · ${item.item_variant}` : ''}
+                ${typeof item.price === 'number' ? ` · ${formatMoney(item.price, order.currency || 'GBP')} each` : ''}
+              </span>
+            </li>
+          `).join('');
+        } else {
+          itemsEl.innerHTML = `
+            <li>
+              <strong>Order received</strong>
+              <span>Your payment was successful, but item details were not available for display on this page.</span>
+            </li>
+          `;
+        }
+
+        // Update status line after successful data load
+        setStatus('Order details loaded successfully.');
+
+        // Push purchase event to GTM
+        window.dataLayer.push({
+          event: 'purchase',
+          ecommerce: {
+            transaction_id: order.transactionId,
+            currency: order.currency,
+            value: order.value,
+            shipping: order.shipping,
+            tax: order.tax,
+            items: order.items
+          }
+        });
+      } catch (error) {
+        console.error('Error loading checkout session:', error);
+
+        // Fallback if summary cannot be loaded
+        setStatus('Your payment succeeded, but we could not load the full order summary here. If needed, contact Atlas Coffee.', true);
+        fulfilmentEl.textContent = 'Confirmed at checkout';
+        totalEl.textContent = 'Confirmed at checkout';
+        referenceEl.textContent = sessionId;
+        itemsEl.innerHTML = `
+          <li>
+            <strong>Order confirmed</strong>
+            <span>The Stripe checkout completed successfully, but the summary could not be retrieved on this page.</span>
+          </li>
+        `;
+      }
+    });
+  </script>
+</body>
+</html>
