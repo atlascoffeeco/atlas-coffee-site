@@ -37,7 +37,7 @@
     window.dataLayer = window.dataLayer || [];
   </script>
 </head>
-<body class="shop-page">
+<body class="shop-page shop-page-compact">
   <!-- Google Tag Manager (noscript) -->
   <noscript>
     <iframe
@@ -69,9 +69,17 @@
       </nav>
 
       <div class="actions">
-        <a class="ghost-button basket-link" href="#basket" aria-label="View basket">
+        <button
+          class="ghost-button basket-link"
+          type="button"
+          id="basket-toggle"
+          aria-haspopup="dialog"
+          aria-expanded="false"
+          aria-controls="basket-popover"
+        >
           Basket <span id="basket-count">0</span>
-        </a>
+        </button>
+
         <button
           class="mobile-menu-toggle"
           type="button"
@@ -89,322 +97,348 @@
       <a href="./why-atlas.html">Why Atlas</a>
       <a href="./shop.html" aria-current="page">Shop</a>
       <a href="./contact.html">Contact</a>
-      <a class="button" href="#basket">View basket</a>
+      <button class="button" type="button" id="mobile-basket-toggle">View basket</button>
     </div>
   </header>
 
   <main id="content">
-    <section class="shop-hero-redesign">
+    <section class="shop-topbar">
       <div class="container">
-        <div class="shop-hero-redesign__shell reveal">
-          <div class="shop-hero-redesign__copy">
+        <div class="shop-topbar__inner reveal">
+          <div class="shop-topbar__copy">
             <span class="eyebrow">Shop</span>
-            <h1>Coffees chosen for balance, clarity, and repeat drinking.</h1>
-            <p class="shop-hero-redesign__lead">
-              A small Atlas line-up of approachable single-origin coffees, roasted in short batches and
-              packed for local collection or UK delivery.
+            <h1>Fresh coffees, straight to the point.</h1>
+            <p>
+              Small-batch single-origin coffees for UK delivery or local collection in Redditch.
             </p>
-
-            <div class="shop-hero-redesign__points" aria-label="Shopping highlights">
-              <span>Small-batch roasted</span>
-              <span>UK delivery available</span>
-              <span>Local collection in Redditch</span>
-              <span>Simple checkout</span>
-            </div>
           </div>
 
-          <aside class="shop-hero-redesign__utility" aria-label="Shop guidance">
-            <div class="shop-utility-card">
-              <strong>Collection & delivery</strong>
-              <p>Dispatch is handled from the checkout details you provide. Collection can be arranged locally after purchase.</p>
+          <div class="shop-topbar__actions">
+            <div class="shop-topbar__meta">
+              <!-- <span>2 coffees available now</span>
+              <span>Choose size, grind, and quantity on each card</span> -->
             </div>
-            <div class="shop-utility-card">
-              <strong>Buying with confidence</strong>
-              <p>Choose bag size, grind style, and quantity directly from each product card with one clear basket action.</p>
-            </div>
-            <a class="ghost-button shop-utility-link" href="#basket">View basket</a>
-          </aside>
+            <!-- <button class="ghost-button" type="button" data-open-basket>View basket</button> -->
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="shop-reassurance-band">
+    <section class="shop-grid-section">
       <div class="container">
-        <ul class="shop-reassurance-band__grid" role="list">
-          <li>
-            <strong>Freshly roasted</strong>
-            <span>Prepared in small runs rather than held as broad catalogue stock.</span>
-          </li>
-          <li>
-            <strong>Simple range</strong>
-            <span>A tighter line-up designed to be easier to choose from and easier to come back to.</span>
-          </li>
-          <li>
-            <strong>Support if needed</strong>
-            <span>Questions about delivery, grind, or collection can be handled directly through Atlas.</span>
-          </li>
-        </ul>
+<div class="shop-product-grid-redesign shop-product-grid-redesign--first">
+  <article class="product-card product-card--detailed reveal" id="serra-negra">
+    <div class="product-top">
+      <div class="meta">
+        <span class="product-tag">Brazil</span>
+        <span>Single origin</span>
       </div>
-    </section>
+      <div class="price">From £10.95</div>
+    </div>
 
-    <section class="shop-products-redesign">
-      <div class="container">
-        <div class="shop-products-redesign__head reveal">
-          <div>
-            <span class="eyebrow">Current coffees</span>
-            <h2>Available now</h2>
-          </div>
+    <div class="featured-product-image-wrap">
+      <img
+        src="./assets/serra-negra-bag.png"
+        alt="Atlas Coffee Company Serra Negra coffee bag"
+        class="featured-product-image"
+        width="900"
+        height="1125"
+        loading="lazy"
+        onerror="this.style.display='none'; this.parentNode.classList.add('is-fallback');"
+      />
+      <div class="shop-product-card__image-fallback">
+        <span>Atlas</span>
+        <strong>Serra Negra</strong>
+      </div>
+    </div>
+
+    <div class="product-card__content">
+      <div class="product-card__intro">
+        <p class="product-hero-label">Brazil • Serra Negra</p>
+        <h2 id="serra-title">Serra Negra</h2>
+        <p class="featured-product-lead">
+          Praline and mellow milk chocolate in the cup, with mild acidity, sweetness,
+          and the kind of easy balance that makes it effortless to come back to.
+        </p>
+      </div>
+
+      <section class="featured-notes-block" aria-labelledby="serra-cup-title">
+        <div>
+          <span class="featured-label" id="serra-cup-title">The Cup</span>
           <p>
-            Each coffee card is organised to help with quick comparison first, then configuration and basket
-            add second.
+            Praline with mellow milk chocolate flavours and a softly sweet finish
+            with mild acidity.
           </p>
         </div>
+      </section>
 
-        <div class="shop-product-grid-redesign">
-          <article class="shop-product-card reveal" id="serra-negra">
-            <div class="shop-product-card__media">
-              <div class="shop-product-card__badges">
-                <span class="shop-origin-pill">Brazil</span>
-                <span class="shop-roast-pill">Single origin</span>
-              </div>
-
-              <div class="shop-product-card__image-frame" aria-hidden="true">
-                <img
-                  src="./assets/serra-negra.png"
-                  alt="Serra Negra coffee bag"
-                  width="720"
-                  height="720"
-                  loading="lazy"
-                  class="shop-product-card__image"
-                  onerror="this.style.display='none'; this.parentNode.classList.add('is-fallback');"
-                />
-                <div class="shop-product-card__image-fallback">
-                  <span>Atlas</span>
-                  <strong>Serra Negra</strong>
-                </div>
-              </div>
-            </div>
-
-            <div class="shop-product-card__body">
-              <div class="shop-product-card__topline">
-                <div>
-                  <p class="shop-product-card__kicker">Single origin</p>
-                  <h3>Serra Negra</h3>
-                </div>
-                <div class="shop-product-card__price-block">
-                  <span>From</span>
-                  <strong>£10.95</strong>
-                </div>
-              </div>
-
-              <p class="shop-product-card__lead">
-                Praline sweetness, soft milk chocolate, and an easy, balanced finish built for everyday brewing.
-              </p>
-
-              <ul class="shop-product-card__meta" role="list" aria-label="Serra Negra highlights">
-                <li>Natural process</li>
-                <li>Espresso or filter</li>
-                <li>Comforting, sweet profile</li>
-              </ul>
-
-              <div class="shop-product-card__story">
-                <strong>Why choose it</strong>
-                <p>
-                  Serra Negra is the most approachable cup in the line-up, with enough character to stay
-                  interesting without becoming heavy or fussy.
-                </p>
-              </div>
-
-              <form class="shop-buy-panel" data-product="Serra Negra">
-                <div class="shop-buy-panel__controls">
-                  <div class="field-group">
-                    <label for="serra-weight">Bag size</label>
-                    <select id="serra-weight" name="weight">
-                      <option value="250g">250g</option>
-                      <option value="500g">500g</option>
-                      <option value="1kg">1kg</option>
-                    </select>
-                  </div>
-
-                  <div class="field-group">
-                    <label for="serra-grind">Grind</label>
-                    <select id="serra-grind" name="grind">
-                      <option value="whole_bean">Whole bean</option>
-                      <option value="coarse">Coarse</option>
-                      <option value="medium">Medium</option>
-                      <option value="fine">Fine</option>
-                    </select>
-                  </div>
-
-                  <div class="field-group">
-                    <label for="serra-quantity">Qty</label>
-                    <input id="serra-quantity" name="quantity" type="number" min="1" max="10" step="1" value="1" />
-                  </div>
-                </div>
-
-                <div class="shop-buy-panel__summary">
-                  <div>
-                    <span class="shop-buy-panel__label">Selected</span>
-                    <strong id="serra-summary-line">250g · Whole bean · Qty 1</strong>
-                  </div>
-                  <div class="shop-buy-panel__price">
-                    <span>Subtotal</span>
-                    <strong id="serra-price">£10.95</strong>
-                  </div>
-                </div>
-
-                <div class="shop-buy-panel__footer">
-                  <p class="shop-buy-panel__note" id="serra-note">
-                    Delivery is added securely at checkout. Collection is available as an alternative.
-                  </p>
-                  <button class="button shop-buy-panel__button" type="button" data-add-to-basket="serra">
-                    Add to basket
-                  </button>
-                </div>
-              </form>
-            </div>
-          </article>
-
-          <article class="shop-product-card reveal" id="peru-cajamarca">
-            <div class="shop-product-card__media">
-              <div class="shop-product-card__badges">
-                <span class="shop-origin-pill">Peru</span>
-                <span class="shop-roast-pill">Single origin</span>
-              </div>
-
-              <div class="shop-product-card__image-frame" aria-hidden="true">
-                <img
-                  src="./assets/peru-cajamarca.png"
-                  alt="Peru Cajamarca coffee bag"
-                  width="720"
-                  height="720"
-                  loading="lazy"
-                  class="shop-product-card__image"
-                  onerror="this.style.display='none'; this.parentNode.classList.add('is-fallback');"
-                />
-                <div class="shop-product-card__image-fallback">
-                  <span>Atlas</span>
-                  <strong>Peru Cajamarca</strong>
-                </div>
-              </div>
-            </div>
-
-            <div class="shop-product-card__body">
-              <div class="shop-product-card__topline">
-                <div>
-                  <p class="shop-product-card__kicker">Single origin</p>
-                  <h3>Peru Cajamarca</h3>
-                </div>
-                <div class="shop-product-card__price-block">
-                  <span>From</span>
-                  <strong>£11.95</strong>
-                </div>
-              </div>
-
-              <p class="shop-product-card__lead">
-                Cleaner and brighter in the cup, with layered sweetness and a more lifted feel from first sip to finish.
-              </p>
-
-              <ul class="shop-product-card__meta" role="list" aria-label="Peru Cajamarca highlights">
-                <li>Clean profile</li>
-                <li>Higher brightness</li>
-                <li>Structured everyday filter</li>
-              </ul>
-
-              <div class="shop-product-card__story">
-                <strong>Why choose it</strong>
-                <p>
-                  Peru Cajamarca is for customers who want more sparkle and definition while still keeping the cup
-                  balanced and easy to return to.
-                </p>
-              </div>
-
-              <form class="shop-buy-panel" data-product="Peru Cajamarca">
-                <div class="shop-buy-panel__controls">
-                  <div class="field-group">
-                    <label for="peru-weight">Bag size</label>
-                    <select id="peru-weight" name="weight">
-                      <option value="250g">250g</option>
-                      <option value="500g">500g</option>
-                      <option value="1kg">1kg</option>
-                    </select>
-                  </div>
-
-                  <div class="field-group">
-                    <label for="peru-grind">Grind</label>
-                    <select id="peru-grind" name="grind">
-                      <option value="whole_bean">Whole bean</option>
-                      <option value="coarse">Coarse</option>
-                      <option value="medium">Medium</option>
-                      <option value="fine">Fine</option>
-                    </select>
-                  </div>
-
-                  <div class="field-group">
-                    <label for="peru-quantity">Qty</label>
-                    <input id="peru-quantity" name="quantity" type="number" min="1" max="10" step="1" value="1" />
-                  </div>
-                </div>
-
-                <div class="shop-buy-panel__summary">
-                  <div>
-                    <span class="shop-buy-panel__label">Selected</span>
-                    <strong id="peru-summary-line">250g · Whole bean · Qty 1</strong>
-                  </div>
-                  <div class="shop-buy-panel__price">
-                    <span>Subtotal</span>
-                    <strong id="peru-price">£11.95</strong>
-                  </div>
-                </div>
-
-                <div class="shop-buy-panel__footer">
-                  <p class="shop-buy-panel__note" id="peru-note">
-                    Delivery is added securely at checkout. Collection is available as an alternative.
-                  </p>
-                  <button class="button shop-buy-panel__button" type="button" data-add-to-basket="peru">
-                    Add to basket
-                  </button>
-                </div>
-              </form>
-            </div>
-          </article>
+      <section class="featured-notes-block featured-notes-block--story" aria-labelledby="serra-story-title">
+        <div>
+          <span class="featured-label" id="serra-story-title">The Coffee</span>
+          <p>
+            Serra Negra is a classic Minas Gerais profile and one of the earliest coffees
+            on the Atlas menu, kept on for its dependable sweetness, approachable body,
+            and everyday versatility.
+          </p>
         </div>
+      </section>
+
+      <dl class="product-facts" aria-label="Serra Negra coffee details">
+        <div class="product-fact">
+          <dt>Process</dt>
+          <dd>Natural</dd>
+        </div>
+        <div class="product-fact">
+          <dt>Variety</dt>
+          <dd>Common Brazilian varieties</dd>
+        </div>
+        <div class="product-fact">
+          <dt>Elevation</dt>
+          <dd>750–1100 MASL</dd>
+        </div>
+        <div class="product-fact">
+          <dt>Harvest</dt>
+          <dd>May–August</dd>
+        </div>
+        <div class="product-fact">
+          <dt>Country</dt>
+          <dd>Brazil</dd>
+        </div>
+      </dl>
+    </div>
+
+    <form class="coffee-form" aria-labelledby="serra-title" data-product="Serra Negra">
+      <div class="field-group">
+        <label for="serra-weight">Bag size</label>
+        <select id="serra-weight" name="weight" required>
+          <option value="250g">250g</option>
+          <option value="500g">500g</option>
+          <option value="1kg">1kg</option>
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label for="serra-grind">Grind</label>
+        <select id="serra-grind" name="grind" required>
+          <option value="whole_bean">Whole bean</option>
+          <option value="coarse">Coarse</option>
+          <option value="medium">Medium</option>
+          <option value="fine">Fine</option>
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label for="serra-quantity">Qty</label>
+        <input
+          id="serra-quantity"
+          name="quantity"
+          type="number"
+          min="1"
+          max="10"
+          step="1"
+          value="1"
+          required
+        />
+      </div>
+
+      <div class="buy-box">
+        <span class="featured-label">Selected</span>
+        <p class="buy-box-summary" id="serra-summary-line">250g · Whole bean · Qty 1</p>
+        <p class="checkout-note" id="serra-note">
+          Delivery is added at checkout. Local collection is also available.
+        </p>
+        <div class="buy-box-price-row">
+          <span>Subtotal</span>
+          <strong id="serra-price">£10.95</strong>
+        </div>
+        <button class="button" type="button" data-add-to-basket="serra">Add to basket</button>
+      </div>
+    </form>
+  </article>
+
+  <article class="product-card product-card--detailed reveal" id="peru-product">
+    <div class="product-top">
+      <div class="meta">
+        <span class="product-tag">Peru</span>
+        <span>Single origin</span>
+      </div>
+      <div class="price">From £11.95</div>
+    </div>
+
+    <div class="featured-product-image-wrap">
+      <img
+        src="./assets/cajamarca-bag.png"
+        alt="Atlas Coffee Company Peru Cajamarca 250g coffee bag"
+        class="featured-product-image"
+        width="900"
+        height="1125"
+        loading="lazy"
+      />
+    </div>
+
+    <div class="product-card__content">
+      <div class="product-card__intro">
+        <p class="product-hero-label">Peru • Cajamarca</p>
+        <h2 id="peru-title">Peru Cajamarca</h2>
+        <p class="featured-product-lead">
+          Clean and brighter in the cup, with mellow panela, vanilla, cooked citrus,
+          and fresh fruit flavours alongside mild winey acidity and sweetness.
+        </p>
+      </div>
+
+      <section class="featured-notes-block" aria-labelledby="peru-cup-title">
+        <div>
+          <span class="featured-label" id="peru-cup-title">The Cup</span>
+          <p>
+            Mellow panela, vanilla, cooked citrus, and fresh fruit flavours with
+            mild winey acidity and sweetness.
+          </p>
+        </div>
+      </section>
+
+      <section class="featured-notes-block featured-notes-block--story" aria-labelledby="peru-story-title">
+        <div>
+          <span class="featured-label" id="peru-story-title">The Coffee</span>
+          <p>
+            A washed Cajamarca lot with a cleaner, more lifted profile, bringing
+            layered sweetness and a brighter finish without losing balance.
+          </p>
+        </div>
+      </section>
+
+      <dl class="product-facts" aria-label="Peru coffee details">
+        <div class="product-fact">
+          <dt>Process</dt>
+          <dd>Washed</dd>
+        </div>
+        <div class="product-fact">
+          <dt>Variety</dt>
+          <dd>Catimor, Caturra, Bourbon, Typica</dd>
+        </div>
+        <div class="product-fact">
+          <dt>Elevation</dt>
+          <dd>1600–1900 MASL</dd>
+        </div>
+        <div class="product-fact">
+          <dt>Region</dt>
+          <dd>Cajamarca</dd>
+        </div>
+        <div class="product-fact">
+          <dt>Country</dt>
+          <dd>Peru</dd>
+        </div>
+      </dl>
+    </div>
+
+    <form class="coffee-form" aria-labelledby="peru-title" data-product="Peru Cajamarca">
+      <div class="field-group">
+        <label for="peru-weight">Bag size</label>
+        <select id="peru-weight" name="weight" required>
+          <option value="250g">250g</option>
+          <option value="500g">500g</option>
+          <option value="1kg">1kg</option>
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label for="peru-grind">Grind</label>
+        <select id="peru-grind" name="grind" required>
+          <option value="whole_bean">Whole bean</option>
+          <option value="coarse">Coarse</option>
+          <option value="medium">Medium</option>
+          <option value="fine">Fine</option>
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label for="peru-quantity">Qty</label>
+        <input
+          id="peru-quantity"
+          name="quantity"
+          type="number"
+          min="1"
+          max="10"
+          step="1"
+          value="1"
+          required
+        />
+      </div>
+
+      <div class="buy-box">
+        <span class="featured-label">Selected</span>
+        <p class="buy-box-summary" id="peru-summary-line">250g · Whole bean · Qty 1</p>
+        <p class="checkout-note" id="peru-note">
+          Delivery is added at checkout. Local collection is also available.
+        </p>
+        <div class="buy-box-price-row">
+          <span>Subtotal</span>
+          <strong id="peru-price">£11.95</strong>
+        </div>
+        <button class="button" type="button" data-add-to-basket="peru">Add to basket</button>
+      </div>
+    </form>
+  </article>
+</div>
       </div>
     </section>
 
-    <section class="shop-assurance-section">
+    <section class="shop-support-strip">
       <div class="container">
-        <div class="shop-assurance-section__grid reveal">
-          <article class="shop-assurance-card">
-            <span class="eyebrow">Delivery</span>
-            <h2>Straightforward fulfilment.</h2>
-            <p>
-              If delivery is selected, the checkout address is used for dispatch. If collection is selected,
-              arrangements can be confirmed directly after payment.
-            </p>
+        <div class="shop-support-strip__grid reveal">
+          <article class="shop-support-strip__item">
+            <strong>Collection &amp; delivery</strong>
+            <p>Checkout handles the delivery details you provide, and local collection can be arranged after purchase.</p>
           </article>
-
-          <article class="shop-assurance-card" id="basket">
-            <span class="eyebrow">Basket</span>
-            <h2>Your selected coffees.</h2>
-            <div id="basket-items" class="shop-basket-list" aria-live="polite">
-              <p class="shop-basket-empty">Your basket is currently empty.</p>
-            </div>
-            <div class="shop-basket-footer">
-              <div>
-                <span class="shop-basket-total-label">Estimated total</span>
-                <strong id="basket-total">£0.00</strong>
-              </div>
-              <button class="button" type="button" id="checkout-button">Proceed to checkout</button>
-            </div>
-            <p class="shop-basket-note">
-              Checkout is handled securely. Delivery charges are added where relevant during checkout.
-            </p>
+          <article class="shop-support-strip__item">
+            <strong>Small focused range</strong>
+            <p>The line-up is intentionally short so it is easier to compare, choose, and buy without scrolling through noise.</p>
           </article>
         </div>
       </div>
     </section>
   </main>
+
+  <div class="shop-basket-popover" id="basket-popover" aria-hidden="true">
+    <button class="shop-basket-popover__backdrop" type="button" data-basket-close tabindex="-1" aria-label="Close basket"></button>
+
+    <aside
+      class="shop-basket-drawer"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="basket-title"
+    >
+      <div class="shop-basket-drawer__header">
+        <div>
+          <span class="eyebrow">Basket</span>
+          <h2 id="basket-title">Your selected coffees.</h2>
+        </div>
+        <button class="shop-basket-drawer__close" type="button" data-basket-close aria-label="Close basket">
+          Close
+        </button>
+      </div>
+
+      <div class="shop-basket-drawer__body">
+        <div id="basket-items" class="shop-basket-list" aria-live="polite">
+          <p class="shop-basket-empty">Your basket is currently empty.</p>
+        </div>
+      </div>
+
+      <div class="shop-basket-drawer__footer">
+        <div class="shop-basket-total">
+          <span class="shop-basket-total-label">Estimated total</span>
+          <strong id="basket-total">£0.00</strong>
+        </div>
+
+        <button class="button shop-basket-checkout" type="button" id="checkout-button">
+          Proceed to checkout
+        </button>
+
+        <p class="shop-basket-note">
+          Checkout is handled securely. Delivery charges are added where relevant during checkout.
+        </p>
+      </div>
+    </aside>
+  </div>
 
   <div class="mobile-buy-bar" aria-hidden="true">
     <div class="container mobile-buy-bar__inner">
@@ -412,7 +446,9 @@
         <strong>Atlas basket</strong>
         <span id="mobile-basket-summary">No items selected yet</span>
       </div>
-      <a class="button mobile-buy-bar__button" href="#basket">View basket</a>
+      <button class="button mobile-buy-bar__button" type="button" id="mobile-basket-bar-toggle">
+        View basket
+      </button>
     </div>
   </div>
 
@@ -493,6 +529,39 @@
         revealItems.forEach((item) => item.classList.add("revealed"));
       }
 
+      const basketPopover = document.getElementById("basket-popover");
+      const basketToggle = document.getElementById("basket-toggle");
+      const mobileBasketToggle = document.getElementById("mobile-basket-toggle");
+      const mobileBasketBarToggle = document.getElementById("mobile-basket-bar-toggle");
+      const extraBasketToggles = document.querySelectorAll("[data-open-basket]");
+      const basketCloseButtons = document.querySelectorAll("[data-basket-close]");
+
+      function openBasket() {
+        if (!basketPopover) return;
+        basketPopover.classList.add("is-open");
+        basketPopover.setAttribute("aria-hidden", "false");
+        document.body.classList.add("basket-open");
+        if (basketToggle) basketToggle.setAttribute("aria-expanded", "true");
+      }
+
+      function closeBasket() {
+        if (!basketPopover) return;
+        basketPopover.classList.remove("is-open");
+        basketPopover.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("basket-open");
+        if (basketToggle) basketToggle.setAttribute("aria-expanded", "false");
+      }
+
+      basketToggle?.addEventListener("click", openBasket);
+      mobileBasketToggle?.addEventListener("click", openBasket);
+      mobileBasketBarToggle?.addEventListener("click", openBasket);
+      extraBasketToggles.forEach((button) => button.addEventListener("click", openBasket));
+      basketCloseButtons.forEach((button) => button.addEventListener("click", closeBasket));
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeBasket();
+      });
+
       const PRODUCTS = {
         serra: {
           id: "serra",
@@ -546,8 +615,9 @@
 
         summaryEl.textContent = `${weightEl.value} · ${prettyGrind(grindEl.value)} · Qty ${quantity}`;
         priceEl.textContent = formatMoney(subtotal);
+
         if (noteEl) {
-          noteEl.textContent = "Delivery is added securely at checkout. Collection is available as an alternative.";
+          noteEl.textContent = "Delivery is added at checkout. Local collection is also available.";
         }
       }
 
@@ -624,6 +694,8 @@
           });
 
           renderBasket();
+          openBasket();
+
           button.textContent = "Added";
           window.setTimeout(() => {
             button.textContent = "Add to basket";
@@ -633,13 +705,14 @@
 
       document.getElementById("checkout-button").addEventListener("click", () => {
         if (!basket.length) {
+          openBasket();
           basketItemsEl.innerHTML = '<p class="shop-basket-empty">Add at least one coffee before proceeding to checkout.</p>';
           return;
         }
 
         basketItemsEl.insertAdjacentHTML(
           "beforeend",
-          '<p class="shop-basket-checkout-note">Basket captured for front-end review. Next step is wiring this redesigned basket to your checkout session endpoint.</p>'
+          '<p class="shop-basket-checkout-note">Basket captured for front-end review. Next step is wiring this basket drawer to your live checkout session endpoint.</p>'
         );
       });
 
