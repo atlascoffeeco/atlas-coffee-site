@@ -1,60 +1,160 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="js-disabled">
 <head>
-    <!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-TMRKXCQQ');</script>
+  <!-- Google Tag Manager -->
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TMRKXCQQ');
+  </script>
   <!-- End Google Tag Manager -->
-  <title>Why Atlas | Atlas Coffee</title>
-  <link rel="icon" type="image/jpeg" href="./assets/logo.jpg">
-  <meta name="description" content="Discover why Atlas exists, the standards behind every roast, and the founder-led approach shaping Atlas Coffee." />
+
+  <!-- Basic page metadata -->
   <meta charset="UTF-8" />
-  <link rel="canonical" href="https://www.atlascoffee.uk/why-atlas" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Why Atlas | Atlas Coffee</title>
+  <meta
+    name="description"
+    content="Discover why Atlas exists, the standards behind every roast, and the founder-led approach shaping Atlas Coffee."
+  />
+  <link rel="canonical" href="https://www.atlascoffee.uk/why-atlas" />
+  <link rel="icon" type="image/jpeg" href="./assets/logo.jpg">
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <script>
-  document.documentElement.classList.add("js");
-</script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Work+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Main stylesheet -->
   <link rel="stylesheet" href="./styles.css" />
+
+  <!-- JS-ready class hook -->
+  <script>
+    document.documentElement.classList.remove("js-disabled");
+    document.documentElement.classList.add("js");
+    window.dataLayer = window.dataLayer || [];
+  </script>
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TMRKXCQQ"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+  <noscript>
+    <iframe
+      src="https://www.googletagmanager.com/ns.html?id=GTM-TMRKXCQQ"
+      height="0"
+      width="0"
+      style="display:none;visibility:hidden"
+    ></iframe>
+  </noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <!-- Skip link for keyboard users -->
   <a class="skip-link" href="#content">Skip to content</a>
+
+  <!-- Site header -->
   <header class="site-header">
     <div class="container nav-shell">
+      <!-- Brand -->
       <a class="brand" href="./index.html" aria-label="Atlas Coffee home">
-        <img src="./assets/logo.jpg" alt="Atlas Coffee logo" width="80" height="80" loading="eager" />
-        <span class="brand-lockup"><span>Atlas Coffee Company</span><small>Independent coffee roasters</small></span>
+        <img
+          src="./assets/logo.jpg"
+          alt="Atlas Coffee logo"
+          width="80"
+          height="80"
+          loading="eager"
+        />
+        <span class="brand-lockup">
+          <span>Atlas Coffee Company</span>
+          <small>Independent coffee roasters</small>
+        </span>
       </a>
+
+      <!-- Main navigation -->
       <nav class="nav-links" aria-label="Primary navigation">
         <a href="./index.html">Home</a>
-        <a href="./why-atlas.html">Why Atlas</a>
+        <a href="./why-atlas.html" aria-current="page">Why Atlas</a>
         <a href="./shop.html">Shop</a>
         <a href="./contact.html">Contact</a>
       </nav>
+
+      <!-- Header actions -->
       <div class="actions">
-        <a class="button" href="./shop.html">Shop coffee</a>
-        <button class="mobile-menu-toggle" type="button" data-mobile-toggle aria-expanded="false" aria-label="Open menu">Menu</button>
+        <!-- Shared basket trigger -->
+        <button
+          class="ghost-button basket-link"
+          type="button"
+          data-basket-trigger
+          data-has-items="false"
+          aria-haspopup="dialog"
+          aria-expanded="false"
+          aria-controls="basket-popover"
+        >
+          <span class="basket-link__icon-wrap" aria-hidden="true">
+            <img
+              src="./assets/basket-outlined-shopping-svgrepo-com.svg"
+              alt=""
+              class="basket-link__icon"
+              width="20"
+              height="20"
+            />
+            <span class="basket-link__dot" aria-hidden="true"></span>
+          </span>
+          <span class="basket-link__label">Basket</span>
+          <span class="basket-link__count" data-basket-count>0</span>
+        </button>
+
+        <!-- Mobile menu toggle -->
+        <button
+          class="mobile-menu-toggle"
+          type="button"
+          data-mobile-toggle
+          aria-expanded="false"
+          aria-label="Open menu"
+        >
+          Menu
+        </button>
       </div>
     </div>
+
+    <!-- Mobile navigation -->
     <div class="container mobile-panel" data-mobile-panel>
       <a href="./index.html">Home</a>
-      <a href="./why-atlas.html">Why Atlas</a>
+      <a href="./why-atlas.html" aria-current="page">Why Atlas</a>
       <a href="./shop.html">Shop</a>
       <a href="./contact.html">Contact</a>
-      <a class="button" href="./shop.html">Shop coffee</a>
+
+      <!-- Mobile basket button mirrors desktop state -->
+      <button
+        class="button mobile-panel-basket"
+        type="button"
+        data-basket-trigger
+        data-has-items="false"
+        aria-controls="basket-popover"
+        aria-expanded="false"
+      >
+        <span class="basket-link__icon-wrap" aria-hidden="true">
+          <img
+            src="./assets/basket-outlined-shopping-svgrepo-com.svg"
+            alt=""
+            class="basket-link__icon"
+            width="20"
+            height="20"
+          />
+          <span class="basket-link__dot" aria-hidden="true"></span>
+        </span>
+        <span>Basket</span>
+        <span class="basket-link__count" data-basket-count>0</span>
+      </button>
     </div>
   </header>
 
+  <!-- Main content -->
   <main id="content">
+    <!-- Hero section -->
     <section class="about-hero">
       <div class="container about-hero-grid">
         <div class="about-hero-copy reveal">
@@ -76,6 +176,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </section>
 
+    <!-- Founder story -->
     <section class="about-story">
       <div class="container story-grid">
         <article class="card card-story reveal">
@@ -107,6 +208,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </section>
 
+    <!-- Brand principles -->
     <section class="about-principles">
       <div class="container">
         <div class="section-head reveal section-head-compact">
@@ -149,6 +251,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </section>
 
+    <!-- Equipment section -->
     <section class="about-roaster">
       <div class="container about-roaster-grid">
         <article class="card card-story reveal">
@@ -177,28 +280,30 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </section>
 
-<section class="about-support">
-  <div class="container cards-2 support-grid">
-    <article class="card support-card reveal">
-      <span class="eyebrow">Our approach</span>
-      <h3>Made to be returned to.</h3>
-      <p>
-        Every roast starts with the same question: does this make the cup better?
-        The focus is always on balance, flavour, and coffees people genuinely want to drink again.
-      </p>
-    </article>
+    <!-- Supporting values -->
+    <section class="about-support">
+      <div class="container cards-2 support-grid">
+        <article class="card support-card reveal">
+          <span class="eyebrow">Our approach</span>
+          <h3>Made to be returned to.</h3>
+          <p>
+            Every roast starts with the same question: does this make the cup better?
+            The focus is always on balance, flavour, and coffees people genuinely want to drink again.
+          </p>
+        </article>
 
-    <article class="card support-card reveal">
-      <span class="eyebrow">Why it matters</span>
-      <h3>Independent by design.</h3>
-      <p>
-        Atlas is built to stay personal, grounded, and close to the standards behind the coffee.
-        That independence helps keep the business honest, deliberate, and connected to the people buying from it.
-      </p>
-    </article>
-  </div>
-</section>
+        <article class="card support-card reveal">
+          <span class="eyebrow">Why it matters</span>
+          <h3>Independent by design.</h3>
+          <p>
+            Atlas is built to stay personal, grounded, and close to the standards behind the coffee.
+            That independence helps keep the business honest, deliberate, and connected to the people buying from it.
+          </p>
+        </article>
+      </div>
+    </section>
 
+    <!-- CTA -->
     <section class="about-cta">
       <div class="container">
         <div class="card card-cta reveal about-cta-card">
@@ -217,7 +322,62 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </section>
   </main>
 
-<footer class="site-footer">
+  <!-- Shared basket drawer -->
+  <div class="shop-basket-popover" id="basket-popover" aria-hidden="true">
+    <button
+      class="shop-basket-popover__backdrop"
+      type="button"
+      data-basket-close
+      tabindex="-1"
+      aria-label="Close basket"
+    ></button>
+
+    <aside
+      class="shop-basket-drawer"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="basket-title"
+    >
+      <div class="shop-basket-drawer__header">
+        <div>
+          <span class="eyebrow">Basket</span>
+          <h2 id="basket-title">Your selected coffees.</h2>
+        </div>
+        <button
+          class="shop-basket-drawer__close"
+          type="button"
+          data-basket-close
+          aria-label="Close basket"
+        >
+          Close
+        </button>
+      </div>
+
+      <div class="shop-basket-drawer__body">
+        <div id="basket-items" class="shop-basket-list" aria-live="polite">
+          <p class="shop-basket-empty">Your basket is currently empty.</p>
+        </div>
+      </div>
+
+      <div class="shop-basket-drawer__footer">
+        <div class="shop-basket-total">
+          <span class="shop-basket-total-label">Estimated total</span>
+          <strong id="basket-total">£0.00</strong>
+        </div>
+
+        <button class="button shop-basket-checkout" type="button" id="checkout-button">
+          Proceed to checkout
+        </button>
+
+        <p class="shop-basket-note">
+          Delivery is calculated at checkout. Local collection is also available.
+        </p>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
     <div class="container footer-grid">
       <div>
         <div class="brand">
@@ -250,6 +410,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </footer>
 
+  <!-- Shared site script -->
   <script src="./app.js" defer></script>
 </body>
 </html>

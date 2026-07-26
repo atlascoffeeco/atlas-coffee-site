@@ -1,528 +1,293 @@
-const mobileToggle =
-  document.querySelector(".mobile-menu-toggle") ||
-  document.querySelector("[data-mobile-toggle]");
-
-const mobilePanel =
-  document.querySelector(".mobile-panel") ||
-  document.querySelector("[data-mobile-panel]");
-
-if (mobileToggle && mobilePanel) {
-  const mobileLinks = mobilePanel.querySelectorAll("a");
-
-  function setMobileMenu(open) {
-    mobileToggle.setAttribute("aria-expanded", String(open));
-    mobileToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-    mobilePanel.classList.toggle("is-open", open);
-  }
-
-  mobileToggle.addEventListener("click", () => {
-    const isOpen = mobileToggle.getAttribute("aria-expanded") === "true";
-    setMobileMenu(!isOpen);
-  });
-
-  mobileLinks.forEach((link) => {
-    link.addEventListener("click", () => setMobileMenu(false));
-  });
-
-  window.addEventListener("resize", () => {
-    if (window.innerWidth > 860) {
-      setMobileMenu(false);
-    }
-  });
-}
-
-const revealItems = document.querySelectorAll(".reveal");
-
-if ("IntersectionObserver" in window && revealItems.length) {
-  const revealObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("revealed");
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.15 }
-  );
-
-  revealItems.forEach((item) => revealObserver.observe(item));
-} else {
-  revealItems.forEach((item) => item.classList.add("revealed"));
-}
-
-const cartOpenButtons = Array.from(document.querySelectorAll("[data-cart-open]"));
-const cartCloseButton = document.querySelector("[data-cart-close]");
-const cartDrawer = document.getElementById("cart-drawer");
-const cartBackdrop = document.getElementById("cart-backdrop");
-const basketLines = document.getElementById("basket-lines");
-const basketEmpty = document.getElementById("basket-empty");
-const basketItemCount = document.getElementById("basket-item-count");
-const basketSubtotal = document.getElementById("basket-subtotal");
-const cartCountPill = document.getElementById("cart-count-pill");
-const cartCountInline = document.getElementById("cart-count-inline");
-const basketStickyBar = document.getElementById("basket-sticky-bar");
-const basketStickyCount = document.getElementById("basket-sticky-count");
-const basketStickySubtotal = document.getElementById("basket-sticky-subtotal");
-const basketFulfilment = document.getElementById("basket-fulfilment");
-const basketFulfilmentNote = document.getElementById("basket-fulfilment-note");
-const basketCheckoutButton = document.getElementById("basket-checkout-button");
-
-const PRICE_MAP = {
-  "Serra Negra": {
-    "250g": 10.95,
-    "500g": 19.5,
-    "1kg": 35.95
-  },
-  "Peru Cajamarca": {
-    "250g": 11.95,
-    "500g": 20.95,
-    "1kg": 38.95
-  }
-};
-
-const DELIVERY_FEE = 4.5;
-
-const basketState = {
-  items: [],
-  fulfilment: basketFulfilment ? basketFulfilment.value : "delivery"
-};
-
-let isCartOpen = false;
-let lastFocusedTrigger = null;
-let previousBodyOverflow = "";
-
-function formatMoney(value) {
-  return new Intl.NumberFormat("en-GB", {
-    style: "currency",
-    currency: "GBP"
-  }).format(value);
-}
-
-function prettyGrind(value) {
-  return {
-    whole_bean: "Whole bean",
-    coarse: "Coarse",
-    medium: "Medium",
-    fine: "Fine"
-  }[value] || value;
-}
-
-function prettyFulfilment(value) {
-  return value === "collection" ? "Collection" : "Delivery";
-}
-
-function getLineItemKey(product, weight, grind) {
-  return `${product}__${weight}__${grind}`;
-}
-
-function getBasketItemCount() {
-  return basketState.items.reduce((total, item) => total + item.quantity, 0);
-}
-
-function updateFulfilmentNote() {
-  if (!basketFulfilmentNote) return;
-
-  if (basketState.fulfilment === "delivery") {
-    basketFulfilmentNote.textContent =
-      `Delivery is added securely at checkout from ${formatMoney(DELIVERY_FEE)}.`;
-  } else {
-    basketFulfilmentNote.textContent =
-      "Collection is available from Church Hill North, Redditch. Collection details will be shared after payment.";
-  }
-}
-
-function updateCartVisibility() {
-  const itemCount = getBasketItemCount();
-  const hasItems = itemCount > 0;
-
-  if (basketEmpty) {
-    basketEmpty.hidden = hasItems;
-  }
-
-  if (basketLines) {
-    basketLines.hidden = !hasItems;
-  }
-
-  if (basketCheckoutButton) {
-    basketCheckoutButton.disabled = !hasItems;
-
-    if (!hasItems) {
-      basketCheckoutButton.setAttribute("disabled", "");
-    } else {
-      basketCheckoutButton.removeAttribute("disabled");
-    }
-
-    basketCheckoutButton.setAttribute("aria-disabled", String(!hasItems));
-    basketCheckoutButton.textContent = "Checkout";
-  }
-
-  if (basketStickyBar) {
-    basketStickyBar.hidden = !hasItems;
-  }
-}
-
-function renderCartLines() {
-  if (!basketLines) return;
-
-  if (!basketState.items.length) {
-    basketLines.innerHTML = "";
-    updateCartVisibility();
-    return;
-  }
-
-  basketLines.innerHTML = basketState.items
-    .map((item, index) => {
-      const lineTotal = item.price * item.quantity;
-
-      return `
-        <article class="basket-line" data-line-index="${index}">
-          <div class="basket-line__main">
-            <div class="basket-line__copy">
-              <h3>${item.product}</h3>
-              <p>${item.weight} · ${prettyGrind(item.grind)} · Qty ${item.quantity}</p>
-            </div>
-            <strong>${formatMoney(lineTotal)}</strong>
-          </div>
-          <button class="basket-line__remove" type="button" data-remove-line="${index}" aria-label="Remove ${item.product} from basket">
-            Remove
-          </button>
-        </article>
-      `;
-    })
-    .join("");
-
-  updateCartVisibility();
-}
-
-function updateCartTotals() {
-  const itemCount = getBasketItemCount();
-  const subtotalValue = basketState.items.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
-
-  if (basketItemCount) basketItemCount.textContent = String(itemCount);
-  if (basketSubtotal) basketSubtotal.textContent = formatMoney(subtotalValue);
-  if (cartCountPill) cartCountPill.textContent = String(itemCount);
-  if (cartCountInline) cartCountInline.textContent = String(itemCount);
-
-  if (basketStickyCount) {
-    basketStickyCount.textContent = `${itemCount} ${itemCount === 1 ? "item" : "items"}`;
-  }
-
-  if (basketStickySubtotal) {
-    basketStickySubtotal.textContent = `${formatMoney(subtotalValue)} subtotal`;
-  }
-
-  updateCartVisibility();
-}
-
-function syncCartUI() {
-  renderCartLines();
-  updateCartTotals();
-  updateCartVisibility();
-  updateFulfilmentNote();
-}
-
-function openCart(trigger = null) {
-  if (!cartDrawer || !cartBackdrop) return;
-
-  lastFocusedTrigger = trigger || document.activeElement;
-  isCartOpen = true;
-
-  cartDrawer.classList.add("is-open");
-  cartBackdrop.hidden = false;
-  cartDrawer.setAttribute("aria-hidden", "false");
-
-  cartOpenButtons.forEach((button) => {
-    button.setAttribute("aria-expanded", "true");
-  });
-
-  previousBodyOverflow = document.body.style.overflow;
-  document.body.style.overflow = "hidden";
-
-  window.requestAnimationFrame(() => {
-    if (cartCloseButton) {
-      cartCloseButton.focus();
-    } else {
-      cartDrawer.focus();
-    }
-  });
-}
-
-function closeCart() {
-  if (!cartDrawer || !cartBackdrop) return;
-
-  isCartOpen = false;
-
-  cartDrawer.classList.remove("is-open");
-  cartBackdrop.hidden = true;
-  cartDrawer.setAttribute("aria-hidden", "true");
-
-  cartOpenButtons.forEach((button) => {
-    button.setAttribute("aria-expanded", "false");
-  });
-
-  document.body.style.overflow = previousBodyOverflow || "";
-
-  if (lastFocusedTrigger && typeof lastFocusedTrigger.focus === "function") {
-    lastFocusedTrigger.focus();
-  }
-}
-
-function addToCart({ product, weight, grind, quantity }) {
-  const price = PRICE_MAP[product]?.[weight];
-
-  if (!price) return;
-
-  const key = getLineItemKey(product, weight, grind);
-  const existing = basketState.items.find((item) => item.key === key);
-
-  if (existing) {
-    existing.quantity = Math.min(10, existing.quantity + quantity);
-  } else {
-    basketState.items.push({
-      key,
-      product,
-      weight,
-      grind,
-      quantity,
-      price
-    });
-  }
-
-  syncCartUI();
-}
-
-function removeCartItem(index) {
-  basketState.items.splice(index, 1);
-  syncCartUI();
-}
-
-cartOpenButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    if (isCartOpen) {
-      closeCart();
-    } else {
-      openCart(button);
-    }
-  });
-});
-
-if (cartCloseButton) {
-  cartCloseButton.addEventListener("click", closeCart);
-}
-
-if (cartBackdrop) {
-  cartBackdrop.addEventListener("click", closeCart);
-}
-
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && isCartOpen) {
-    closeCart();
-  }
-});
-
-if (basketFulfilment) {
-  basketFulfilment.addEventListener("change", () => {
-    basketState.fulfilment = basketFulfilment.value;
-    updateFulfilmentNote();
-  });
-}
-
-if (basketLines) {
-  basketLines.addEventListener("click", (event) => {
-    const removeButton = event.target.closest("[data-remove-line]");
-    if (!removeButton) return;
-
-    const index = Number(removeButton.getAttribute("data-remove-line"));
-    if (Number.isNaN(index)) return;
-
-    removeCartItem(index);
-  });
-}
-
-document.querySelectorAll("[data-coffee-form]").forEach((form) => {
-  const product = form.dataset.product;
-  const weight = form.querySelector('select[name="weight"]');
-  const grind = form.querySelector('select[name="grind"]');
-  const quantity = form.querySelector('input[name="quantity"]');
-  const selectedPrice = form.querySelector("[data-selected-price]");
-  const selectionSummary = form.querySelector("[data-selection-summary]");
-
-  function updateCardSummary() {
-    const chosenWeight = weight.value;
-    const chosenGrind = grind.value;
-    const chosenQty = Math.max(1, Math.min(10, Number(quantity.value) || 1));
-    quantity.value = chosenQty;
-
-    const unitPrice = PRICE_MAP[product]?.[chosenWeight] || 0;
-
-    if (selectedPrice) {
-      selectedPrice.textContent = formatMoney(unitPrice);
-    }
-
-    if (selectionSummary) {
-      selectionSummary.textContent = `${chosenWeight} · ${prettyGrind(chosenGrind)} · Qty ${chosenQty}`;
-    }
-  }
-
-  weight?.addEventListener("change", updateCardSummary);
-  grind?.addEventListener("change", updateCardSummary);
-  quantity?.addEventListener("input", updateCardSummary);
-
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    const chosenQty = Math.max(1, Math.min(10, Number(quantity.value) || 1));
-
-    addToCart({
-      product,
-      weight: weight.value,
-      grind: grind.value,
-      quantity: chosenQty
-    });
-
-    openCart(form.querySelector('button[type="submit"]'));
-  });
-
-  updateCardSummary();
-});
-
-if (basketCheckoutButton) {
-  basketCheckoutButton.addEventListener("click", async () => {
-    if (!getBasketItemCount()) {
-      syncCartUI();
-      return;
-    }
-
-    basketCheckoutButton.disabled = true;
-    basketCheckoutButton.setAttribute("disabled", "");
-    basketCheckoutButton.setAttribute("aria-disabled", "true");
-    basketCheckoutButton.textContent = "Redirecting...";
-
+document.documentElement.classList.add("js");
+window.dataLayer = window.dataLayer || [];
+
+document.addEventListener("DOMContentLoaded", () => {
+  const BASKET_STORAGE_KEY = "atlas-basket";
+  const basket = readBasket();
+
+  const mobileToggle = document.querySelector("[data-mobile-toggle]");
+  const mobilePanel = document.querySelector("[data-mobile-panel]");
+  const revealItems = document.querySelectorAll(".reveal");
+  const basketPopover = document.getElementById("basket-popover");
+  const basketToggles = document.querySelectorAll("[data-basket-trigger], [data-open-basket]");
+  const basketCloseButtons = document.querySelectorAll("[data-basket-close]");
+  const basketCountEls = document.querySelectorAll("[data-basket-count], #basket-count");
+  const basketStateEls = document.querySelectorAll("[data-has-items]");
+  const basketItemsEl = document.getElementById("basket-items");
+  const basketTotalEl = document.getElementById("basket-total");
+  const mobileBasketSummaryEl = document.getElementById("mobile-basket-summary");
+  const checkoutButton = document.getElementById("checkout-button");
+  const mobileBasketBarToggle = document.getElementById("mobile-basket-bar-toggle");
+
+  setupMobileMenu();
+  setupReveal();
+  setupBasketDrawer();
+  setupShopProductForms();
+  renderBasket();
+
+  function readBasket() {
     try {
-      const response = await fetch("/api/create-checkout-session", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          items: basketState.items.map((item) => ({
-            product: item.product,
-            weight: item.weight,
-            grind: item.grind,
-            quantity: item.quantity
-          })),
-          fulfilment: basketState.fulfilment
-        })
-      });
-
-      const rawText = await response.text();
-      let data = {};
-
-      try {
-        data = rawText ? JSON.parse(rawText) : {};
-      } catch (parseError) {
-        throw new Error(`Invalid response from checkout endpoint: ${rawText || "empty response"}`);
-      }
-
-      if (!response.ok || !data.url) {
-        throw new Error(data.error || "Unable to create checkout session.");
-      }
-
-      window.location.href = data.url;
-    } catch (error) {
-      syncCartUI();
-      window.alert(error.message || "Something went wrong. Please try again.");
+      const raw = localStorage.getItem(BASKET_STORAGE_KEY);
+      const parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
     }
-  });
-}
-
-syncCartUI();
-
-const contactForm = document.getElementById("contact-form");
-
-if (contactForm) {
-  const status = document.getElementById("contact-status");
-  const submitButton = document.getElementById("contact-submit");
-
-  function getTurnstileToken() {
-    return (
-      contactForm.querySelector('input[name="cf-turnstile-response"]')?.value?.trim() ||
-      document.querySelector('input[name="cf-turnstile-response"]')?.value?.trim() ||
-      ""
-    );
   }
 
-  contactForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
+  function saveBasket() {
+    try {
+      localStorage.setItem(BASKET_STORAGE_KEY, JSON.stringify(basket));
+    } catch {}
+  }
 
-    const formData = new FormData(contactForm);
-    const payload = {
-      name: formData.get("name")?.toString().trim() || "",
-      email: formData.get("email")?.toString().trim() || "",
-      subject: formData.get("subject")?.toString().trim() || "",
-      message: formData.get("message")?.toString().trim() || ""
+  function formatMoney(value) {
+    return new Intl.NumberFormat("en-GB", {
+      style: "currency",
+      currency: "GBP"
+    }).format(value);
+  }
+
+  function prettyGrind(value) {
+    return {
+      whole_bean: "Whole bean",
+      coarse: "Coarse",
+      medium: "Medium",
+      fine: "Fine"
+    }[value] || value;
+  }
+
+  function setupMobileMenu() {
+    if (!mobileToggle || !mobilePanel) return;
+
+    const setMobileMenu = (open) => {
+      mobileToggle.setAttribute("aria-expanded", String(open));
+      mobilePanel.classList.toggle("is-open", open);
+      mobileToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
     };
 
-    const honeypot = formData.get("website")?.toString().trim() || "";
-    const turnstileToken = getTurnstileToken();
+    mobileToggle.addEventListener("click", () => {
+      const isOpen = mobileToggle.getAttribute("aria-expanded") === "true";
+      setMobileMenu(!isOpen);
+    });
 
-    if (honeypot) {
-      status.textContent = "Submission blocked.";
+    mobilePanel.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => setMobileMenu(false));
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 860) setMobileMenu(false);
+    });
+  }
+
+  function setupReveal() {
+    if (!revealItems.length) return;
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (!prefersReducedMotion && "IntersectionObserver" in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      revealItems.forEach((item) => observer.observe(item));
+    } else {
+      revealItems.forEach((item) => item.classList.add("revealed"));
+    }
+  }
+
+  function openBasket() {
+    if (basketPopover) {
+      basketPopover.classList.add("is-open");
+      basketPopover.setAttribute("aria-hidden", "false");
+      document.body.classList.add("basket-open");
+    } else {
+      window.location.href = "./shop.html#basket";
+    }
+
+    basketToggles.forEach((toggle) => toggle.setAttribute("aria-expanded", "true"));
+  }
+
+  function closeBasket() {
+    if (!basketPopover) return;
+
+    basketPopover.classList.remove("is-open");
+    basketPopover.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("basket-open");
+    basketToggles.forEach((toggle) => toggle.setAttribute("aria-expanded", "false"));
+  }
+
+  function setupBasketDrawer() {
+    basketToggles.forEach((button) => button.addEventListener("click", openBasket));
+    basketCloseButtons.forEach((button) => button.addEventListener("click", closeBasket));
+    mobileBasketBarToggle?.addEventListener("click", openBasket);
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeBasket();
+    });
+
+    if (window.location.hash === "#basket" && basketPopover) {
+      openBasket();
+    }
+  }
+
+  function renderBasket() {
+    const count = basket.reduce((sum, item) => sum + item.quantity, 0);
+    const total = basket.reduce((sum, item) => sum + item.lineTotal, 0);
+
+    basketCountEls.forEach((el) => {
+      el.textContent = String(count);
+    });
+
+    basketStateEls.forEach((el) => {
+      el.setAttribute("data-has-items", count > 0 ? "true" : "false");
+    });
+
+    if (mobileBasketSummaryEl) {
+      mobileBasketSummaryEl.textContent = basket.length
+        ? `${count} item${count === 1 ? "" : "s"} · ${formatMoney(total)}`
+        : "No items selected yet";
+    }
+
+    if (!basketItemsEl || !basketTotalEl) return;
+
+    if (!basket.length) {
+      basketItemsEl.innerHTML = '<p class="shop-basket-empty">Your basket is currently empty.</p>';
+      basketTotalEl.textContent = formatMoney(0);
       return;
     }
 
-    if (!payload.name || !payload.email || !payload.subject || !payload.message) {
-      status.textContent = "Please complete all fields.";
-      return;
+    basketItemsEl.innerHTML = basket.map((item, index) => `
+      <div class="shop-basket-item">
+        <div class="shop-basket-item__copy">
+          <strong>${item.product}</strong>
+          <span>${item.weight} · ${prettyGrind(item.grind)} · Quantity ${item.quantity}</span>
+        </div>
+        <div class="shop-basket-item__actions">
+          <strong>${formatMoney(item.lineTotal)}</strong>
+          <button type="button" class="shop-basket-remove" data-remove-index="${index}">Remove</button>
+        </div>
+      </div>
+    `).join("");
+
+    basketTotalEl.textContent = formatMoney(total);
+
+    basketItemsEl.querySelectorAll("[data-remove-index]").forEach((button) => {
+      button.addEventListener("click", () => {
+        basket.splice(Number(button.dataset.removeIndex), 1);
+        saveBasket();
+        renderBasket();
+      });
+    });
+  }
+
+  function setupShopProductForms() {
+    const PRODUCTS = {
+      serra: {
+        id: "serra",
+        name: "Serra Negra",
+        prices: { "250g": 10.95, "500g": 19.5, "1kg": 35.95 }
+      },
+      peru: {
+        id: "peru",
+        name: "Peru Cajamarca",
+        prices: { "250g": 13.95, "500g": 26.95, "1kg": 49.95 }
+      }
+    };
+
+    if (!document.querySelector("[data-add-to-basket]")) return;
+
+    function updateProductPanel(prefix, priceMap) {
+      const weightEl = document.getElementById(`${prefix}-weight`);
+      const grindEl = document.getElementById(`${prefix}-grind`);
+      const quantityEl = document.getElementById(`${prefix}-quantity`);
+      const summaryEl = document.getElementById(`${prefix}-summary-line`);
+      const priceEl = document.getElementById(`${prefix}-price`);
+      const noteEl = document.getElementById(`${prefix}-note`);
+
+      if (!weightEl || !grindEl || !quantityEl || !summaryEl || !priceEl) return;
+
+      const quantity = Math.max(1, Math.min(10, Number(quantityEl.value) || 1));
+      quantityEl.value = quantity;
+
+      const unitPrice = priceMap[weightEl.value];
+      const subtotal = unitPrice * quantity;
+
+      summaryEl.textContent = `${weightEl.value} · ${prettyGrind(grindEl.value)} · Quantity: ${quantity}`;
+      priceEl.textContent = formatMoney(subtotal);
+
+      if (noteEl) {
+        noteEl.textContent = "Delivery is added at checkout. Local collection is also available.";
+      }
     }
 
-    if (!turnstileToken) {
-      status.textContent = "Please complete the spam check.";
-      return;
-    }
-
-    submitButton.disabled = true;
-    submitButton.textContent = "Sending...";
-    status.textContent = "";
-
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          ...payload,
-          website: honeypot,
-          turnstileToken
-        })
+    [["serra", PRODUCTS.serra.prices], ["peru", PRODUCTS.peru.prices]].forEach(([prefix, prices]) => {
+      ["weight", "grind", "quantity"].forEach((field) => {
+        const el = document.getElementById(`${prefix}-${field}`);
+        if (el) {
+          el.addEventListener(field === "quantity" ? "input" : "change", () => {
+            updateProductPanel(prefix, prices);
+          });
+        }
       });
 
-      const result = await response.json();
+      updateProductPanel(prefix, prices);
+    });
 
-      if (!response.ok) {
-        throw new Error(result.error || "Unable to send message.");
+    document.querySelectorAll("[data-add-to-basket]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const key = button.getAttribute("data-add-to-basket");
+        const product = PRODUCTS[key];
+        if (!product) return;
+
+        const prefix = key === "serra" ? "serra" : "peru";
+        const weight = document.getElementById(`${prefix}-weight`).value;
+        const grind = document.getElementById(`${prefix}-grind`).value;
+        const quantity = Math.max(1, Math.min(10, Number(document.getElementById(`${prefix}-quantity`).value) || 1));
+        const unitPrice = product.prices[weight];
+
+        basket.push({
+          product: product.name,
+          weight,
+          grind,
+          quantity,
+          unitPrice,
+          lineTotal: unitPrice * quantity
+        });
+
+        saveBasket();
+        renderBasket();
+        openBasket();
+
+        const original = button.textContent;
+        button.textContent = "Added";
+
+        window.setTimeout(() => {
+          button.textContent = original;
+        }, 1200);
+      });
+    });
+
+    checkoutButton?.addEventListener("click", () => {
+      if (!basket.length) {
+        openBasket();
+        if (basketItemsEl) {
+          basketItemsEl.innerHTML = '<p class="shop-basket-empty">Add at least one coffee before proceeding to checkout.</p>';
+        }
+        return;
       }
 
-      contactForm.reset();
-      status.textContent = "Thanks — your message has been sent.";
-
-      if (window.turnstile) {
-        window.turnstile.reset();
+      if (basketItemsEl) {
+        basketItemsEl.insertAdjacentHTML(
+          "beforeend",
+          '<p class="shop-basket-checkout-note">Basket captured for front-end review. Next step is wiring this basket drawer to your live checkout session endpoint.</p>'
+        );
       }
-    } catch (error) {
-      status.textContent = error.message || "Something went wrong. Please try again.";
-
-      if (window.turnstile) {
-        window.turnstile.reset();
-      }
-    } finally {
-      submitButton.disabled = false;
-      submitButton.textContent = "Send message";
-    }
-  });
-}
+    });
+  }
+});

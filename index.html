@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="js-disabled">
 <head>
-    <!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-TMRKXCQQ');</script>
+  <!-- Google Tag Manager -->
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TMRKXCQQ');
+  </script>
   <!-- End Google Tag Manager -->
-  <link rel="icon" type="image/jpeg" href="./assets/logo.jpg">
+
+  <!-- Basic page setup -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Atlas Coffee Company</title>
@@ -17,47 +20,98 @@
     content="Atlas Coffee Company roasts small-batch coffee with clarity, character, and straightforward flavour."
   >
   <link rel="canonical" href="https://www.atlascoffee.uk/" />
+  <link rel="icon" type="image/jpeg" href="./assets/logo.jpg">
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Work+Sans:wght@400;500;600;700&display=swap"
     rel="stylesheet"
   >
-  <script>
-  document.documentElement.classList.add("js");
-</script>
+
+  <!-- Main stylesheet -->
   <link rel="stylesheet" href="styles.css">
+
+  <!-- Early JS class hook -->
+  <script>
+    document.documentElement.classList.remove("js-disabled");
+    document.documentElement.classList.add("js");
+    window.dataLayer = window.dataLayer || [];
+  </script>
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TMRKXCQQ"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+  <noscript>
+    <iframe
+      src="https://www.googletagmanager.com/ns.html?id=GTM-TMRKXCQQ"
+      height="0"
+      width="0"
+      style="display:none;visibility:hidden"
+    ></iframe>
+  </noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <!-- Accessibility shortcut -->
   <a class="skip-link" href="#main-content">Skip to content</a>
 
+  <!-- Site header -->
   <header class="site-header">
     <div class="container nav-shell">
-      <a class="brand" href="index.html" aria-label="Atlas Coffee Company home">
-        <img src="./assets/logo.jpg" alt="Atlas Coffee Company logo" loading="lazy">
+      <!-- Brand -->
+      <a class="brand" href="./index.html" aria-label="Atlas Coffee Company home">
+        <img
+          src="./assets/logo.jpg"
+          alt="Atlas Coffee Company logo"
+          width="80"
+          height="80"
+          loading="lazy"
+        >
         <span class="brand-lockup">
           <span>Atlas Coffee Company</span>
           <small>Independent coffee roasters</small>
         </span>
       </a>
 
+      <!-- Main navigation -->
       <nav class="nav-links" aria-label="Primary navigation">
-        <a href="index.html" aria-current="page">Home</a>
-        <a href="why-atlas.html">Why Atlas</a>
-        <a href="shop.html">Shop</a>
-        <a href="contact.html">Contact</a>
+        <a href="./index.html" aria-current="page">Home</a>
+        <a href="./why-atlas.html">Why Atlas</a>
+        <a href="./shop.html">Shop</a>
+        <a href="./contact.html">Contact</a>
       </nav>
 
+      <!-- Header actions -->
       <div class="actions">
-        <!-- <a class="ghost-button" href="about.html">About Atlas</a> -->
-        <a class="button" href="shop.html">Shop coffee</a>
+        <!-- Shared basket trigger used across the site -->
+        <button
+          class="ghost-button basket-link"
+          type="button"
+          data-basket-trigger
+          data-has-items="false"
+          aria-haspopup="dialog"
+          aria-expanded="false"
+          aria-controls="basket-popover"
+        >
+          <span class="basket-link__icon-wrap" aria-hidden="true">
+            <img
+              src="./assets/basket-outlined-shopping-svgrepo-com.svg"
+              alt=""
+              class="basket-link__icon"
+              width="20"
+              height="20"
+            />
+            <span class="basket-link__dot" aria-hidden="true"></span>
+          </span>
+          <span class="basket-link__label">Basket</span>
+          <span class="basket-link__count" data-basket-count>0</span>
+        </button>
+
+        <!-- Mobile menu toggle -->
         <button
           class="mobile-menu-toggle"
           type="button"
+          data-mobile-toggle
           aria-expanded="false"
           aria-controls="mobile-panel"
           aria-label="Open menu"
@@ -67,16 +121,41 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </div>
 
-    <div class="container mobile-panel" id="mobile-panel">
-      <a href="index.html" aria-current="page">Home</a>
-      <a href="why-atlas.html">Why Atlas</a>
-      <a href="shop.html">Shop</a>
-      <a href="contact.html">Contact</a>
-      <a class="button" href="shop.html">Shop coffee</a>
+    <!-- Mobile navigation panel -->
+    <div class="container mobile-panel" id="mobile-panel" data-mobile-panel>
+      <a href="./index.html" aria-current="page">Home</a>
+      <a href="./why-atlas.html">Why Atlas</a>
+      <a href="./shop.html">Shop</a>
+      <a href="./contact.html">Contact</a>
+
+      <!-- Mobile basket button mirrors desktop basket state -->
+      <button
+        class="button mobile-panel-basket"
+        type="button"
+        data-basket-trigger
+        data-has-items="false"
+        aria-controls="basket-popover"
+        aria-expanded="false"
+      >
+        <span class="basket-link__icon-wrap" aria-hidden="true">
+          <img
+            src="./assets/basket-outlined-shopping-svgrepo-com.svg"
+            alt=""
+            class="basket-link__icon"
+            width="20"
+            height="20"
+          />
+          <span class="basket-link__dot" aria-hidden="true"></span>
+        </span>
+        <span>Basket</span>
+        <span class="basket-link__count" data-basket-count>0</span>
+      </button>
     </div>
   </header>
 
+  <!-- Main page content -->
   <main id="main-content">
+    <!-- Hero -->
     <section class="hero hero-premium">
       <div class="container hero-grid">
         <div class="hero-copy reveal">
@@ -87,8 +166,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </p>
 
           <div class="hero-actions">
-            <a class="button" href="shop.html">Shop coffee</a>
-            <a class="ghost-button" href="why-atlas.html">Read our story</a>
+            <a class="button" href="./shop.html">Shop coffee</a>
+            <a class="ghost-button" href="./why-atlas.html">Read our story</a>
           </div>
 
           <div class="hero-mini-points">
@@ -108,7 +187,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
 
             <div class="product-hero-body">
-              <!-- <p class="product-hero-label">Atlas Coffee Company</p> -->
               <h2>Serra Negra</h2>
               <p class="product-hero-copy">
                 A smooth Brazilian coffee with praline sweetness, mellow milk chocolate, and an easy, balanced finish.
@@ -125,27 +203,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 </div>
                 <div>
                   <span>Profile</span>
-                  <strong>Sweet & balanced</strong>
+                  <strong>Sweet &amp; balanced</strong>
                 </div>
               </div>
-
-              <!-- <div class="product-hero-notes">
-                <span>Praline</span>
-                <span>Milk chocolate</span>
-                <span>Balanced</span>
-                <span>Sweet finish</span>
-              </div>
-            </div> -->
+            </div>
 
             <div class="product-hero-footer">
               <span>Available now</span>
-              <a href="shop.html">Shop now</a>
+              <a href="./shop.html">Shop now</a>
             </div>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- Trust strip -->
     <section class="trust-band trust-band-dark">
       <div class="container trust-grid trust-grid-compact">
         <div class="trust-item trust-item-dark reveal">
@@ -167,6 +239,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </section>
 
+    <!-- Featured products preview -->
     <section class="featured-products">
       <div class="container">
         <div class="section-head section-head-row reveal">
@@ -177,7 +250,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               A few good places to begin, whether you want an easy everyday brew or something with a bit more character.
             </p>
           </div>
-          <a class="ghost-button" href="shop.html">View coffees</a>
+          <a class="ghost-button" href="./shop.html">View coffees</a>
         </div>
 
         <div class="product-preview-grid">
@@ -190,7 +263,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               <span>Balanced</span>
               <span>Everyday brew</span>
             </div>
-            <a class="button" href="shop.html">Shop Serra Negra</a>
+            <a class="button" href="./shop.html">Shop Serra Negra</a>
           </article>
 
           <article class="product-preview reveal product-preview-accent">
@@ -202,7 +275,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               <span>Expressive</span>
               <span>Seasonal</span>
             </div>
-            <a class="ghost-button" href="shop.html">Browse origins</a>
+            <a class="ghost-button" href="./shop.html">Browse origins</a>
           </article>
 
           <article class="product-preview reveal">
@@ -214,12 +287,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               <span>Flexible</span>
               <span>Daily drinker</span>
             </div>
-            <a class="ghost-button" href="shop.html">See blends</a>
+            <a class="ghost-button" href="./shop.html">See blends</a>
           </article>
         </div>
       </div>
     </section>
 
+    <!-- Brand story / CTA split -->
     <section class="notice notice-split">
       <div class="container story-grid">
         <div class="card card-story reveal">
@@ -229,7 +303,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             Atlas Coffee is built around small-batch roasting, straightforward flavour notes, and coffees you’ll want to come back to.
           </p>
           <div class="hero-actions">
-            <a class="ghost-button" href="why-atlas.html">About the roastery</a>
+            <a class="ghost-button" href="./why-atlas.html">About the roastery</a>
           </div>
         </div>
 
@@ -240,15 +314,70 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             Explore single origins and blends roasted fresh for better mornings, slower weekends, and everyday brews.
           </p>
           <div class="hero-actions">
-            <a class="button" href="shop.html">Shop now</a>
-            <a class="ghost-button" href="contact.html">Get in touch</a>
+            <a class="button" href="./shop.html">Shop now</a>
+            <a class="ghost-button" href="./contact.html">Get in touch</a>
           </div>
         </div>
       </div>
     </section>
   </main>
 
-<footer class="site-footer">
+  <!-- Shared basket drawer so the basket can open from the homepage too -->
+  <div class="shop-basket-popover" id="basket-popover" aria-hidden="true">
+    <button
+      class="shop-basket-popover__backdrop"
+      type="button"
+      data-basket-close
+      tabindex="-1"
+      aria-label="Close basket"
+    ></button>
+
+    <aside
+      class="shop-basket-drawer"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="basket-title"
+    >
+      <div class="shop-basket-drawer__header">
+        <div>
+          <span class="eyebrow">Basket</span>
+          <h2 id="basket-title">Your selected coffees.</h2>
+        </div>
+        <button
+          class="shop-basket-drawer__close"
+          type="button"
+          data-basket-close
+          aria-label="Close basket"
+        >
+          Close
+        </button>
+      </div>
+
+      <div class="shop-basket-drawer__body">
+        <div id="basket-items" class="shop-basket-list" aria-live="polite">
+          <p class="shop-basket-empty">Your basket is currently empty.</p>
+        </div>
+      </div>
+
+      <div class="shop-basket-drawer__footer">
+        <div class="shop-basket-total">
+          <span class="shop-basket-total-label">Estimated total</span>
+          <strong id="basket-total">£0.00</strong>
+        </div>
+
+        <button class="button shop-basket-checkout" type="button" id="checkout-button">
+          Proceed to checkout
+        </button>
+
+        <p class="shop-basket-note">
+          Delivery is calculated at checkout. Local collection is also available.
+        </p>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
     <div class="container footer-grid">
       <div>
         <div class="brand">
@@ -281,6 +410,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </footer>
 
-  <script src="app.js" defer></script>
+  <!-- Shared site logic -->
+  <script src="./app.js" defer></script>
 </body>
 </html>

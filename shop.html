@@ -69,28 +69,29 @@
       </nav>
 
       <div class="actions">
-<button
-  class="ghost-button basket-link"
-  type="button"
-  id="basket-toggle"
-  aria-haspopup="dialog"
-  aria-expanded="false"
-  aria-controls="basket-popover"
-  data-has-items="false"
->
-  <span class="basket-link__icon-wrap" aria-hidden="true">
-    <img
-      src="./assets/basket-outlined-shopping-svgrepo-com.svg"
-      alt=""
-      class="basket-link__icon"
-      width="20"
-      height="20"
-    />
-    <span class="basket-link__dot" aria-hidden="true"></span>
-  </span>
-  <span class="basket-link__label">Basket</span>
-  <span class="basket-link__count" id="basket-count">0</span>
-</button>
+        <button
+          class="ghost-button basket-link"
+          type="button"
+          id="basket-toggle"
+          aria-haspopup="dialog"
+          aria-expanded="false"
+          aria-controls="basket-popover"
+          data-basket-trigger
+          data-has-items="false"
+        >
+          <span class="basket-link__icon-wrap" aria-hidden="true">
+            <img
+              src="./assets/basket-outlined-shopping-svgrepo-com.svg"
+              alt=""
+              class="basket-link__icon"
+              width="20"
+              height="20"
+            />
+            <span class="basket-link__dot" aria-hidden="true"></span>
+          </span>
+          <span class="basket-link__label">Basket</span>
+          <span class="basket-link__count" data-basket-count>0</span>
+        </button>
 
         <button
           class="mobile-menu-toggle"
@@ -109,7 +110,27 @@
       <a href="./why-atlas.html">Why Atlas</a>
       <a href="./shop.html" aria-current="page">Shop</a>
       <a href="./contact.html">Contact</a>
-      <button class="button" type="button" id="mobile-basket-toggle">View basket</button>
+      <button
+        class="button mobile-panel-basket"
+        type="button"
+        data-basket-trigger
+        data-has-items="false"
+        aria-controls="basket-popover"
+        aria-expanded="false"
+      >
+        <span class="basket-link__icon-wrap" aria-hidden="true">
+          <img
+            src="./assets/basket-outlined-shopping-svgrepo-com.svg"
+            alt=""
+            class="basket-link__icon"
+            width="20"
+            height="20"
+          />
+          <span class="basket-link__dot" aria-hidden="true"></span>
+        </span>
+        <span>Basket</span>
+        <span class="basket-link__count" data-basket-count>0</span>
+      </button>
     </div>
   </header>
 
@@ -126,11 +147,7 @@
           </div>
 
           <div class="shop-topbar__actions">
-            <div class="shop-topbar__meta">
-              <!-- <span>2 coffees available now</span>
-              <span>Choose size, grind, and quantity on each card</span> -->
-            </div>
-            <!-- <button class="ghost-button" type="button" data-open-basket>View basket</button> -->
+            <div class="shop-topbar__meta"></div>
           </div>
         </div>
       </div>
@@ -166,7 +183,6 @@
 
             <div class="product-card__content">
               <div class="product-card__intro">
-                <!-- <p class="product-hero-label">Brazil • Serra Negra</p> -->
                 <h2 id="serra-title">Serra Negra</h2>
                 <p class="featured-product-lead">
                   Mild acidity, sweetness,
@@ -178,9 +194,7 @@
                 <details class="product-disclosure" open>
                   <summary>The Cup</summary>
                   <div class="product-disclosure__content">
-                    <p>
-                      Praline, caramel, milk chocolate.
-                    </p>
+                    <p>Praline, caramel, milk chocolate.</p>
                   </div>
                 </details>
 
@@ -206,14 +220,6 @@
                         <dt>Elevation</dt>
                         <dd>750–1100 MASL</dd>
                       </div>
-                      <!-- <div class="product-fact">
-                        <dt>Harvest</dt>
-                        <dd>May–August</dd>
-                      </div>
-                      <div class="product-fact">
-                        <dt>Country</dt>
-                        <dd>Brazil</dd>
-                      </div> -->
                     </dl>
                   </div>
                 </details>
@@ -296,7 +302,6 @@
 
             <div class="product-card__content">
               <div class="product-card__intro">
-                <!-- <p class="product-hero-label">Peru • Cajamarca</p> -->
                 <h2 id="peru-title">Peru Cajamarca</h2>
                 <p class="featured-product-lead">
                   Clean and bright in the cup, with fresh fruit flavours alongside mild winey acidity and sweetness.
@@ -307,9 +312,7 @@
                 <details class="product-disclosure" open>
                   <summary>The Cup</summary>
                   <div class="product-disclosure__content">
-                    <p>
-                      Mellow panela, vanilla, cooked citrus.
-                    </p>
+                    <p>Mellow panela, vanilla, cooked citrus.</p>
                   </div>
                 </details>
 
@@ -334,14 +337,6 @@
                         <dt>Elevation</dt>
                         <dd>1600–1900 MASL</dd>
                       </div>
-                      <!-- <div class="product-fact">
-                        <dt>Region</dt>
-                        <dd>Cajamarca</dd>
-                      </div>
-                      <div class="product-fact">
-                        <dt>Country</dt>
-                        <dd>Peru</dd>
-                      </div> -->
                     </dl>
                   </div>
                 </details>
@@ -503,243 +498,6 @@
     </div>
   </footer>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const mobileToggle = document.querySelector("[data-mobile-toggle]");
-      const mobilePanel = document.querySelector("[data-mobile-panel]");
-
-      if (mobileToggle && mobilePanel) {
-        const setMobileMenu = (open) => {
-          mobileToggle.setAttribute("aria-expanded", String(open));
-          mobilePanel.classList.toggle("is-open", open);
-          mobileToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-        };
-
-        mobileToggle.addEventListener("click", () => {
-          const isOpen = mobileToggle.getAttribute("aria-expanded") === "true";
-          setMobileMenu(!isOpen);
-        });
-
-        mobilePanel.querySelectorAll("a").forEach((link) => {
-          link.addEventListener("click", () => setMobileMenu(false));
-        });
-
-        window.addEventListener("resize", () => {
-          if (window.innerWidth > 860) setMobileMenu(false);
-        });
-      }
-
-      const revealItems = document.querySelectorAll(".reveal");
-      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-      if (!prefersReducedMotion && "IntersectionObserver" in window) {
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("revealed");
-              observer.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.12 });
-
-        revealItems.forEach((item) => observer.observe(item));
-      } else {
-        revealItems.forEach((item) => item.classList.add("revealed"));
-      }
-
-      const basketPopover = document.getElementById("basket-popover");
-      const basketToggle = document.getElementById("basket-toggle");
-      const mobileBasketToggle = document.getElementById("mobile-basket-toggle");
-      const mobileBasketBarToggle = document.getElementById("mobile-basket-bar-toggle");
-      const extraBasketToggles = document.querySelectorAll("[data-open-basket]");
-      const basketCloseButtons = document.querySelectorAll("[data-basket-close]");
-
-      function openBasket() {
-        if (!basketPopover) return;
-        basketPopover.classList.add("is-open");
-        basketPopover.setAttribute("aria-hidden", "false");
-        document.body.classList.add("basket-open");
-        if (basketToggle) basketToggle.setAttribute("aria-expanded", "true");
-      }
-
-      function closeBasket() {
-        if (!basketPopover) return;
-        basketPopover.classList.remove("is-open");
-        basketPopover.setAttribute("aria-hidden", "true");
-        document.body.classList.remove("basket-open");
-        if (basketToggle) basketToggle.setAttribute("aria-expanded", "false");
-      }
-
-      basketToggle?.addEventListener("click", openBasket);
-      mobileBasketToggle?.addEventListener("click", openBasket);
-      mobileBasketBarToggle?.addEventListener("click", openBasket);
-      extraBasketToggles.forEach((button) => button.addEventListener("click", openBasket));
-      basketCloseButtons.forEach((button) => button.addEventListener("click", closeBasket));
-
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") closeBasket();
-      });
-
-      const PRODUCTS = {
-        serra: {
-          id: "serra",
-          name: "Serra Negra",
-          prices: { "250g": 10.95, "500g": 19.5, "1kg": 35.95 }
-        },
-        peru: {
-          id: "peru",
-          name: "Peru Cajamarca",
-          prices: { "250g": 13.95, "500g": 26.95, "1kg": 49.95 }
-        }
-      };
-
-      const basket = [];
-      const basketCountEls = document.querySelectorAll("#basket-count");
-      const basketItemsEl = document.getElementById("basket-items");
-      const basketTotalEl = document.getElementById("basket-total");
-      const mobileBasketSummaryEl = document.getElementById("mobile-basket-summary");
-
-      function formatMoney(value) {
-        return new Intl.NumberFormat("en-GB", {
-          style: "currency",
-          currency: "GBP"
-        }).format(value);
-      }
-
-      function prettyGrind(value) {
-        return {
-          whole_bean: "Whole bean",
-          coarse: "Coarse",
-          medium: "Medium",
-          fine: "Fine"
-        }[value] || value;
-      }
-
-      function updateProductPanel(prefix, priceMap) {
-        const weightEl = document.getElementById(`${prefix}-weight`);
-        const grindEl = document.getElementById(`${prefix}-grind`);
-        const quantityEl = document.getElementById(`${prefix}-quantity`);
-        const summaryEl = document.getElementById(`${prefix}-summary-line`);
-        const priceEl = document.getElementById(`${prefix}-price`);
-        const noteEl = document.getElementById(`${prefix}-note`);
-
-        if (!weightEl || !grindEl || !quantityEl || !summaryEl || !priceEl) return;
-
-        const quantity = Math.max(1, Math.min(10, Number(quantityEl.value) || 1));
-        quantityEl.value = quantity;
-
-        const unitPrice = priceMap[weightEl.value];
-        const subtotal = unitPrice * quantity;
-
-        summaryEl.textContent = `${weightEl.value} · ${prettyGrind(grindEl.value)} · Quantity: ${quantity}`;
-        priceEl.textContent = formatMoney(subtotal);
-
-        if (noteEl) {
-          noteEl.textContent = "Delivery is added at checkout. Local collection is also available.";
-        }
-      }
-
-      function renderBasket() {
-        const count = basket.reduce((sum, item) => sum + item.quantity, 0);
-        const total = basket.reduce((sum, item) => sum + item.lineTotal, 0);
-
-        basketCountEls.forEach((el) => {
-          el.textContent = String(count);
-        });
-
-        if (basketToggle) {
-          basketToggle.setAttribute("data-has-items", count > 0 ? "true" : "false");
-      }
-
-        if (!basket.length) {
-          basketItemsEl.innerHTML = '<p class="shop-basket-empty">Your basket is currently empty.</p>';
-          basketTotalEl.textContent = formatMoney(0);
-          mobileBasketSummaryEl.textContent = "No items selected yet";
-          return;
-        }
-
-        basketItemsEl.innerHTML = basket.map((item, index) => `
-          <div class="shop-basket-item">
-            <div class="shop-basket-item__copy">
-              <strong>${item.product}</strong>
-              <span>${item.weight} · ${prettyGrind(item.grind)} · Quantity ${item.quantity}</span>
-            </div>
-            <div class="shop-basket-item__actions">
-              <strong>${formatMoney(item.lineTotal)}</strong>
-              <button type="button" class="shop-basket-remove" data-remove-index="${index}">Remove</button>
-            </div>
-          </div>
-        `).join("");
-
-        basketTotalEl.textContent = formatMoney(total);
-        mobileBasketSummaryEl.textContent = `${count} item${count === 1 ? "" : "s"} · ${formatMoney(total)}`;
-
-        basketItemsEl.querySelectorAll("[data-remove-index]").forEach((button) => {
-          button.addEventListener("click", () => {
-            basket.splice(Number(button.dataset.removeIndex), 1);
-            renderBasket();
-          });
-        });
-      }
-
-      [["serra", PRODUCTS.serra.prices], ["peru", PRODUCTS.peru.prices]].forEach(([prefix, prices]) => {
-        ["weight", "grind", "quantity"].forEach((field) => {
-          const el = document.getElementById(`${prefix}-${field}`);
-          if (el) {
-            el.addEventListener(field === "quantity" ? "input" : "change", () => {
-              updateProductPanel(prefix, prices);
-            });
-          }
-        });
-        updateProductPanel(prefix, prices);
-      });
-
-      document.querySelectorAll("[data-add-to-basket]").forEach((button) => {
-        button.addEventListener("click", () => {
-          const key = button.getAttribute("data-add-to-basket");
-          const product = PRODUCTS[key];
-          if (!product) return;
-
-          const prefix = key === "serra" ? "serra" : "peru";
-          const weight = document.getElementById(`${prefix}-weight`).value;
-          const grind = document.getElementById(`${prefix}-grind`).value;
-          const quantity = Math.max(1, Math.min(10, Number(document.getElementById(`${prefix}-quantity`).value) || 1));
-          const unitPrice = product.prices[weight];
-
-          basket.push({
-            product: product.name,
-            weight,
-            grind,
-            quantity,
-            unitPrice,
-            lineTotal: unitPrice * quantity
-          });
-
-          renderBasket();
-          openBasket();
-
-          button.textContent = "Added";
-          window.setTimeout(() => {
-            button.textContent = "Add to basket";
-          }, 1200);
-        });
-      });
-
-      document.getElementById("checkout-button").addEventListener("click", () => {
-        if (!basket.length) {
-          openBasket();
-          basketItemsEl.innerHTML = '<p class="shop-basket-empty">Add at least one coffee before proceeding to checkout.</p>';
-          return;
-        }
-
-        basketItemsEl.insertAdjacentHTML(
-          "beforeend",
-          '<p class="shop-basket-checkout-note">Basket captured for front-end review. Next step is wiring this basket drawer to your live checkout session endpoint.</p>'
-        );
-      });
-
-      renderBasket();
-    });
-  </script>
+  <script src="./app.js" defer></script>
 </body>
 </html>
