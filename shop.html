@@ -1,50 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="js">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop | Atlas Coffee Roasters</title>
+  <meta
+    name="description"
+    content="Shop Atlas Coffee Roasters coffees roasted in small batches for clarity, balance, and character."
+  >
+
   <!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  <script>
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-TMRKXCQQ');</script>
-  <!-- End Google Tag Manager -->
-  <title>Shop Atlas Coffee</title>
-  <link rel="icon" type="image/jpeg" href="./assets/logo.jpg">
-  <meta
-    name="description"
-    content="Browse Atlas Coffee single-origin coffees and order for delivery or local collection in Redditch."
-  />
-  <link rel="canonical" href="https://www.atlascoffee.uk/shop" />
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Work+Sans:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet"
-  />
-  <script>
-    document.documentElement.classList.add("js");
+  })(window,document,'script','dataLayer','GTM-TMRKXCQQ');
   </script>
-  <link rel="stylesheet" href="./styles.css" />
+  <!-- End Google Tag Manager -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Work+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/png" href="./assets/AtlasLogoInstagram.jpg">
 </head>
-<body class="shop-page">
+<body class="shop-page shop-page-premium">
   <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TMRKXCQQ"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-  <a class="skip-link" href="#content">Skip to content</a>
+  <noscript>
+    <iframe
+      src="https://www.googletagmanager.com/ns.html?id=GTM-TMRKXCQQ"
+      height="0"
+      width="0"
+      style="display:none;visibility:hidden"
+    ></iframe>
+  </noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <a class="skip-link" href="#main-content">Skip to content</a>
 
   <header class="site-header">
     <div class="container nav-shell">
       <a class="brand" href="./index.html" aria-label="Atlas Coffee home">
-        <img
-          src="./assets/logo.jpg"
-          alt="Atlas Coffee logo"
-          width="80"
-          height="80"
-          loading="eager"
-        />
+        <img src="./assets/logo.jpg" alt="Atlas Coffee logo" width="80" height="80" loading="eager" />
         <span class="brand-lockup">
           <span>Atlas Coffee Company</span>
           <small>Independent coffee roasters</small>
@@ -59,260 +60,316 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </nav>
 
       <div class="actions">
-        <a class="button" href="./shop.html">Shop coffee</a>
         <button
-          class="mobile-menu-toggle"
+          class="ghost-button cart-trigger"
           type="button"
-          data-mobile-toggle
+          data-cart-open
+          aria-controls="cart-drawer"
           aria-expanded="false"
-          aria-label="Open menu"
         >
+          Basket
+          <span class="cart-trigger__count" id="cart-count-pill">0</span>
+        </button>
+
+        <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-label="Open menu">
           Menu
         </button>
       </div>
     </div>
 
     <div class="container mobile-panel" data-mobile-panel>
-      <a href="./index.html">Home</a>
-      <a href="./why-atlas.html">Why Atlas</a>
-      <a href="./shop.html" aria-current="page">Shop</a>
-      <a href="./contact.html">Contact</a>
-      <a class="button" href="./shop.html">Shop coffee</a>
+      <a href="index.html">Home</a>
+      <a href="shop.html" aria-current="page">Shop</a>
+      <a href="why-atlas.html">Why Atlas</a>
+      <a href="contact.html">Contact</a>
     </div>
   </header>
 
-  <main id="content">
-    <section class="products-hero">
-      <div class="container products-hero-shell reveal">
-        <div class="section-head products-hero-copy">
-          <span class="eyebrow">Current lineup</span>
-          <h1>A focused coffee lineup, roasted properly.</h1>
-          <p>
-            Atlas Coffee is starting with a focused offering rather than a crowded catalogue.
-            Serra Negra is available now, with more coffees to follow soon.
-          </p>
+  <div class="cart-backdrop" id="cart-backdrop" hidden></div>
+
+  <aside
+    class="cart-drawer"
+    id="cart-drawer"
+    aria-labelledby="cart-drawer-title"
+    aria-hidden="true"
+    tabindex="-1"
+  >
+    <div class="cart-drawer__header">
+      <div>
+        <span class="eyebrow">Your basket</span>
+        <h2 id="cart-drawer-title">A few good coffees, chosen with intent.</h2>
+      </div>
+      <button class="cart-drawer__close" type="button" data-cart-close aria-label="Close basket">
+        ×
+      </button>
+    </div>
+
+    <div class="cart-drawer__body">
+      <div class="basket-empty" id="basket-empty">
+        <h3>Your basket is empty.</h3>
+        <p>Add a coffee below and build your order at your own pace.</p>
+      </div>
+
+      <div class="basket-lines" id="basket-lines" hidden></div>
+    </div>
+
+    <div class="cart-drawer__footer">
+      <div class="basket-fulfilment">
+        <label for="basket-fulfilment">Fulfilment</label>
+        <select id="basket-fulfilment" name="basket-fulfilment">
+          <option value="delivery">UK delivery</option>
+          <option value="collection">Local collection</option>
+        </select>
+        <p class="checkout-note" id="basket-fulfilment-note">
+          Collection is available from Church Hill North, Redditch. Delivery is added securely at checkout.
+        </p>
+      </div>
+
+      <div class="basket-summary">
+        <div class="basket-summary__row">
+          <span>Items</span>
+          <strong id="basket-item-count">0</strong>
+        </div>
+        <div class="basket-summary__row basket-summary__row--total">
+          <span>Subtotal</span>
+          <strong id="basket-subtotal">£0.00</strong>
+        </div>
+      </div>
+
+      <button class="button basket-checkout-button" id="basket-checkout-button" type="button" disabled>
+        Checkout
+      </button>
+    </div>
+  </aside>
+
+  <main id="main-content">
+    <section class="shop-intro shop-intro-compact">
+      <div class="container">
+        <div class="shop-intro-shell reveal">
+          <div class="shop-intro-copy">
+            <span class="eyebrow">Shop</span>
+            <h1>Coffees with balance, clarity, and character.</h1>
+            <p>
+              Atlas is built around small-batch coffees chosen with intent and roasted to feel refined,
+              approachable, and easy to come back to.
+            </p>
+          </div>
+
+          <div class="shop-intro-note">
+            <span class="featured-label">Collection & delivery</span>
+            <p>UK delivery available, alongside local collection in Redditch.</p>
+            <button
+              class="ghost-button shop-inline-cart-button"
+              type="button"
+              data-cart-open
+              aria-controls="cart-drawer"
+              aria-expanded="false"
+            >
+              View basket
+              <span class="cart-trigger__count" id="cart-count-inline">0</span>
+            </button>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="featured-product-section">
-      <div class="container featured-product-layout">
-        <article class="featured-product-copy card reveal" id="serra-negra-product">
-          <span class="eyebrow">Featured coffee</span>
-
-          <div class="featured-product-image-wrap">
-            <img
-              src="./assets/serra-negra-bag.png"
-              alt="Atlas Coffee Company Serra Negra 250g coffee bag"
-              class="featured-product-image"
-              width="900"
-              height="1125"
-              loading="eager"
-            />
-          </div>
-
-          <div class="featured-product-head">
-            <div>
-              <p class="product-hero-label">Single Origin Brazil</p>
-              <h2>Serra Negra</h2>
-            </div>
-            <div class="price" id="serra-price-display">£10.95</div>
-          </div>
-
-          <p class="featured-product-lead">
-            A naturally processed Brazilian single origin with praline sweetness,
-            soft milk chocolate character, and a bright yet balanced finish.
-          </p>
-
-          <div class="featured-spec-grid featured-spec-grid-compact">
-            <div class="featured-spec">
-              <span>Origin</span>
-              <strong>Brazil</strong>
-            </div>
-            <div class="featured-spec">
-              <span>Process</span>
-              <strong>Natural</strong>
-            </div>
-            <div class="featured-spec">
-              <span>Taste notes</span>
-              <strong>Praline, milk chocolate, bright finish</strong>
-            </div>
-          </div>
-
-          <div class="featured-notes-block">
-            <div>
-              <span class="featured-label">Best for</span>
-              <p>An easy everyday brew with enough character to stay interesting.</p>
-            </div>
-          </div>
-
-          <div class="featured-product-story">
-            <h3>Built for everyday brewing.</h3>
-            <p>
-              Serra Negra is the kind of coffee that feels easy to come back to — sweet,
-              approachable, and versatile enough for espresso, filter, or slower weekend brews.
-            </p>
-          </div>
-        </article>
-
-        <aside class="featured-product-buy card reveal" id="buy-panel">
-          <span class="eyebrow">Order Serra Negra</span>
-
-          <p class="buy-panel-intro">
-            A naturally processed Brazilian single origin with praline sweetness,
-            soft milk chocolate character, and a bright yet balanced finish.
-          </p>
-
-          <h2>Choose your bag and grind.</h2>
-          <p class="muted">
-            Order online for UK delivery or select free local collection in Redditch.
-          </p>
-
-          <form id="coffee-form" class="coffee-form">
-            <div class="field-group">
-              <label for="weight">Weight</label>
-              <select id="weight" name="weight" required>
-                <option value="250g">250g — £10.95</option>
-                <option value="500g">500g — £19.50</option>
-                <option value="1kg">1kg — £35.95</option>
-              </select>
-            </div>
-
-            <div class="field-group">
-              <label for="grind">Grind</label>
-              <select id="grind" name="grind" required>
-                <option value="whole_bean">Whole bean</option>
-                <option value="coarse">Coarse</option>
-                <option value="medium">Medium</option>
-                <option value="fine">Fine</option>
-              </select>
-            </div>
-
-            <div class="field-group">
-              <label for="fulfilment">Fulfilment</label>
-              <select
-                id="fulfilment"
-                name="fulfilment"
-                required
-                aria-describedby="fulfilment-help"
+    <section class="shop-products shop-products-tight">
+      <div class="container">
+        <div class="shop-grid shop-grid-simple">
+          <article class="coffee-card coffee-card-simple reveal" data-product-card>
+            <div class="coffee-card__media coffee-card__media-simple">
+              <span class="coffee-card__country">Brazil</span>
+              <img
+                src="./assets/AtlasLogoInstagram.jpg"
+                alt="Atlas Coffee Roasters bag placeholder for Serra Negra"
+                width="420"
+                height="420"
+                loading="lazy"
               >
-                <option value="delivery">Delivery</option>
-                <option value="collection">Collection</option>
-              </select>
-              <p id="fulfilment-help" class="field-help">
-                Choose delivery for UK postage or collection for free local pickup in Redditch.
-              </p>
             </div>
 
-            <div class="field-group">
-              <label for="quantity">Quantity</label>
-              <input
-                id="quantity"
-                name="quantity"
-                type="number"
-                min="1"
-                max="10"
-                value="1"
-                required
-              />
-            </div>
-
-            <div class="buy-box buy-box-premium">
-              <div class="buy-box-head">
-                <span class="featured-label">Your selection</span>
-                <strong id="serra-total">Subtotal: £10.95</strong>
+            <div class="coffee-card__content coffee-card__content-simple">
+              <div class="coffee-card__head coffee-card__head-simple">
+                <div>
+                  <span class="coffee-card__kicker">Single origin</span>
+                  <h2>Serra Negra</h2>
+                </div>
+                <div class="coffee-card__price">
+                  <span>From</span>
+                  <strong>£10.95</strong>
+                </div>
               </div>
 
-              <p id="serra-summary" class="buy-box-summary">
-                250g · Whole bean · Delivery · Qty 1
+              <p class="coffee-card__lead">
+                Praline sweetness, soft milk chocolate, and an easy, balanced finish.
               </p>
 
-              <p id="serra-fulfilment-note" class="checkout-note">
-                Delivery: £4.50 postage and packaging is added at checkout for delivery orders only. Collection is always free.
-              </p>
+              <form class="coffee-card__form" data-coffee-form data-product="Serra Negra">
+                <input type="hidden" name="product" value="Serra Negra">
 
-              <div class="buy-box-actions">
-                <button class="button" type="submit" id="buy-button">Buy Serra Negra</button>
-                <p class="muted" style="margin-top:.75rem;">
-                  <a href="./delivery-returns.html">Delivery &amp; Returns</a>
-                </p>
+                <div class="coffee-card__controls">
+                  <div class="field-group">
+                    <label for="serra-weight">Bag size</label>
+                    <select id="serra-weight" name="weight">
+                      <option value="250g">250g</option>
+                      <option value="500g">500g</option>
+                      <option value="1kg">1kg</option>
+                    </select>
+                  </div>
+
+                  <div class="field-group">
+                    <label for="serra-grind">Grind</label>
+                    <select id="serra-grind" name="grind">
+                      <option value="whole_bean">Whole bean</option>
+                      <option value="coarse">Coarse</option>
+                      <option value="medium">Medium</option>
+                      <option value="fine">Fine</option>
+                    </select>
+                  </div>
+
+                  <div class="field-group field-group--qty">
+                    <label for="serra-quantity">Qty</label>
+                    <input id="serra-quantity" name="quantity" type="number" min="1" max="10" step="1" value="1">
+                  </div>
+                </div>
+
+                <div class="coffee-card__purchase coffee-card__purchase-simple">
+                  <div class="coffee-card__selection">
+                    <span class="featured-label">Selected</span>
+                    <strong data-selected-price>£10.95</strong>
+                    <p data-selection-summary>250g · Whole bean · Qty 1</p>
+                  </div>
+
+                  <button class="button coffee-card__submit" type="submit">
+                    Add to basket
+                  </button>
+                </div>
+              </form>
+
+              <details class="coffee-card__details">
+                <summary>More about this coffee</summary>
+                <div class="coffee-card__details-inner">
+                  <p>
+                    Serra Negra is a naturally processed Brazilian coffee with a rounded sweetness and a softer,
+                    more comfortable profile that suits everyday brewing.
+                  </p>
+                  <ul class="coffee-card__details-list">
+                    <li><strong>Origin:</strong> Brazil</li>
+                    <li><strong>Process:</strong> Natural</li>
+                    <li><strong>Taste notes:</strong> Praline, milk chocolate, bright finish</li>
+                    <li><strong>Best for:</strong> Espresso, filter, cafetière</li>
+                  </ul>
+                </div>
+              </details>
+            </div>
+          </article>
+
+          <article class="coffee-card coffee-card-simple reveal" data-product-card>
+            <div class="coffee-card__media coffee-card__media-simple coffee-card__media--alt">
+              <span class="coffee-card__country">Peru</span>
+              <img
+                src="./assets/AtlasLogoInstagram.jpg"
+                alt="Atlas Coffee Roasters bag placeholder for Peru Cajamarca"
+                width="420"
+                height="420"
+                loading="lazy"
+              >
+            </div>
+
+            <div class="coffee-card__content coffee-card__content-simple">
+              <div class="coffee-card__head coffee-card__head-simple">
+                <div>
+                  <span class="coffee-card__kicker">Single origin</span>
+                  <h2>Peru Cajamarca</h2>
+                </div>
+                <div class="coffee-card__price">
+                  <span>From</span>
+                  <strong>£11.95</strong>
+                </div>
               </div>
 
-              <p id="purchase-message" style="margin-top:.75rem;display:none;"></p>
+              <p class="coffee-card__lead">
+                Cleaner and brighter in the cup, with layered sweetness and a more lifted feel.
+              </p>
+
+              <form class="coffee-card__form" data-coffee-form data-product="Peru Cajamarca">
+                <input type="hidden" name="product" value="Peru Cajamarca">
+
+                <div class="coffee-card__controls">
+                  <div class="field-group">
+                    <label for="peru-weight">Bag size</label>
+                    <select id="peru-weight" name="weight">
+                      <option value="250g">250g</option>
+                      <option value="500g">500g</option>
+                      <option value="1kg">1kg</option>
+                    </select>
+                  </div>
+
+                  <div class="field-group">
+                    <label for="peru-grind">Grind</label>
+                    <select id="peru-grind" name="grind">
+                      <option value="whole_bean">Whole bean</option>
+                      <option value="coarse">Coarse</option>
+                      <option value="medium">Medium</option>
+                      <option value="fine">Fine</option>
+                    </select>
+                  </div>
+
+                  <div class="field-group field-group--qty">
+                    <label for="peru-quantity">Qty</label>
+                    <input id="peru-quantity" name="quantity" type="number" min="1" max="10" step="1" value="1">
+                  </div>
+                </div>
+
+                <div class="coffee-card__purchase coffee-card__purchase-simple">
+                  <div class="coffee-card__selection">
+                    <span class="featured-label">Selected</span>
+                    <strong data-selected-price>£11.95</strong>
+                    <p data-selection-summary>250g · Whole bean · Qty 1</p>
+                  </div>
+
+                  <button class="button coffee-card__submit" type="submit">
+                    Add to basket
+                  </button>
+                </div>
+              </form>
+
+              <details class="coffee-card__details">
+                <summary>More about this coffee</summary>
+                <div class="coffee-card__details-inner">
+                  <p>
+                    Peru Cajamarca is the brighter of the two coffees, offering more clarity and lift while still
+                    staying balanced and approachable.
+                  </p>
+                  <ul class="coffee-card__details-list">
+                    <li><strong>Origin:</strong> Peru</li>
+                    <li><strong>Region:</strong> Cajamarca</li>
+                    <li><strong>Profile:</strong> Cleaner, brighter, layered sweetness</li>
+                    <li><strong>Best for:</strong> Filter, espresso, slower brews</li>
+                  </ul>
+                </div>
+              </details>
             </div>
-          </form>
-        </aside>
-      </div>
-    </section>
-
-    <section class="coming-soon-band">
-      <div class="container coming-soon-shell">
-        <div class="section-head reveal section-head-compact">
-          <span class="eyebrow">Coming soon</span>
-          <h2>More coffees are on the way.</h2>
-          <p>
-            Atlas Coffee will grow gradually, with new single origins and seasonal releases
-            added when they are ready.
-          </p>
-        </div>
-
-        <div class="coming-soon-grid">
-          <article class="coming-soon-card reveal">
-            <strong>Next single origin</strong>
-            <p>
-              A fresh coffee release will be added here as soon as the next lot arrives and
-              is ready to roast.
-            </p>
           </article>
-
-          <article class="coming-soon-card reveal">
-            <strong>Seasonal releases</strong>
-            <p>
-              Expect small-batch coffees and rotating lots as the range expands over time.
-            </p>
-          </article>
-
-          <article class="coming-soon-card reveal">
-            <strong>Stay in the loop</strong>
-            <p>
-              Check back soon or get in touch if you’d like to know what is coming next.
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="notice products-fulfilment">
-      <div class="container cards-2">
-        <div class="card reveal">
-          <span class="eyebrow">Delivery</span>
-          <h3>UK delivery for £4.50.</h3>
-          <p>
-            Orders can be shipped across the UK for a flat postage and packaging charge,
-            added at checkout.
-          </p>
-        </div>
-
-        <div class="card reveal">
-          <span class="eyebrow">Collection</span>
-          <h3>Free local collection in Redditch.</h3>
-          <p>
-            Collection is available from Church Hill North, Redditch.
-            Collection details are shared after payment.
-          </p>
         </div>
       </div>
     </section>
   </main>
 
-  <div class="mobile-buy-bar" aria-label="Quick buy bar">
-    <div class="container mobile-buy-bar__inner">
-      <div class="mobile-buy-bar__meta">
-        <strong id="mobile-serra-total">£10.95</strong>
-        <span id="mobile-serra-summary">250g · Whole bean</span>
+  <div class="basket-sticky-bar" id="basket-sticky-bar" hidden>
+    <div class="container basket-sticky-bar__inner">
+      <div class="basket-sticky-bar__meta">
+        <strong id="basket-sticky-count">0 items</strong>
+        <span id="basket-sticky-subtotal">£0.00 subtotal</span>
       </div>
-      <button class="button mobile-buy-bar__button" type="button" id="mobile-buy-button">
-        Buy now
+      <button
+        class="button basket-sticky-bar__button"
+        type="button"
+        data-cart-open
+        aria-controls="cart-drawer"
+        aria-expanded="false"
+      >
+        View basket
       </button>
     </div>
   </div>
@@ -350,175 +407,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </footer>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const total = document.getElementById("serra-total");
-      const summary = document.getElementById("serra-summary");
-      const mobileTotal = document.getElementById("mobile-serra-total");
-      const mobileSummary = document.getElementById("mobile-serra-summary");
-      const mobileBuyButton = document.getElementById("mobile-buy-button");
-      const buyButton = document.getElementById("buy-button");
-      const coffeeForm = document.getElementById("coffee-form");
-
-      const syncMobileBar = () => {
-        if (total && mobileTotal) {
-          mobileTotal.textContent = total.textContent.replace("Subtotal: ", "");
-        }
-
-        if (summary && mobileSummary) {
-          const compact = summary.textContent
-            .replace(/\s*·\s*Delivery/i, "")
-            .replace(/\s*·\s*Collection/i, "")
-            .replace(/\s*·\s*Qty\s*\d+/i, "")
-            .trim();
-
-          mobileSummary.textContent = compact;
-        }
-      };
-
-      if (mobileBuyButton && buyButton && coffeeForm) {
-        mobileBuyButton.addEventListener("click", () => {
-          if (typeof coffeeForm.reportValidity === "function" && !coffeeForm.reportValidity()) {
-            const firstInvalid = coffeeForm.querySelector(":invalid");
-            if (firstInvalid) {
-              firstInvalid.scrollIntoView({ behavior: "smooth", block: "center" });
-              firstInvalid.focus({ preventScroll: true });
-            } else {
-              document.getElementById("buy-panel")?.scrollIntoView({ behavior: "smooth", block: "start" });
-            }
-            return;
-          }
-
-          buyButton.click();
-        });
-      }
-
-      syncMobileBar();
-
-      const observer = new MutationObserver(syncMobileBar);
-
-      if (total) {
-        observer.observe(total, {
-          childList: true,
-          subtree: true,
-          characterData: true
-        });
-      }
-
-      if (summary) {
-        observer.observe(summary, {
-          childList: true,
-          subtree: true,
-          characterData: true
-        });
-      }
-    });
-  </script>
-
-  <script>
-    window.dataLayer = window.dataLayer || [];
-
-    document.addEventListener("DOMContentLoaded", () => {
-      const weightSelect = document.getElementById("weight");
-      const quantityInput = document.getElementById("quantity");
-      const featuredProduct = document.getElementById("serra-negra-product");
-      const buyButton = document.getElementById("buy-button");
-      const coffeeForm = document.getElementById("coffee-form");
-
-      if (!weightSelect || !quantityInput || !featuredProduct || !buyButton || !coffeeForm) return;
-
-      const getSelectedPrice = () => {
-        const selectedText = weightSelect.options[weightSelect.selectedIndex]?.text || "";
-        const match = selectedText.match(/£\s*([0-9]+(?:\.[0-9]{1,2})?)/);
-        return match ? parseFloat(match[1]) : 10.95;
-      };
-
-      const getSelectedWeight = () => {
-        return weightSelect.value || "250g";
-      };
-
-      const getSelectedQuantity = () => {
-        const qty = parseInt(quantityInput.value, 10);
-        return Number.isFinite(qty) && qty > 0 ? qty : 1;
-      };
-
-      const buildEcommerceData = () => {
-        const price = getSelectedPrice();
-        const quantity = getSelectedQuantity();
-        const weight = getSelectedWeight();
-
-        return {
-          price,
-          quantity,
-          value: +(price * quantity).toFixed(2),
-          item: {
-            item_id: `serra-negra-${weight}`,
-            item_name: "Serra Negra",
-            item_brand: "Atlas Coffee",
-            item_category: "Coffee",
-            item_variant: weight,
-            price: price,
-            quantity: quantity
-          }
-        };
-      };
-
-      const pushViewItem = () => {
-        const { value, item } = buildEcommerceData();
-
-        window.dataLayer.push({
-          event: "view_item",
-          ecommerce: {
-            currency: "GBP",
-            value: value,
-            items: [item]
-          }
-        });
-      };
-
-      const pushBeginCheckout = () => {
-        const { value, item } = buildEcommerceData();
-
-        window.dataLayer.push({
-          event: "begin_checkout",
-          ecommerce: {
-            currency: "GBP",
-            value: value,
-            items: [item]
-          }
-        });
-      };
-
-      let hasFiredViewItem = false;
-      let hasFiredBeginCheckout = false;
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !hasFiredViewItem) {
-            hasFiredViewItem = true;
-            pushViewItem();
-            observer.disconnect();
-          }
-        });
-      }, {
-        threshold: 0.5
-      });
-
-      observer.observe(featuredProduct);
-
-      buyButton.addEventListener("click", () => {
-        if (typeof coffeeForm.reportValidity === "function" && !coffeeForm.reportValidity()) {
-          return;
-        }
-
-        if (!hasFiredBeginCheckout) {
-          hasFiredBeginCheckout = true;
-          pushBeginCheckout();
-        }
-      });
-    });
-  </script>
-
-  <script src="./app.js" defer></script>
+  <script src="app.js"></script>
 </body>
 </html>

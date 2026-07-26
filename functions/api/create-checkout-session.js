@@ -1,247 +1,159 @@
-const mobileToggle =
-  document.querySelector(".mobile-menu-toggle") ||
-  document.querySelector("[data-mobile-toggle]");
+export async function onRequest(context) {
+  const { request, env } = context;
 
-const mobilePanel =
-  document.querySelector(".mobile-panel") ||
-  document.querySelector("[data-mobile-panel]");
-
-if (mobileToggle && mobilePanel) {
-  const mobileLinks = mobilePanel.querySelectorAll("a");
-
-  function setMobileMenu(open) {
-    mobileToggle.setAttribute("aria-expanded", String(open));
-    mobileToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-    mobilePanel.classList.toggle("is-open", open);
+  if (request.method !== "POST") {
+    return new Response(JSON.stringify({ error: "Method not allowed" }), {
+      status: 405,
+      headers: { "Content-Type": "application/json" }
+    });
   }
 
-  mobileToggle.addEventListener("click", () => {
-    const isOpen = mobileToggle.getAttribute("aria-expanded") === "true";
-    setMobileMenu(!isOpen);
-  });
+  try {
+    const body = await request.json();
+    const { product, weight, grind, fulfilment, quantity } = body;
 
-  mobileLinks.forEach((link) => {
-    link.addEventListener("click", () => setMobileMenu(false));
-  });
-
-  window.addEventListener("resize", () => {
-    if (window.innerWidth > 860) {
-      setMobileMenu(false);
-    }
-  });
-}
-
-const revealItems = document.querySelectorAll(".reveal");
-
-if ("IntersectionObserver" in window && revealItems.length) {
-  const revealObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("revealed");
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.15 }
-  );
-
-  revealItems.forEach((item) => revealObserver.observe(item));
-} else {
-  revealItems.forEach((item) => item.classList.add("revealed"));
-}
-
-const coffeeForm = document.getElementById("coffee-form");
-
-if (coffeeForm) {
-  const PRICE_MAP = {
-    "250g": { amount: 10.95 },
-    "500g": { amount: 19.5 },
-    "1kg": { amount: 35.95 }
-  };
-
-  const DELIVERY_FEE = 4.50;
-
-  const weight = document.getElementById("weight");
-  const grind = document.getElementById("grind");
-  const fulfilment = document.getElementById("fulfilment");
-  const quantity = document.getElementById("quantity");
-  const subtotal = document.getElementById("serra-total");
-  const summary = document.getElementById("serra-summary");
-  const priceDisplay = document.getElementById("serra-price-display");
-  const fulfilmentNote = document.getElementById("serra-fulfilment-note");
-  const buyButton = document.getElementById("buy-button");
-  const message = document.getElementById("purchase-message");
-
-  function formatMoney(value) {
-    return new Intl.NumberFormat("en-GB", {
-      style: "currency",
-      currency: "GBP"
-    }).format(value);
-  }
-
-  function prettyGrind(value) {
-    return {
-      whole_bean: "Whole bean",
-      coarse: "Coarse",
-      medium: "Medium",
-      fine: "Fine"
-    }[value] || value;
-  }
-
-  function prettyFulfilment(value) {
-    return value === "collection" ? "Collection" : "Delivery";
-  }
-
-  function updateCoffeeSummary() {
-    const chosenWeight = weight.value;
-    const chosenQty = Math.max(1, Math.min(10, Number(quantity.value) || 1));
-    quantity.value = chosenQty;
-
-    const unitPrice = PRICE_MAP[chosenWeight].amount;
-    const orderSubtotal = unitPrice * chosenQty;
-
-    priceDisplay.textContent = formatMoney(unitPrice);
-    subtotal.textContent = `Subtotal: ${formatMoney(orderSubtotal)}`;
-    summary.textContent = `${chosenWeight} · ${prettyGrind(grind.value)} · ${prettyFulfilment(fulfilment.value)} · Qty ${chosenQty}`;
-
-    if (fulfilment.value === "delivery") {
-      fulfilmentNote.textContent = `Delivery: ${formatMoney(DELIVERY_FEE)} postage and packaging added securely at checkout.`;
-    } else {
-      fulfilmentNote.textContent =
-        "Collection: free from Church Hill North, Redditch. Collection details will be shared after payment.";
-    }
-  }
-
-  weight.addEventListener("change", updateCoffeeSummary);
-  grind.addEventListener("change", updateCoffeeSummary);
-  fulfilment.addEventListener("change", updateCoffeeSummary);
-  quantity.addEventListener("input", updateCoffeeSummary);
-
-  coffeeForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const chosenQty = Math.max(1, Math.min(10, Number(quantity.value) || 1));
-
-    buyButton.disabled = true;
-    buyButton.textContent = "Redirecting...";
-    message.style.display = "none";
-    message.textContent = "";
-
-    try {
-      const response = await fetch("/api/create-checkout-session", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          product: "Serra Negra",
-          weight: weight.value,
-          grind: grind.value,
-          fulfilment: fulfilment.value,
-          quantity: chosenQty
-        })
-      });
-
-      const rawText = await response.text();
-      let data = {};
-
-      try {
-        data = rawText ? JSON.parse(rawText) : {};
-      } catch (parseError) {
-        throw new Error(`Invalid response from checkout endpoint: ${rawText || "empty response"}`);
+    const PRODUCT_PRICE_IDS = {
+      "Serra Negra": {
+        "250g": env.STRIPE_PRICE_SERRA_NEGRA_250G,
+        "500g": env.STRIPE_PRICE_SERRA_NEGRA_500G,
+        "1kg": env.STRIPE_PRICE_SERRA_NEGRA_1KG
+      },
+      "Peru Cajamarca": {
+        "250g": env.STRIPE_PRICE_PERU_CAJAMARCA_250G,
+        "500g": env.STRIPE_PRICE_PERU_CAJAMARCA_500G,
+        "1kg": env.STRIPE_PRICE_PERU_CAJAMARCA_1KG
       }
-
-      if (!response.ok || !data.url) {
-        throw new Error(data.error || "Unable to create checkout session.");
-      }
-
-      window.location.href = data.url;
-    } catch (error) {
-      message.textContent = error.message || "Something went wrong. Please try again.";
-      message.style.display = "block";
-      buyButton.disabled = false;
-      buyButton.textContent = "Buy Serra Negra";
-    }
-  });
-
-  updateCoffeeSummary();
-}
-
-const contactForm = document.getElementById("contact-form");
-
-if (contactForm) {
-  const status = document.getElementById("contact-status");
-  const submitButton = document.getElementById("contact-submit");
-
-  contactForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-
-    const formData = new FormData(contactForm);
-
-    const payload = {
-      name: formData.get("name")?.toString().trim() || "",
-      email: formData.get("email")?.toString().trim() || "",
-      subject: formData.get("subject")?.toString().trim() || "",
-      message: formData.get("message")?.toString().trim() || ""
     };
 
-    const honeypot = formData.get("website")?.toString().trim() || "";
-    const turnstileToken = formData.get("cf-turnstile-response")?.toString().trim() || "";
+    const selectedProduct = PRODUCT_PRICE_IDS[product];
+    const selectedPrice = selectedProduct?.[weight];
+    const qty = Number(quantity);
 
-    if (honeypot) {
-      status.textContent = "Submission blocked.";
-      return;
+    if (!selectedProduct) {
+      return new Response(JSON.stringify({ error: "Invalid product selected." }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" }
+      });
     }
 
-    if (!payload.name || !payload.email || !payload.subject || !payload.message) {
-      status.textContent = "Please complete all fields.";
-      return;
+    if (!selectedPrice) {
+      return new Response(JSON.stringify({ error: "Invalid weight selected." }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" }
+      });
     }
 
-    if (!turnstileToken) {
-      status.textContent = "Please complete the spam check first.";
-      return;
+    if (!Number.isInteger(qty) || qty < 1 || qty > 10) {
+      return new Response(JSON.stringify({ error: "Quantity must be between 1 and 10." }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" }
+      });
     }
 
-    submitButton.disabled = true;
-    submitButton.textContent = "Sending...";
-    status.textContent = "";
+    if (!env.STRIPE_SECRET_KEY) {
+      return new Response(JSON.stringify({ error: "Missing STRIPE_SECRET_KEY environment variable." }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+
+    const requiredPriceIds = [
+      env.STRIPE_PRICE_SERRA_NEGRA_250G,
+      env.STRIPE_PRICE_SERRA_NEGRA_500G,
+      env.STRIPE_PRICE_SERRA_NEGRA_1KG,
+      env.STRIPE_PRICE_PERU_CAJAMARCA_250G,
+      env.STRIPE_PRICE_PERU_CAJAMARCA_500G,
+      env.STRIPE_PRICE_PERU_CAJAMARCA_1KG
+    ];
+
+    if (requiredPriceIds.some((value) => !value)) {
+      return new Response(JSON.stringify({ error: "Missing one or more Stripe Price ID environment variables." }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+
+    const origin = new URL(request.url).origin;
+    const params = new URLSearchParams();
+
+    params.append("mode", "payment");
+    params.append("success_url", `${origin}/thank-you.html?session_id={CHECKOUT_SESSION_ID}`);
+    params.append("cancel_url", `${origin}/shop.html`);
+
+    params.append("line_items[0][price]", selectedPrice);
+    params.append("line_items[0][quantity]", String(qty));
+
+    params.append("metadata[product]", product || "");
+    params.append("metadata[weight]", weight || "");
+    params.append("metadata[grind]", grind || "");
+    params.append("metadata[fulfilment]", fulfilment || "");
+    params.append("metadata[quantity]", String(qty));
+    params.append("metadata[stripe_price_id]", selectedPrice);
+
+    params.append("payment_intent_data[metadata][product]", product || "");
+    params.append("payment_intent_data[metadata][weight]", weight || "");
+    params.append("payment_intent_data[metadata][grind]", grind || "");
+    params.append("payment_intent_data[metadata][fulfilment]", fulfilment || "");
+    params.append("payment_intent_data[metadata][quantity]", String(qty));
+    params.append("payment_intent_data[metadata][stripe_price_id]", selectedPrice);
+
+    if (fulfilment === "delivery") {
+      params.append("shipping_address_collection[allowed_countries][0]", "GB");
+      params.append("shipping_options[0][shipping_rate_data][type]", "fixed_amount");
+      params.append("shipping_options[0][shipping_rate_data][fixed_amount][amount]", "450");
+      params.append("shipping_options[0][shipping_rate_data][fixed_amount][currency]", "gbp");
+      params.append("shipping_options[0][shipping_rate_data][display_name]", "UK delivery");
+      params.append("shipping_options[0][shipping_rate_data][delivery_estimate][minimum][unit]", "business_day");
+      params.append("shipping_options[0][shipping_rate_data][delivery_estimate][minimum][value]", "2");
+      params.append("shipping_options[0][shipping_rate_data][delivery_estimate][maximum][unit]", "business_day");
+      params.append("shipping_options[0][shipping_rate_data][delivery_estimate][maximum][value]", "4");
+    }
+
+    if (fulfilment === "collection") {
+      params.append("custom_fields[0][key]", "collection_note");
+      params.append("custom_fields[0][label][type]", "custom");
+      params.append("custom_fields[0][label][custom]", "Collection note");
+      params.append("custom_fields[0][type]", "text");
+      params.append("custom_fields[0][optional]", "true");
+      params.append("custom_fields[0][text][maximum_length]", "120");
+    }
+
+    const stripeResponse = await fetch("https://api.stripe.com/v1/checkout/sessions", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${env.STRIPE_SECRET_KEY}`,
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: params.toString()
+    });
+
+    const raw = await stripeResponse.text();
+    let session = {};
 
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          ...payload,
-          website: honeypot,
-          turnstileToken
-        })
+      session = raw ? JSON.parse(raw) : {};
+    } catch (e) {
+      return new Response(JSON.stringify({ error: "Stripe returned invalid JSON.", raw }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" }
       });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.error || "Unable to send message.");
-      }
-
-      contactForm.reset();
-      status.textContent = "Thanks — your message has been sent.";
-
-      if (window.turnstile) {
-        window.turnstile.reset();
-      }
-    } catch (error) {
-      status.textContent = error.message || "Something went wrong. Please try again.";
-
-      if (window.turnstile) {
-        window.turnstile.reset();
-      }
-    } finally {
-      submitButton.disabled = false;
-      submitButton.textContent = "Send message";
     }
-  });
+
+    if (!stripeResponse.ok) {
+      return new Response(JSON.stringify({ error: session.error?.message || "Stripe error." }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+
+    return new Response(JSON.stringify({ url: session.url }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" }
+    });
+  } catch (error) {
+    return new Response(JSON.stringify({ error: error.message || "Server error creating checkout session." }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" }
+    });
+  }
 }
