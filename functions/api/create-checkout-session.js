@@ -137,6 +137,7 @@ export async function onRequest(context) {
 
     // Store fulfilment choice in metadata
     formData.set("payment_intent_data[metadata][fulfilment]", fulfilment);
+    formData.set("metadata[fulfilment]", fulfilment);
 
     // Only collect shipping addresses for delivery orders
     if (fulfilment === "delivery") {

@@ -5,11 +5,27 @@ document.documentElement.classList.add("js");
 window.dataLayer = window.dataLayer || [];
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Local storage key used to persist the basket between page loads
+  // Local storage keys used to persist basket and fulfilment preference
   const BASKET_STORAGE_KEY = "atlas-basket";
+  const FULFILMENT_STORAGE_KEY = "atlas-fulfilment";
 
-  // Read any saved basket items as soon as the page loads
+  // Shared product pricing in GBP for front-end display only
+  const PRODUCTS = {
+    serra: {
+      id: "serra",
+      name: "Serra Negra",
+      prices: { "250g": 10.95, "500g": 19.5, "1kg": 35.95 }
+    },
+    peru: {
+      id: "peru",
+      name: "Peru Cajamarca",
+      prices: { "250g": 13.95, "500g": 26.95, "1kg": 49.95 }
+    }
+  };
+
+  // Read any saved basket items and fulfilment choice as soon as the page loads
   const basket = readBasket();
+  let fulfilment = readFulfilment();
 
   // Shared UI references used across the site
   const mobileToggle = document.querySelector("[data-mobile-toggle]");
@@ -25,11 +41,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const mobileBasketSummaryEl = document.getElementById("mobile-basket-summary");
   const checkoutButton = document.getElementById("checkout-button");
   const mobileBasketBarToggle = document.getElementById("mobile-basket-bar-toggle");
+  const fulfilmentInputs = document.querySelectorAll('input[name="basket-fulfilment"]');
+  const fulfilmentNoteEl = document.getElementById("basket-fulfilment-note");
+  const checkoutNoteEl = document.getElementById("basket-checkout-note");
+
+  // Sync saved fulfilment state into the radio inputs on load
+  syncFulfilmentInputs();
 
   // Set up all shared behaviors used across the site
   setupMobileMenu();
   setupReveal();
   setupBasketDrawer();
+  setupFulfilmentSelector();
   setupShopProductForms();
   renderBasket();
 
@@ -51,6 +74,23 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch {}
   }
 
+  // Read fulfilment safely from localStorage
+  function readFulfilment() {
+    try {
+      const saved = localStorage.getItem(FULFILMENT_STORAGE_KEY);
+      return saved === "collection" ? "collection" : "delivery";
+    } catch {
+      return "delivery";
+    }
+  }
+
+  // Save fulfilment safely into localStorage
+  function saveFulfilment() {
+    try {
+      localStorage.setItem(FULFILMENT_STORAGE_KEY, fulfilment);
+    } catch {}
+  }
+
   // Format prices as GBP for display in the UI
   function formatMoney(value) {
     return new Intl.NumberFormat("en-GB", {
@@ -67,6 +107,35 @@ document.addEventListener("DOMContentLoaded", () => {
       medium: "Medium",
       fine: "Fine"
     }[value] || value;
+  }
+
+  // Convert fulfilment values into readable labels
+  function prettyFulfilment(value) {
+    return value === "collection" ? "Local collection" : "Delivery";
+  }
+
+  // Keep the basket fulfilment radio buttons in sync with state
+  function syncFulfilmentInputs() {
+    fulfilmentInputs.forEach((input) => {
+      input.checked = input.value === fulfilment;
+    });
+  }
+
+  // Update fulfilment guidance shown in the basket drawer
+  function updateFulfilmentUI() {
+    if (fulfilmentNoteEl) {
+      fulfilmentNoteEl.textContent =
+        fulfilment === "collection"
+          ? "Collection is free in Redditch. We’ll contact you after payment to arrange pickup."
+          : "Delivery is calculated in Stripe checkout. Switch to local collection to skip the delivery charge.";
+    }
+
+    if (checkoutNoteEl) {
+      checkoutNoteEl.textContent =
+        fulfilment === "collection"
+          ? "Your order will be marked for local collection after payment."
+          : "Delivery charges will be applied during checkout.";
+    }
   }
 
   // Shared mobile menu behavior for pages using the common header
@@ -153,6 +222,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Attach fulfilment change interactions
+  function setupFulfilmentSelector() {
+    updateFulfilmentUI();
+
+    fulfilmentInputs.forEach((input) => {
+      input.addEventListener("change", () => {
+        if (!input.checked) return;
+        fulfilment = input.value === "collection" ? "collection" : "delivery";
+        saveFulfilment();
+        syncFulfilmentInputs();
+        updateFulfilmentUI();
+      });
+    });
+  }
+
   // Render the current basket contents and totals into the drawer UI
   function renderBasket() {
     const count = basket.reduce((sum, item) => sum + item.quantity, 0);
@@ -168,23 +252,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (mobileBasketSummaryEl) {
       mobileBasketSummaryEl.textContent = basket.length
-        ? `${count} item${count === 1 ? "" : "s"} · ${formatMoney(total)}`
+        ? `${count} item${count === 1 ? "" : "s"} · ${formatMoney(total)} · ${prettyFulfilment(fulfilment)}`
         : "No items selected yet";
     }
 
-    if (!basketItemsEl || !basketTotalEl) return;
+    if (!basketItemsEl || !basketTotalEl) {
+      updateFulfilmentUI();
+      return;
+    }
 
     if (!basket.length) {
       basketItemsEl.innerHTML = '<p class="shop-basket-empty">Your basket is currently empty.</p>';
       basketTotalEl.textContent = formatMoney(0);
+      updateFulfilmentUI();
       return;
     }
 
     basketItemsEl.innerHTML = basket.map((item, index) => `
       <div class="shop-basket-item">
         <div class="shop-basket-item__copy">
-          <strong>${item.product}</strong>
-          <span>${item.weight} · ${prettyGrind(item.grind)} · Quantity ${item.quantity}</span>
+          <strong>${escapeHtml(item.product)}</strong>
+          <span>${escapeHtml(item.weight)} · ${escapeHtml(prettyGrind(item.grind))} · Quantity ${item.quantity}</span>
         </div>
         <div class="shop-basket-item__actions">
           <strong>${formatMoney(item.lineTotal)}</strong>
@@ -194,6 +282,7 @@ document.addEventListener("DOMContentLoaded", () => {
     `).join("");
 
     basketTotalEl.textContent = formatMoney(total);
+    updateFulfilmentUI();
 
     basketItemsEl.querySelectorAll("[data-remove-index]").forEach((button) => {
       button.addEventListener("click", () => {
@@ -206,20 +295,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Product-specific add-to-basket logic used on the shop page
   function setupShopProductForms() {
-    const PRODUCTS = {
-      serra: {
-        id: "serra",
-        name: "Serra Negra",
-        prices: { "250g": 10.95, "500g": 19.5, "1kg": 35.95 }
-      },
-      peru: {
-        id: "peru",
-        name: "Peru Cajamarca",
-        prices: { "250g": 13.95, "500g": 26.95, "1kg": 49.95 }
-      }
-    };
-
-    // If there are no add-to-basket buttons on the current page, skip shop-specific setup
     if (!document.querySelector("[data-add-to-basket]")) return;
 
     // Update the visible summary and subtotal for each product panel
@@ -243,7 +318,7 @@ document.addEventListener("DOMContentLoaded", () => {
       priceEl.textContent = formatMoney(subtotal);
 
       if (noteEl) {
-        noteEl.textContent = "Delivery is added at checkout. Local collection is also available.";
+        noteEl.textContent = "Choose delivery or local collection later in the basket before checkout.";
       }
     }
 
@@ -315,7 +390,7 @@ document.addEventListener("DOMContentLoaded", () => {
       try {
         // Build the server payload from the basket contents
         const payload = {
-          fulfilment: "delivery",
+          fulfilment,
           items: basket.map((item) => ({
             product: item.product,
             weight: item.weight,
@@ -360,7 +435,8 @@ document.addEventListener("DOMContentLoaded", () => {
               price: item.unitPrice,
               quantity: item.quantity
             }))
-          }
+          },
+          fulfilment
         });
 
         // Clear the basket before redirecting into hosted checkout
@@ -371,14 +447,13 @@ document.addEventListener("DOMContentLoaded", () => {
         // Send the customer to Stripe Checkout
         window.location.href = data.url;
       } catch (error) {
-        // Show any checkout error inside the drawer
         if (basketItemsEl) {
           const existingNote = basketItemsEl.querySelector(".shop-basket-checkout-note");
           if (existingNote) existingNote.remove();
 
           basketItemsEl.insertAdjacentHTML(
             "beforeend",
-            `<p class="shop-basket-checkout-note">${error.message || "Something went wrong. Please try again."}</p>`
+            `<p class="shop-basket-checkout-note">${escapeHtml(error.message || "Something went wrong. Please try again.")}</p>`
           );
         }
 
@@ -386,5 +461,15 @@ document.addEventListener("DOMContentLoaded", () => {
         checkoutButton.textContent = originalText;
       }
     });
+  }
+
+  // Basic HTML escaping for any user-facing interpolated text
+  function escapeHtml(value) {
+    return String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#39;");
   }
 });

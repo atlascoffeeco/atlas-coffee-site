@@ -1,13 +1,28 @@
 <!DOCTYPE html>
 <html lang="en" class="js-disabled">
 <head>
+  <!-- <style>
+  @media (min-width: 1100px) {
+    body.shop-page {
+      zoom: 0.88;
+    }
+  }
+</style> -->
   <!-- Google Tag Manager -->
   <script>
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-TMRKXCQQ');
+    (function (w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({
+        "gtm.start": new Date().getTime(),
+        event: "gtm.js"
+      });
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l !== "dataLayer" ? "&l=" + l : "";
+      j.async = true;
+      j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, "script", "dataLayer", "GTM-TMRKXCQQ");
   </script>
   <!-- End Google Tag Manager -->
 
@@ -37,6 +52,7 @@
     window.dataLayer = window.dataLayer || [];
   </script>
 </head>
+
 <body class="shop-page shop-page-compact">
   <!-- Google Tag Manager (noscript) -->
   <noscript>
@@ -54,7 +70,13 @@
   <header class="site-header">
     <div class="container nav-shell">
       <a class="brand" href="./index.html" aria-label="Atlas Coffee home">
-        <img src="./assets/logo.jpg" alt="Atlas Coffee logo" width="80" height="80" loading="eager" />
+        <img
+          src="./assets/logo.jpg"
+          alt="Atlas Coffee logo"
+          width="80"
+          height="80"
+          loading="eager"
+        />
         <span class="brand-lockup">
           <span>Atlas Coffee Company</span>
           <small>Independent coffee roasters</small>
@@ -142,7 +164,7 @@
             <span class="eyebrow">Shop</span>
             <h1>Fresh coffees, straight to the point.</h1>
             <p>
-              Small-batch single-origin coffees for UK delivery or local collection in Redditch.
+              Small-batch single-origin coffees for UK delivery or free local collection in Redditch.
             </p>
           </div>
 
@@ -159,7 +181,10 @@
           <article class="product-card product-card--detailed reveal" id="serra-negra">
             <div class="product-top">
               <div class="meta">
+                <!-- Country badge -->
                 <span class="product-tag">Brazil</span>
+
+                <!-- Roast type badge -->
                 <span>Single origin</span>
               </div>
               <div class="price">From £10.95</div>
@@ -185,8 +210,7 @@
               <div class="product-card__intro">
                 <h2 id="serra-title">Serra Negra</h2>
                 <p class="featured-product-lead">
-                  Mild acidity, sweetness,
-                  and the kind of easy balance that makes it effortless to come back to.
+                  Mild acidity, sweetness, and the kind of easy balance that makes it effortless to come back to.
                 </p>
               </div>
 
@@ -261,7 +285,7 @@
               </div>
 
               <div class="buy-box">
-                <span class="featured-label">Selected</span>
+                <span class="featured-label">Your Selection</span>
                 <p class="buy-box-summary" id="serra-summary-line">250g · Whole bean · Quantity: 1</p>
                 <p class="checkout-note" id="serra-note">
                   Delivery is added at checkout. Local collection is also available.
@@ -278,7 +302,10 @@
           <article class="product-card product-card--detailed reveal" id="peru-product">
             <div class="product-top">
               <div class="meta">
+                <!-- Country badge -->
                 <span class="product-tag">Peru</span>
+
+                <!-- Roast type badge -->
                 <span>Blend</span>
               </div>
               <div class="price">From £13.95</div>
@@ -378,7 +405,7 @@
               </div>
 
               <div class="buy-box">
-                <span class="featured-label">Selected</span>
+                <span class="featured-label">Your Selection</span>
                 <p class="buy-box-summary" id="peru-summary-line">250g · Whole bean · Quantity: 1</p>
                 <p class="checkout-note" id="peru-note">
                   Delivery is added at checkout. Local collection is also available.
@@ -400,11 +427,16 @@
         <div class="shop-support-strip__grid reveal">
           <article class="shop-support-strip__item">
             <strong>Collection &amp; delivery</strong>
-            <p>Checkout handles the delivery details you provide, and local collection can be arranged after purchase.</p>
+            <p>
+              Choose delivery or free local collection in the basket before checkout. If you select collection,
+              we’ll contact you after payment to arrange pickup in Redditch.
+            </p>
           </article>
           <article class="shop-support-strip__item">
             <strong>Small focused range</strong>
-            <p>The line-up is intentionally short so it is easier to compare, choose, and buy without scrolling through noise.</p>
+            <p>
+              The line-up is intentionally short so it is easier to compare, choose, and buy without scrolling through noise.
+            </p>
           </article>
         </div>
       </div>
@@ -412,20 +444,26 @@
   </main>
 
   <div class="shop-basket-popover" id="basket-popover" aria-hidden="true">
-    <button class="shop-basket-popover__backdrop" type="button" data-basket-close tabindex="-1" aria-label="Close basket"></button>
+    <button
+      class="shop-basket-popover__backdrop"
+      type="button"
+      data-basket-close
+      tabindex="-1"
+      aria-label="Close basket"
+    ></button>
 
-    <aside
-      class="shop-basket-drawer"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="basket-title"
-    >
+    <aside class="shop-basket-drawer" role="dialog" aria-modal="true" aria-labelledby="basket-title">
       <div class="shop-basket-drawer__header">
         <div>
           <span class="eyebrow">Basket</span>
           <h2 id="basket-title">Your selected coffees.</h2>
         </div>
-        <button class="shop-basket-drawer__close" type="button" data-basket-close aria-label="Close basket">
+        <button
+          class="shop-basket-drawer__close"
+          type="button"
+          data-basket-close
+          aria-label="Close basket"
+        >
           Close
         </button>
       </div>
@@ -437,6 +475,44 @@
       </div>
 
       <div class="shop-basket-drawer__footer">
+        <!-- Fulfilment selector added before total and checkout -->
+        <div class="shop-basket-fulfilment" aria-labelledby="basket-fulfilment-label">
+          <span class="shop-basket-total-label" id="basket-fulfilment-label">Fulfilment</span>
+
+          <div class="shop-basket-fulfilment__options" role="radiogroup" aria-label="Choose fulfilment">
+            <label class="shop-basket-fulfilment__option">
+              <input
+                type="radio"
+                name="basket-fulfilment"
+                id="basket-fulfilment-delivery"
+                value="delivery"
+                checked
+              />
+              <span>
+                <strong>Delivery</strong>
+                <small>Shipping is added securely at checkout.</small>
+              </span>
+            </label>
+
+            <label class="shop-basket-fulfilment__option">
+              <input
+                type="radio"
+                name="basket-fulfilment"
+                id="basket-fulfilment-collection"
+                value="collection"
+              />
+              <span>
+                <strong>Local collection</strong>
+                <small>Free collection in Redditch. We’ll contact you after payment.</small>
+              </span>
+            </label>
+          </div>
+
+          <p class="shop-basket-note" id="basket-fulfilment-note">
+            Delivery is calculated at checkout. Switch to local collection to skip the delivery charge.
+          </p>
+        </div>
+
         <div class="shop-basket-total">
           <span class="shop-basket-total-label">Estimated total</span>
           <strong id="basket-total">£0.00</strong>
@@ -446,8 +522,8 @@
           Proceed to checkout
         </button>
 
-        <p class="shop-basket-note">
-          Delivery is calculated at checkout. Local collection is also available.
+        <p class="shop-basket-note" id="basket-checkout-note">
+          Checkout is handled securely. Your fulfilment choice will be included with the order.
         </p>
       </div>
     </aside>

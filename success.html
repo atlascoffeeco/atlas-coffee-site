@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" class="js-disabled">
 <head>
+    <style>
+  @media (min-width: 1100px) {
+    body.shop-page {
+      zoom: 0.88;
+    }
+  }
+</style>
   <!-- Google Tag Manager -->
   <script>
     (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -32,8 +39,8 @@
 
   <!-- Global site bootstrapping -->
   <script>
-    document.documentElement.classList.remove('js-disabled');
-    document.documentElement.classList.add('js');
+    document.documentElement.classList.remove("js-disabled");
+    document.documentElement.classList.add("js");
     window.dataLayer = window.dataLayer || [];
   </script>
 </head>
@@ -72,7 +79,7 @@
         <a href="./contact.html">Contact</a>
       </nav>
 
-      <!-- Success page keeps a simple CTA instead of a basket trigger -->
+      <!-- Success page uses a simple CTA rather than a basket trigger -->
       <div class="actions">
         <a class="button" href="./shop.html">Shop coffee</a>
         <button
@@ -106,9 +113,8 @@
           <article class="confirmation-card confirmation-card--message reveal">
             <span class="eyebrow">Order confirmed</span>
             <h1>Thank you — your coffee order is locked in.</h1>
-            <p class="confirmation-lead">
-              Your order has been received successfully. Leave it to us to prepare your
-              order for delivery or collection.
+            <p class="confirmation-lead" id="confirmation-lead">
+              Your order has been received successfully. We’ll now prepare it for delivery or collection.
             </p>
 
             <div class="confirmation-actions">
@@ -117,7 +123,7 @@
             </div>
 
             <p class="confirmation-status" id="confirmation-status">
-              Order details loaded successfully.
+              Please wait while your order summary is loaded.
             </p>
           </article>
 
@@ -132,7 +138,7 @@
             <div class="confirmation-meta">
               <div class="confirmation-meta-row">
                 <span>Payment status</span>
-                <strong id="payment-status">Confirmed</strong>
+                <strong id="payment-status">Loading…</strong>
               </div>
               <div class="confirmation-meta-row">
                 <span>Fulfilment</span>
@@ -152,7 +158,7 @@
               <li>Loading order items…</li>
             </ul>
 
-            <p class="checkout-note">
+            <p class="checkout-note" id="summary-note">
               Please wait while the checkout summary is retrieved.
             </p>
           </aside>
@@ -170,12 +176,12 @@
           >
             <span class="eyebrow">What happens next</span>
             <h2 id="what-next-title">We’ll take it from here.</h2>
-            <p>
-              Everything has gone through correctly. Leave it to us, we'll get your beans
-              roasted and packed, and then delivered or ready for collection.
+            <p id="next-steps-intro">
+              Everything has gone through correctly. We’ll review your order, prepare your coffee,
+              and get it ready for delivery or collection.
             </p>
 
-            <ul class="confirmation-checklist">
+            <ul class="confirmation-checklist" id="confirmation-checklist">
               <li>
                 <strong>Order review</strong>
                 <span>
@@ -188,11 +194,10 @@
                   Coffee is prepared according to your selected coffee, grind, and fulfilment option.
                 </span>
               </li>
-              <li>
+              <li id="fulfilment-step">
                 <strong>Delivery or collection</strong>
                 <span>
-                  If you selected collection, we will contact you to arrange pickup. If you selected
-                  delivery, we will aim to dispatch your order within 1-3 business days, excluding weekends or public holidays.
+                  We’ll use your selected fulfilment method to complete the order after roasting.
                 </span>
               </li>
             </ul>
@@ -242,43 +247,43 @@
 
   <!-- Shared page interactions -->
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const mobileToggle = document.querySelector('[data-mobile-toggle]');
-      const mobilePanel = document.querySelector('[data-mobile-panel]');
+    document.addEventListener("DOMContentLoaded", () => {
+      const mobileToggle = document.querySelector("[data-mobile-toggle]");
+      const mobilePanel = document.querySelector("[data-mobile-panel]");
 
       if (mobileToggle && mobilePanel) {
-        const mobileLinks = mobilePanel.querySelectorAll('a');
+        const mobileLinks = mobilePanel.querySelectorAll("a");
 
         const setMobileMenu = (open) => {
-          mobileToggle.setAttribute('aria-expanded', String(open));
-          mobileToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-          mobilePanel.classList.toggle('is-open', open);
+          mobileToggle.setAttribute("aria-expanded", String(open));
+          mobileToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+          mobilePanel.classList.toggle("is-open", open);
         };
 
-        mobileToggle.addEventListener('click', () => {
-          const isOpen = mobileToggle.getAttribute('aria-expanded') === 'true';
+        mobileToggle.addEventListener("click", () => {
+          const isOpen = mobileToggle.getAttribute("aria-expanded") === "true";
           setMobileMenu(!isOpen);
         });
 
         mobileLinks.forEach((link) => {
-          link.addEventListener('click', () => setMobileMenu(false));
+          link.addEventListener("click", () => setMobileMenu(false));
         });
 
-        window.addEventListener('resize', () => {
+        window.addEventListener("resize", () => {
           if (window.innerWidth > 860) {
             setMobileMenu(false);
           }
         });
       }
 
-      const revealItems = document.querySelectorAll('.reveal');
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const revealItems = document.querySelectorAll(".reveal");
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-      if (!prefersReducedMotion && 'IntersectionObserver' in window) {
+      if (!prefersReducedMotion && "IntersectionObserver" in window) {
         const observer = new IntersectionObserver((entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              entry.target.classList.add('revealed');
+              entry.target.classList.add("revealed");
               observer.unobserve(entry.target);
             }
           });
@@ -286,42 +291,96 @@
 
         revealItems.forEach((item) => observer.observe(item));
       } else {
-        revealItems.forEach((item) => item.classList.add('revealed'));
+        revealItems.forEach((item) => item.classList.add("revealed"));
       }
     });
   </script>
 
   <!-- Stripe Checkout session lookup -->
   <script>
-    document.addEventListener('DOMContentLoaded', async () => {
-      const statusEl = document.getElementById('confirmation-status');
-      const fulfilmentEl = document.getElementById('fulfilment-method');
-      const totalEl = document.getElementById('order-total');
-      const referenceEl = document.getElementById('order-reference');
-      const paymentStatusEl = document.getElementById('payment-status');
-      const itemsEl = document.getElementById('order-items');
+    document.addEventListener("DOMContentLoaded", async () => {
+      const statusEl = document.getElementById("confirmation-status");
+      const confirmationLeadEl = document.getElementById("confirmation-lead");
+      const fulfilmentEl = document.getElementById("fulfilment-method");
+      const totalEl = document.getElementById("order-total");
+      const referenceEl = document.getElementById("order-reference");
+      const paymentStatusEl = document.getElementById("payment-status");
+      const itemsEl = document.getElementById("order-items");
+      const summaryNoteEl = document.getElementById("summary-note");
+      const nextStepsIntroEl = document.getElementById("next-steps-intro");
+      const fulfilmentStepEl = document.getElementById("fulfilment-step");
 
       const url = new URL(window.location.href);
-      const sessionId = url.searchParams.get('session_id');
+      const sessionId = url.searchParams.get("session_id");
 
       const setStatus = (message, isError = false) => {
         statusEl.textContent = message;
-        statusEl.classList.toggle('error', isError);
+        statusEl.classList.toggle("error", isError);
       };
 
-      const formatMoney = (amount, currency = 'GBP') => {
-        return new Intl.NumberFormat('en-GB', {
-          style: 'currency',
+      const formatMoney = (amount, currency = "GBP") => {
+        return new Intl.NumberFormat("en-GB", {
+          style: "currency",
           currency
         }).format(amount || 0);
       };
 
+      const formatPaymentStatus = (status) => {
+        if (!status) return "Confirmed";
+        return String(status).charAt(0).toUpperCase() + String(status).slice(1);
+      };
+
+      const formatFulfilment = (value) => {
+        return value === "collection" ? "Local collection" : "Delivery";
+      };
+
+      const applyFulfilmentCopy = (fulfilment) => {
+        const isCollection = fulfilment === "collection";
+
+        if (confirmationLeadEl) {
+          confirmationLeadEl.textContent = isCollection
+            ? "Your order has been received successfully. We’ll now prepare it and contact you to arrange local collection."
+            : "Your order has been received successfully. We’ll now prepare it for roasting, packing, and delivery.";
+        }
+
+        if (summaryNoteEl) {
+          summaryNoteEl.textContent = isCollection
+            ? "Collection is free. We’ll contact you after payment to arrange pickup in Redditch."
+            : "Delivery charges, if applicable, were applied during checkout and are reflected in your final order total.";
+        }
+
+        if (nextStepsIntroEl) {
+          nextStepsIntroEl.textContent = isCollection
+            ? "Everything has gone through correctly. We’ll review your order, prepare your coffee, and contact you to arrange collection."
+            : "Everything has gone through correctly. We’ll review your order, prepare your coffee, and get it ready for dispatch.";
+        }
+
+        if (fulfilmentStepEl) {
+          fulfilmentStepEl.innerHTML = isCollection
+            ? `
+              <strong>Collection</strong>
+              <span>
+                You chose local collection. We’ll contact you after payment to arrange pickup in Redditch once your order is ready.
+              </span>
+            `
+            : `
+              <strong>Delivery</strong>
+              <span>
+                You chose delivery. We’ll aim to dispatch your order within 1-3 business days, excluding weekends or public holidays.
+              </span>
+            `;
+        }
+      };
+
       if (!sessionId) {
-        setStatus('Order reference missing. If you need help, please contact Atlas Coffee.', true);
-        fulfilmentEl.textContent = 'Unavailable';
-        totalEl.textContent = 'Unavailable';
-        referenceEl.textContent = 'Unavailable';
-        paymentStatusEl.textContent = 'Unavailable';
+        setStatus("Order reference missing. If you need help, please contact Atlas Coffee.", true);
+        fulfilmentEl.textContent = "Unavailable";
+        totalEl.textContent = "Unavailable";
+        referenceEl.textContent = "Unavailable";
+        paymentStatusEl.textContent = "Unavailable";
+        if (summaryNoteEl) {
+          summaryNoteEl.textContent = "This page was opened without a valid checkout session reference.";
+        }
         itemsEl.innerHTML = `
           <li>
             <strong>We could not load this order.</strong>
@@ -336,25 +395,29 @@
         const order = await response.json();
 
         if (!response.ok) {
-          throw new Error(order?.error || 'Unable to load checkout session.');
+          throw new Error(order?.error || "Unable to load checkout session.");
         }
 
-        paymentStatusEl.textContent = order.paymentStatus || 'Confirmed';
-        fulfilmentEl.textContent = order.fulfilment || 'Delivery';
-        totalEl.textContent = formatMoney(order.value || 0, order.currency || 'GBP');
+        const fulfilment = order.fulfilment === "collection" ? "collection" : "delivery";
+
+        paymentStatusEl.textContent = formatPaymentStatus(order.paymentStatus || "confirmed");
+        fulfilmentEl.textContent = formatFulfilment(fulfilment);
+        totalEl.textContent = formatMoney(order.value || 0, order.currency || "GBP");
         referenceEl.textContent = order.transactionId || sessionId;
+
+        applyFulfilmentCopy(fulfilment);
 
         if (Array.isArray(order.items) && order.items.length > 0) {
           itemsEl.innerHTML = order.items.map((item) => `
             <li>
-              <strong>${item.item_name || 'Atlas Coffee item'}</strong>
+              <strong>${escapeHtml(item.item_name || "Atlas Coffee item")}</strong>
               <span>
-                Qty ${item.quantity || 1}
-                ${item.item_variant ? ` · ${item.item_variant}` : ''}
-                ${typeof item.price === 'number' ? ` · ${formatMoney(item.price, order.currency || 'GBP')} each` : ''}
+                Qty ${Number(item.quantity) || 1}
+                ${item.item_variant ? ` · ${escapeHtml(item.item_variant)}` : ""}
+                ${typeof item.price === "number" ? ` · ${formatMoney(item.price, order.currency || "GBP")} each` : ""}
               </span>
             </li>
-          `).join('');
+          `).join("");
         } else {
           itemsEl.innerHTML = `
             <li>
@@ -364,33 +427,51 @@
           `;
         }
 
-        setStatus('Order details loaded successfully.');
+        // setStatus("Order details loaded successfully.");
 
         window.dataLayer.push({
-          event: 'purchase',
+          event: "purchase",
           ecommerce: {
             transaction_id: order.transactionId,
             currency: order.currency,
             value: order.value,
             shipping: order.shipping,
             tax: order.tax,
-            items: order.items
-          }
+            items: Array.isArray(order.items) ? order.items : []
+          },
+          fulfilment
         });
       } catch (error) {
-        console.error('Error loading checkout session:', error);
+        console.error("Error loading checkout session:", error);
 
-        setStatus('Your payment succeeded, but we could not load the full order summary here. If needed, contact Atlas Coffee.', true);
-        fulfilmentEl.textContent = 'Confirmed at checkout';
-        totalEl.textContent = 'Confirmed at checkout';
+        setStatus(
+          "Your payment succeeded, but we could not load the full order summary here. If needed, contact Atlas Coffee.",
+          true
+        );
+        fulfilmentEl.textContent = "Confirmed at checkout";
+        totalEl.textContent = "Confirmed at checkout";
         referenceEl.textContent = sessionId;
-        paymentStatusEl.textContent = 'Confirmed';
+        paymentStatusEl.textContent = "Confirmed";
+
+        if (summaryNoteEl) {
+          summaryNoteEl.textContent = "The payment completed successfully, but the confirmation page could not retrieve the full summary.";
+        }
+
         itemsEl.innerHTML = `
           <li>
             <strong>Order confirmed</strong>
             <span>The Stripe checkout completed successfully, but the summary could not be retrieved on this page.</span>
           </li>
         `;
+      }
+
+      function escapeHtml(value) {
+        return String(value)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#39;");
       }
     });
   </script>

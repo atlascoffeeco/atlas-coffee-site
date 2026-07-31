@@ -6187,3 +6187,107 @@ body.basket-open {
     padding-inline: 0.85rem;
   }
 }
+
+/* ==========================================
+   GLOBAL SITE SCALE
+   Apply across all pages
+   ========================================== */
+
+/* Base content width */
+:root {
+  --content: 1280px; /* was 1180px */
+}
+
+/* Shared container width across the site */
+.container {
+  width: min(calc(100% - 2rem), var(--content));
+  margin-inline: auto;
+}
+
+/* Slightly calmer desktop spacing and typography */
+@media (min-width: 1100px) {
+  main section {
+    padding-block: clamp(3rem, 5vw, 5rem);
+  }
+
+  h1 {
+    font-size: clamp(2.8rem, 4vw, 4.8rem);
+    line-height: 0.96;
+  }
+
+  h2 {
+    line-height: 1.02;
+  }
+
+  p {
+    max-width: 62ch;
+  }
+
+  .card,
+  .product-card,
+  .product-preview,
+  .products-hero-shell,
+  .featured-product-copy,
+  .featured-product-buy,
+  .contact-intro-card,
+  .contact-form-card,
+  .legal-page {
+    padding: clamp(1.5rem, 2vw, 2.25rem);
+  }
+}
+
+/* =========================================
+   SHOP PAGE DARK MODE
+   ==========================================
+*/
+@media (prefers-color-scheme: dark) {
+  .product-tag {
+    color: #f8f1e8 !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  }
+}
+
+/* =========================================
+   SPACE BETWEEN FOOTER AND LAST ITEMS ON SHOP PAGE
+   ==========================================
+*/
+.shop-page .products-fulfilment {
+  padding-bottom: 4rem;
+}
+
+.shop-page .shop-support-strip {
+  padding-bottom: 1.5rem;
+}
+
+/* =========================================
+   CONTROL BASKET ICON COLOUR DARK/LIGHT MODE
+   ==========================================
+*/
+
+.basket-link__icon {
+  display: none;
+}
+
+.basket-link__icon-wrap {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  position: relative;
+  flex: 0 0 20px;
+  background-color: #111111;
+  -webkit-mask: url("./assets/basket-outlined-shopping-svgrepo-com.svg") center / contain no-repeat;
+  mask: url("./assets/basket-outlined-shopping-svgrepo-com.svg") center / contain no-repeat;
+}
+
+@media (prefers-color-scheme: dark) {
+  .basket-link__icon-wrap {
+    background-color: #ffffff;
+  }
+}
+
+.basket-link__dot {
+  position: absolute;
+  right: -2px;
+  top: -2px;
+}
