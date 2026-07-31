@@ -3876,6 +3876,48 @@ main section{
   margin-bottom: .3rem;
 }
 
+/* =========================================================
+   Fixing Radio Buttons alignment for desktop
+   ========================================================= */
+
+.shop-basket-fulfilment {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.shop-basket-fulfilment__options {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.shop-basket-fulfilment__option {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  line-height: 1.2;
+}
+
+.shop-basket-fulfilment__option input {
+  margin: 0;
+  flex: 0 0 auto;
+}
+
+.shop-basket-fulfilment__option strong {
+  font-size: var(--text-sm);
+}
+
+.shop-basket-fulfilment__option small {
+  display: none;
+}
+
+.shop-basket-note {
+  min-height: 1.5rem;
+  font-size: var(--text-sm);
+  line-height: 1.35;
+}
+
+
+
 .basket-link {
   display: inline-flex;
   align-items: center;
@@ -6075,27 +6117,6 @@ body.basket-open {
   line-height: 1;
 }
 
-.basket-link__dot {
-  position: absolute;
-  right: -0.18rem;
-  bottom: -0.18rem;
-  width: 0.82rem;
-  height: 0.82rem;
-  border-radius: 999px;
-  background: #d7a928;
-  border: 2px solid var(--bg);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--text) 8%, transparent);
-  opacity: 0;
-  transform: scale(0.7);
-  transition: opacity 180ms ease, transform 180ms ease;
-  pointer-events: none;
-}
-
-.basket-link[data-has-items="true"] .basket-link__dot {
-  opacity: 1;
-  transform: scale(1);
-}
-
 @media (max-width: 640px) {
   .basket-link__label {
     display: none;
@@ -6140,35 +6161,24 @@ body.basket-open {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 1.2rem;
-  height: 1.2rem;
-  padding: 0 0.3rem;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--text) 8%, transparent);
-  font-size: 0.78rem;
+  min-width: 1.5rem; 
+  height: 1.5rem;
+  padding: 0 .45rem;
+  border-radius: 9999px;
+  background: #ffa503;
+  color: #111111;
+  font-weight: 700;
+  font-size: .9rem;
   line-height: 1;
+  flex: 0 0 auto;
 }
 
-.basket-link__dot {
-  position: absolute;
-  right: -0.18rem;
-  bottom: -0.18rem;
-  width: 0.82rem;
-  height: 0.82rem;
-  border-radius: 999px;
-  background: #d7a928;
-  border: 2px solid var(--bg);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--text) 8%, transparent);
-  opacity: 0;
-  transform: scale(0.7);
-  transition: opacity 180ms ease, transform 180ms ease;
-  pointer-events: none;
-}
 
-[data-has-items="true"] .basket-link__dot {
-  opacity: 1;
-  transform: scale(1);
-}
+/* ==========================================
+   BASKET ICON DOT
+   ==========================================
+*/
+
 
 .mobile-panel-basket {
   display: inline-flex;
@@ -6236,7 +6246,7 @@ body.basket-open {
   }
 }
 
-/* =========================================
+/* ==========================================
    SHOP PAGE DARK MODE
    ==========================================
 */
@@ -6260,7 +6270,7 @@ body.basket-open {
   padding-bottom: 1.5rem;
 }
 
-/* =========================================
+/* ==========================================
    CONTROL BASKET ICON COLOUR DARK/LIGHT MODE
    ==========================================
 */
@@ -6286,8 +6296,14 @@ body.basket-open {
   }
 }
 
-.basket-link__dot {
-  position: absolute;
-  right: -2px;
-  top: -2px;
+
+/* ==========================================
+   SET ZOOM OUT FOR WEBSITE GLOBALLY
+   ==========================================
+*/ 
+
+@media (min-width: 1024px) {
+  html {
+    font-size: 80%;
+  }
 }
