@@ -2605,6 +2605,19 @@ main section{
   width: 100%;
 }
 
+
+
+.shop-basket-checkout:disabled {
+  background: color-mix(in srgb, var(--text) 8%, var(--surface));
+  color: var(--muted);
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+  transform: none;
+}
+
+
+
 .shop-page-premium .basket-sticky-bar {
   position: fixed;
   left: 0;
@@ -3824,6 +3837,35 @@ main section{
 .shop-basket-checkout-note {
   color: var(--muted);
 }
+
+.shop-basket-item {
+  display: grid;
+  gap: .4rem;
+  padding: var(--space-3);
+}
+
+.shop-basket-item__title-row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  align-items: baseline;
+}
+
+.shop-basket-item__price {
+  white-space: nowrap;
+}
+
+.shop-basket-item__copy span {
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: 1.25;
+}
+
+.shop-basket-remove {
+  justify-self: end;
+}
+
+
 
 .shop-basket-item {
   display: flex;
@@ -6306,4 +6348,140 @@ body.basket-open {
   html {
     font-size: 80%;
   }
+}
+
+/* ==========================================
+   MOBILE BASKET DRAWER
+   ==========================================
+*/
+
+@media (max-width: 640px) {
+  .shop-basket-popover {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 220ms ease, visibility 0s linear 220ms;
+  }
+
+  .shop-basket-popover.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: opacity 220ms ease;
+  }
+
+  .shop-basket-popover__backdrop {
+    position: absolute;
+    inset: 0;
+  }
+
+  .shop-basket-drawer {
+    width: 100%;
+    max-height: 78vh;
+    border-radius: 1.25rem 1.25rem 0 0;
+    transform: translateY(100%);
+    transition: transform 280ms ease;
+    will-change: transform;
+  }
+
+  .shop-basket-popover.is-open .shop-basket-drawer {
+    transform: translateY(0);
+  }
+}
+
+@media (min-width: 641px) {
+  .mobile-buy-bar {
+    display: none !important;
+  }
+}
+
+/* ==========================================
+   NEW HOME PAGE LAYOUT
+   ==========================================
+*/
+
+/* Homepage refresh */
+.home-hero {
+  padding-top: clamp(var(--space-10), 6vw, var(--space-20));
+}
+
+.home-hero .hero-grid {
+  align-items: stretch;
+  gap: clamp(var(--space-6), 4vw, var(--space-10));
+}
+
+.home-hero .hero-copy {
+  padding: clamp(var(--space-2), 1vw, var(--space-4)) 0;
+}
+
+.home-hero .hero-copy h1 {
+  max-width: 9ch;
+  letter-spacing: -0.06em;
+}
+
+.home-hero .hero-lead {
+  max-width: 34ch;
+}
+
+.home-hero .hero-mini-points span {
+  background: color-mix(in srgb, var(--primary) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--primary) 22%, transparent);
+  color: var(--text);
+}
+
+.home-hero .hero-visual {
+  min-height: 620px;
+  background:
+    radial-gradient(circle at 80% 18%, rgba(255,165,3,.18), transparent 20%),
+    radial-gradient(circle at 10% 85%, rgba(255,165,3,.10), transparent 26%),
+    linear-gradient(145deg, var(--surface) 0%, var(--surface-2) 48%, var(--surface-3) 100%);
+  border: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
+  box-shadow: var(--shadow-lg);
+}
+
+.home-hero .product-hero-card {
+  transform: translateY(10px);
+}
+
+.home-trust-band {
+  background: linear-gradient(180deg, var(--surface-2), color-mix(in srgb, var(--surface) 82%, var(--bg)));
+}
+
+.home-trust-band .trust-item {
+  background: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--text) 8%, transparent);
+  box-shadow: var(--shadow-sm);
+}
+
+.home-featured .section-head {
+  margin-bottom: var(--space-10);
+}
+
+.home-featured .product-preview-grid {
+  gap: var(--space-5);
+}
+
+.home-featured .product-preview {
+  background: linear-gradient(180deg, var(--surface), color-mix(in srgb, var(--surface-2) 78%, var(--surface)));
+  box-shadow: var(--shadow-md);
+}
+
+.home-featured .product-preview-accent {
+  transform: translateY(-10px);
+}
+
+.home-story .card-story {
+  background:
+    linear-gradient(180deg, var(--surface), color-mix(in srgb, var(--surface-2) 82%, var(--surface)));
+}
+
+.home-story .card-cta {
+  background:
+    radial-gradient(circle at top right, rgba(255,165,3,.10), transparent 28%),
+    linear-gradient(180deg, var(--surface), color-mix(in srgb, var(--surface-2) 86%, var(--surface)));
 }

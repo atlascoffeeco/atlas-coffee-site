@@ -71,7 +71,7 @@ export async function onRequest(context) {
     }
   };
 
-  // Normalize grind values from the frontend into readable labels
+  // Normalise grind values from the frontend into readable labels
   const GRIND_LABELS = {
     whole_bean: "Whole bean",
     wholebean: "Whole bean",
