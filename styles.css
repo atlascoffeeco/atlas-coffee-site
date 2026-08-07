@@ -554,6 +554,13 @@ main section{
   box-shadow:var(--shadow-sm);
 }
 
+.product-preview-grid,
+.cards-2 {
+  justify-content: center;
+  justify-items: center;
+}
+
+
 .product-preview h3{
   font-size:var(--text-xl);
 }
@@ -6484,4 +6491,247 @@ body.basket-open {
   background:
     radial-gradient(circle at top right, rgba(255,165,3,.10), transparent 28%),
     linear-gradient(180deg, var(--surface), color-mix(in srgb, var(--surface-2) 86%, var(--surface)));
+}
+
+/* ==========================================
+   HOMEPAGE FEATURED COFFEE SECTION
+   ==========================================
+*/
+
+/* Featured coffee visual */
+
+.hero-visual {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1rem;
+  border: 1px solid rgba(22, 17, 13, 0.16);
+  border-radius: 1rem;
+  background:
+    radial-gradient(
+      circle at 80% 18%,
+      rgba(255, 165, 3, 0.12),
+      transparent 24%
+    ),
+    radial-gradient(
+      circle at 12% 84%,
+      rgba(255, 165, 3, 0.08),
+      transparent 28%
+    ),
+    linear-gradient(
+      145deg,
+      var(--surface) 0%,
+      var(--surface-2) 58%,
+      var(--surface-3) 100%
+    );
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+.spotlight-card {
+  width: min(100%, 360px);
+  margin: 0 auto;
+}
+
+.product-hero-card {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 28px;
+  overflow: hidden;
+}
+
+.product-hero-card::before {
+  border-radius: inherit;
+}
+
+.product-hero-top {
+  margin-bottom: 0.5rem;
+}
+
+.product-hero-image {
+  width: 100%;
+  max-width: 220px;
+  margin: 0 auto;
+}
+
+.product-hero-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.product-hero-body {
+  margin-top: 0;
+  padding-inline: 0.25rem;
+}
+
+.product-hero-body h2 {
+  margin: 0 0 0.2rem;
+  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+  line-height: 1.05;
+}
+
+.product-hero-copy {
+  margin-bottom: 0.7rem;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.product-hero-specs {
+  gap: 0.5rem;
+  margin-top: 0.15rem;
+}
+
+.product-hero-specs > div {
+  min-height: 68px;
+  padding: 0.65rem 0.75rem;
+}
+
+.product-hero-footer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+  padding-top: 0.65rem;
+}
+
+.product-hero-footer a {
+  padding: 0.7rem 1rem;
+}
+
+@media (max-width: 900px) {
+  .hero-visual {
+    min-height: auto;
+    padding: 1rem;
+  }
+
+  .product-hero-card {
+    width: min(100%, 330px);
+    padding: 0.9rem;
+  }
+
+  .product-hero-image {
+    max-width: 200px;
+  }
+
+  .product-hero-specs {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Final featured coffee spacing polish */
+
+.product-hero-card {
+  padding: 0.85rem;
+  gap: 0.75rem;
+}
+
+.product-hero-top {
+  margin-bottom: 0.25rem;
+}
+
+.product-hero-image {
+  max-width: 235px;
+  margin: -0.15rem auto 0;
+}
+
+.product-hero-image img {
+  transform: none;
+}
+
+.product-hero-body {
+  margin-top: -0.25rem;
+}
+
+.product-hero-copy {
+  margin-bottom: 0.55rem;
+}
+
+.product-hero-specs {
+  margin-top: 0;
+}
+
+.product-hero-specs > div {
+  min-height: 64px;
+  padding: 0.6rem 0.7rem;
+}
+
+.product-hero-footer {
+  margin-top: 0.45rem;
+  padding-top: 0.45rem;
+  gap: 0.6rem;
+}
+
+.product-hero-footer a {
+  padding: 0.65rem 0.9rem;
+}
+
+@media (max-width: 900px) {
+  .product-hero-image {
+    max-width: 215px;
+  }
+}
+
+.shop#peru-product{
+  display:flex;
+  flex-wrap:wrap;
+  gap:var(--space-3);
+  margin-top:var(--space-6)
+}
+
+/* ==========================================
+   SHOP COFFEE SHEEN
+   ==========================================
+*/
+
+/* Shop Coffee shimmer — desktop and mobile navigation */
+
+.site-header .nav-links a[href*="shop"],
+.site-header .mobile-panel a[href*="shop"] {
+  display: inline-block;
+  color: #ffa503 !important;
+  font-weight: 700;
+  text-decoration: none;
+
+  background: repeating-linear-gradient(
+    110deg,
+    #ffa503 0%,
+    #ffa503 38%,
+    #fff7cc 48%,
+    #ffffff 50%,
+    #fff7cc 52%,
+    #ffa503 62%,
+    #ffa503 100%
+  );
+  background-size: 200% 100%;
+  background-position: 0 0;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  animation: shop-coffee-shine 2.8s linear infinite;
+}
+
+@keyframes shop-coffee-shine {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header .nav-links a[href*="shop"],
+  .site-header .mobile-panel a[href*="shop"] {
+    animation: none;
+    background: none;
+    color: #ffa503 !important;
+    -webkit-text-fill-color: currentColor;
+  }
 }

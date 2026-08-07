@@ -22,26 +22,34 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  const HOME_FEATURED_PRODUCTS = [
-    {
-      name: "Serra Negra",
-      copy: "A smooth Brazilian coffee with praline sweetness, soft milk chocolate, and a balanced finish that works beautifully as an everyday brew.",
-      origin: "Brazil",
-      use: "Everyday brewing",
-      profile: "Sweet & balanced",
-      price: "From £10.95",
-      link: "./shop.html#serra"
-    },
-    {
-      name: "Peru Cajamarca",
-      copy: "Cleaner and brighter in the cup, with layered sweetness and a more lifted finish from first sip to last.",
-      origin: "Peru",
-      use: "Morning filter",
-      profile: "Bright & layered",
-      price: "From £13.95",
-      link: "./shop.html#peru"
-    }
-  ];
+const HOME_FEATURED_PRODUCTS = [
+  {
+    id: "serra",
+    name: "Serra Negra",
+    copy: "A smooth Brazilian coffee with praline sweetness, soft milk chocolate, and a balanced finish that works beautifully as an everyday brew.",
+    origin: "Brazil",
+    use: "Everyday brewing",
+    profile: "Sweet & balanced",
+    price: "From £10.95",
+    image: "/assets/serra-negra-bag.webp",
+    fallbackImage: "/assets/serra-negra-bag.png",
+    imageAlt: "Serra Negra Brazilian coffee bag from Atlas Coffee",
+    link: "/shop#serra-negra"
+  },
+  {
+    id: "peru",
+    name: "Peru Cajamarca",
+    copy: "Cleaner and brighter in the cup, with layered sweetness and a more lifted finish from first sip to last.",
+    origin: "Peru",
+    use: "Morning filter",
+    profile: "Bright & layered",
+    price: "From £13.95",
+    image: "/assets/cajamarca-bag.webp",
+    fallbackImage: "/assets/cajamarca-bag.png",
+    imageAlt: "Peru Cajamarca coffee bag from Atlas Coffee",
+    link: "/shop#peru-product"
+  }
+];
 
   const mobileBasketBarMarkup = `
     <div class="mobile-buy-bar" aria-hidden="true">
@@ -511,30 +519,49 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function setupHomepageFeaturedCoffee() {
-    const nameEl = document.querySelector("[data-featured-name]");
-    const copyEl = document.querySelector("[data-featured-copy]");
-    const originEl = document.querySelector("[data-featured-origin]");
-    const useEl = document.querySelector("[data-featured-use]");
-    const profileEl = document.querySelector("[data-featured-profile]");
-    const priceEl = document.querySelector("[data-featured-price]");
-    const linkEl = document.querySelector("[data-featured-link]");
+  const nameEl = document.querySelector("[data-featured-name]");
+  const copyEl = document.querySelector("[data-featured-copy]");
+  const originEl = document.querySelector("[data-featured-origin]");
+  const useEl = document.querySelector("[data-featured-use]");
+  const profileEl = document.querySelector("[data-featured-profile]");
+  const priceEl = document.querySelector("[data-featured-price]");
+  const linkEl = document.querySelector("[data-featured-link]");
+  const imageEl = document.querySelector("[data-featured-image]");
 
-    if (!nameEl || !copyEl || !originEl || !useEl || !profileEl || !priceEl || !linkEl) return;
-
-    const selected = HOME_FEATURED_PRODUCTS[Math.floor(Math.random() * HOME_FEATURED_PRODUCTS.length)];
-
-    nameEl.textContent = selected.name;
-    copyEl.textContent = selected.copy;
-    originEl.textContent = selected.origin;
-    useEl.textContent = selected.use;
-    profileEl.textContent = selected.profile;
-    priceEl.textContent = selected.price;
-    linkEl.href = selected.link;
+  if (
+    !nameEl ||
+    !copyEl ||
+    !originEl ||
+    !useEl ||
+    !profileEl ||
+    !priceEl ||
+    !linkEl ||
+    !imageEl
+  ) {
+    return;
   }
 
-  function getBasketGrandTotal() {
-    return getBasketSubtotal() + getBasketDeliveryFee();
-  }
+  // Permanently feature Peru Cajamarca.
+  const selected = HOME_FEATURED_PRODUCTS.find(
+    (product) => product.id === "peru"
+  );
+
+  nameEl.textContent = selected.name;
+  copyEl.textContent = selected.copy;
+  originEl.textContent = selected.origin;
+  useEl.textContent = selected.use;
+  profileEl.textContent = selected.profile;
+  priceEl.textContent = selected.price;
+  linkEl.href = selected.link;
+
+  imageEl.src = selected.image;
+  imageEl.alt = selected.imageAlt;
+
+  imageEl.onerror = () => {
+    imageEl.onerror = null;
+    imageEl.src = selected.fallbackImage;
+  };
+}
 
   function escapeHtml(value) {
     return String(value)

@@ -1,42 +1,80 @@
 <!DOCTYPE html>
 <html lang="en" class="js-disabled">
+
 <head>
-  <style>
-    @media (min-width: 1100px) {
-      body.shop-page {
-        zoom: 0.88;
-      }
-    }
-  </style>
-
-  <!-- Google Tag Manager -->
-  <script>
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-TMRKXCQQ');
-  </script>
-  <!-- End Google Tag Manager -->
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Atlas Coffee Company</title>
-  <meta
-    name="description"
-    content="Atlas Coffee Company roasts small-batch coffee with clarity, character, and straightforward flavour."
-  >
-  <link rel="canonical" href="https://www.atlascoffee.uk/" />
-  <link rel="icon" type="image/jpeg" href="./assets/logo.jpg">
+
+  <title>Atlas Coffee | Freshly Roasted Small-Batch Coffee</title>
+
+  <meta name="description"
+    content="Shop freshly roasted small-batch coffee from Atlas Coffee. Discover Serra Negra and Peru Cajamarca for UK delivery or free local collection in Redditch.">
+
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://www.atlascoffee.uk/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.atlascoffee.uk/">
+  <meta property="og:title" content="Atlas Coffee | Freshly Roasted Small-Batch Coffee">
+  <meta property="og:description"
+    content="Freshly roasted small-batch coffee with clear flavour, UK delivery, and free local collection in Redditch.">
+  <meta property="og:image" content="https://www.atlascoffee.uk/assets/atlas-coffee-social.jpg">
+  <meta property="og:site_name" content="Atlas Coffee">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Atlas Coffee | Freshly Roasted Small-Batch Coffee">
+  <meta name="twitter:description"
+    content="Freshly roasted small-batch coffee for UK delivery or free local collection in Redditch.">
+  <meta name="twitter:image" content="https://www.atlascoffee.uk/assets/atlas-coffee-social.jpg">
+
+  <link rel="icon" type="image/jpeg" href="/assets/logo.jpg">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link
     href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Work+Sans:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
-  >
+    rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="/styles.css">
+
+  <!-- Google Tag Manager -->
+  <script>
+    (function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+          new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-TMRKXCQQ');
+  </script>
+  <!-- End Google Tag Manager -->
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://www.atlascoffee.uk/#organization",
+        "name": "Atlas Coffee Company",
+        "url": "https://www.atlascoffee.uk/",
+        "logo": "https://www.atlascoffee.uk/assets/logo.jpg"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.atlascoffee.uk/#website",
+        "url": "https://www.atlascoffee.uk/",
+        "name": "Atlas Coffee Company",
+        "publisher": {
+          "@id": "https://www.atlascoffee.uk/#organization"
+        }
+      }
+    ]
+  }
+  </script>
 
   <script>
     document.documentElement.classList.remove("js-disabled");
@@ -44,28 +82,25 @@
     window.dataLayer = window.dataLayer || [];
   </script>
 </head>
+
 <body class="home-page">
+
+  <!-- Google Tag Manager noscript -->
   <noscript>
-    <iframe
-      src="https://www.googletagmanager.com/ns.html?id=GTM-TMRKXCQQ"
-      height="0"
-      width="0"
-      style="display:none;visibility:hidden"
-    ></iframe>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TMRKXCQQ" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe>
   </noscript>
+  <!-- End Google Tag Manager noscript -->
 
   <a class="skip-link" href="#main-content">Skip to content</a>
 
   <header class="site-header">
     <div class="container nav-shell">
-      <a class="brand" href="./index.html" aria-label="Atlas Coffee Company home">
-        <img
-          src="./assets/logo.jpg"
-          alt="Atlas Coffee Company logo"
-          width="80"
-          height="80"
-          loading="lazy"
-        >
+
+      <a class="brand" href="/" aria-label="Atlas Coffee Company home">
+        <img src="/assets/logo.jpg" alt="Atlas Coffee Company logo" width="80" height="80" loading="eager"
+          fetchpriority="high" decoding="async">
+
         <span class="brand-lockup">
           <span>Atlas Coffee Company</span>
           <small>Independent coffee roasters</small>
@@ -73,22 +108,15 @@
       </a>
 
       <nav class="nav-links" aria-label="Primary navigation">
-        <a href="./index.html" aria-current="page">Home</a>
-        <a href="./why-atlas.html">Why Atlas</a>
-        <a href="./shop.html">Shop</a>
-        <a href="./contact.html">Contact</a>
+        <a href="/" aria-current="page">Home</a>
+        <a href="/why-atlas">Why Atlas</a>
+        <a class="nav-shop-link" href="/shop">Shop Coffee</a>
+        <a href="/contact">Contact</a>
       </nav>
 
       <div class="actions">
-        <button
-          class="ghost-button basket-link"
-          type="button"
-          data-basket-trigger
-          data-has-items="false"
-          aria-haspopup="dialog"
-          aria-expanded="false"
-          aria-controls="basket-popover"
-        >
+        <button class="ghost-button basket-link" type="button" data-basket-trigger data-has-items="false"
+          aria-haspopup="dialog" aria-expanded="false" aria-controls="basket-popover">
           <span class="basket-link__icon-wrap" aria-hidden="true">
             <span class="basket-link__dot" aria-hidden="true"></span>
           </span>
@@ -96,43 +124,21 @@
           <span class="basket-link__count" data-basket-count>0</span>
         </button>
 
-        <button
-          class="mobile-menu-toggle"
-          type="button"
-          data-mobile-toggle
-          aria-expanded="false"
-          aria-controls="mobile-panel"
-          aria-label="Open menu"
-        >
+        <button class="mobile-menu-toggle" type="button" data-mobile-toggle aria-expanded="false"
+          aria-controls="mobile-panel" aria-label="Open menu">
           Menu
         </button>
       </div>
     </div>
 
     <div class="container mobile-panel" id="mobile-panel" data-mobile-panel>
-      <a href="./index.html" aria-current="page">Home</a>
-      <a href="./shop.html">Shop</a>
-      <a href="./why-atlas.html">Why Atlas</a>
-      <a href="./contact.html">Contact</a>
+      <a href="/" aria-current="page">Home</a>
+      <a href="/shop">Shop Coffee</a>
+      <a href="/why-atlas">Why Atlas</a>
+      <a href="/contact">Contact</a>
 
-      <button
-        class="button mobile-panel-basket"
-        type="button"
-        data-basket-trigger
-        data-has-items="false"
-        aria-controls="basket-popover"
-        aria-expanded="false"
-      >
-        <span class="basket-link__icon-wrap" aria-hidden="true">
-          <img
-            src="./assets/basket-outlined-shopping-svgrepo-com.svg"
-            alt=""
-            class="basket-link__icon"
-            width="20"
-            height="20"
-          />
-          <span class="basket-link__dot" aria-hidden="true"></span>
-        </span>
+      <button class="button mobile-panel-basket" type="button" data-basket-trigger data-has-items="false"
+        aria-controls="basket-popover" aria-expanded="false">
         <span>Basket</span>
         <span class="basket-link__count" data-basket-count>0</span>
       </button>
@@ -140,192 +146,259 @@
   </header>
 
   <main id="main-content">
+
     <section class="hero hero-premium home-hero">
       <div class="container hero-grid">
+
         <div class="hero-copy reveal">
-          <span class="eyebrow">Freshly roasted coffee, delivered or collected.</span>
-          <h1>Roastery-fresh coffee for everyday buying.</h1>
+          <span class="eyebrow">
+            Freshly roasted in small batches · UK delivery · Redditch collection
+          </span>
+
+          <h1>Fresh coffee, roasted with clarity and character.</h1>
+
           <p class="hero-lead">
-            Shop a short, focused range of coffees roasted in small batches for easier decisions, better flavour, and a faster path to checkout.
+            Discover a focused range of small-batch coffees chosen for sweetness,
+            balance, and everyday drinkability. Order online for UK delivery or
+            free local collection in Redditch.
           </p>
 
           <div class="hero-actions">
-            <a class="button" href="./shop.html">Shop coffee</a>
-            <a class="ghost-button" href="#featured-coffee">See featured coffee</a>
+            <a class="button" href="/shop">
+              Shop freshly roasted coffee
+            </a>
+
+            <!-- <a class="ghost-button" href="#featured-coffee">
+              Explore the coffees
+            </a> -->
           </div>
 
           <div class="hero-mini-points">
             <span>Small-batch roasted</span>
             <span>UK delivery</span>
-            <span>Local collection</span>
+            <span>Free local collection</span>
           </div>
         </div>
 
         <div class="hero-visual reveal">
           <div class="product-hero-card spotlight-card">
+
             <div class="product-hero-top">
               <span class="product-hero-kicker">Featured coffee</span>
+
               <div class="product-hero-logo">
-                <img src="./assets/logo.jpg" alt="Atlas Coffee Company logo">
+                <img src="/assets/logo.jpg" alt="Atlas Coffee Company logo" width="80" height="80" loading="eager"
+                  decoding="async">
               </div>
-            </div>
-
-            <div class="product-hero-body">
-              <div id="featured-coffee">
-                <h2 data-featured-name>Serra Negra</h2>
+              </div>
+              
+              <div class="product-hero-image">
+                <img data-featured-image src="/assets/cajamarca-bag.webp" alt="Peru Cajamarca coffee bag from Atlas Coffee"
+                  width="700" height="875" loading="eager" fetchpriority="high" decoding="async"
+                  onerror="this.onerror=null; this.src='/assets/cajamarca-bag.png';">
+              </div>
+              
+              <div class="product-hero-body" id="featured-coffee">
+                <h2 data-featured-name>Peru Cajamarca</h2>
+              
                 <p class="product-hero-copy" data-featured-copy>
-                  A smooth Brazilian coffee with praline sweetness, soft milk chocolate, and a balanced finish that works beautifully as an everyday brew.
+                  Cleaner and brighter in the cup, with layered sweetness and a more lifted finish from first sip to last.
                 </p>
-
+              
                 <div class="product-hero-specs">
                   <div>
                     <span>Origin</span>
-                    <strong data-featured-origin>Brazil</strong>
+                    <strong data-featured-origin>Peru</strong>
                   </div>
+              
                   <div>
                     <span>Best for</span>
-                    <strong data-featured-use>Everyday brewing</strong>
+                    <strong data-featured-use>Morning filter</strong>
                   </div>
+              
                   <div>
                     <span>Profile</span>
-                    <strong data-featured-profile>Sweet &amp; balanced</strong>
+                    <strong data-featured-profile>Bright &amp; layered</strong>
                   </div>
                 </div>
               </div>
-            </div>
+              
+              <div class="product-hero-footer">
+                <span data-featured-price>From £13.95</span>
+              
+                <a class="button" data-featured-link href="/shop#peru-product">
+                  Shop Peru Cajamarca
+                </a>
+              </div>
+              
+              </div>
+              </div>
 
-            <div class="product-hero-footer">
-              <span data-featured-price>From £10.95</span>
-              <a data-featured-link href="./shop.html">Shop now</a>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 
-    <section class="trust-band trust-band-dark home-trust-band">
+    <section class="trust-band trust-band-dark home-trust-band" aria-label="Why buy from Atlas Coffee">
       <div class="container trust-grid trust-grid-compact">
-        <div class="trust-item trust-item-dark reveal">
-          <strong>Simple buying</strong>
-          <span>A short range, clear product detail, and quick checkout.</span>
-        </div>
+
         <div class="trust-item trust-item-dark reveal">
           <strong>Freshly roasted</strong>
-          <span>Roasted in small batches for better flavour and consistency.</span>
+          <span>Small batches, roasted with care for better flavour.</span>
         </div>
+
         <div class="trust-item trust-item-dark reveal">
-          <strong>Delivery or collection</strong>
-          <span>Choose the fulfilment option that suits you best.</span>
+          <strong>UK delivery</strong>
+          <span>Order online and have fresh coffee sent to your door.</span>
         </div>
+
         <div class="trust-item trust-item-dark reveal">
-          <strong>Flavour-first selection</strong>
-          <span>Coffees chosen for everyday drinkability and clear flavour.</span>
+          <strong>Free local collection</strong>
+          <span>Choose collection in Redditch after checkout.</span>
         </div>
+
+        <div class="trust-item trust-item-dark reveal">
+          <strong>Secure checkout</strong>
+          <span>Pay securely online through our checkout.</span>
+        </div>
+
       </div>
     </section>
 
-    <section class="featured-products home-featured">
+    <section class="featured-products home-featured" aria-labelledby="range-heading">
       <div class="container">
+
         <div class="section-head section-head-row reveal">
           <div>
             <span class="eyebrow">Shop the range</span>
-            <h2>Two coffees. One easy choice.</h2>
+
+            <h2 id="range-heading">
+              Two coffees. One easy choice.
+            </h2>
+
             <p>
-              We keep the line-up short so shoppers can compare quickly and get to the coffee they want without extra browsing.
+              We keep the line-up short so you can compare quickly and get to
+              the coffee you want without extra browsing.
             </p>
           </div>
-          <a class="ghost-button" href="./shop.html">View coffees</a>
+
+          <a class="ghost-button" href="/shop">
+            View all coffees
+          </a>
         </div>
 
         <div class="product-preview-grid">
+
           <article class="product-preview reveal">
-            <span class="product-tag">Quick buy</span>
+            <span class="product-tag">Sweet and balanced</span>
+
             <h3>Serra Negra</h3>
-            <p>Brazilian single origin with praline sweetness, soft chocolate notes, and a balanced finish.</p>
+
+            <p>
+              Brazilian single origin with praline sweetness, soft chocolate
+              notes, and a balanced finish.
+            </p>
+
             <div class="meta">
               <span>From £10.95</span>
               <span>Brazil</span>
               <span>Everyday brew</span>
             </div>
-            <a class="button" href="./shop.html">Shop Serra Negra</a>
+
+            <a class="button" href="/shop#serra-negra">
+              Shop Serra Negra
+            </a>
           </article>
 
-          <article class="product-preview reveal product-preview-accent">
-            <span class="product-tag">Another option</span>
-            <h3>Single-origin coffee</h3>
-            <p>Cleaner and brighter in the cup, with layered sweetness and a more lifted finish from first sip to last.</p>
+          <article class="product-preview reveal">
+            <span class="product-tag">Bright and expressive</span>
+
+            <h3>Peru Cajamarca</h3>
+
+            <p>
+              A clean, bright washed coffee with mellow panela, vanilla,
+              cooked citrus, and a lifted finish.
+            </p>
+
             <div class="meta">
-              <span>From £10.95</span>
+              <span>From £13.95</span>
+              <span>Peru</span>
               <span>Single origin</span>
-              <span>Expressive cup</span>
             </div>
-            <a class="ghost-button" href="./shop.html">Browse coffee</a>
+
+            <a class="button" href="/shop#peru-product">
+              Shop Peru Cajamarca
+            </a>
           </article>
+
         </div>
       </div>
     </section>
 
     <section class="notice notice-split home-story">
       <div class="container story-grid">
+
         <div class="card card-story reveal">
           <span class="eyebrow">About Atlas</span>
-          <h2>Small-batch roasting, straightforward flavour, no noise.</h2>
+
+          <h2>
+            Small-batch roasting, straightforward flavour, no noise.
+          </h2>
+
           <p class="muted">
-            Atlas Coffee is built around short runs, clear product selection, and coffees that are easy to buy, brew, and enjoy.
+            Atlas Coffee is built around short runs, clear product selection,
+            and coffees that are easy to buy, brew, and enjoy.
           </p>
+
           <div class="hero-actions">
-            <a class="ghost-button" href="./why-atlas.html">About the roastery</a>
+            <a class="ghost-button" href="/why-atlas">
+              About the roastery
+            </a>
           </div>
         </div>
 
         <div class="card card-cta reveal">
           <span class="eyebrow">Ready to order</span>
-          <h2>Find a bag, add it to basket, and check out.</h2>
+
+          <h2>
+            Find a bag, add it to your basket, and check out.
+          </h2>
+
           <p class="muted">
-            Explore the current line-up and choose a coffee roasted fresh for better mornings, slower weekends, and everyday brews.
+            Explore the current line-up and choose a coffee roasted fresh for
+            better mornings, slower weekends, and everyday brews.
           </p>
+
           <div class="hero-actions">
-            <a class="button" href="./shop.html">Shop now</a>
-            <a class="ghost-button" href="./contact.html">Get in touch</a>
+            <a class="button" href="/shop">Shop now</a>
+            <a class="ghost-button" href="/contact">Get in touch</a>
           </div>
         </div>
+
       </div>
     </section>
+
   </main>
 
   <div class="shop-basket-popover" id="basket-popover" aria-hidden="true">
-    <button
-      class="shop-basket-popover__backdrop"
-      type="button"
-      data-basket-close
-      tabindex="-1"
-      aria-label="Close basket"
-    ></button>
+    <button class="shop-basket-popover__backdrop" type="button" data-basket-close tabindex="-1"
+      aria-label="Close basket"></button>
 
-    <aside
-      class="shop-basket-drawer"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="basket-title"
-    >
+    <aside class="shop-basket-drawer" role="dialog" aria-modal="true" aria-labelledby="basket-title">
       <div class="shop-basket-drawer__header">
         <div>
           <span class="eyebrow">Basket</span>
           <h2 id="basket-title">Your selected coffees.</h2>
         </div>
-        <button
-          class="shop-basket-drawer__close"
-          type="button"
-          data-basket-close
-          aria-label="Close basket"
-        >
+
+        <button class="shop-basket-drawer__close" type="button" data-basket-close aria-label="Close basket">
           Close
         </button>
       </div>
 
       <div class="shop-basket-drawer__body">
         <div id="basket-items" class="shop-basket-list" aria-live="polite">
-          <p class="shop-basket-empty">Your basket is currently empty.</p>
+          <p class="shop-basket-empty">
+            Your basket is currently empty.
+          </p>
         </div>
       </div>
 
@@ -348,37 +421,45 @@
 
   <footer class="site-footer">
     <div class="container footer-grid">
+
       <div>
         <div class="brand">
-          <img src="./assets/logo.jpg" alt="Atlas Coffee logo" width="80" height="80" loading="lazy" />
+          <img src="/assets/logo.jpg" alt="Atlas Coffee logo" width="80" height="80" loading="lazy" decoding="async">
+
           <span class="brand-lockup">
             <span>Atlas Coffee</span>
-            <small>Freshly roasted coffee for delivery or local collection.</small>
+            <small>
+              Freshly roasted coffee for delivery or local collection.
+            </small>
           </span>
         </div>
       </div>
 
       <div>
         <strong>Pages</strong>
+
         <ul style="display:grid;gap:.6rem;margin-top:1rem;list-style:none;">
-          <li><a href="./index.html">Home</a></li>
-          <li><a href="./shop.html">Shop</a></li>
-          <li><a href="./why-atlas.html">Why Atlas</a></li>
-          <li><a href="./contact.html">Contact</a></li>
+          <li><a href="/">Home</a></li>
+          <a href="/shop" class="shop-coffee-shine">Shop Coffee</a>
+          <li><a href="/why-atlas">Why Atlas</a></li>
+          <li><a href="/contact">Contact</a></li>
         </ul>
       </div>
 
       <div>
         <strong>Legal</strong>
+
         <ul style="display:grid;gap:.6rem;margin-top:1rem;list-style:none;">
-          <li><a href="./privacy.html">Privacy Policy</a></li>
-          <li><a href="./terms.html">Terms &amp; Conditions</a></li>
-          <li><a href="./delivery-returns.html">Delivery &amp; Returns</a></li>
+          <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/terms">Terms &amp; Conditions</a></li>
+          <li><a href="/delivery-returns">Delivery &amp; Returns</a></li>
         </ul>
       </div>
+
     </div>
   </footer>
 
-  <script src="./app.js" defer></script>
+  <script src="/app.js" defer></script>
 </body>
+
 </html>
