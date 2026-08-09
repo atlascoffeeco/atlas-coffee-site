@@ -1552,26 +1552,82 @@ main section{
 @media(max-width:860px){
   .nav-links,.actions .button{display:none}
 
-  .mobile-menu-toggle{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    min-width:44px;
-    min-height:44px;
-    padding:0 1rem;
-    border-radius:var(--radius-full);
-    border:1px solid color-mix(in srgb,var(--text) 10%,transparent);
-    background:var(--surface)
-  }
+.mobile-menu-toggle {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  min-height: 44px;
+  padding: 0;
+  border-radius: var(--radius-full);
+  border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
+  background: var(--surface);
+  transition: gap 260ms cubic-bezier(.16, 1, .3, 1);
+}
 
-  .mobile-panel{
-    display:none;
-    flex-direction:column;
-    gap:var(--space-3);
-    padding:0 0 var(--space-4)
-  }
+.mobile-menu-toggle[aria-expanded="true"] {
+  gap: 8px;
+}
 
-  .mobile-panel.is-open{display:flex}
+.mobile-menu-toggle span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--text);
+  transition:
+    width 260ms cubic-bezier(.16, 1, .3, 1),
+    opacity 260ms ease;
+}
+
+.mobile-menu-toggle[aria-expanded="true"] span {
+  width: 20px;
+}
+
+.mobile-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-10px);
+
+  padding-top: 0;
+  padding-bottom: 0;
+
+  transition:
+    max-height 500ms cubic-bezier(.16, 1, .3, 1),
+    opacity 220ms ease,
+    transform 500ms cubic-bezier(.16, 1, .3, 1),
+    padding 500ms cubic-bezier(.16, 1, .3, 1),
+    visibility 0s linear 500ms;
+}
+
+.mobile-panel.is-open {
+  max-height: 170px;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+
+  padding-top: var(--space-3);
+  padding-bottom: var(--space-4);
+
+  transition:
+    max-height 500ms cubic-bezier(.16, 1, .3, 1),
+    opacity 220ms ease,
+    transform 500ms cubic-bezier(.16, 1, .3, 1),
+    padding 500ms cubic-bezier(.16, 1, .3, 1),
+    visibility 0s linear 0s;
+}
 
   .hero-visual{
     min-height:auto;

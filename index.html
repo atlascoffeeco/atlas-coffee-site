@@ -2,6 +2,7 @@
 <html lang="en" class="js-disabled">
 
 <head>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -126,7 +127,9 @@
 
         <button class="mobile-menu-toggle" type="button" data-mobile-toggle aria-expanded="false"
           aria-controls="mobile-panel" aria-label="Open menu">
-          Menu
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
         </button>
       </div>
     </div>
@@ -134,14 +137,14 @@
     <div class="container mobile-panel" id="mobile-panel" data-mobile-panel>
       <a href="/" aria-current="page">Home</a>
       <a href="/shop">Shop Coffee</a>
-      <a href="/why-atlas">Why Atlas?</a>
+      <a href="/why-atlas">Why Atlas</a>
       <a href="/contact">Contact</a>
 
-      <button class="button mobile-panel-basket" type="button" data-basket-trigger data-has-items="false"
+      <!-- <button class="button mobile-panel-basket" type="button" data-basket-trigger data-has-items="false"
         aria-controls="basket-popover" aria-expanded="false">
         <span>Basket</span>
         <span class="basket-link__count" data-basket-count>0</span>
-      </button>
+      </button> -->
     </div>
   </header>
 
@@ -190,49 +193,50 @@
                 <img src="/assets/logo.jpg" alt="Atlas Coffee Company logo" width="80" height="80" loading="eager"
                   decoding="async">
               </div>
-              </div>
-              
-              <div class="product-hero-image">
-                <img data-featured-image src="/assets/cajamarca-bag.webp" alt="Peru Cajamarca coffee bag from Atlas Coffee"
-                  width="700" height="875" loading="eager" fetchpriority="high" decoding="async"
-                  onerror="this.onerror=null; this.src='/assets/cajamarca-bag.png';">
-              </div>
-              
-              <div class="product-hero-body" id="featured-coffee">
-                <h2 data-featured-name>Peru Cajamarca</h2>
-              
-                <p class="product-hero-copy" data-featured-copy>
-                  Cleaner and brighter in the cup, with layered sweetness and a more lifted finish from first sip to last.
-                </p>
-              
-                <div class="product-hero-specs">
-                  <div>
-                    <span>Origin</span>
-                    <strong data-featured-origin>Peru</strong>
-                  </div>
-              
-                  <div>
-                    <span>Best for</span>
-                    <strong data-featured-use>Morning filter</strong>
-                  </div>
-              
-                  <div>
-                    <span>Profile</span>
-                    <strong data-featured-profile>Bright &amp; layered</strong>
-                  </div>
+            </div>
+
+            <div class="product-hero-image">
+              <img data-featured-image src="/assets/cajamarca-bag.webp"
+                alt="Peru Cajamarca coffee bag from Atlas Coffee" width="700" height="875" loading="eager"
+                fetchpriority="high" decoding="async"
+                onerror="this.onerror=null; this.src='/assets/cajamarca-bag.png';">
+            </div>
+
+            <div class="product-hero-body" id="featured-coffee">
+              <h2 data-featured-name>Peru Cajamarca</h2>
+
+              <p class="product-hero-copy" data-featured-copy>
+                Cleaner and brighter in the cup, with layered sweetness and a more lifted finish from first sip to last.
+              </p>
+
+              <div class="product-hero-specs">
+                <div>
+                  <span>Origin</span>
+                  <strong data-featured-origin>Peru</strong>
+                </div>
+
+                <div>
+                  <span>Best for</span>
+                  <strong data-featured-use>Morning filter</strong>
+                </div>
+
+                <div>
+                  <span>Profile</span>
+                  <strong data-featured-profile>Bright &amp; layered</strong>
                 </div>
               </div>
-              
-              <div class="product-hero-footer">
-                <span data-featured-price>From £13.95</span>
-              
-                <a class="button" data-featured-link href="/shop#peru-product">
-                  Shop Peru Cajamarca
-                </a>
-              </div>
-              
-              </div>
-              </div>
+            </div>
+
+            <div class="product-hero-footer">
+              <span data-featured-price>From £13.95</span>
+
+              <a class="button" data-featured-link href="/shop#peru-product">
+                Shop Peru Cajamarca
+              </a>
+            </div>
+
+          </div>
+        </div>
 
       </div>
     </section>

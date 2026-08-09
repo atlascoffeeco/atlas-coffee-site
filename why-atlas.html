@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" class="js-disabled">
+
 <head>
-<link rel="canonical" href="https://www.atlascoffee.uk/why-atlas">
+  <link rel="canonical" href="https://www.atlascoffee.uk/why-atlas">
   <!-- Google Tag Manager -->
   <script>
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-TMRKXCQQ');
+    (function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+          new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-TMRKXCQQ');
   </script>
   <!-- End Google Tag Manager -->
 
@@ -16,10 +20,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Why Atlas | Atlas Coffee</title>
-  <meta
-    name="description"
-    content="Discover why Atlas exists, the standards behind every roast, and the founder-led approach shaping Atlas Coffee."
-  />
+  <meta name="description"
+    content="Discover why Atlas exists, the standards behind every roast, and the founder-led approach shaping Atlas Coffee." />
   <link rel="canonical" href="https://www.atlascoffee.uk/why-atlas" />
   <link rel="icon" type="image/jpeg" href="./assets/logo.jpg">
 
@@ -28,8 +30,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Work+Sans:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet"
-  >
+    rel="stylesheet">
 
   <!-- Main stylesheet -->
   <link rel="stylesheet" href="./styles.css" />
@@ -41,15 +42,12 @@
     window.dataLayer = window.dataLayer || [];
   </script>
 </head>
+
 <body>
   <!-- Google Tag Manager (noscript) -->
   <noscript>
-    <iframe
-      src="https://www.googletagmanager.com/ns.html?id=GTM-TMRKXCQQ"
-      height="0"
-      width="0"
-      style="display:none;visibility:hidden"
-    ></iframe>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TMRKXCQQ" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe>
   </noscript>
   <!-- End Google Tag Manager (noscript) -->
 
@@ -61,13 +59,7 @@
     <div class="container nav-shell">
       <!-- Brand -->
       <a class="brand" href="./index" aria-label="Atlas Coffee home">
-        <img
-          src="./assets/logo.jpg"
-          alt="Atlas Coffee logo"
-          width="80"
-          height="80"
-          loading="eager"
-        />
+        <img src="./assets/logo.jpg" alt="Atlas Coffee logo" width="80" height="80" loading="eager" />
         <span class="brand-lockup">
           <span>Atlas Coffee Company</span>
           <small>Independent coffee roasters</small>
@@ -85,23 +77,11 @@
       <!-- Header actions -->
       <div class="actions">
         <!-- Shared basket trigger -->
-        <button
-          class="ghost-button basket-link"
-          type="button"
-          data-basket-trigger
-          data-has-items="false"
-          aria-haspopup="dialog"
-          aria-expanded="false"
-          aria-controls="basket-popover"
-        >
+        <button class="ghost-button basket-link" type="button" data-basket-trigger data-has-items="false"
+          aria-haspopup="dialog" aria-expanded="false" aria-controls="basket-popover">
           <span class="basket-link__icon-wrap" aria-hidden="true">
-            <img
-              src="./assets/basket-outlined-shopping-svgrepo-com.svg"
-              alt=""
-              class="basket-link__icon"
-              width="20"
-              height="20"
-            />
+            <img src="./assets/basket-outlined-shopping-svgrepo-com.svg" alt="" class="basket-link__icon" width="20"
+              height="20" />
             <span class="basket-link__dot" aria-hidden="true"></span>
           </span>
           <span class="basket-link__label">Basket</span>
@@ -109,14 +89,11 @@
         </button>
 
         <!-- Mobile menu toggle -->
-        <button
-          class="mobile-menu-toggle"
-          type="button"
-          data-mobile-toggle
-          aria-expanded="false"
-          aria-label="Open menu"
-        >
-          Menu
+        <button class="mobile-menu-toggle" type="button" data-mobile-toggle aria-expanded="false"
+          aria-controls="mobile-panel" aria-label="Open menu">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
         </button>
       </div>
     </div>
@@ -124,32 +101,21 @@
     <!-- Mobile navigation -->
     <div class="container mobile-panel" data-mobile-panel>
       <a href="./index">Home</a>
-      <a href="./why-atlas" aria-current="page">Why Atlas</a>
       <a href="./shop">Shop Coffee</a>
+      <a href="./why-atlas" aria-current="page">Why Atlas</a>
       <a href="./contact">Contact</a>
 
       <!-- Mobile basket button mirrors desktop state -->
-      <button
-        class="button mobile-panel-basket"
-        type="button"
-        data-basket-trigger
-        data-has-items="false"
-        aria-controls="basket-popover"
-        aria-expanded="false"
-      >
+      <!-- <button class="button mobile-panel-basket" type="button" data-basket-trigger data-has-items="false"
+        aria-controls="basket-popover" aria-expanded="false">
         <span class="basket-link__icon-wrap" aria-hidden="true">
-          <img
-            src="./assets/basket-outlined-shopping-svgrepo-com.svg"
-            alt=""
-            class="basket-link__icon"
-            width="20"
-            height="20"
-          />
+          <img src="./assets/basket-outlined-shopping-svgrepo-com.svg" alt="" class="basket-link__icon" width="20"
+            height="20" />
           <span class="basket-link__dot" aria-hidden="true"></span>
         </span>
         <span>Basket</span>
         <span class="basket-link__count" data-basket-count>0</span>
-      </button>
+      </button> -->
     </div>
   </header>
 
@@ -325,31 +291,16 @@
 
   <!-- Shared basket drawer -->
   <div class="shop-basket-popover" id="basket-popover" aria-hidden="true">
-    <button
-      class="shop-basket-popover__backdrop"
-      type="button"
-      data-basket-close
-      tabindex="-1"
-      aria-label="Close basket"
-    ></button>
+    <button class="shop-basket-popover__backdrop" type="button" data-basket-close tabindex="-1"
+      aria-label="Close basket"></button>
 
-    <aside
-      class="shop-basket-drawer"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="basket-title"
-    >
+    <aside class="shop-basket-drawer" role="dialog" aria-modal="true" aria-labelledby="basket-title">
       <div class="shop-basket-drawer__header">
         <div>
           <span class="eyebrow">Basket</span>
           <h2 id="basket-title">Your selected coffees.</h2>
         </div>
-        <button
-          class="shop-basket-drawer__close"
-          type="button"
-          data-basket-close
-          aria-label="Close basket"
-        >
+        <button class="shop-basket-drawer__close" type="button" data-basket-close aria-label="Close basket">
           Close
         </button>
       </div>
@@ -395,7 +346,7 @@
         <ul style="display:grid;gap:.6rem;margin-top:1rem;list-style:none;">
           <li><a href="./index">Home</a></li>
           <li><a href="./why-atlas">Why Atlas</a></li>
-          <li><a href="./shop">Shop</a></li>
+          <li><a href="./shop">Shop Coffee</a></li>
           <li><a href="./contact">Contact</a></li>
         </ul>
       </div>
@@ -414,4 +365,5 @@
   <!-- Shared site script -->
   <script src="./app.js" defer></script>
 </body>
+
 </html>
