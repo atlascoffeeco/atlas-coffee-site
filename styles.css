@@ -1581,7 +1581,14 @@ main section{
   background: var(--text);
   transition:
     width 260ms cubic-bezier(.16, 1, .3, 1),
-    opacity 260ms ease;
+    opacity 26
+    0ms ease;
+}
+
+.mobile-panel.no-transition,
+.mobile-panel.no-transition * {
+  transition: none !important;
+  animation: none !important;
 }
 
 .mobile-menu-toggle[aria-expanded="true"] span {
@@ -6782,12 +6789,156 @@ body.basket-open {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .site-header .nav-links a[href*="shop"],
-  .site-header .mobile-panel a[href*="shop"] {
-    animation: none;
-    background: none;
-    color: #ffa503 !important;
-    -webkit-text-fill-color: currentColor;
+/* ==========================================
+   SHOP PAGE SCROLL MARGIN TOP FOR FEATURED COFFEE
+   ==========================================
+*/
+
+#peru-product {
+  scroll-margin-top: 115px;
+}
+
+@media (max-width: 860px) {
+  #peru-product {
+    scroll-margin-top: 110px;
+  }
+}
+
+
+/* ==========================================
+   HOME HERO — FINAL FEATURED COFFEE CARD
+   ========================================== */
+
+@media (min-width: 860px) {
+  .home-hero .hero-visual {
+    min-height: 0;
+    display: block;
+  }
+
+  .home-hero .product-hero-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    height: 100%;
+    min-height: 0;
+    box-sizing: border-box;
+    padding: 1rem;
+    border-radius: 1.8rem;
+    overflow: hidden;
+  }
+
+  /* Top label and logo */
+
+  .home-hero .product-hero-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.8rem;
+    flex-shrink: 0;
+  }
+
+  .home-hero .product-hero-logo {
+    width: 52px;
+    height: 52px;
+    flex: 0 0 52px;
+  }
+
+  .home-hero .product-hero-logo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Coffee image */
+
+  .home-hero .product-hero-image {
+    width: 100%;
+    height: 310px;
+    min-height: 310px;
+    padding: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    overflow: visible;
+    flex-shrink: 0;
+  }
+
+  .home-hero .product-hero-image img[data-featured-image] {
+    display: block;
+    width: auto;
+    height: 310px;
+    max-width: 100%;
+    max-height: 310px;
+    object-fit: contain;
+    transform: translateY(-6px);
+  }
+
+  /* Coffee title and description */
+
+  .home-hero .product-hero-body {
+    display: grid;
+    gap: 0.45rem;
+    min-width: 0;
+    flex-shrink: 0;
+  }
+
+  .home-hero .product-hero-body h2 {
+    margin: 0;
+    font-size: clamp(1.75rem, 1.35rem + 0.6vw, 2.35rem);
+    line-height: 0.98;
+  }
+
+  .home-hero .product-hero-copy {
+    margin: 0;
+    max-width: 34ch;
+    line-height: 1.45;
+  }
+
+  /* Product facts */
+
+  .home-hero .product-hero-specs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.5rem;
+    margin-top: 0.15rem;
+  }
+
+  .home-hero .product-hero-specs div {
+    min-width: 0;
+    padding: 0.6rem;
+    box-sizing: border-box;
+  }
+
+  .home-hero .product-hero-specs span {
+    display: block;
+    font-size: 0.68rem;
+  }
+
+  .home-hero .product-hero-specs strong {
+    display: block;
+    font-size: 0.9rem;
+    overflow-wrap: anywhere;
+  }
+
+  /* Price and button */
+
+  .home-hero .product-hero-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.8rem;
+    margin-top: auto;
+  }
+
+  .home-hero .product-hero-footer span {
+    white-space: nowrap;
+    font-size: 0.95rem;
+  }
+
+  .home-hero .product-hero-footer a {
+    min-height: 42px;
+    padding: 0.7rem 1rem;
+    white-space: nowrap;
   }
 }
