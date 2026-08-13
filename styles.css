@@ -8074,8 +8074,8 @@ body.basket-open {
    @media (max-width: 640px) {
   .shop-page .shop-basket-drawer {
     grid-template-rows: auto minmax(0, 1fr) auto;
-    height: 100dvh;
-    max-height: 100dvh;
+    height: 95dvh;
+    max-height: 95dvh;
   }
 
   .shop-page .shop-basket-drawerbody {
@@ -8140,4 +8140,18 @@ body.basket-open {
     white-space: normal;
     line-height: 1.35;
   }
+}
+
+
+
+
+
+.site-header .nav-links a[href="/shop"],
+.site-header .mobile-panel a[href="/shop"] {
+  color: var(--primary) !important;
+  background: none;
+  background-clip: initial;
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: currentColor;
+  animation: none;
 }

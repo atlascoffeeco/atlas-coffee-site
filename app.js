@@ -202,16 +202,30 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Only this mobile-menu function has been updated.
   function setupMobileMenu() {
     if (!mobileToggle || !mobilePanel) return;
+
     const setMobileMenu = (open) => {
       mobileToggle.setAttribute("aria-expanded", String(open));
-      mobilePanel.classList.toggle("is-open", open);
       mobileToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      mobilePanel.classList.toggle("is-open", open);
     };
-    mobileToggle.addEventListener("click", () => setMobileMenu(mobileToggle.getAttribute("aria-expanded") !== "true"));
-    mobilePanel.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setMobileMenu(false)));
-    window.addEventListener("resize", () => { if (window.innerWidth > 860) setMobileMenu(false); });
+
+    mobileToggle.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      const isOpen = mobileToggle.getAttribute("aria-expanded") === "true";
+      setMobileMenu(!isOpen);
+    });
+
+    mobilePanel.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => setMobileMenu(false));
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 860) setMobileMenu(false);
+    });
   }
 
   function setupReveal() {
@@ -296,59 +310,38 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function setupCollectionInfoPopover() {
-  const infoButton = document.querySelector(".shop-basket-info");
-  const popover = document.getElementById("collection-info-popover");
-  const closeButton = document.querySelector(
-    ".shop-basket-info-popover__close"
-  );
+    const infoButton = document.querySelector(".shop-basket-info");
+    const popover = document.getElementById("collection-info-popover");
+    const closeButton = document.querySelector(".shop-basket-info-popover__close");
 
-  if (!infoButton || !popover || !closeButton) {
-    return;
-  }
+    if (!infoButton || !popover || !closeButton) return;
 
-  let lastFocusedElement = null;
+    let lastFocusedElement = null;
 
-  function openInfoPopover() {
-    lastFocusedElement = document.activeElement;
+    function openInfoPopover() {
+      lastFocusedElement = document.activeElement;
+      popover.hidden = false;
+      infoButton.setAttribute("aria-expanded", "true");
+      document.body.classList.add("collection-info-open");
+      requestAnimationFrame(() => { closeButton.focus(); });
+    }
 
-    popover.hidden = false;
-    infoButton.setAttribute("aria-expanded", "true");
-    document.body.classList.add("collection-info-open");
+    function closeInfoPopover() {
+      popover.hidden = true;
+      infoButton.setAttribute("aria-expanded", "false");
+      document.body.classList.remove("collection-info-open");
+      if (lastFocusedElement && typeof lastFocusedElement.focus === "function") lastFocusedElement.focus();
+    }
 
-    requestAnimationFrame(() => {
-      closeButton.focus();
+    infoButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      if (popover.hidden) openInfoPopover();
     });
+
+    closeButton.addEventListener("click", closeInfoPopover);
+    document.addEventListener("keydown", (event) => { if (event.key === "Escape" && !popover.hidden) closeInfoPopover(); });
   }
-
-  function closeInfoPopover() {
-    popover.hidden = true;
-    infoButton.setAttribute("aria-expanded", "false");
-    document.body.classList.remove("collection-info-open");
-
-    if (lastFocusedElement && typeof lastFocusedElement.focus === "function") {
-      lastFocusedElement.focus();
-    }
-  }
-
-  infoButton.addEventListener("click", (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-
-    if (popover.hidden) {
-      openInfoPopover();
-    }
-  });
-
-  closeButton.addEventListener("click", () => {
-    closeInfoPopover();
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && !popover.hidden) {
-      closeInfoPopover();
-    }
-  });
-}
 
   function setupFulfilmentSelector() {
     updateFulfilmentUI();
@@ -370,20 +363,18 @@ document.addEventListener("DOMContentLoaded", () => {
     if (mobileBasketSummaryEl) mobileBasketSummaryEl.textContent = basket.length ? `${count} item${count === 1 ? "" : "s"} · ${formatMoney(grandTotal)} · ${prettyFulfilment(fulfilment)}` : "No items selected yet";
     if (!basketItemsEl || !basketTotalEl) { updateFulfilmentUI(); return; }
     if (!basket.length) {
-  basketItemsEl.innerHTML = `
-    <div class="shop-basket-empty">
-      <p>Your basket is currently empty.</p>
-
-      <div class="shop-basket-empty__actions">
-        <a class="button" href="./shop">Shop coffee</a>
-      </div>
-    </div>
-  `;
-
-  basketTotalEl.textContent = formatMoney(0);
-  updateFulfilmentUI();
-  return;
-}
+      basketItemsEl.innerHTML = `
+        <div class="shop-basket-empty">
+          <p>Your basket is currently empty.</p>
+          <div class="shop-basket-empty__actions">
+            <a class="button" href="./shop">Shop coffee</a>
+          </div>
+        </div>
+      `;
+      basketTotalEl.textContent = formatMoney(0);
+      updateFulfilmentUI();
+      return;
+    }
     basketItemsEl.innerHTML = basket.map((item, index) => `
       <div class="shop-basket-item">
         <div class="shop-basket-item__copy">
@@ -392,57 +383,153 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
         <button type="button" class="shop-basket-remove" data-remove-index="${index}" aria-label="Remove ${escapeHtml(item.product)} from basket">Remove</button>
       </div>`).join("");
-    basketTotalEl.textContent = formatMoney(grandTotal); updateFulfilmentUI();
+    basketTotalEl.textContent = formatMoney(grandTotal);
+    updateFulfilmentUI();
     basketItemsEl.querySelectorAll("[data-remove-index]").forEach((button) => button.addEventListener("click", () => {
       basket.splice(Number(button.dataset.removeIndex), 1); saveBasket(); renderBasket();
     }));
   }
 
   function setupShopProductForms() {
-    if (!document.querySelector("[data-add-to-basket]")) return;
     function updateProductPanel(prefix, priceMap) {
-      const weightEl = document.getElementById(`${prefix}-weight`), grindEl = document.getElementById(`${prefix}-grind`), quantityEl = document.getElementById(`${prefix}-quantity`), summaryEl = document.getElementById(`${prefix}-summary-line`), priceEl = document.getElementById(`${prefix}-price`), noteEl = document.getElementById(`${prefix}-note`);
+      const weightEl = document.getElementById(`${prefix}-weight`);
+      const grindEl = document.getElementById(`${prefix}-grind`);
+      const quantityEl = document.getElementById(`${prefix}-quantity`);
+      const summaryEl = document.getElementById(`${prefix}-summary-line`);
+      const priceEl = document.getElementById(`${prefix}-price`);
+      const noteEl = document.getElementById(`${prefix}-note`);
+
       if (!weightEl || !grindEl || !quantityEl || !summaryEl || !priceEl) return;
+
       const quantity = Math.max(1, Math.min(MAX_QUANTITY, Number(quantityEl.value) || 1));
       quantityEl.value = quantity;
       summaryEl.textContent = `${weightEl.value} · ${prettyGrind(grindEl.value)} · Quantity: ${quantity}`;
       priceEl.textContent = formatMoney(priceMap[weightEl.value] * quantity);
       if (noteEl) noteEl.textContent = "Choose delivery or local collection later in the basket before checkout.";
     }
-    [["serra", PRODUCTS.serra.prices], ["peru", PRODUCTS.peru.prices]].forEach(([prefix, prices]) => {
-      ["weight", "grind", "quantity"].forEach((field) => {
-        const el = document.getElementById(`${prefix}-${field}`);
-        if (el) el.addEventListener(field === "quantity" ? "input" : "change", () => updateProductPanel(prefix, prices));
+
+    const hasProductForms = document.querySelector("[data-add-to-basket]");
+
+    if (hasProductForms) {
+      [["serra", PRODUCTS.serra.prices], ["peru", PRODUCTS.peru.prices]].forEach(([prefix, prices]) => {
+        ["weight", "grind", "quantity"].forEach((field) => {
+          const element = document.getElementById(`${prefix}-${field}`);
+          if (!element) return;
+          element.addEventListener(field === "quantity" ? "input" : "change", () => updateProductPanel(prefix, prices));
+        });
+        updateProductPanel(prefix, prices);
       });
-      updateProductPanel(prefix, prices);
-    });
-    document.querySelectorAll("[data-add-to-basket]").forEach((button) => button.addEventListener("click", () => {
-      const key = button.getAttribute("data-add-to-basket"), product = PRODUCTS[key];
-      if (!product) return;
-      const prefix = key === "serra" ? "serra" : "peru";
-      const weightEl = document.getElementById(`${prefix}-weight`), grindEl = document.getElementById(`${prefix}-grind`), quantityEl = document.getElementById(`${prefix}-quantity`);
-      if (!weightEl || !grindEl || !quantityEl) return;
-      addBasketItem({ product: product.name, weight: weightEl.value, grind: grindEl.value, quantity: Math.max(1, Math.min(MAX_QUANTITY, Number(quantityEl.value) || 1)), unitPrice: product.prices[weightEl.value] });
-      saveBasket(); renderBasket(); openBasket();
-      const original = button.textContent; button.textContent = "Added";
-      window.setTimeout(() => { button.textContent = original; }, 1200);
-    }));
+
+      document.querySelectorAll("[data-add-to-basket]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const key = button.getAttribute("data-add-to-basket");
+          const product = PRODUCTS[key];
+          if (!product) return;
+
+          const prefix = key === "serra" ? "serra" : "peru";
+          const weightEl = document.getElementById(`${prefix}-weight`);
+          const grindEl = document.getElementById(`${prefix}-grind`);
+          const quantityEl = document.getElementById(`${prefix}-quantity`);
+          if (!weightEl || !grindEl || !quantityEl) return;
+
+          const quantity = Math.max(1, Math.min(MAX_QUANTITY, Number(quantityEl.value) || 1));
+          const unitPrice = product.prices[weightEl.value];
+
+          addBasketItem({
+            product: product.name,
+            weight: weightEl.value,
+            grind: grindEl.value,
+            quantity,
+            unitPrice
+          });
+
+          saveBasket();
+          renderBasket();
+          openBasket();
+
+          const originalText = button.textContent;
+          button.textContent = "Added";
+          window.setTimeout(() => { button.textContent = originalText; }, 1200);
+        });
+      });
+    }
+
+    // This listener deliberately sits outside the product-form block so the shared basket works on every page.
     checkoutButton?.addEventListener("click", async () => {
-      if (!basket.length) { openBasket(); if (basketItemsEl) basketItemsEl.innerHTML = '<p class="shop-basket-empty">Add at least one coffee before proceeding to checkout.</p>'; return; }
-      const originalText = checkoutButton.textContent; checkoutButton.disabled = true; checkoutButton.setAttribute("aria-busy", "true");
-      checkoutButton.textContent = "Opening secure checkout…";
+      if (!basket.length) {
+        openBasket();
+        if (basketItemsEl) {
+          basketItemsEl.innerHTML = `
+            <div class="shop-basket-empty">
+              <p>Add at least one coffee before proceeding to checkout.</p>
+            </div>
+          `;
+        }
+        return;
+      }
+
+      const originalText = checkoutButton.textContent;
+      checkoutButton.disabled = true;
+      checkoutButton.textContent = "Redirecting...";
+
       try {
-        const payload = { fulfilment, items: basket.map((item) => ({ product: item.product, weight: item.weight, grind: item.grind, quantity: item.quantity })) };
-        const response = await fetch("/api/create-checkout-session", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
-        const rawText = await response.text(); let data = {};
-        try { data = rawText ? JSON.parse(rawText) : {}; } catch { throw new Error(`Invalid response from checkout endpoint: ${rawText || "empty response"}`); }
-        if (!response.ok || !data.url) throw new Error(data.error || "Unable to create checkout session.");
-        window.dataLayer.push({ event: "begin_checkout", ecommerce: { currency: "GBP", value: basket.reduce((sum, item) => sum + item.lineTotal, 0), items: basket.map((item) => ({ item_name: item.product, item_variant: `${item.weight} / ${prettyGrind(item.grind)}`, price: item.unitPrice, quantity: item.quantity })) }, fulfilment });
+        const payload = {
+          fulfilment,
+          items: basket.map((item) => ({
+            product: item.product,
+            weight: item.weight,
+            grind: item.grind,
+            quantity: item.quantity
+          }))
+        };
+
+        const response = await fetch("/api/create-checkout-session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        const rawText = await response.text();
+        let data = {};
+
+        try {
+          data = rawText ? JSON.parse(rawText) : {};
+        } catch {
+          throw new Error(`Invalid response from checkout endpoint: ${rawText || "empty response"}`);
+        }
+
+        if (!response.ok || !data.url) {
+          throw new Error(data.error || "Unable to create checkout session.");
+        }
+
+        window.dataLayer.push({
+          event: "begin_checkout",
+          ecommerce: {
+            currency: "GBP",
+            value: getBasketSubtotal(),
+            items: basket.map((item) => ({
+              item_name: item.product,
+              item_variant: `${item.weight} / ${prettyGrind(item.grind)}`,
+              price: item.unitPrice,
+              quantity: item.quantity
+            }))
+          },
+          fulfilment
+        });
+
+        // Keep the basket intact while checkout loads.
         window.location.href = data.url;
       } catch (error) {
-        if (basketItemsEl) basketItemsEl.insertAdjacentHTML("beforeend", `<p class="shop-basket-checkout-note">${escapeHtml(error.message || "Something went wrong. Please try again.")}</p>`);
-        checkoutButton.disabled = false; 
-       checkoutButton.removeAttribute("aria-busy");
+        if (basketItemsEl) {
+          const existingNote = basketItemsEl.querySelector(".shop-basket-checkout-note");
+          if (existingNote) existingNote.remove();
+          basketItemsEl.insertAdjacentHTML(
+            "beforeend",
+            `<p class="shop-basket-checkout-note">${escapeHtml(error.message || "Something went wrong. Please try again.")}</p>`
+          );
+        }
+
+        checkoutButton.disabled = false;
         checkoutButton.textContent = originalText;
       }
     });
