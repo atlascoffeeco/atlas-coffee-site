@@ -8155,3 +8155,77 @@ body.basket-open {
   -webkit-text-fill-color: currentColor;
   animation: none;
 }
+
+
+/* Featured coffee card: dark-mode contrast */
+@media (prefers-color-scheme: dark) {
+  .hero-visual .product-hero-card,
+  .hero-visual .spotlight-card {
+    color: #f8f1e8;
+    background:
+      radial-gradient(
+        circle at 82% 16%,
+        rgba(255, 165, 3, 0.18),
+        transparent 26%
+      ),
+      linear-gradient(
+        145deg,
+        #2b2118 0%,
+        #1b1511 58%,
+        #241a13 100%
+      );
+    border-color: rgba(255, 255, 255, 0.14);
+  }
+
+  .hero-visual .product-hero-kicker {
+    color: #17120f;
+    background: #b87918;
+  }
+
+  .hero-visual .product-hero-body h2,
+  .hero-visual .product-hero-copy,
+  .hero-visual .product-hero-note,
+  .hero-visual .product-hero-notes,
+  .hero-visual .product-hero-notes span,
+  .hero-visual .product-hero-notes strong,
+  .hero-visual .product-hero-footer > span {
+    color: #f8f1e8;
+  }
+
+  .hero-visual .product-hero-copy,
+  .hero-visual .product-hero-note {
+    color: rgba(248, 241, 232, 0.82);
+  }
+
+  .hero-visual .product-hero-notes {
+    border-top-color: rgba(255, 255, 255, 0.14);
+  }
+
+  .hero-visual .product-hero-notes span {
+    color: rgba(248, 241, 232, 0.68);
+  }
+
+  .hero-visual .product-hero-notes strong {
+    color: #f8f1e8;
+  }
+
+  .hero-visual .product-hero-image {
+    background:
+      radial-gradient(
+        circle at 50% 44%,
+        rgba(255, 165, 3, 0.12),
+        transparent 50%
+      );
+  }
+
+  .hero-visual .product-hero-footer .button {
+    color: #17120f;
+    background: #ffad05;
+  }
+
+  .hero-visual .product-hero-footer .button:hover,
+  .hero-visual .product-hero-footer .button:focus-visible {
+    color: #17120f;
+    background: #ffc044;
+  }
+}
