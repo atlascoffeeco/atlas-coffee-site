@@ -139,107 +139,123 @@
       <a href="/shop">Shop Coffee</a>
       <a href="/why-atlas">Why Atlas</a>
       <a href="/contact">Contact Us</a>
-
-      <!-- <button class="button mobile-panel-basket" type="button" data-basket-trigger data-has-items="false"
-        aria-controls="basket-popover" aria-expanded="false">
-        <span>Basket</span>
-        <span class="basket-link__count" data-basket-count>0</span>
-      </button> -->
     </div>
   </header>
 
   <main id="main-content">
 
     <section class="hero hero-premium home-hero">
-      <div class="container hero-grid">
+  <div class="container hero-grid">
 
-        <div class="hero-copy reveal">
-          <span class="eyebrow">
-            Freshly roasted in small batches · UK delivery · Redditch collection
+    <div class="hero-copy reveal">
+      <!-- <span class="eyebrow">
+        Freshly roasted in small batches · UK Delivery
+      </span> -->
+
+      <h1>
+        Fresh coffee, roasted with clarity and character.
+      </h1>
+
+      <p class="hero-lead">
+        Discover a focused range of small-batch coffees chosen for sweetness,
+        balance, and everyday drinkability. Order online for UK delivery or
+        free local collection in Redditch.
+      </p>
+
+      <div class="hero-actions">
+        <a class="button" href="/shop">
+          Shop freshly roasted coffee
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-visual reveal">
+      <div class="product-hero-card spotlight-card">
+
+        <div class="product-hero-top">
+          <span class="product-hero-kicker">
+            Featured coffee
           </span>
 
-          <h1>Fresh coffee, roasted with clarity and character.</h1>
-
-          <p class="hero-lead">
-            Discover a focused range of small-batch coffees chosen for sweetness,
-            balance, and everyday drinkability. Order online for UK delivery or
-            free local collection in Redditch.
-          </p>
-
-          <div class="hero-actions">
-            <a class="button" href="/shop">
-              Shop freshly roasted coffee
-            </a>
-
-            <!-- <a class="ghost-button" href="#featured-coffee">
-              Explore the coffees
-            </a> -->
-          </div>
-
-          <div class="hero-mini-points">
-            <span>Small-batch roasted</span>
-            <span>UK delivery</span>
-            <span>Free local collection</span>
+          <div class="product-hero-logo">
+            <img
+              src="/assets/logo.jpg"
+              alt="Atlas Coffee Company logo"
+              width="80"
+              height="80"
+              loading="eager"
+              decoding="async"
+            >
           </div>
         </div>
 
-        <div class="hero-visual reveal">
-          <div class="product-hero-card spotlight-card">
+        <div class="product-hero-image">
+          <img
+            data-featured-image
+            src="/assets/cajamarca-bag.webp"
+            alt="Peru Cajamarca coffee bag from Atlas Coffee"
+            width="700"
+            height="875"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            onerror="this.onerror=null; this.src='/assets/cajamarca-bag.png';"
+          >
+        </div>
 
-            <div class="product-hero-top">
-              <span class="product-hero-kicker">Featured coffee</span>
+        <div
+          class="product-hero-body"
+          id="featured-coffee"
+        >
+          <h2 data-featured-name>
+            Peru Cajamarca
+          </h2>
 
-              <div class="product-hero-logo">
-                <img src="/assets/logo.jpg" alt="Atlas Coffee Company logo" width="80" height="80" loading="eager"
-                  decoding="async">
-              </div>
-            </div>
+          <div class="product-hero-text">
+            <p
+              class="product-hero-copy"
+              data-featured-copy
+            >
+              A bright, lifted Peruvian with mellow panela sweetness, vanilla,
+              cooked citrus, and a fresh-fruit finish. Clean and balanced,
+              it’s an easy choice if you want a lively cup with a soft,
+              elegant edge.
+            </p>
 
-            <div class="product-hero-image">
-              <img data-featured-image src="/assets/cajamarca-bag.webp"
-                alt="Peru Cajamarca coffee bag from Atlas Coffee" width="700" height="875" loading="eager"
-                fetchpriority="high" decoding="async"
-                onerror="this.onerror=null; this.src='/assets/cajamarca-bag.png';">
-            </div>
-
-            <div class="product-hero-body" id="featured-coffee">
-              <h2 data-featured-name>Peru Cajamarca</h2>
-
-              <p class="product-hero-copy" data-featured-copy>
-                Cleaner and brighter in the cup, with layered sweetness and a more lifted finish from first sip to last.
-              </p>
-
-              <div class="product-hero-specs">
-                <div>
-                  <span>Origin</span>
-                  <strong data-featured-origin>Peru</strong>
-                </div>
-
-                <div>
-                  <span>Best for</span>
-                  <strong data-featured-use>Morning filter</strong>
-                </div>
-
-                <div>
-                  <span>Profile</span>
-                  <strong data-featured-profile>Bright &amp; layered</strong>
-                </div>
-              </div>
-            </div>
-
-            <div class="product-hero-footer">
-              <span data-featured-price>From £13.95</span>
-
-              <a class="button" data-featured-link href="/shop#peru-product">
-                Shop Peru Cajamarca
-              </a>
-            </div>
-
+            <p class="product-hero-note">
+              Ideal for filter brews, with clarity up front and a rounded,
+              sweet finish.
+            </p>
           </div>
+
+          <div class="product-hero-notes">
+            <span>Tasting notes</span>
+
+            <strong data-featured-notes>
+              Panela · Vanilla · Plum · Sweet Cherry
+            </strong>
+          </div>
+        </div>
+
+        <div class="product-hero-footer">
+          <span data-featured-price>
+            From £13.95
+          </span>
+
+          <a
+            class="button"
+            data-featured-link
+            href="/shop#peru-product"
+          >
+            Shop Peru Cajamarca
+          </a>
         </div>
 
       </div>
-    </section>
+    </div>
+
+  </div>
+</section>
 
     <section class="trust-band trust-band-dark home-trust-band" aria-label="Why buy from Atlas Coffee">
       <div class="container trust-grid trust-grid-compact">
