@@ -7591,3 +7591,60 @@ body.basket-open {
 .mobile-buy-bar[hidden] {
   display: none !important;
 }
+
+.shop-page .shop-basket-list {
+  min-height: 180px;
+}
+
+.shop-page .shop-basket-empty {
+  display: grid;
+  place-items: center;
+  min-height: 180px;
+  margin: 0;
+  padding: 1rem;
+  text-align: center;
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--bg) 76%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--text) 8%, transparent);
+}
+
+@media (max-width: 859px) {
+  .shop-page .shop-basket-drawer__header {
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: grab;
+  }
+
+  .shop-page .shop-basket-drawer__header:active {
+    cursor: grabbing;
+  }
+
+  .shop-page .shop-basket-drawer__handle {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    width: 100%;
+    min-height: 30px;
+    touch-action: none;
+  }
+
+  .shop-page .shop-basket-drawer__handle span {
+    display: block;
+    width: 2.8rem;
+    height: 0.3rem;
+    margin: auto;
+    border-radius: 999px;
+    background: color-mix(
+      in srgb,
+      var(--text) 25%,
+      transparent
+    );
+  }
+
+  .shop-page .shop-basket-drawer__close {
+    position: relative;
+    z-index: 3;
+    touch-action: manipulation;
+  }
+}

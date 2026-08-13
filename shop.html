@@ -387,12 +387,7 @@
   The backdrop closes the basket on desktop.
   On mobile, app.js minimises a populated basket to the mobile basket bar.
 -->
-<button
-  class="shop-basket-popover__backdrop"
-  type="button"
-  tabindex="-1"
-  aria-label="Close basket"
-></button>
+    <button class="shop-basket-popover__backdrop" type="button" tabindex="-1" aria-label="Close basket"></button>
 
     <aside class="shop-basket-drawer" role="dialog" aria-modal="true" aria-labelledby="basket-title">
       <div class="shop-basket-drawer__header">
@@ -464,33 +459,21 @@
   Collapsed mobile basket bar.
   app.js displays this only when the basket contains items.
 -->
-<div
-  class="mobile-buy-bar"
-  aria-hidden="true"
-  hidden
->
-  <div class="container mobile-buy-bar__inner">
-    <div class="mobile-buy-bar__meta">
-      <strong>Your basket</strong>
-      <span
-        id="mobile-basket-summary"
-        aria-live="polite"
-      >
-        No items selected yet
-      </span>
-    </div>
+  <div class="mobile-buy-bar" aria-hidden="true" hidden>
+    <div class="container mobile-buy-bar__inner">
+      <div class="mobile-buy-bar__meta">
+        <strong>Your basket</strong>
+        <span id="mobile-basket-summary" aria-live="polite">
+          No items selected yet
+        </span>
+      </div>
 
-    <button
-      class="button mobile-buy-bar__button"
-      type="button"
-      id="mobile-basket-bar-toggle"
-      aria-controls="basket-popover"
-      aria-label="View your basket"
-    >
-      View basket
-    </button>
+      <button class="button mobile-buy-bar__button" type="button" id="mobile-basket-bar-toggle"
+        aria-controls="basket-popover" aria-label="View your basket">
+        View basket
+      </button>
+    </div>
   </div>
-</div>
 
   <footer class="site-footer">
     <div class="container footer-grid">

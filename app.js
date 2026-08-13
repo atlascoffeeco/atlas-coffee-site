@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       id: "peru",
       name: "Peru Cajamarca",
-      copy: "A bright, lifted Peruvian with mellow panela sweetness, vanilla, cooked citrus, and a fresh-fruit finish. Clean and balanced, it’s an easy choice if you want a lively cup with a soft, elegant edge.",
+      copy: "A bright, lifted Peruvian with mellow panela sweetness, vanilla, cooked citrus, and a fresh-fruit finish. Clean and balanced.",
       origin: "Peru",
       use: "Morning filter",
       profile: "Bright & layered",
@@ -108,6 +108,9 @@ document.addEventListener("DOMContentLoaded", () => {
     ".shop-basket-popover__backdrop"
   );
   const basketHandle = document.querySelector("[data-basket-handle]");
+const basketHeader = document.querySelector(
+  ".shop-basket-drawer__header"
+);
   const basketCountEls = document.querySelectorAll(
     "[data-basket-count], #basket-count"
   );
@@ -290,8 +293,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (fulfilmentNoteEl) {
       fulfilmentNoteEl.textContent =
         fulfilment === "collection"
-          ? "Collection is free in Redditch. We’ll contact you after payment to arrange pickup."
-          : "Delivery is added securely at checkout. Switch to local collection to skip the delivery charge.";
+          ? "Collection is free in South Birmingham. We’ll contact you after payment to arrange pickup."
+          : "Switch to local collection to skip the delivery charge.";
     }
 
     if (checkoutNoteEl) {
@@ -366,23 +369,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Open the drawer and reset any inline transform left by a previous drag.
   function openBasket() {
-    if (basketPopover) {
-      basketPopover.classList.add("is-open");
-      basketPopover.setAttribute("aria-hidden", "false");
-      document.body.classList.add("basket-open");
+  if (basketPopover) {
+    renderBasket();
+    basketPopover.classList.add("is-open");
+    basketPopover.setAttribute("aria-hidden", "false");
+    document.body.classList.add("basket-open");
 
-      if (basketDrawer) {
-        basketDrawer.classList.remove("is-dragging");
-        basketDrawer.style.removeProperty("transform");
-      }
-    } else {
-      window.location.href = "./shop.html#basket";
+    if (basketDrawer) {
+      basketDrawer.classList.remove("is-dragging");
+      basketDrawer.style.removeProperty("transform");
     }
 
-    basketToggles.forEach((toggle) => {
-      toggle.setAttribute("aria-expanded", "true");
-    });
+    requestAnimationFrame(() => renderBasket());
+  } else {
+    window.location.href = "./shop.html#basket";
   }
+
+  basketToggles.forEach((toggle) => {
+    toggle.setAttribute("aria-expanded", "true");
+  });
+}
 
   // On mobile, minimise a populated basket to the sticky basket bar.
   // An empty basket closes completely because there is nothing to preserve.
@@ -458,70 +464,96 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Drag only from the handle, leaving the item list free to scroll normally.
   function setupBasketDrag() {
-    if (!basketHandle || !basketDrawer) return;
+  /*
+   * Use the visible handle when available.
+   * Fall back to the complete basket header so the gesture still works
+   * if the handle is hidden or not rendered.
+   */
+  const dragRegion = basketHandle || basketHeader;
 
-    let startY = 0;
-    let currentY = 0;
-    let startTime = 0;
-    let pointerId = null;
-    let dragging = false;
+  if (!dragRegion || !basketDrawer) return;
 
-    const isMobileSheet = () =>
-      window.matchMedia("(max-width: 859px)").matches;
+  let startY = 0;
+  let currentY = 0;
+  let startTime = 0;
+  let pointerId = null;
+  let dragging = false;
 
-    const resetDrag = () => {
-      basketDrawer.classList.remove("is-dragging");
-      basketDrawer.style.removeProperty("transform");
-      dragging = false;
-      pointerId = null;
-    };
+  const isMobileSheet = () =>
+    window.matchMedia("(max-width: 859px)").matches;
 
-    basketHandle.addEventListener("pointerdown", (event) => {
-      if (!isMobileSheet()) return;
-      if (!basketPopover?.classList.contains("is-open")) return;
+  const resetDrag = () => {
+    basketDrawer.classList.remove("is-dragging");
+    basketDrawer.style.removeProperty("transform");
+    dragging = false;
+    pointerId = null;
+  };
 
-      pointerId = event.pointerId;
-      startY = event.clientY;
-      currentY = startY;
-      startTime = performance.now();
-      dragging = true;
+  dragRegion.addEventListener("pointerdown", (event) => {
+    if (!isMobileSheet()) return;
+    if (!basketPopover?.classList.contains("is-open")) return;
 
-      basketDrawer.classList.add("is-dragging");
-      basketHandle.setPointerCapture(pointerId);
-    });
+    /*
+     * Do not start a drag when the user is pressing the Close button
+     * or the handle's own button click is being handled normally.
+     */
+    if (
+      event.target.closest(".shop-basket-drawer__close") ||
+      event.target.closest("a") ||
+      event.target.closest("input") ||
+      event.target.closest("select")
+    ) {
+      return;
+    }
 
-    basketHandle.addEventListener("pointermove", (event) => {
-      if (!dragging || event.pointerId !== pointerId) return;
+    pointerId = event.pointerId;
+    startY = event.clientY;
+    currentY = startY;
+    startTime = performance.now();
+    dragging = true;
 
-      currentY = event.clientY;
-      const distance = Math.max(0, currentY - startY);
-      basketDrawer.style.transform = `translateY(${distance}px)`;
-    });
+    basketDrawer.classList.add("is-dragging");
 
-    basketHandle.addEventListener("pointerup", (event) => {
-      if (!dragging || event.pointerId !== pointerId) return;
+    if (dragRegion.setPointerCapture) {
+      dragRegion.setPointerCapture(pointerId);
+    }
+  });
 
-      const distance = Math.max(0, currentY - startY);
-      const elapsed = Math.max(1, performance.now() - startTime);
-      const velocity = distance / elapsed;
-      const shouldMinimise =
-        distance >= 90 ||
-        (distance >= 45 && velocity >= 0.5);
+  dragRegion.addEventListener("pointermove", (event) => {
+    if (!dragging || event.pointerId !== pointerId) return;
 
-      if (shouldMinimise) {
-        resetDrag();
-        minimiseBasket();
-        return;
-      }
+    currentY = event.clientY;
+    const distance = Math.max(0, currentY - startY);
 
+    basketDrawer.style.transform = `translateY(${distance}px)`;
+  });
+
+  dragRegion.addEventListener("pointerup", (event) => {
+    if (!dragging || event.pointerId !== pointerId) return;
+
+    const distance = Math.max(0, currentY - startY);
+    const elapsed = Math.max(1, performance.now() - startTime);
+    const velocity = distance / elapsed;
+
+    const shouldMinimise =
+      distance >= 70 ||
+      (distance >= 35 && velocity >= 0.45);
+
+    if (shouldMinimise) {
       resetDrag();
-    });
+      minimiseBasket();
+      return;
+    }
 
-    basketHandle.addEventListener("pointercancel", resetDrag);
-    basketHandle.addEventListener("lostpointercapture", () => {
-      if (dragging) resetDrag();
-    });
-  }
+    resetDrag();
+  });
+
+  dragRegion.addEventListener("pointercancel", resetDrag);
+
+  dragRegion.addEventListener("lostpointercapture", () => {
+    if (dragging) resetDrag();
+  });
+}
 
   function setupFulfilmentSelector() {
     updateFulfilmentUI();
