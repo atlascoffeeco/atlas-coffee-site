@@ -1,13 +1,14 @@
-// Mark the document as JS-enabled for any CSS hooks
+// Mark the document as JS-enabled for CSS hooks.
 document.documentElement.classList.add("js");
 
-// Ensure the Google Tag Manager data layer always exists
+// Ensure the Google Tag Manager data layer always exists.
 window.dataLayer = window.dataLayer || [];
 
 document.addEventListener("DOMContentLoaded", () => {
   const BASKET_STORAGE_KEY = "atlas-basket";
   const FULFILMENT_STORAGE_KEY = "atlas-fulfilment";
   const DELIVERY_FEE = 4.5;
+  const MAX_QUANTITY = 10;
 
   const PRODUCTS = {
     serra: {
@@ -22,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  // Content used by the homepage featured-coffee card.
   const HOME_FEATURED_PRODUCTS = [
     {
       id: "serra",
@@ -30,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
       origin: "Brazil",
       use: "Everyday brewing",
       profile: "Sweet & balanced",
+      notes: "Praline · Milk chocolate · Toasted nuts",
       price: "From £10.95",
       image: "/assets/serra-negra-bag.webp",
       fallbackImage: "/assets/serra-negra-bag.png",
@@ -39,10 +42,11 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       id: "peru",
       name: "Peru Cajamarca",
-      copy: "A bright, lifted Peruvian with mellow panela sweetness, vanilla,cooked citrus, and a fresh-fruit finish. Clean and balanced, it’s an easy choice if you want a lively cup with a soft, elegant edge.",
+      copy: "A bright, lifted Peruvian with mellow panela sweetness, vanilla, cooked citrus, and a fresh-fruit finish. Clean and balanced, it’s an easy choice if you want a lively cup with a soft, elegant edge.",
       origin: "Peru",
       use: "Morning filter",
       profile: "Bright & layered",
+      notes: "Panela · Vanilla · Plum · Sweet Cherry",
       price: "From £13.95",
       image: "/assets/cajamarca-bag.webp",
       fallbackImage: "/assets/cajamarca-bag.png",
@@ -51,6 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   ];
 
+  // The mobile basket bar is added only on pages that do not already contain it.
   const mobileBasketBarMarkup = `
     <div class="mobile-buy-bar" aria-hidden="true">
       <div class="container mobile-buy-bar__inner">
@@ -67,32 +72,58 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function ensureMobileBasketBar() {
     if (document.getElementById("mobile-basket-bar-toggle")) return;
+
     const footer = document.querySelector(".site-footer");
     if (!footer) return;
+
     footer.insertAdjacentHTML("beforebegin", mobileBasketBarMarkup);
   }
 
   ensureMobileBasketBar();
 
+  // readBasket() normalises and merges any older duplicate rows in localStorage.
   const basket = readBasket();
   let fulfilment = readFulfilment();
 
+  // Persist the cleaned basket so duplicates are not recreated on the next page load.
+  if (basket.length) {
+    try {
+      localStorage.setItem(BASKET_STORAGE_KEY, JSON.stringify(basket));
+    } catch { }
+  }
+
+  // Cache DOM references before any setup function is called.
   const mobileToggle = document.querySelector("[data-mobile-toggle]");
   const mobilePanel = document.querySelector("[data-mobile-panel]");
   const revealItems = document.querySelectorAll(".reveal");
   const basketPopover = document.getElementById("basket-popover");
-  const basketToggles = document.querySelectorAll("[data-basket-trigger], [data-open-basket]");
-  const basketCloseButtons = document.querySelectorAll("[data-basket-close]");
-  const basketCountEls = document.querySelectorAll("[data-basket-count], #basket-count");
+  const basketDrawer = document.querySelector(".shop-basket-drawer");
+  const basketToggles = document.querySelectorAll(
+    "[data-basket-trigger], [data-open-basket]"
+  );
+  const basketCloseButtons = document.querySelectorAll(
+    ".shop-basket-drawer__close[data-basket-close]"
+  );
+  const basketBackdrop = document.querySelector(
+    ".shop-basket-popover__backdrop"
+  );
+  const basketHandle = document.querySelector("[data-basket-handle]");
+  const basketCountEls = document.querySelectorAll(
+    "[data-basket-count], #basket-count"
+  );
   const basketStateEls = document.querySelectorAll("[data-has-items]");
   const basketItemsEl = document.getElementById("basket-items");
   const basketTotalEl = document.getElementById("basket-total");
-  const basketTotalLabelEl = document.querySelector(".shop-basket-total .shop-basket-total-label");
+  const basketTotalLabelEl = document.querySelector(
+    ".shop-basket-total .shop-basket-total-label"
+  );
   const basketTotalNoteEl = document.getElementById("basket-total-note");
   const mobileBasketSummaryEl = document.getElementById("mobile-basket-summary");
   const checkoutButton = document.getElementById("checkout-button");
   const mobileBasketBarToggle = document.getElementById("mobile-basket-bar-toggle");
-  const fulfilmentInputs = document.querySelectorAll('input[name="basket-fulfilment"]');
+  const fulfilmentInputs = document.querySelectorAll(
+    'input[name="basket-fulfilment"]'
+  );
   const fulfilmentNoteEl = document.getElementById("basket-fulfilment-note");
   const checkoutNoteEl = document.getElementById("basket-checkout-note");
 
@@ -110,10 +141,94 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const raw = localStorage.getItem(BASKET_STORAGE_KEY);
       const parsed = raw ? JSON.parse(raw) : [];
-      return Array.isArray(parsed) ? parsed : [];
+
+      if (!Array.isArray(parsed)) return [];
+
+      return mergeBasketItems(parsed);
     } catch {
       return [];
     }
+  }
+
+  // Product, weight, and grind together identify one basket line.
+  function getBasketItemKey(item) {
+    return [
+      String(item.product || ""),
+      String(item.weight || ""),
+      String(item.grind || "")
+    ].join("::");
+  }
+
+  // Remove invalid records and merge duplicate selections from localStorage.
+  function mergeBasketItems(items) {
+    const merged = new Map();
+
+    items.forEach((item) => {
+      if (!item || typeof item !== "object") return;
+
+      const quantity = Math.max(
+        1,
+        Math.min(MAX_QUANTITY, Number(item.quantity) || 1)
+      );
+      const unitPrice = Number(item.unitPrice);
+
+      if (
+        !item.product ||
+        !item.weight ||
+        !item.grind ||
+        !Number.isFinite(unitPrice) ||
+        unitPrice < 0
+      ) {
+        return;
+      }
+
+      const cleanItem = {
+        product: String(item.product),
+        weight: String(item.weight),
+        grind: String(item.grind),
+        quantity,
+        unitPrice,
+        lineTotal: unitPrice * quantity
+      };
+
+      const key = getBasketItemKey(cleanItem);
+      const existing = merged.get(key);
+
+      if (!existing) {
+        merged.set(key, cleanItem);
+        return;
+      }
+
+      existing.quantity = Math.min(
+        MAX_QUANTITY,
+        existing.quantity + cleanItem.quantity
+      );
+      existing.lineTotal = existing.unitPrice * existing.quantity;
+    });
+
+    return Array.from(merged.values());
+  }
+
+  // Add a new line or increase the quantity of an identical selection.
+  function addBasketItem(item) {
+    const key = getBasketItemKey(item);
+    const existing = basket.find(
+      (basketItem) => getBasketItemKey(basketItem) === key
+    );
+
+    if (existing) {
+      existing.quantity = Math.min(
+        MAX_QUANTITY,
+        existing.quantity + item.quantity
+      );
+      existing.lineTotal = existing.unitPrice * existing.quantity;
+      return;
+    }
+
+    basket.push({
+      ...item,
+      lineTotal: item.unitPrice * item.quantity
+    });
   }
 
   function saveBasket() {
@@ -206,7 +321,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const setMobileMenu = (open) => {
       mobileToggle.setAttribute("aria-expanded", String(open));
       mobilePanel.classList.toggle("is-open", open);
-      mobileToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      mobileToggle.setAttribute(
+        "aria-label",
+        open ? "Close menu" : "Open menu"
+      );
     };
 
     mobileToggle.addEventListener("click", () => {
@@ -226,7 +344,9 @@ document.addEventListener("DOMContentLoaded", () => {
   function setupReveal() {
     if (!revealItems.length) return;
 
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
 
     if (!prefersReducedMotion && "IntersectionObserver" in window) {
       const observer = new IntersectionObserver((entries) => {
@@ -244,38 +364,163 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Open the drawer and reset any inline transform left by a previous drag.
   function openBasket() {
     if (basketPopover) {
       basketPopover.classList.add("is-open");
       basketPopover.setAttribute("aria-hidden", "false");
       document.body.classList.add("basket-open");
+
+      if (basketDrawer) {
+        basketDrawer.classList.remove("is-dragging");
+        basketDrawer.style.removeProperty("transform");
+      }
     } else {
       window.location.href = "./shop.html#basket";
     }
 
-    basketToggles.forEach((toggle) => toggle.setAttribute("aria-expanded", "true"));
+    basketToggles.forEach((toggle) => {
+      toggle.setAttribute("aria-expanded", "true");
+    });
   }
 
+  // On mobile, minimise a populated basket to the sticky basket bar.
+  // An empty basket closes completely because there is nothing to preserve.
+  function minimiseBasket() {
+    if (!basketPopover) return;
+
+    if (basket.length > 0) {
+      basketPopover.classList.remove("is-open");
+      basketPopover.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("basket-open");
+
+      basketToggles.forEach((toggle) => {
+        toggle.setAttribute("aria-expanded", "false");
+      });
+
+      return;
+    }
+
+    closeBasket();
+  }
+
+  // Explicit Close and Escape dismiss the drawer completely.
   function closeBasket() {
     if (!basketPopover) return;
+
     basketPopover.classList.remove("is-open");
     basketPopover.setAttribute("aria-hidden", "true");
     document.body.classList.remove("basket-open");
-    basketToggles.forEach((toggle) => toggle.setAttribute("aria-expanded", "false"));
+
+    if (basketDrawer) {
+      basketDrawer.classList.remove("is-dragging");
+      basketDrawer.style.removeProperty("transform");
+    }
+
+    basketToggles.forEach((toggle) => {
+      toggle.setAttribute("aria-expanded", "false");
+    });
   }
 
   function setupBasketDrawer() {
-    basketToggles.forEach((button) => button.addEventListener("click", openBasket));
-    basketCloseButtons.forEach((button) => button.addEventListener("click", closeBasket));
+    basketToggles.forEach((button) => {
+      button.addEventListener("click", openBasket);
+    });
+
+    basketCloseButtons.forEach((button) => {
+      button.addEventListener("click", closeBasket);
+    });
+
     mobileBasketBarToggle?.addEventListener("click", openBasket);
+
+    // Mobile backdrop tap minimises a populated basket; desktop tap closes it.
+    basketBackdrop?.addEventListener("click", () => {
+      if (window.matchMedia("(max-width: 859px)").matches) {
+        minimiseBasket();
+      } else {
+        closeBasket();
+      }
+    });
+
+    // The handle is both a keyboard-accessible minimise button and drag target.
+    basketHandle?.addEventListener("click", minimiseBasket);
 
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") closeBasket();
     });
 
+    setupBasketDrag();
+
     if (window.location.hash === "#basket" && basketPopover) {
       openBasket();
     }
+  }
+
+  // Drag only from the handle, leaving the item list free to scroll normally.
+  function setupBasketDrag() {
+    if (!basketHandle || !basketDrawer) return;
+
+    let startY = 0;
+    let currentY = 0;
+    let startTime = 0;
+    let pointerId = null;
+    let dragging = false;
+
+    const isMobileSheet = () =>
+      window.matchMedia("(max-width: 859px)").matches;
+
+    const resetDrag = () => {
+      basketDrawer.classList.remove("is-dragging");
+      basketDrawer.style.removeProperty("transform");
+      dragging = false;
+      pointerId = null;
+    };
+
+    basketHandle.addEventListener("pointerdown", (event) => {
+      if (!isMobileSheet()) return;
+      if (!basketPopover?.classList.contains("is-open")) return;
+
+      pointerId = event.pointerId;
+      startY = event.clientY;
+      currentY = startY;
+      startTime = performance.now();
+      dragging = true;
+
+      basketDrawer.classList.add("is-dragging");
+      basketHandle.setPointerCapture(pointerId);
+    });
+
+    basketHandle.addEventListener("pointermove", (event) => {
+      if (!dragging || event.pointerId !== pointerId) return;
+
+      currentY = event.clientY;
+      const distance = Math.max(0, currentY - startY);
+      basketDrawer.style.transform = `translateY(${distance}px)`;
+    });
+
+    basketHandle.addEventListener("pointerup", (event) => {
+      if (!dragging || event.pointerId !== pointerId) return;
+
+      const distance = Math.max(0, currentY - startY);
+      const elapsed = Math.max(1, performance.now() - startTime);
+      const velocity = distance / elapsed;
+      const shouldMinimise =
+        distance >= 90 ||
+        (distance >= 45 && velocity >= 0.5);
+
+      if (shouldMinimise) {
+        resetDrag();
+        minimiseBasket();
+        return;
+      }
+
+      resetDrag();
+    });
+
+    basketHandle.addEventListener("pointercancel", resetDrag);
+    basketHandle.addEventListener("lostpointercapture", () => {
+      if (dragging) resetDrag();
+    });
   }
 
   function setupFulfilmentSelector() {
@@ -284,6 +529,7 @@ document.addEventListener("DOMContentLoaded", () => {
     fulfilmentInputs.forEach((input) => {
       input.addEventListener("change", () => {
         if (!input.checked) return;
+
         fulfilment = input.value === "collection" ? "collection" : "delivery";
         saveFulfilment();
         syncFulfilmentInputs();
@@ -291,10 +537,6 @@ document.addEventListener("DOMContentLoaded", () => {
         renderBasket();
       });
     });
-  }
-
-  function getBasketGrandTotal() {
-    return getBasketSubtotal() + getBasketDeliveryFee();
   }
 
   function renderBasket() {
@@ -308,9 +550,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const mobileBuyBar = document.querySelector(".mobile-buy-bar");
-    if (mobileBuyBar) {
-      mobileBuyBar.style.display = basket.length ? "block" : "none";
-    }
+
+if (mobileBuyBar) {
+  const hasItems = basket.length > 0;
+
+  mobileBuyBar.hidden = !hasItems;
+  mobileBuyBar.setAttribute("aria-hidden", String(!hasItems));
+}
 
     basketCountEls.forEach((el) => {
       el.textContent = String(count);
@@ -332,7 +578,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (!basket.length) {
-      basketItemsEl.innerHTML = '<p class="shop-basket-empty">Your basket is currently empty.</p>';
+      basketItemsEl.innerHTML =
+        '<p class="shop-basket-empty">Your basket is currently empty.</p>';
       basketTotalEl.textContent = formatMoney(0);
       updateFulfilmentUI();
       return;
@@ -347,7 +594,14 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
           <span>${escapeHtml(item.weight)} · ${escapeHtml(prettyGrind(item.grind))} · Quantity ${item.quantity}</span>
         </div>
-        <button type="button" class="shop-basket-remove" data-remove-index="${index}">Remove</button>
+        <button
+          type="button"
+          class="shop-basket-remove"
+          data-remove-index="${index}"
+          aria-label="Remove ${escapeHtml(item.product)} from basket"
+        >
+          Remove
+        </button>
       </div>
     `).join("");
 
@@ -376,7 +630,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!weightEl || !grindEl || !quantityEl || !summaryEl || !priceEl) return;
 
-      const quantity = Math.max(1, Math.min(10, Number(quantityEl.value) || 1));
+      const quantity = Math.max(
+        1,
+        Math.min(MAX_QUANTITY, Number(quantityEl.value) || 1)
+      );
       quantityEl.value = quantity;
 
       const unitPrice = priceMap[weightEl.value];
@@ -386,22 +643,27 @@ document.addEventListener("DOMContentLoaded", () => {
       priceEl.textContent = formatMoney(subtotal);
 
       if (noteEl) {
-        noteEl.textContent = "Choose delivery or local collection later in the basket before checkout.";
+        noteEl.textContent =
+          "Choose delivery or local collection later in the basket before checkout.";
       }
     }
 
-    [["serra", PRODUCTS.serra.prices], ["peru", PRODUCTS.peru.prices]].forEach(([prefix, prices]) => {
-      ["weight", "grind", "quantity"].forEach((field) => {
-        const el = document.getElementById(`${prefix}-${field}`);
-        if (el) {
-          el.addEventListener(field === "quantity" ? "input" : "change", () => {
-            updateProductPanel(prefix, prices);
-          });
-        }
-      });
+    [["serra", PRODUCTS.serra.prices], ["peru", PRODUCTS.peru.prices]].forEach(
+      ([prefix, prices]) => {
+        ["weight", "grind", "quantity"].forEach((field) => {
+          const el = document.getElementById(`${prefix}-${field}`);
 
-      updateProductPanel(prefix, prices);
-    });
+          if (el) {
+            el.addEventListener(
+              field === "quantity" ? "input" : "change",
+              () => updateProductPanel(prefix, prices)
+            );
+          }
+        });
+
+        updateProductPanel(prefix, prices);
+      }
+    );
 
     document.querySelectorAll("[data-add-to-basket]").forEach((button) => {
       button.addEventListener("click", () => {
@@ -410,18 +672,26 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!product) return;
 
         const prefix = key === "serra" ? "serra" : "peru";
-        const weight = document.getElementById(`${prefix}-weight`).value;
-        const grind = document.getElementById(`${prefix}-grind`).value;
-        const quantity = Math.max(1, Math.min(10, Number(document.getElementById(`${prefix}-quantity`).value) || 1));
+        const weightEl = document.getElementById(`${prefix}-weight`);
+        const grindEl = document.getElementById(`${prefix}-grind`);
+        const quantityEl = document.getElementById(`${prefix}-quantity`);
+
+        if (!weightEl || !grindEl || !quantityEl) return;
+
+        const weight = weightEl.value;
+        const grind = grindEl.value;
+        const quantity = Math.max(
+          1,
+          Math.min(MAX_QUANTITY, Number(quantityEl.value) || 1)
+        );
         const unitPrice = product.prices[weight];
 
-        basket.push({
+        addBasketItem({
           product: product.name,
           weight,
           grind,
           quantity,
-          unitPrice,
-          lineTotal: unitPrice * quantity
+          unitPrice
         });
 
         saveBasket();
@@ -440,9 +710,12 @@ document.addEventListener("DOMContentLoaded", () => {
     checkoutButton?.addEventListener("click", async () => {
       if (!basket.length) {
         openBasket();
+
         if (basketItemsEl) {
-          basketItemsEl.innerHTML = '<p class="shop-basket-empty">Add at least one coffee before proceeding to checkout.</p>';
+          basketItemsEl.innerHTML =
+            '<p class="shop-basket-empty">Add at least one coffee before proceeding to checkout.</p>';
         }
+
         return;
       }
 
@@ -475,7 +748,9 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
           data = rawText ? JSON.parse(rawText) : {};
         } catch {
-          throw new Error(`Invalid response from checkout endpoint: ${rawText || "empty response"}`);
+          throw new Error(
+            `Invalid response from checkout endpoint: ${rawText || "empty response"}`
+          );
         }
 
         if (!response.ok || !data.url) {
@@ -503,12 +778,16 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = data.url;
       } catch (error) {
         if (basketItemsEl) {
-          const existingNote = basketItemsEl.querySelector(".shop-basket-checkout-note");
+          const existingNote = basketItemsEl.querySelector(
+            ".shop-basket-checkout-note"
+          );
           if (existingNote) existingNote.remove();
 
           basketItemsEl.insertAdjacentHTML(
             "beforeend",
-            `<p class="shop-basket-checkout-note">${escapeHtml(error.message || "Something went wrong. Please try again.")}</p>`
+            `<p class="shop-basket-checkout-note">${escapeHtml(
+              error.message || "Something went wrong. Please try again."
+            )}</p>`
           );
         }
 
@@ -521,23 +800,13 @@ document.addEventListener("DOMContentLoaded", () => {
   function setupHomepageFeaturedCoffee() {
     const nameEl = document.querySelector("[data-featured-name]");
     const copyEl = document.querySelector("[data-featured-copy]");
-    const originEl = document.querySelector("[data-featured-origin]");
-    const useEl = document.querySelector("[data-featured-use]");
-    const profileEl = document.querySelector("[data-featured-profile]");
+    const notesEl = document.querySelector("[data-featured-notes]");
     const priceEl = document.querySelector("[data-featured-price]");
     const linkEl = document.querySelector("[data-featured-link]");
     const imageEl = document.querySelector("[data-featured-image]");
 
-    if (
-      !nameEl ||
-      !copyEl ||
-      !originEl ||
-      !useEl ||
-      !profileEl ||
-      !priceEl ||
-      !linkEl ||
-      !imageEl
-    ) {
+    // The homepage uses the new tasting-notes row rather than the old specs row.
+    if (!nameEl || !copyEl || !notesEl || !priceEl || !linkEl || !imageEl) {
       return;
     }
 
@@ -546,14 +815,13 @@ document.addEventListener("DOMContentLoaded", () => {
       (product) => product.id === "peru"
     );
 
+    if (!selected) return;
+
     nameEl.textContent = selected.name;
     copyEl.textContent = selected.copy;
-    originEl.textContent = selected.origin;
-    useEl.textContent = selected.use;
-    profileEl.textContent = selected.profile;
+    notesEl.textContent = selected.notes;
     priceEl.textContent = selected.price;
     linkEl.href = selected.link;
-
     imageEl.src = selected.image;
     imageEl.alt = selected.imageAlt;
 

@@ -7085,3 +7085,509 @@ body.basket-open {
     border-bottom: 15px solid rgba(210, 210, 204, 0.95);
   }
 }
+
+/* =========================================================
+   Mobile basket refinement
+   Place after all existing shop/basket CSS
+   ========================================================= */
+
+@media (max-width: 640px) {
+  .shop-page .shop-basket-drawer {
+    width: 100%;
+    height: 100dvh;
+    max-height: 100dvh;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    border-radius: 1.25rem 1.25rem 0 0;
+  }
+
+  /*
+   * Keep the header compact so the first product remains visible.
+   * The drawer itself still uses the full viewport height.
+   */
+
+  .shop-page .shop-basket-drawer__header {
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem 0.85rem;
+  }
+
+  .shop-page .shop-basket-drawer__header h2 {
+    margin-top: 0.45rem;
+    max-width: 12ch;
+    font-size: clamp(1.75rem, 8vw, 2.25rem);
+    line-height: 0.98;
+  }
+
+  .shop-page .shop-basket-drawer__close {
+    min-width: 44px;
+    min-height: 44px;
+    padding-inline: 0.85rem;
+    flex-shrink: 0;
+  }
+
+  /*
+   * The item area scrolls independently.
+   * min-height: 0 is important inside the grid.
+   */
+
+  .shop-page .shop-basket-drawer__body {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 0.85rem 1.25rem 1rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .shop-page .shop-basket-list {
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  /*
+   * Each item becomes a readable two-column card:
+   * details on the left, price/remove action on the right.
+   */
+
+  .shop-page .shop-basket-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 0.75rem;
+    padding: 0.9rem;
+    border-radius: 0.9rem;
+  }
+
+  .shop-page .shop-basket-item__copy {
+    min-width: 0;
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .shop-page .shop-basket-item__title-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.65rem;
+    min-width: 0;
+  }
+
+  .shop-page .shop-basket-item__title-row > strong:first-child {
+    min-width: 0;
+    font-size: 1rem;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+  }
+
+  .shop-page .shop-basket-item__price {
+    flex: 0 0 auto;
+    font-size: 0.98rem;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  .shop-page .shop-basket-item__copy > span {
+    display: block;
+    color: var(--muted);
+    font-size: 0.88rem;
+    line-height: 1.4;
+  }
+
+  /*
+   * The current JavaScript renders the Remove button directly inside
+   * .shop-basket-item, so target that actual structure.
+   */
+
+  .shop-page .shop-basket-item > .shop-basket-remove {
+    grid-column: 2;
+    justify-self: end;
+    align-self: end;
+    min-height: 36px;
+    padding: 0.35rem 0.55rem;
+    border: 1px solid color-mix(
+      in srgb,
+      var(--text) 14%,
+      transparent
+    );
+    border-radius: 999px;
+    background: transparent;
+    color: var(--muted);
+    font-size: 0.78rem;
+    line-height: 1;
+    text-decoration: none;
+  }
+
+  .shop-page .shop-basket-item > .shop-basket-remove:active {
+    transform: scale(0.98);
+  }
+
+  /*
+   * Keep the checkout area visible but reduce its vertical footprint.
+   */
+
+  .shop-page .shop-basket-drawer__footer {
+    max-height: 43dvh;
+    overflow-y: auto;
+    gap: 0.8rem;
+    padding: 0.85rem 1.25rem calc(
+      0.85rem + env(safe-area-inset-bottom)
+    );
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .shop-page .shop-basket-fulfilment {
+    gap: 0.55rem;
+  }
+
+  .shop-page .shop-basket-fulfilment__options {
+    gap: 0.45rem;
+  }
+
+  .shop-page .shop-basket-fulfilment__option {
+    align-items: flex-start;
+    gap: 0.55rem;
+    padding: 0.15rem 0;
+  }
+
+  .shop-page .shop-basket-fulfilment__option input {
+    width: 1.1rem;
+    height: 1.1rem;
+    margin-top: 0.12rem;
+  }
+
+  .shop-page .shop-basket-fulfilment__option span {
+    display: grid;
+    gap: 0.15rem;
+  }
+
+  .shop-page .shop-basket-fulfilment__option strong {
+    font-size: 0.95rem;
+    line-height: 1.2;
+  }
+
+  .shop-page .shop-basket-fulfilment__option small {
+    display: block;
+    color: var(--muted);
+    font-size: 0.78rem;
+    line-height: 1.3;
+  }
+
+  .shop-page .shop-basket-fulfilment .shop-basket-note {
+    margin: 0.15rem 0 0;
+    font-size: 0.82rem;
+    line-height: 1.35;
+  }
+
+  .shop-page .shop-basket-total {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .shop-page .shop-basket-total-label {
+    margin-bottom: 0;
+  }
+
+  .shop-page .shop-basket-total strong {
+    font-size: 1.5rem;
+  }
+
+  .shop-page .shop-basket-checkout {
+    min-height: 52px;
+    margin-top: 0.1rem;
+  }
+
+  .shop-page .shop-basket-drawer__footer > .shop-basket-note {
+    margin: 0;
+    font-size: 0.8rem;
+    line-height: 1.35;
+  }
+}
+
+/*
+ * Very short iPhone viewports: give the product list priority.
+ */
+
+@media (max-width: 640px) and (max-height: 700px) {
+  .shop-page .shop-basket-drawer__header {
+    padding-top: 0.75rem;
+    padding-bottom: 0.65rem;
+  }
+
+  .shop-page .shop-basket-drawer__header h2 {
+    font-size: 1.7rem;
+  }
+
+  .shop-page .shop-basket-drawer__footer {
+    max-height: 39dvh;
+    gap: 0.65rem;
+    padding-top: 0.7rem;
+  }
+
+  .shop-page .shop-basket-item {
+    padding: 0.8rem;
+  }
+}
+
+/* =========================================================
+   Basket remove button — unified style
+   ========================================================= */
+
+.shop-page .shop-basket-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0.4rem 0.75rem;
+  border-radius: 9999px;
+  border: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
+  background: color-mix(in srgb, var(--text) 3%, transparent);
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  text-underline-offset: 0;
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.shop-page .shop-basket-remove:hover {
+  background: color-mix(in srgb, var(--primary) 10%, var(--surface));
+  border-color: color-mix(in srgb, var(--primary) 24%, transparent);
+  color: var(--text);
+}
+
+.shop-page .shop-basket-remove:active {
+  transform: scale(0.98);
+}
+
+.shop-page .shop-basket-remove:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 18%, transparent);
+  border-color: color-mix(in srgb, var(--primary) 28%, transparent);
+}
+
+/* =========================================================
+   Basket close button — match remove button style
+   ========================================================= */
+
+.shop-page .shop-basket-drawer__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0.4rem 0.75rem;
+  border-radius: 9999px;
+  border: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
+  background: color-mix(in srgb, var(--text) 3%, transparent);
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.shop-page .shop-basket-drawer__close:hover {
+  background: color-mix(in srgb, var(--primary) 10%, var(--surface));
+  border-color: color-mix(in srgb, var(--primary) 24%, transparent);
+  color: var(--text);
+}
+
+.shop-page .shop-basket-drawer__close:active {
+  transform: scale(0.98);
+}
+
+.shop-page .shop-basket-drawer__close:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 18%, transparent);
+  border-color: color-mix(in srgb, var(--primary) 28%, transparent);
+}
+
+/* =========================================================
+   Mobile basket bottom sheet
+   ========================================================= */
+
+.shop-basket-drawer__handle {
+  display: none;
+}
+
+@media (max-width: 859px) {
+  .shop-page .shop-basket-popover {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .shop-page .shop-basket-popover__backdrop {
+    cursor: pointer;
+  }
+
+  .shop-page .shop-basket-drawer {
+    width: 100%;
+    height: min(92dvh, 800px);
+    max-height: 92dvh;
+    margin: 0;
+    border-radius: 1.35rem 1.35rem 0 0;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    transform: translateY(100%);
+    transition: transform 260ms cubic-bezier(.16, 1, .3, 1);
+    will-change: transform;
+  }
+
+  .shop-page .shop-basket-popover.is-open .shop-basket-drawer {
+    transform: translateY(0);
+  }
+
+  /*
+   * During a drag, JavaScript controls the transform directly.
+   */
+
+  .shop-page .shop-basket-drawer.is-dragging {
+    transition: none;
+  }
+
+  .shop-page .shop-basket-drawer__header {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "handle handle"
+      "heading close";
+    align-items: start;
+    gap: 0.65rem 0.8rem;
+    padding: 0.55rem 1.25rem 0.9rem;
+  }
+
+  .shop-page .shop-basket-drawer__handle {
+    grid-area: handle;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 28px;
+    margin: -0.2rem 0 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: grab;
+    touch-action: none;
+  }
+
+  .shop-page .shop-basket-drawer__handle:active {
+    cursor: grabbing;
+  }
+
+  .shop-page .shop-basket-drawer__handle span {
+    display: block;
+    width: 2.8rem;
+    height: 0.3rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--text) 22%, transparent);
+  }
+
+  .shop-page .shop-basket-drawer__heading {
+    grid-area: heading;
+    min-width: 0;
+  }
+
+  .shop-page .shop-basket-drawer__heading h2 {
+    margin-top: 0.45rem;
+    max-width: 12ch;
+    font-size: clamp(1.75rem, 8vw, 2.35rem);
+    line-height: 0.98;
+  }
+
+  .shop-page .shop-basket-drawer__close {
+    grid-area: close;
+    align-self: start;
+    min-width: 78px;
+    min-height: 38px;
+    padding: 0.4rem 0.75rem;
+    border-radius: 9999px;
+    border: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
+    background: color-mix(in srgb, var(--text) 3%, transparent);
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 1;
+    transition:
+      background 180ms ease,
+      border-color 180ms ease,
+      color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .shop-page .shop-basket-drawer__close:hover {
+    background: color-mix(in srgb, var(--primary) 10%, var(--surface));
+    border-color: color-mix(in srgb, var(--primary) 24%, transparent);
+    color: var(--text);
+  }
+
+  .shop-page .shop-basket-drawer__close:active {
+    transform: scale(0.98);
+  }
+
+  .shop-page .shop-basket-drawer__close:focus-visible,
+  .shop-page .shop-basket-drawer__handle:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 18%, transparent);
+  }
+
+  .shop-page .shop-basket-drawer__body {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 0.85rem 1.25rem 1rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .shop-page .shop-basket-drawer__footer {
+    max-height: 43dvh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 0.85rem 1.25rem calc(
+      0.85rem + env(safe-area-inset-bottom)
+    );
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /*
+   * Keep the minimised basket bar behind the open drawer.
+   * It remains available after the drawer is minimised.
+   */
+
+  .shop-page .mobile-buy-bar {
+    z-index: 110;
+  }
+
+  .shop-page .shop-basket-popover {
+    z-index: 120;
+  }
+}
+
+/* Short mobile screens need to preserve more room for the products. */
+
+@media (max-width: 859px) and (max-height: 700px) {
+  .shop-page .shop-basket-drawer {
+    height: 94dvh;
+    max-height: 94dvh;
+  }
+
+  .shop-page .shop-basket-drawer__footer {
+    max-height: 39dvh;
+  }
+}
+
+.mobile-buy-bar[hidden] {
+  display: none !important;
+}
