@@ -429,7 +429,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }));
     checkoutButton?.addEventListener("click", async () => {
       if (!basket.length) { openBasket(); if (basketItemsEl) basketItemsEl.innerHTML = '<p class="shop-basket-empty">Add at least one coffee before proceeding to checkout.</p>'; return; }
-      const originalText = checkoutButton.textContent; checkoutButton.disabled = true; checkoutButton.textContent = "Redirecting...";
+      const originalText = checkoutButton.textContent; checkoutButton.disabled = true; checkoutButton.setAttribute("aria-busy", "true");
+      checkoutButton.textContent = "Opening secure checkout…";
       try {
         const payload = { fulfilment, items: basket.map((item) => ({ product: item.product, weight: item.weight, grind: item.grind, quantity: item.quantity })) };
         const response = await fetch("/api/create-checkout-session", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
@@ -437,10 +438,12 @@ document.addEventListener("DOMContentLoaded", () => {
         try { data = rawText ? JSON.parse(rawText) : {}; } catch { throw new Error(`Invalid response from checkout endpoint: ${rawText || "empty response"}`); }
         if (!response.ok || !data.url) throw new Error(data.error || "Unable to create checkout session.");
         window.dataLayer.push({ event: "begin_checkout", ecommerce: { currency: "GBP", value: basket.reduce((sum, item) => sum + item.lineTotal, 0), items: basket.map((item) => ({ item_name: item.product, item_variant: `${item.weight} / ${prettyGrind(item.grind)}`, price: item.unitPrice, quantity: item.quantity })) }, fulfilment });
-        basket.length = 0; saveBasket(); renderBasket(); window.location.href = data.url;
+        window.location.href = data.url;
       } catch (error) {
         if (basketItemsEl) basketItemsEl.insertAdjacentHTML("beforeend", `<p class="shop-basket-checkout-note">${escapeHtml(error.message || "Something went wrong. Please try again.")}</p>`);
-        checkoutButton.disabled = false; checkoutButton.textContent = originalText;
+        checkoutButton.disabled = false; 
+       checkoutButton.removeAttribute("aria-busy");
+        checkoutButton.textContent = originalText;
       }
     });
   }

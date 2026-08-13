@@ -7709,25 +7709,17 @@ body.basket-open {
   display: none;
 }
 
-@media (max-width: 640px) {
-  .shop-basket-info-popover {
-    border-radius: 1.25rem 1.25rem 0 0;
-    overflow: hidden;
-  }
-}
-
 .shop-basket-info-popover__panel {
   position: relative;
-  z-index: 1;
-  width: min(100%, 20rem);
-  aspect-ratio: 1 / 1;
+  width: min(100%, 28rem);
+  max-height: min(78dvh, 34rem);
+  overflow-y: auto;
   display: grid;
-  align-content: start;
   gap: 0.9rem;
-  padding: 2.15rem 1.35rem 1.35rem;
+  align-content: start;
+  padding: 1.25rem 1rem 1rem;
   border: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
-  border-radius: 1.35rem;
-  overflow: hidden;
+  border-radius: 1rem;
   background: var(--surface);
   color: var(--text);
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
@@ -7735,9 +7727,9 @@ body.basket-open {
 
 .shop-basket-info-popover__panel h2 {
   margin: 0;
-  padding-right: 2.2rem;
+  padding-right: 2rem;
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: clamp(1.3rem, 2.6vw, 1.7rem);
   line-height: 1.05;
   letter-spacing: -0.035em;
 }
@@ -7749,10 +7741,6 @@ body.basket-open {
   line-height: 1.55;
 }
 
-.shop-basket-info-popover__panel p + p {
-  margin-top: 0.15rem;
-}
-
 .shop-basket-info-popover__close {
   position: absolute;
   top: 0.7rem;
@@ -7760,50 +7748,42 @@ body.basket-open {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.2rem;
-  height: 2.2rem;
+  width: 2.25rem;
+  height: 2.25rem;
   padding: 0;
   border: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
-  border-radius: 50%;
+  border-radius: 999px;
   background: color-mix(in srgb, var(--text) 5%, transparent);
   color: var(--text);
   font-family: inherit;
-  font-size: 1.5rem;
+  font-size: 1.35rem;
   line-height: 1;
   cursor: pointer;
 }
 
-.shop-basket-info-popover__close:hover {
-  background: color-mix(in srgb, var(--text) 10%, transparent);
-}
-
-body.collection-info-open {
-  overflow: hidden;
-}
-
 @media (max-width: 640px) {
+  .shop-basket-info-popover {
+    padding: 0.85rem;
+  }
+
   .shop-basket-info-popover__panel {
     width: min(100%, 19rem);
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .shop-basket-info {
-    border-color: rgba(255, 255, 255, 0.22);
+    max-height: 80dvh;
+    padding: 1.05rem 0.9rem 0.9rem;
+    border-radius: 0.95rem;
   }
 
-  .shop-basket-info-popover {
-    background: rgba(0, 0, 0, 0.58);
-  }
-
-  .shop-basket-info-popover__panel {
-    border-color: rgba(255, 255, 255, 0.1);
-    background: #211b16;
+  .shop-basket-info-popover__panel h2 {
+    font-size: 1.25rem;
+    padding-right: 1.8rem;
   }
 
   .shop-basket-info-popover__close {
-    border-color: rgba(255, 255, 255, 0.12);
-    background: rgba(255, 255, 255, 0.06);
+    width: 2rem;
+    height: 2rem;
+    top: 0.6rem;
+    right: 0.6rem;
+    font-size: 1.2rem;
   }
 }
 
@@ -8087,3 +8067,77 @@ body.collection-info-open {
 }
 
 
+/* =========================================================
+   Fix footer in basket drawer on mobile
+   ========================================================= */
+
+   @media (max-width: 640px) {
+  .shop-page .shop-basket-drawer {
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    height: 100dvh;
+    max-height: 100dvh;
+  }
+
+  .shop-page .shop-basket-drawerbody {
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  .shop-page .shop-basket-drawerfooter {
+    overflow: visible;
+    max-height: none;
+  }
+
+  .shop-page .shop-basket-fulfilment,
+  .shop-page .shop-basket-total,
+  .shop-page .shop-basket-checkout,
+  .shop-page .shop-basket-note {
+    flex-shrink: 0;
+  }
+
+  .shop-page .shop-basket-fulfilmentoption small {
+    display: block;
+  }
+}
+
+@media (max-width: 640px) {
+  .shop-page .shop-basket-drawerfooter {
+    overflow: visible;
+    max-height: none;
+    display: grid;
+    gap: 0.7rem;
+    padding-top: 0.8rem;
+    padding-bottom: calc(0.8rem + env(safe-area-inset-bottom));
+  }
+
+  .shop-page .shop-basket-fulfilment {
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .shop-page .shop-basket-fulfilment__options {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .shop-page .shop-basket-fulfilment__option {
+    display: grid;
+    grid-template-columns: 1.1rem minmax(0, 1fr);
+    gap: 0.55rem;
+    align-items: start;
+  }
+
+  .shop-page .shop-basket-fulfilment__option input {
+    margin-top: 0.2rem;
+  }
+
+  .shop-page .shop-basket-fulfilment__option small {
+    display: block;
+    white-space: normal;
+  }
+
+  .shop-page .shop-basket-note {
+    white-space: normal;
+    line-height: 1.35;
+  }
+}
