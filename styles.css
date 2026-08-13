@@ -321,7 +321,7 @@ main section{
 }
 
 .product-hero-card{
-  background:linear-gradient(180deg, rgba(247,247,243,.98), rgba(236,236,231,.96));
+  /* background:linear-gradient(180deg, rgba(247,247,243,.98), rgba(236,236,231,.96)); */
   color:#16110d;
   border-radius:1.8rem;
   border:1px solid rgba(22,17,13,.08);
@@ -7081,6 +7081,6 @@ body.basket-open {
   .home-hero .product-hero-card {
     position: relative;
     box-sizing: border-box;
-    border-bottom: 10px solid rgba(210, 210, 204, 0.95);
+    border-bottom: 15px solid rgba(210, 210, 204, 0.95);
   }
 }
