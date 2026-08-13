@@ -152,20 +152,21 @@ ul{margin:0;padding:0}
   padding:var(--space-4) 0
 }
 
-.brand{
-  display:flex;
-  align-items:center;
-  gap:var(--space-3);
-  font-weight:700
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-weight: 700;
 }
 
-.brand img{
-  width:2.7rem;
-  height:2.7rem;
-  border-radius:50%;
-  border:2px solid var(--accent);
-  object-fit:cover;
-  background:#fff
+.brand img {
+  width: 4rem;
+  height: 4rem;
+  flex: 0 0 4rem;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  object-fit: cover;
+  background: #fff;
 }
 
 .brand-lockup span{display:block;line-height:1.05}
