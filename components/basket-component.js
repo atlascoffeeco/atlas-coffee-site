@@ -120,7 +120,7 @@ window.AtlasBasket = {
                   <span>
                     <strong>Local collection</strong>
                     <small>
-                      Free collection in Redditch. We’ll contact you after payment.
+                      Free collection in Beoley, Worcestershire. We’ll contact you after payment.
                     </small>
                   </span>
                 </label>
