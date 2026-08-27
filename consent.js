@@ -1,11 +1,9 @@
-// consent.js
-// Simple cookie consent + Google consent mode v2 for Atlas Coffee
-
+// consent.js – debug version
 (function () {
   const CONSENT_COOKIE_NAME = "atlas_consent";
-  const CONSENT_VERSION = "1"; // increment if you change the shape
+  const CONSENT_VERSION = "1";
 
-  // Default consent state: deny analytics, allow necessary
+  // Default consent: deny analytics
   function setDefaultConsent() {
     if (typeof gtag === "function") {
       gtag("consent", "default", {
@@ -25,7 +23,7 @@
         return parsed;
       }
     } catch (e) {
-      // ignore
+      console.warn("[atlas consent] failed to parse cookie", e);
     }
     return null;
   }
@@ -36,10 +34,15 @@
       .map(c => c.trim())
       .find(c => c.startsWith(CONSENT_COOKIE_NAME + "="));
 
-    if (!cookie) return null;
+    if (!cookie) {
+      console.log("[atlas consent] no consent cookie found");
+      return null;
+    }
 
     const value = cookie.slice(CONSENT_COOKIE_NAME.length + 1);
-    return parseConsentCookie(value);
+    const parsed = parseConsentCookie(decodeURIComponent(value));
+    console.log("[atlas consent] read cookie:", parsed);
+    return parsed;
   }
 
   function setConsentCookie(consent) {
@@ -49,23 +52,24 @@
       updated_at: new Date().toISOString()
     });
 
-    // 1 year expiry, path=/, secure if available
     const expires = new Date();
     expires.setFullYear(expires.getFullYear() + 1);
 
-    let cookieString = `${CONSENT_COOKIE_NAME}=${encodeURIComponent(
-      value
-    )}; expires=${expires.toUTCString()}; path=/; SameSite=Lax`;
+    let cookieString = `${CONSENT_COOKIE_NAME}=${encodeURIComponent(value)}; expires=${expires.toUTCString()}; path=/; SameSite=Lax`;
 
     if (location.protocol === "https:") {
       cookieString += "; Secure";
     }
 
+    console.log("[atlas consent] setting cookie:", cookieString);
     document.cookie = cookieString;
   }
 
   function updateGoogleConsent(consent) {
-    if (typeof gtag !== "function") return;
+    if (typeof gtag !== "function") {
+      console.warn("[atlas consent] gtag not available yet");
+      return;
+    }
 
     gtag("consent", "update", {
       ad_storage: "denied",
@@ -73,10 +77,15 @@
       ad_user_data: "denied",
       ad_personalization: "denied"
     });
+
+    console.log("[atlas consent] updated Google consent:", consent);
   }
 
   function createBanner() {
-    if (document.getElementById("atlas-cookie-banner")) return;
+    if (document.getElementById("atlas-cookie-banner")) {
+      console.log("[atlas consent] banner already in DOM, skipping create");
+      return;
+    }
 
     const banner = document.createElement("div");
     banner.id = "atlas-cookie-banner";
@@ -91,10 +100,10 @@
         </p>
         <div class="atlas-cookie-banner-actions">
           <button type="button" id="atlas-cookie-decline" class="atlas-cookie-button atlas-cookie-button--secondary">
-            Decline Cookies
+            Decline cookies
           </button>
           <button type="button" id="atlas-cookie-accept" class="atlas-cookie-button atlas-cookie-button--primary">
-            Accept Cookies
+            Accept cookies
           </button>
           <a href="/privacy" class="atlas-cookie-link">Cookie policy</a>
         </div>
@@ -102,19 +111,21 @@
     `;
 
     document.body.appendChild(banner);
+    console.log("[atlas consent] banner created");
   }
 
   function showBannerIfFirstVisit() {
-    if (window.atlasCookieBannerInitialised) return;
-    window.atlasCookieBannerInitialised = true;
+    console.log("[atlas consent] showBannerIfFirstVisit running");
 
     const existing = getConsentFromCookie();
     if (existing) {
+      console.log("[atlas consent] consent already set, updating Google and not showing banner");
       updateGoogleConsent(existing);
       return;
     }
 
     if (document.getElementById("atlas-cookie-banner")) {
+      console.log("[atlas consent] banner already in DOM, skipping");
       return;
     }
 
@@ -125,27 +136,32 @@
 
     function hideBanner() {
       const banner = document.getElementById("atlas-cookie-banner");
-      if (banner) banner.remove();
+      if (banner) {
+        banner.remove();
+        console.log("[atlas consent] banner removed");
+      }
     }
 
     function handleChoice(analytics) {
-      if (document.getElementById("atlas-cookie-banner-handled")) return;
-      // Mark that we've handled a choice to avoid double writes
-      const marker = document.createElement("meta");
-      marker.id = "atlas-cookie-banner-handled";
-      document.head.appendChild(marker);
-
+      console.log("[atlas consent] choice made, analytics:", analytics);
       const consent = { analytics: !!analytics };
       setConsentCookie(consent);
       updateGoogleConsent(consent);
       hideBanner();
     }
 
-    declineBtn.addEventListener("click", () => handleChoice(false));
-    acceptBtn.addEventListener("click", () => handleChoice(true));
-}
+    declineBtn.addEventListener("click", () => {
+      console.log("[atlas consent] decline clicked");
+      handleChoice(false);
+    });
 
-  // Run as early as possible
+    acceptBtn.addEventListener("click", () => {
+      console.log("[atlas consent] accept clicked");
+      handleChoice(true);
+    });
+  }
+
+  // Run
   setDefaultConsent();
 
   if (document.readyState === "loading") {
@@ -156,7 +172,6 @@
     showBannerIfFirstVisit();
   }
 
-  // Expose a small helper for the settings panel later
   window.AtlasConsent = {
     get: getConsentFromCookie,
     set: function (analytics) {
