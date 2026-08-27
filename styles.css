@@ -8291,86 +8291,153 @@ body.basket-open {
    Atlas cookie banner
    ========================================================= */
 
+/* Atlas cookie banner */
 #atlas-cookie-banner {
   position: fixed;
-  inset-inline: 0;
-  bottom: 0;
-  z-index: 9999;
-  background: var(--surface);
-  border-top: 1px solid var(--border);
-  box-shadow: 0 -8px 24px rgba(0,0,0,0.12);
-  padding: var(--space-4) 0;
-  font-size: var(--text-sm);
-}
-
-.atlas-cookie-banner-inner {
-  max-width: var(--content);
+  z-index: 2147483647;
+  right: 1rem;
+  bottom: 1rem;
+  left: 1rem;
+  box-sizing: border-box;
+  width: auto;
+  max-width: 620px;
   margin: 0 auto;
-  padding: 0 var(--space-4);
-  display: grid;
-  gap: var(--space-3);
+  padding: 1rem 1.1rem;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
 }
 
-.atlas-cookie-banner-text {
+#atlas-cookie-banner,
+#atlas-cookie-banner * {
+  box-sizing: border-box;
+}
+
+.atlas-cookie-banner__inner {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.atlas-cookie-banner__content {
+  display: grid;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.atlas-cookie-banner__content h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  line-height: 1.15;
+}
+
+.atlas-cookie-banner__content p {
+  max-width: 58ch;
   margin: 0;
   color: var(--muted);
-  max-width: 60ch;
+  font-size: 0.9rem;
+  line-height: 1.4;
 }
 
-.atlas-cookie-banner-actions {
+.atlas-cookie-banner__actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-3);
+  gap: 0.6rem;
 }
 
 .atlas-cookie-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
-  padding: 0.6rem 1rem;
-  border-radius: var(--radius-full);
-  border: 1px solid transparent;
-  font-weight: 600;
+  min-height: 40px;
+  padding: 0.6rem 0.85rem;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1;
   cursor: pointer;
-  transition: transform 180ms cubic-bezier(0.16,1,0.3,1), background 180ms ease, border-color 180ms ease;
+  border: 1px solid transparent;
+  border-radius: var(--radius-full);
 }
 
 .atlas-cookie-button--primary {
-  background: var(--primary);
   color: var(--primary-text);
+  background: var(--primary);
 }
 
-.atlas-cookie-button--primary:hover {
+.atlas-cookie-button--primary:hover,
+.atlas-cookie-button--primary:focus-visible {
   background: var(--primary-strong);
-  transform: translateY(-1px);
 }
 
 .atlas-cookie-button--secondary {
-  background: var(--bg);
+  color: var(--text);
+  background: transparent;
   border-color: var(--border);
-  color: var(--text);
 }
 
-.atlas-cookie-button--secondary:hover {
+.atlas-cookie-button--secondary:hover,
+.atlas-cookie-button--secondary:focus-visible {
   background: var(--surface-2);
-  transform: translateY(-1px);
 }
 
-.atlas-cookie-link {
+.atlas-cookie-banner__link {
   color: var(--muted);
+  font-size: 0.9rem;
   text-decoration: underline;
-  text-underline-offset: 2px;
+  text-underline-offset: 0.2em;
 }
 
-.atlas-cookie-link:hover {
+.atlas-cookie-banner__link:hover,
+.atlas-cookie-banner__link:focus-visible {
   color: var(--text);
 }
 
-@media (min-width: 768px) {
-  .atlas-cookie-banner-inner {
-    grid-template-columns: 1fr auto;
+@media (min-width: 720px) {
+  #atlas-cookie-banner {
+    right: 1.5rem;
+    bottom: 1.5rem;
+    left: auto;
+    width: min(620px, calc(100vw - 3rem));
+    margin: 0;
+    padding: 1rem 1.15rem;
+  }
+
+  .atlas-cookie-banner__inner {
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
+    gap: 1.25rem;
+  }
+
+  .atlas-cookie-banner__actions {
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 719px) {
+  #atlas-cookie-banner {
+    right: 0.75rem;
+    bottom: 0.75rem;
+    left: 0.75rem;
+    padding: 0.9rem;
+  }
+
+  .atlas-cookie-banner__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.55rem;
+  }
+
+  .atlas-cookie-button {
+    width: 100%;
+    min-height: 42px;
+  }
+
+  .atlas-cookie-banner__link {
+    grid-column: 1 / -1;
+    justify-self: start;
   }
 }
