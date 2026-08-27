@@ -20,6 +20,13 @@ function toAnalyticsItem(item) {
   const weight = String(item.weight || "").toLowerCase();
   const grind = String(item.grind || "").toLowerCase();
 
+  const grindLabel = {
+    whole_bean: "Whole bean",
+    coarse: "Coarse",
+    medium: "Medium",
+    fine: "Fine"
+  }[grind] || item.grind;
+
   const itemName =
     productId === "peru"
       ? "Peru Cajamarca"
@@ -28,7 +35,7 @@ function toAnalyticsItem(item) {
   return {
     item_id: `${productId}_${weight}_${grind}`,
     item_name: itemName,
-    item_variant: `${item.weight} · ${prettyGrind(item.grind)}`,
+    item_variant: `${item.weight} · ${grindLabel}`,
     item_category: "Coffee",
     price: Number(item.unitPrice) || 0,
     quantity: Number(item.quantity) || 1
