@@ -105,10 +105,16 @@
   }
 
   function showBannerIfFirstVisit() {
+    if (window.atlasCookieBannerInitialised) return;
+    window.atlasCookieBannerInitialised = true;
+
     const existing = getConsentFromCookie();
     if (existing) {
-      // Consent already given/declined; update Google immediately
       updateGoogleConsent(existing);
+      return;
+    }
+
+    if (document.getElementById("atlas-cookie-banner")) {
       return;
     }
 
@@ -122,20 +128,22 @@
       if (banner) banner.remove();
     }
 
-    declineBtn.addEventListener("click", () => {
-      const consent = { analytics: false };
-      setConsentCookie(consent);
-      updateGoogleConsent(consent);
-      hideBanner();
-    });
+    function handleChoice(analytics) {
+      if (document.getElementById("atlas-cookie-banner-handled")) return;
+      // Mark that we've handled a choice to avoid double writes
+      const marker = document.createElement("meta");
+      marker.id = "atlas-cookie-banner-handled";
+      document.head.appendChild(marker);
 
-    acceptBtn.addEventListener("click", () => {
-      const consent = { analytics: true };
+      const consent = { analytics: !!analytics };
       setConsentCookie(consent);
       updateGoogleConsent(consent);
       hideBanner();
-    });
-  }
+    }
+
+    declineBtn.addEventListener("click", () => handleChoice(false));
+    acceptBtn.addEventListener("click", () => handleChoice(true));
+}
 
   // Run as early as possible
   setDefaultConsent();
