@@ -5,15 +5,19 @@
 
   // Default consent: deny analytics
   function setDefaultConsent() {
-    if (typeof gtag === "function") {
-      gtag("consent", "default", {
+    window.dataLayer = window.dataLayer || [];
+
+    window.dataLayer.push({
+      event: "default_consent",
+      consent_state: {
         ad_storage: "denied",
         analytics_storage: "denied",
         ad_user_data: "denied",
-        ad_personalization: "denied",
-        wait_for_update: 500
-      });
-    }
+        ad_personalization: "denied"
+      }
+    });
+
+    console.log("[atlas consent] default consent pushed to dataLayer");
   }
 
   function parseConsentCookie(cookieValue) {
@@ -162,15 +166,15 @@
   }
 
   // Run
-  setDefaultConsent();
+  // setDefaultConsent();
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", () => {
-      showBannerIfFirstVisit();
-    });
-  } else {
-    showBannerIfFirstVisit();
-  }
+  // if (document.readyState === "loading") {
+  //   document.addEventListener("DOMContentLoaded", () => {
+  //     showBannerIfFirstVisit();
+  //   });
+  // } else {
+  //   showBannerIfFirstVisit();
+  // }
 
   window.AtlasConsent = {
     get: getConsentFromCookie,
