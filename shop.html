@@ -38,20 +38,19 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
+  
   <link
     href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Work+Sans:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
-
+  
   <link rel="stylesheet" href="./styles.css">
-
+  
   <script>
-    document.documentElement.classList.remove("js-disabled");
     document.documentElement.classList.add("js");
     window.dataLayer = window.dataLayer || [];
   </script>
-</head>
-
+  <script src="consent.js" defer></script>
+  </head>
 
 
 <body class="shop-page shop-page-compact">
@@ -147,137 +146,7 @@
 
         <div class="shop-product-grid-redesign shop-product-grid-redesign--first">
 
-          <!-- Serra Negra -->
-          <article class="product-card product-card--detailed reveal" id="serra-negra">
-            <div class="product-top">
-              <div class="meta">
-                <span class="product-tag">Brazil</span>
-                <span>Single Origin</span>
-              </div>
-
-              <div class="price">From £10.95</div>
-            </div>
-
-            <div class="featured-product-image-wrap">
-              <img src="./assets/serra-negra-bag.png" alt="Atlas Coffee Company Serra Negra 250g coffee bag"
-                class="featured-product-image" width="900" height="1125" loading="lazy"
-                onerror="this.style.display='none'; this.parentNode.classList.add('is-fallback');">
-
-              <div class="shop-product-card__image-fallback">
-                <span>Atlas</span>
-                <strong>Serra Negra</strong>
-              </div>
-            </div>
-
-            <div class="product-card__content">
-              <div class="product-card__intro">
-                <h2 id="serra-title">Serra Negra</h2>
-
-                <p class="featured-product-lead">
-                  A smooth, full-bodied Brazilian with praline, mellow milk
-                  chocolate, toasted nuts, and a gentle lemon-like lift.
-                  Soft sweetness and comforting richness make it an easy,
-                  satisfying coffee for everyday brewing.
-                </p>
-              </div>
-
-              <div class="product-accordion-group" aria-label="Serra Negra information">
-                <details class="product-disclosure" open>
-                  <summary>The Cup</summary>
-
-                  <div class="product-disclosure__content">
-                    <p>
-                      Praline, mellow milk chocolate, mild acidity, and sweetness.
-                    </p>
-                  </div>
-                </details>
-
-                <details class="product-disclosure">
-                  <summary>Coffee Details</summary>
-
-                  <div class="product-disclosure__content">
-                    <p class="product-disclosure__story">
-                      Serra Negra is a classic Brazilian coffee from Minas
-                      Gerais, produced using the natural process, where the
-                      coffee cherries are dried before the beans are removed.
-                      It comes from common Brazilian varieties grown at
-                      750–1100 MASL and is shaped by the region’s warm climate,
-                      fertile land, and long coffee-growing tradition.
-                    </p>
-
-                    <dl class="product-facts" aria-label="Serra Negra coffee details">
-                      <div class="product-fact">
-                        <dt>Process</dt>
-                        <dd>Natural</dd>
-                      </div>
-
-                      <div class="product-fact">
-                        <dt>Variety</dt>
-                        <dd>Bourbon, Maracaturra, Catuai</dd>
-                      </div>
-
-                      <div class="product-fact">
-                        <dt>Elevation</dt>
-                        <dd>750–1100 MASL</dd>
-                      </div>
-                    </dl>
-                  </div>
-                </details>
-              </div>
-            </div>
-
-            <form class="coffee-form" aria-labelledby="serra-title" data-product="Serra Negra">
-              <div class="field-group">
-                <label for="serra-weight">Bag size</label>
-
-                <select id="serra-weight" name="weight" required>
-                  <option value="250g">250g</option>
-                  <option value="500g">500g</option>
-                  <option value="1kg">1kg</option>
-                </select>
-              </div>
-
-              <div class="field-group">
-                <label for="serra-grind">Grind</label>
-
-                <select id="serra-grind" name="grind" required>
-                  <option value="whole_bean">Whole bean</option>
-                  <option value="coarse">Coarse</option>
-                  <option value="medium">Medium</option>
-                  <option value="fine">Fine</option>
-                </select>
-              </div>
-
-              <div class="field-group">
-                <label for="serra-quantity">Quantity</label>
-
-                <input id="serra-quantity" name="quantity" type="number" min="1" max="10" step="1" value="1" required>
-              </div>
-
-              <div class="buy-box">
-                <span class="featured-label">Your Selection</span>
-
-                <p class="buy-box-summary" id="serra-summary-line">
-                  250g · Whole bean · Quantity: 1
-                </p>
-
-                <p class="checkout-note" id="serra-note">
-                  Delivery is added at checkout. Local collection is also available.
-                </p>
-
-                <div class="buy-box-price-row">
-                  <span>Subtotal</span>
-                  <strong id="serra-price">£10.95</strong>
-                </div>
-
-                <button class="button" type="button" data-add-to-basket="serra">
-                  Add to basket
-                </button>
-              </div>
-            </form>
-          </article>
-
-          <!-- Peru Cajamarca -->
+                    <!-- Peru Cajamarca -->
           <article class="product-card product-card--detailed reveal" id="peru-product">
             <div class="product-top">
               <div class="meta">
@@ -404,6 +273,136 @@
                 </div>
 
                 <button class="button" type="button" data-add-to-basket="peru">
+                  Add to basket
+                </button>
+              </div>
+            </form>
+          </article> 
+
+          <!-- Serra Negra -->
+          <article class="product-card product-card--detailed reveal" id="serra-negra">
+            <div class="product-top">
+              <div class="meta">
+                <span class="product-tag">Brazil</span>
+                <span>Single Origin</span>
+              </div>
+
+              <div class="price">From £10.95</div>
+            </div>
+
+            <div class="featured-product-image-wrap">
+              <img src="./assets/serra-negra-bag.png" alt="Atlas Coffee Company Serra Negra 250g coffee bag"
+                class="featured-product-image" width="900" height="1125" loading="lazy"
+                onerror="this.style.display='none'; this.parentNode.classList.add('is-fallback');">
+
+              <div class="shop-product-card__image-fallback">
+                <span>Atlas</span>
+                <strong>Serra Negra</strong>
+              </div>
+            </div>
+
+            <div class="product-card__content">
+              <div class="product-card__intro">
+                <h2 id="serra-title">Serra Negra</h2>
+
+                <p class="featured-product-lead">
+                  A smooth, full-bodied Brazilian with praline, mellow milk
+                  chocolate, toasted nuts, and a gentle lemon-like lift.
+                  Soft sweetness and comforting richness make it an easy,
+                  satisfying coffee for everyday brewing.
+                </p>
+              </div>
+
+              <div class="product-accordion-group" aria-label="Serra Negra information">
+                <details class="product-disclosure" open>
+                  <summary>The Cup</summary>
+
+                  <div class="product-disclosure__content">
+                    <p>
+                      Praline, mellow milk chocolate, mild acidity, and sweetness.
+                    </p>
+                  </div>
+                </details>
+
+                <details class="product-disclosure">
+                  <summary>Coffee Details</summary>
+
+                  <div class="product-disclosure__content">
+                    <p class="product-disclosure__story">
+                      Serra Negra is a classic Brazilian coffee from Minas
+                      Gerais, produced using the natural process, where the
+                      coffee cherries are dried before the beans are removed.
+                      It comes from common Brazilian varieties grown at
+                      750–1100 MASL and is shaped by the region’s warm climate,
+                      fertile land, and long coffee-growing tradition.
+                    </p>
+
+                    <dl class="product-facts" aria-label="Serra Negra coffee details">
+                      <div class="product-fact">
+                        <dt>Process</dt>
+                        <dd>Natural</dd>
+                      </div>
+
+                      <div class="product-fact">
+                        <dt>Variety</dt>
+                        <dd>Bourbon, Maracaturra, Catuai</dd>
+                      </div>
+
+                      <div class="product-fact">
+                        <dt>Elevation</dt>
+                        <dd>750–1100 MASL</dd>
+                      </div>
+                    </dl>
+                  </div>
+                </details>
+              </div>
+            </div>
+
+            <form class="coffee-form" aria-labelledby="serra-title" data-product="Serra Negra">
+              <div class="field-group">
+                <label for="serra-weight">Bag size</label>
+
+                <select id="serra-weight" name="weight" required>
+                  <option value="250g">250g</option>
+                  <option value="500g">500g</option>
+                  <option value="1kg">1kg</option>
+                </select>
+              </div>
+
+              <div class="field-group">
+                <label for="serra-grind">Grind</label>
+
+                <select id="serra-grind" name="grind" required>
+                  <option value="whole_bean">Whole bean</option>
+                  <option value="coarse">Coarse</option>
+                  <option value="medium">Medium</option>
+                  <option value="fine">Fine</option>
+                </select>
+              </div>
+
+              <div class="field-group">
+                <label for="serra-quantity">Quantity</label>
+
+                <input id="serra-quantity" name="quantity" type="number" min="1" max="10" step="1" value="1" required>
+              </div>
+
+              <div class="buy-box">
+                <span class="featured-label">Your Selection</span>
+
+                <p class="buy-box-summary" id="serra-summary-line">
+                  250g · Whole bean · Quantity: 1
+                </p>
+
+                <p class="checkout-note" id="serra-note">
+                  Delivery is added at checkout. Local collection is also available.
+                </p>
+
+                <div class="buy-box-price-row">
+                  <span>Subtotal</span>
+                  <strong id="serra-price">£10.95</strong>
+                </div>
+
+                <button class="button" type="button" data-add-to-basket="serra">
                   Add to basket
                 </button>
               </div>

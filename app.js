@@ -2,6 +2,39 @@
 document.documentElement.classList.add("js");
 window.dataLayer = window.dataLayer || [];
 
+function pushDataLayerEvent(event, ecommerce = {}, extra = {}) {
+  window.dataLayer = window.dataLayer || [];
+
+  // Clear previous ecommerce data
+  window.dataLayer.push({ ecommerce: null });
+
+  window.dataLayer.push({
+    event,
+    ecommerce,
+    ...extra
+  });
+}
+
+function toAnalyticsItem(item) {
+  const productId = String(item.product || "").toLowerCase();
+  const weight = String(item.weight || "").toLowerCase();
+  const grind = String(item.grind || "").toLowerCase();
+
+  const itemName =
+    productId === "peru"
+      ? "Peru Cajamarca"
+      : "Serra Negra";
+
+  return {
+    item_id: `${productId}_${weight}_${grind}`,
+    item_name: itemName,
+    item_variant: `${item.weight} · ${prettyGrind(item.grind)}`,
+    item_category: "Coffee",
+    price: Number(item.unitPrice) || 0,
+    quantity: Number(item.quantity) || 1
+  };
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const BASKET_STORAGE_KEY = "atlas-basket";
   const FULFILMENT_STORAGE_KEY = "atlas-fulfilment";
@@ -143,7 +176,22 @@ document.addEventListener("DOMContentLoaded", () => {
     if (existing) {
       existing.quantity = Math.min(MAX_QUANTITY, existing.quantity + item.quantity);
       existing.lineTotal = existing.unitPrice * existing.quantity;
-    } else basket.push({ ...item, lineTotal: item.unitPrice * item.quantity });
+    } else {
+      basket.push({ ...item, lineTotal: item.unitPrice * item.quantity });
+    }
+
+    // Send add_to_cart event
+    pushDataLayerEvent(
+      "add_to_cart",
+      {
+        currency: "GBP",
+        value: Number(item.unitPrice) * Number(item.quantity),
+        items: [toAnalyticsItem(item)]
+      },
+      {
+        fulfilment_method: fulfilment
+      }
+    );
   }
 
   function saveBasket() {
@@ -386,7 +434,26 @@ document.addEventListener("DOMContentLoaded", () => {
     basketTotalEl.textContent = formatMoney(grandTotal);
     updateFulfilmentUI();
     basketItemsEl.querySelectorAll("[data-remove-index]").forEach((button) => button.addEventListener("click", () => {
-      basket.splice(Number(button.dataset.removeIndex), 1); saveBasket(); renderBasket();
+      const index = Number(button.dataset.removeIndex);
+      const item = basket[index];
+      if (!item) return;
+
+      // Send remove_from_cart event
+      pushDataLayerEvent(
+        "remove_from_cart",
+        {
+          currency: "GBP",
+          value: Number(item.unitPrice) * Number(item.quantity),
+          items: [toAnalyticsItem(item)]
+        },
+        {
+          fulfilment_method: fulfilment
+        }
+      );
+
+      basket.splice(index, 1);
+      saveBasket();
+      renderBasket();
     }));
   }
 

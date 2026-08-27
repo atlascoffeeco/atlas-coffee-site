@@ -29,19 +29,18 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Work+Sans:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet"
-  >
-
+    rel="stylesheet">
+  
   <!-- JS-ready state -->
   <script>
-    document.documentElement.classList.remove("js-disabled");
     document.documentElement.classList.add("js");
     window.dataLayer = window.dataLayer || [];
   </script>
-
+  <script src="consent.js" defer></script>
+  
   <!-- Cloudflare Turnstile -->
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
-
+  
   <!-- Main stylesheet -->
   <link rel="stylesheet" href="./styles.css" />
 </head>
