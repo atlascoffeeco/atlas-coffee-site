@@ -8923,3 +8923,664 @@ body.basket-open {
     min-width: 0;
   }
 }
+
+
+/* =========================================================
+   WHY ATLAS — story-led page redesign
+   Add this entire block at the very end of styles.css.
+   ========================================================= */
+
+.about-page-story {
+  overflow-x: clip;
+}
+
+.about-page-story main > section {
+  padding: clamp(var(--space-12), 8vw, var(--space-20)) 0;
+}
+
+.about-page-story .atlas-story-hero {
+  padding-top: clamp(var(--space-12), 7vw, var(--space-20));
+  padding-bottom: clamp(var(--space-12), 7vw, var(--space-20));
+}
+
+.atlas-story-hero__inner {
+  display: grid;
+  gap: var(--space-8);
+  align-items: end;
+}
+
+.atlas-story-hero__copy {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-5);
+}
+
+.atlas-story-hero__copy h1 {
+  max-width: 10ch;
+  font-size: var(--text-3xl);
+  letter-spacing: -0.055em;
+}
+
+.atlas-story-hero__lead {
+  max-width: 38ch;
+  color: var(--muted);
+  font-size: var(--text-lg);
+  line-height: 1.55;
+}
+
+.atlas-story-hero__aside {
+  display: grid;
+  gap: var(--space-3);
+  align-self: end;
+  padding: var(--space-6);
+  border-left: 3px solid var(--primary);
+  background: color-mix(in srgb, var(--text) 4%, var(--surface));
+}
+
+.atlas-story-hero__aside p {
+  max-width: 31ch;
+  color: var(--muted);
+  font-size: var(--text-base);
+  line-height: 1.6;
+}
+
+.atlas-story-hero__aside .atlas-story-hero__aside-kicker {
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.atlas-origin {
+  background: var(--surface-2);
+}
+
+.atlas-reading-width {
+  display: grid;
+  gap: var(--space-5);
+  max-width: 760px;
+}
+
+.atlas-reading-width h2,
+.atlas-process__copy h2,
+.atlas-principles__intro h2,
+.atlas-story-cta h2 {
+  font-size: var(--text-2xl);
+  letter-spacing: -0.045em;
+}
+
+.atlas-origin__body {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.atlas-origin__body p {
+  max-width: 64ch;
+  color: var(--muted);
+  font-size: var(--text-lg);
+  line-height: 1.65;
+}
+
+.atlas-process__grid {
+  display: grid;
+  gap: var(--space-8);
+  align-items: stretch;
+}
+
+.atlas-process__visual {
+  display: grid;
+  align-content: end;
+  min-height: 360px;
+  padding: var(--space-8);
+  overflow: hidden;
+  color: #fff8ec;
+  background:
+    radial-gradient(circle at 78% 15%, rgba(255, 165, 3, 0.52), transparent 18%),
+    linear-gradient(145deg, #17120d 0%, #302015 58%, #5e3a17 100%);
+  border-radius: calc(var(--radius-xl) + 0.25rem);
+  box-shadow: var(--shadow-lg);
+}
+
+.atlas-process__visual-mark {
+  color: var(--primary);
+  font-family: var(--font-display);
+  font-size: clamp(3.4rem, 7vw, 6.5rem);
+  font-weight: 700;
+  letter-spacing: -0.08em;
+  line-height: 0.8;
+}
+
+.atlas-process__visual p {
+  margin-top: var(--space-4);
+  color: rgba(255, 248, 236, 0.76);
+  font-size: var(--text-sm);
+}
+
+.atlas-process__copy {
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: var(--space-5);
+}
+
+.atlas-process__copy > p {
+  max-width: 50ch;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.atlas-process__copy .atlas-process__closing {
+  max-width: 46ch;
+  padding-top: var(--space-5);
+  border-top: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.atlas-principles {
+  background: var(--surface-2);
+}
+
+.atlas-principles__intro {
+  display: grid;
+  gap: var(--space-4);
+  max-width: 660px;
+}
+
+.atlas-principles__list {
+  display: grid;
+  gap: 0;
+  margin: var(--space-8) 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: none;
+  border-top: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
+}
+
+.atlas-principles__list li {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr);
+  gap: var(--space-4);
+  padding: var(--space-6) 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
+}
+
+.atlas-principles__number {
+  color: var(--primary-strong);
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.atlas-principles__list li > div {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.atlas-principles__list h3 {
+  font-size: var(--text-xl);
+  letter-spacing: -0.03em;
+}
+
+.atlas-principles__list p {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.atlas-story-cta {
+  padding-bottom: clamp(var(--space-16), 10vw, var(--space-24)) !important;
+}
+
+.atlas-story-cta__inner {
+  display: grid;
+  gap: var(--space-8);
+  padding: clamp(var(--space-8), 6vw, var(--space-12));
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
+  border-radius: calc(var(--radius-xl) + 0.25rem);
+  box-shadow: var(--shadow-md);
+}
+
+.atlas-story-cta__inner > div:first-child {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.atlas-story-cta__inner h2 {
+  max-width: 19ch;
+}
+
+.atlas-story-cta__inner p {
+  max-width: 55ch;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.atlas-story-cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+@media (min-width: 860px) {
+  .atlas-story-hero__inner {
+    grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.55fr);
+  }
+
+  .atlas-process__grid {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+  }
+
+  .atlas-story-cta__inner {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+  }
+
+  .atlas-story-cta__actions {
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 640px) {
+  .about-page-story main > section {
+    padding: var(--space-12) 0;
+  }
+
+  .about-page-story .atlas-story-hero {
+    padding-top: var(--space-10);
+  }
+
+  .atlas-story-hero__copy h1 {
+    max-width: 11ch;
+  }
+
+  .atlas-story-hero__lead,
+  .atlas-origin__body p {
+    font-size: var(--text-base);
+  }
+
+  .atlas-story-hero__aside {
+    padding: var(--space-5);
+  }
+
+  .atlas-process__visual {
+    min-height: 240px;
+    padding: var(--space-6);
+  }
+
+  .atlas-principles__list {
+    margin-top: var(--space-6);
+  }
+
+  .atlas-principles__list li {
+    grid-template-columns: 3rem minmax(0, 1fr);
+    gap: var(--space-3);
+    padding: var(--space-5) 0;
+  }
+
+  .atlas-story-cta__inner {
+    padding: var(--space-6);
+  }
+
+  .atlas-story-cta__actions {
+    display: grid;
+  }
+
+  .atlas-story-cta__actions .button,
+  .atlas-story-cta__actions .ghost-button {
+    width: 100%;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .atlas-story-hero__aside {
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .atlas-origin,
+  .atlas-principles {
+    background: var(--surface-2);
+  }
+
+  .atlas-process__visual {
+    background:
+      radial-gradient(circle at 78% 15%, rgba(255, 165, 3, 0.38), transparent 18%),
+      linear-gradient(145deg, #0e0c0a 0%, #21170f 58%, #442911 100%);
+  }
+
+  .atlas-story-cta__inner {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.03));
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* =========================================================
+   WHY ATLAS — fuller desktop hero
+   ========================================================= */
+
+.about-page-story .atlas-story-hero {
+  padding-top: clamp(3.5rem, 7vw, 7rem);
+  padding-bottom: 0;
+  overflow: hidden;
+}
+
+.about-page-story .atlas-story-hero__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(360px, 1.08fr);
+  gap: clamp(2rem, 5vw, 6rem);
+  align-items: stretch;
+}
+
+.about-page-story .atlas-story-hero__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(1rem, 3vw, 3rem) 0 clamp(3rem, 6vw, 5rem);
+}
+
+.about-page-story .atlas-story-hero__copy h1 {
+  max-width: 8ch;
+  margin: 0;
+  font-size: clamp(4.4rem, 8vw, 8.8rem);
+  line-height: 0.88;
+  letter-spacing: -0.075em;
+}
+
+.about-page-story .atlas-story-hero__lead {
+  max-width: 32rem;
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+  font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+  line-height: 1.55;
+}
+
+.about-page-story .atlas-story-hero__copy .hero-actions {
+  margin-top: clamp(1.75rem, 3vw, 3rem);
+}
+
+/* Large visual block */
+/* =========================================================
+   Hero coffee-beans visual
+   ========================================================= */
+
+.about-page-story .atlas-story-hero__visual {
+  position: relative;
+  display: flex;
+  min-height: clamp(420px, 48vw, 700px);
+  align-items: flex-end;
+  overflow: hidden;
+  color: #fff8ec;
+
+  /*
+    Change this path only if coffee-beans.png is not inside
+    your site's /assets folder.
+  */
+  background-image:
+    linear-gradient(
+      180deg,
+      rgba(20, 13, 8, 0.08) 0%,
+      rgba(20, 13, 8, 0.2) 40%,
+      rgba(20, 13, 8, 0.88) 100%
+    ),
+    url("./assets/coffee-beans.png");
+
+  background-repeat: no-repeat;
+  background-position: center, center;
+  background-size: cover, cover;
+  border-radius: clamp(1rem, 2vw, 2rem);
+  box-shadow: 0 2rem 5rem rgba(28, 20, 12, 0.18);
+}
+
+/* Remove the old abstract circles entirely */
+.about-page-story .atlas-story-hero__visual::before,
+.about-page-story .atlas-story-hero__visual::after {
+  display: none;
+}
+
+.about-page-story .atlas-story-hero__visual-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 1rem;
+  padding: clamp(1.5rem, 4vw, 4rem);
+}
+
+.about-page-story .atlas-story-hero__visual-label {
+  color: #ffb21a;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.4);
+  text-transform: uppercase;
+}
+
+.about-page-story .atlas-story-hero__visual-word {
+  margin-left: -0.08em;
+  color: #fff8ec;
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 13vw, 13rem);
+  font-weight: 700;
+  letter-spacing: -0.1em;
+  line-height: 0.75;
+  text-shadow: 0 0.3rem 1.4rem rgba(0, 0, 0, 0.36);
+}
+
+.about-page-story .atlas-story-hero__visual-caption {
+  max-width: 18rem;
+  color: rgba(255, 248, 236, 0.88);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
+}
+
+.about-page-story .atlas-story-hero__visual-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 1rem;
+  padding: clamp(1.5rem, 4vw, 4rem);
+}
+
+.about-page-story .atlas-story-hero__visual-label {
+  color: #ffae16;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.about-page-story .atlas-story-hero__visual-word {
+  margin-left: -0.08em;
+  color: #ffa503;
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 13vw, 13rem);
+  font-weight: 700;
+  letter-spacing: -0.1em;
+  line-height: 0.75;
+}
+
+.about-page-story .atlas-story-hero__visual-caption {
+  max-width: 18rem;
+  color: rgba(255, 248, 236, 0.74);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Proof strip spans the full composition */
+.about-page-story .atlas-story-hero__proof {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: clamp(1.5rem, 3vw, 3rem);
+  border-top: 1px solid color-mix(in srgb, var(--text) 15%, transparent);
+}
+
+.about-page-story .atlas-story-hero__proof > div {
+  display: flex;
+  min-height: 5.5rem;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem 1.25rem 0;
+  border-right: 1px solid color-mix(in srgb, var(--text) 15%, transparent);
+}
+
+.about-page-story .atlas-story-hero__proof > div:not(:first-child) {
+  padding-left: 1.5rem;
+}
+
+.about-page-story .atlas-story-hero__proof > div:last-child {
+  border-right: 0;
+}
+
+.about-page-story .atlas-story-hero__proof strong {
+  color: var(--primary-strong);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+}
+
+.about-page-story .atlas-story-hero__proof span {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* Tablet */
+@media (max-width: 859px) and (min-width: 641px) {
+  .about-page-story .atlas-story-hero__copy h1 {
+    font-size: clamp(4rem, 8vw, 6rem);
+  }
+
+  .about-page-story .atlas-story-hero__visual {
+    min-height: 440px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .about-page-story .atlas-story-hero {
+    padding-top: 2.5rem;
+  }
+
+  .about-page-story .atlas-story-hero__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .about-page-story .atlas-story-hero__copy {
+    padding: 0;
+  }
+
+  .about-page-story .atlas-story-hero__copy h1 {
+    max-width: 9ch;
+    font-size: clamp(3.8rem, 17vw, 6rem);
+  }
+
+  .about-page-story .atlas-story-hero__visual {
+    min-height: 330px;
+  }
+
+  .about-page-story .atlas-story-hero__visual-word {
+    font-size: clamp(5rem, 27vw, 8rem);
+  }
+
+  .about-page-story .atlas-story-hero__proof {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0;
+  }
+
+  .about-page-story .atlas-story-hero__proof > div,
+  .about-page-story .atlas-story-hero__proof > div:not(:first-child) {
+    min-height: 0;
+    padding: 1rem 0;
+    border-right: 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--text) 15%, transparent);
+  }
+
+  .about-page-story .atlas-story-hero__proof > div:last-child {
+    border-bottom: 0;
+  }
+}
+
+/* =========================================================
+   Why Atlas — coffee roasting image panel
+   ========================================================= */
+
+.about-page-story .atlas-process__visual {
+  position: relative;
+  display: flex;
+  min-height: clamp(360px, 39vw, 570px);
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  overflow: hidden;
+  color: #fffaf1;
+
+  /*
+    Image location:
+    /assets/coffee-roasting.png
+  */
+  background-image:
+    linear-gradient(
+      180deg,
+      rgba(17, 11, 7, 0.16) 0%,
+      rgba(17, 11, 7, 0.06) 38%,
+      rgba(17, 11, 7, 0.86) 100%
+    ),
+    url("./assets/coffee-roasting.png");
+
+  background-repeat: no-repeat;
+  background-position: center, center;
+  background-size: cover, cover;
+  border-radius: calc(var(--radius-xl) + 0.25rem);
+  box-shadow: var(--shadow-lg);
+}
+
+.about-page-story .atlas-process__visual-label {
+  display: inline-flex;
+  width: fit-content;
+  padding: 0.55rem 0.75rem;
+  color: #1c140c;
+  background: #ffae16;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.about-page-story .atlas-process__visual p {
+  max-width: 20rem;
+  margin: 0;
+  color: rgba(255, 250, 241, 0.96);
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2vw, 1.65rem);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.12;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.64);
+}
+
+@media (max-width: 640px) {
+  .about-page-story .atlas-process__visual {
+    min-height: 300px;
+    padding: 1.5rem;
+  }
+}
