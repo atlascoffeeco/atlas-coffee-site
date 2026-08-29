@@ -542,7 +542,20 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+      pushDataLayerEvent(
+        "begin_checkout",
+        {
+          currency: "GBP",
+          value: getBasketSubtotal() + getBasketDeliveryFee(),
+          items: basket.map(toAnalyticsItem)
+        },
+        {
+          fulfilment_method: fulfilment
+        }
+      );
+
       const originalText = checkoutButton.textContent;
+
       checkoutButton.disabled = true;
       checkoutButton.textContent = "Redirecting...";
 
@@ -576,20 +589,20 @@ document.addEventListener("DOMContentLoaded", () => {
           throw new Error(data.error || "Unable to create checkout session.");
         }
 
-        window.dataLayer.push({
-          event: "begin_checkout",
-          ecommerce: {
-            currency: "GBP",
-            value: getBasketSubtotal(),
-            items: basket.map((item) => ({
-              item_name: item.product,
-              item_variant: `${item.weight} / ${prettyGrind(item.grind)}`,
-              price: item.unitPrice,
-              quantity: item.quantity
-            }))
-          },
-          fulfilment
-        });
+        // window.dataLayer.push({
+        //   event: "begin_checkout",
+        //   ecommerce: {
+        //     currency: "GBP",
+        //     value: getBasketSubtotal(),
+        //     items: basket.map((item) => ({
+        //       item_name: item.product,
+        //       item_variant: `${item.weight} / ${prettyGrind(item.grind)}`,
+        //       price: item.unitPrice,
+        //       quantity: item.quantity
+        //     }))
+        //   },
+        //   fulfilment
+        // });
 
         // Keep the basket intact while checkout loads.
         window.location.href = data.url;
