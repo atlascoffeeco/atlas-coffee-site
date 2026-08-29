@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" class="js-disabled">
 
+
 <head>
   <link rel="canonical" href="https://www.atlascoffee.uk/success">
   <script>
     window.dataLayer = window.dataLayer || [];
 
+
     function gtag() {
       window.dataLayer.push(arguments);
     }
+
 
     gtag("consent", "default", {
       ad_storage: "denied",
@@ -18,6 +21,7 @@
       wait_for_update: 500
     });
   </script>
+
 
 
   <!-- Google Tag Manager -->
@@ -33,6 +37,7 @@
   </script>
   <!-- End Google Tag Manager -->
 
+
   <!-- Basic metadata -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,6 +45,7 @@
   <meta name="description" content="Your Atlas Coffee order has been received and confirmed.">
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/jpeg" href="./assets/logo.jpg">
+
 
   <!-- Shared brand fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -49,6 +55,7 @@
     rel="stylesheet"
   >
 
+
   <!-- Shared site stylesheet -->
   <link rel="stylesheet" href="./styles.css">
   
@@ -57,7 +64,7 @@
     document.documentElement.classList.add("js");
     window.dataLayer = window.dataLayer || [];
   </script>
-  <script src="consent.js" defer></script>
+  <script src="/consent.js" defer></script>
   </head>
   
   <body>
@@ -72,8 +79,10 @@
   </noscript>
   <!-- End Google Tag Manager (noscript) -->
 
+
   <!-- Accessibility shortcut -->
   <a class="skip-link" href="#content">Skip to content</a>
+
 
   <!-- Shared Atlas header -->
   <header class="site-header">
@@ -86,6 +95,7 @@
           <small>Independent coffee roasters</small>
         </span>
       </a>
+
 
       <!-- Primary navigation -->
       <nav class="nav-links" aria-label="Primary navigation">
@@ -117,6 +127,7 @@
     </div>
   </header>
 
+
   <!-- Main content -->
   <main id="content">
     <section class="confirmation-hero">
@@ -130,15 +141,18 @@
               Your order has been received successfully. We’ll now prepare it for delivery or collection.
             </p>
 
+
             <div class="confirmation-actions">
               <a class="button" href="./shop">Back to shop</a>
               <a class="ghost-button" href="./contact">Contact Atlas</a>
             </div>
 
+
             <p class="confirmation-status" id="confirmation-status">
               Please wait while your order summary is loaded.
             </p>
           </article>
+
 
           <!-- Order summary panel -->
           <aside
@@ -147,6 +161,7 @@
           >
             <span class="eyebrow">Order details</span>
             <h2 id="order-summary-title">Your checkout summary</h2>
+
 
             <div class="confirmation-meta">
               <div class="confirmation-meta-row">
@@ -167,9 +182,11 @@
               </div>
             </div>
 
+
             <ul class="confirmation-items" id="order-items">
               <li>Loading order items…</li>
             </ul>
+
 
             <p class="checkout-note" id="summary-note">
               Please wait while the checkout summary is retrieved.
@@ -178,6 +195,7 @@
         </div>
       </div>
     </section>
+
 
     <section class="confirmation-grid-section">
       <div class="container">
@@ -193,6 +211,7 @@
               Everything has gone through correctly. We’ll review your order, prepare your coffee,
               and get it ready for delivery or collection.
             </p>
+
 
             <ul class="confirmation-checklist" id="confirmation-checklist">
               <li>
@@ -215,6 +234,7 @@
               </li>
             </ul>
 
+
             <div class="confirmation-actions confirmation-actions--secondary">
               <a class="ghost-button" href="./delivery-returns">Delivery &amp; Returns</a>
             </div>
@@ -223,6 +243,7 @@
       </div>
     </section>
   </main>
+
 
   <!-- Shared Atlas footer -->
   <footer class="site-footer">
@@ -237,6 +258,7 @@
         </div>
       </div>
 
+
       <div>
         <strong>Pages</strong>
         <ul style="display:grid;gap:.6rem;margin-top:1rem;list-style:none;">
@@ -246,6 +268,7 @@
           <li><a href="./contact">Contact</a></li>
         </ul>
       </div>
+
 
       <div>
         <strong>Legal</strong>
@@ -258,14 +281,17 @@
     </div>
   </footer>
 
+
   <!-- Shared page interactions -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const mobileToggle = document.querySelector("[data-mobile-toggle]");
       const mobilePanel = document.querySelector("[data-mobile-panel]");
 
+
       if (mobileToggle && mobilePanel) {
         const mobileLinks = mobilePanel.querySelectorAll("a");
+
 
         const setMobileMenu = (open) => {
           mobileToggle.setAttribute("aria-expanded", String(open));
@@ -273,14 +299,17 @@
           mobilePanel.classList.toggle("is-open", open);
         };
 
+
         mobileToggle.addEventListener("click", () => {
           const isOpen = mobileToggle.getAttribute("aria-expanded") === "true";
           setMobileMenu(!isOpen);
         });
 
+
         mobileLinks.forEach((link) => {
           link.addEventListener("click", () => setMobileMenu(false));
         });
+
 
         window.addEventListener("resize", () => {
           if (window.innerWidth > 860) {
@@ -289,8 +318,10 @@
         });
       }
 
+
       const revealItems = document.querySelectorAll(".reveal");
       const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
 
       if (!prefersReducedMotion && "IntersectionObserver" in window) {
         const observer = new IntersectionObserver((entries) => {
@@ -302,12 +333,14 @@
           });
         }, { threshold: 0.12 });
 
+
         revealItems.forEach((item) => observer.observe(item));
       } else {
         revealItems.forEach((item) => item.classList.add("revealed"));
       }
     });
   </script>
+
 
   <!-- Stripe Checkout session lookup -->
   <script>
@@ -323,13 +356,16 @@
       const nextStepsIntroEl = document.getElementById("next-steps-intro");
       const fulfilmentStepEl = document.getElementById("fulfilment-step");
 
+
       const url = new URL(window.location.href);
       const sessionId = url.searchParams.get("session_id");
+
 
       const setStatus = (message, isError = false) => {
         statusEl.textContent = message;
         statusEl.classList.toggle("error", isError);
       };
+
 
       const formatMoney = (amount, currency = "GBP") => {
         return new Intl.NumberFormat("en-GB", {
@@ -338,17 +374,21 @@
         }).format(amount || 0);
       };
 
+
       const formatPaymentStatus = (status) => {
         if (!status) return "Confirmed";
         return String(status).charAt(0).toUpperCase() + String(status).slice(1);
       };
 
+
       const formatFulfilment = (value) => {
         return value === "collection" ? "Local collection" : "Delivery";
       };
 
+
       const applyFulfilmentCopy = (fulfilment) => {
         const isCollection = fulfilment === "collection";
+
 
         if (confirmationLeadEl) {
           confirmationLeadEl.textContent = isCollection
@@ -356,17 +396,20 @@
             : "Your order has been received successfully. We’ll now prepare it for roasting, packing, and delivery.";
         }
 
+
         if (summaryNoteEl) {
           summaryNoteEl.textContent = isCollection
             ? "Collection is free. We’ll contact you after payment to arrange pickup in Beoley, Worcestershire."
             : "Delivery charges, if applicable, were applied during checkout and are reflected in your final order total.";
         }
 
+
         if (nextStepsIntroEl) {
           nextStepsIntroEl.textContent = isCollection
             ? "Everything has gone through correctly. We’ll review your order, prepare your coffee, and contact you to arrange collection."
             : "Everything has gone through correctly. We’ll review your order, prepare your coffee, and get it ready for dispatch.";
         }
+
 
         if (fulfilmentStepEl) {
           fulfilmentStepEl.innerHTML = isCollection
@@ -384,6 +427,7 @@
             `;
         }
       };
+
 
       if (!sessionId) {
         setStatus("Order reference missing. If you need help, please contact Atlas Coffee.", true);
@@ -403,22 +447,28 @@
         return;
       }
 
+
       try {
         const response = await fetch(`/api/get-checkout-session?session_id=${encodeURIComponent(sessionId)}`);
         const order = await response.json();
+
 
         if (!response.ok) {
           throw new Error(order?.error || "Unable to load checkout session.");
         }
 
+
         const fulfilment = order.fulfilment === "collection" ? "collection" : "delivery";
+
 
         paymentStatusEl.textContent = formatPaymentStatus(order.paymentStatus || "confirmed");
         fulfilmentEl.textContent = formatFulfilment(fulfilment);
         totalEl.textContent = formatMoney(order.value || 0, order.currency || "GBP");
         referenceEl.textContent = order.transactionId || sessionId;
 
+
         applyFulfilmentCopy(fulfilment);
+
 
         if (Array.isArray(order.items) && order.items.length > 0) {
           itemsEl.innerHTML = order.items.map((item) => `
@@ -440,22 +490,50 @@
           `;
         }
 
+
         setStatus("");
 
-        window.dataLayer.push({
-          event: "purchase",
-          ecommerce: {
-            transaction_id: order.transactionId,
-            currency: order.currency,
-            value: order.value,
-            shipping: order.shipping,
-            tax: order.tax,
-            items: Array.isArray(order.items) ? order.items : []
-          },
-          fulfilment
-        });
+
+        const transactionId = String(order.transactionId || sessionId);
+
+        if (!transactionId) {
+          throw new Error("Purchase transaction ID is missing.");
+        }
+
+        const purchaseStorageKey = `atlas-purchase-sent:${transactionId}`;
+        let purchaseAlreadySent = false;
+
+        try {
+          purchaseAlreadySent = sessionStorage.getItem(purchaseStorageKey) === "true";
+        } catch (storageError) {
+          console.warn("Could not read purchase de-duplication state:", storageError);
+        }
+
+        if (!purchaseAlreadySent) {
+          window.dataLayer.push({ ecommerce: null });
+
+          window.dataLayer.push({
+            event: "purchase",
+            ecommerce: {
+              transaction_id: transactionId,
+              currency: order.currency || "GBP",
+              value: Number(order.value) || 0,
+              shipping: Number(order.shipping) || 0,
+              tax: Number(order.tax) || 0,
+              items: Array.isArray(order.items) ? order.items : []
+            },
+            fulfilment_method: fulfilment
+          });
+
+          try {
+            sessionStorage.setItem(purchaseStorageKey, "true");
+          } catch (storageError) {
+            console.warn("Could not save purchase de-duplication state:", storageError);
+          }
+        }
       } catch (error) {
         console.error("Error loading checkout session:", error);
+
 
         setStatus(
           "Your payment succeeded, but we could not load the full order summary here. If needed, contact Atlas Coffee.",
@@ -466,9 +544,11 @@
         referenceEl.textContent = sessionId;
         paymentStatusEl.textContent = "Confirmed";
 
+
         if (summaryNoteEl) {
           summaryNoteEl.textContent = "The payment completed successfully, but the confirmation page could not retrieve the full summary.";
         }
+
 
         itemsEl.innerHTML = `
           <li>
@@ -477,6 +557,7 @@
           </li>
         `;
       }
+
 
       function escapeHtml(value) {
         return String(value)
