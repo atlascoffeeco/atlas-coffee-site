@@ -2,11 +2,14 @@
 document.documentElement.classList.add("js");
 window.dataLayer = window.dataLayer || [];
 
+
 function pushDataLayerEvent(event, ecommerce = {}, extra = {}) {
   window.dataLayer = window.dataLayer || [];
 
+
   // Clear previous ecommerce data
   window.dataLayer.push({ ecommerce: null });
+
 
   window.dataLayer.push({
     event,
@@ -15,10 +18,12 @@ function pushDataLayerEvent(event, ecommerce = {}, extra = {}) {
   });
 }
 
+
 function toAnalyticsItem(item) {
   const productId = String(item.product || "").toLowerCase();
   const weight = String(item.weight || "").toLowerCase();
   const grind = String(item.grind || "").toLowerCase();
+
 
   const grindLabel = {
     whole_bean: "Whole bean",
@@ -27,10 +32,12 @@ function toAnalyticsItem(item) {
     fine: "Fine"
   }[grind] || item.grind;
 
+
   const itemName =
     productId === "peru"
       ? "Peru Cajamarca"
       : "Serra Negra";
+
 
   return {
     item_id: `${productId}_${weight}_${grind}`,
@@ -42,16 +49,19 @@ function toAnalyticsItem(item) {
   };
 }
 
+
 document.addEventListener("DOMContentLoaded", () => {
   const BASKET_STORAGE_KEY = "atlas-basket";
   const FULFILMENT_STORAGE_KEY = "atlas-fulfilment";
   const DELIVERY_FEE = 4.5;
   const MAX_QUANTITY = 10;
 
+
   const PRODUCTS = {
     serra: { id: "serra", name: "Serra Negra", prices: { "250g": 10.95, "500g": 19.5, "1kg": 35.95 } },
     peru: { id: "peru", name: "Peru Cajamarca", prices: { "250g": 13.95, "500g": 26.95, "1kg": 49.95 } }
   };
+
 
   const HOME_FEATURED_PRODUCTS = [
     {
@@ -84,6 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   ];
 
+
   const mobileBasketBarMarkup = `
     <div class="mobile-buy-bar" aria-hidden="true">
       <div class="container mobile-buy-bar__inner">
@@ -96,20 +107,25 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
   `;
 
+
   function ensureMobileBasketBar() {
     if (document.getElementById("mobile-basket-bar-toggle")) return;
     const footer = document.querySelector(".site-footer");
     if (footer) footer.insertAdjacentHTML("beforebegin", mobileBasketBarMarkup);
   }
 
+
   ensureMobileBasketBar();
+
 
   const basket = readBasket();
   let fulfilment = readFulfilment();
 
+
   if (basket.length) {
     try { localStorage.setItem(BASKET_STORAGE_KEY, JSON.stringify(basket)); } catch { }
   }
+
 
   const mobileToggle = document.querySelector("[data-mobile-toggle]");
   const mobilePanel = document.querySelector("[data-mobile-panel]");
@@ -134,6 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const fulfilmentNoteEl = document.getElementById("basket-fulfilment-note");
   const checkoutNoteEl = document.getElementById("basket-checkout-note");
 
+
   syncFulfilmentInputs();
   setupMobileMenu();
   setupReveal();
@@ -141,8 +158,10 @@ document.addEventListener("DOMContentLoaded", () => {
   setupFulfilmentSelector();
   setupCollectionInfoPopover();
   setupShopProductForms();
+  setupProductViewTracking();
   setupHomepageFeaturedCoffee();
   renderBasket();
+
 
   function readBasket() {
     try {
@@ -152,9 +171,11 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch { return []; }
   }
 
+
   function getBasketItemKey(item) {
     return [String(item.product || ""), String(item.weight || ""), String(item.grind || "")].join("::");
   }
+
 
   function mergeBasketItems(items) {
     const merged = new Map();
@@ -178,6 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return Array.from(merged.values());
   }
 
+
   function addBasketItem(item) {
     const existing = basket.find((basketItem) => getBasketItemKey(basketItem) === getBasketItemKey(item));
     if (existing) {
@@ -186,6 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       basket.push({ ...item, lineTotal: item.unitPrice * item.quantity });
     }
+
 
     // Send add_to_cart event
     pushDataLayerEvent(
@@ -201,42 +224,52 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
+
   function saveBasket() {
     try { localStorage.setItem(BASKET_STORAGE_KEY, JSON.stringify(basket)); } catch { }
   }
+
 
   function readFulfilment() {
     try { return localStorage.getItem(FULFILMENT_STORAGE_KEY) === "collection" ? "collection" : "delivery"; }
     catch { return "delivery"; }
   }
 
+
   function saveFulfilment() {
     try { localStorage.setItem(FULFILMENT_STORAGE_KEY, fulfilment); } catch { }
   }
+
 
   function formatMoney(value) {
     return new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP" }).format(value);
   }
 
+
   function prettyGrind(value) {
     return { whole_bean: "Whole bean", coarse: "Coarse", medium: "Medium", fine: "Fine" }[value] || value;
   }
+
 
   function prettyFulfilment(value) {
     return value === "collection" ? "Local collection" : "Delivery";
   }
 
+
   function getBasketSubtotal() {
     return basket.reduce((sum, item) => sum + item.lineTotal, 0);
   }
+
 
   function getBasketDeliveryFee() {
     return basket.length && fulfilment === "delivery" ? DELIVERY_FEE : 0;
   }
 
+
   function syncFulfilmentInputs() {
     fulfilmentInputs.forEach((input) => { input.checked = input.value === fulfilment; });
   }
+
 
   function updateFulfilmentUI() {
     if (fulfilmentNoteEl) {
@@ -257,15 +290,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+
   // Only this mobile-menu function has been updated.
   function setupMobileMenu() {
     if (!mobileToggle || !mobilePanel) return;
+
 
     const setMobileMenu = (open) => {
       mobileToggle.setAttribute("aria-expanded", String(open));
       mobileToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
       mobilePanel.classList.toggle("is-open", open);
     };
+
 
     mobileToggle.addEventListener("click", (event) => {
       event.preventDefault();
@@ -274,14 +310,17 @@ document.addEventListener("DOMContentLoaded", () => {
       setMobileMenu(!isOpen);
     });
 
+
     mobilePanel.querySelectorAll("a").forEach((link) => {
       link.addEventListener("click", () => setMobileMenu(false));
     });
+
 
     window.addEventListener("resize", () => {
       if (window.innerWidth > 860) setMobileMenu(false);
     });
   }
+
 
   function setupReveal() {
     if (!revealItems.length) return;
@@ -294,6 +333,64 @@ document.addEventListener("DOMContentLoaded", () => {
     } else revealItems.forEach((item) => item.classList.add("revealed"));
   }
 
+
+  function setupProductViewTracking() {
+    const productCards = document.querySelectorAll("[data-product-view]");
+    if (!productCards.length) return;
+
+    const viewedProducts = new Set();
+
+    function trackProductView(productKey) {
+      if (viewedProducts.has(productKey)) return;
+
+      const product = PRODUCTS[productKey];
+      if (!product) return;
+
+      viewedProducts.add(productKey);
+
+      const lowestPrice = Math.min(...Object.values(product.prices));
+
+      pushDataLayerEvent(
+        "view_item",
+        {
+          currency: "GBP",
+          value: lowestPrice,
+          items: [
+            {
+              item_id: `${product.id}_default`,
+              item_name: product.name,
+              item_category: "Coffee",
+              price: lowestPrice,
+              quantity: 1
+            }
+          ]
+        }
+      );
+    }
+
+    if (!("IntersectionObserver" in window)) {
+      productCards.forEach((card) => {
+        trackProductView(card.dataset.productView);
+      });
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting || entry.intersectionRatio < 0.5) return;
+
+          trackProductView(entry.target.dataset.productView);
+          observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    productCards.forEach((card) => observer.observe(card));
+  }
+
+
   function openBasket() {
     if (!basketPopover) { window.location.href = "./shop.html#basket"; return; }
     renderBasket();
@@ -305,6 +402,7 @@ document.addEventListener("DOMContentLoaded", () => {
     requestAnimationFrame(renderBasket);
   }
 
+
   function minimiseBasket() {
     if (!basketPopover) return;
     if (basket.length) {
@@ -315,6 +413,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else closeBasket();
   }
 
+
   function closeBasket() {
     if (!basketPopover) return;
     basketPopover.classList.remove("is-open");
@@ -323,6 +422,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (basketDrawer) { basketDrawer.classList.remove("is-dragging"); basketDrawer.style.removeProperty("transform"); }
     basketToggles.forEach((toggle) => toggle.setAttribute("aria-expanded", "false"));
   }
+
 
   function setupBasketDrawer() {
     basketToggles.forEach((button) => button.addEventListener("click", openBasket));
@@ -334,6 +434,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setupBasketDrag();
     if (window.location.hash === "#basket" && basketPopover) openBasket();
   }
+
 
   function setupBasketDrag() {
     const dragRegion = basketHandle || basketHeader;
@@ -364,14 +465,18 @@ document.addEventListener("DOMContentLoaded", () => {
     dragRegion.addEventListener("lostpointercapture", () => { if (dragging) resetDrag(); });
   }
 
+
   function setupCollectionInfoPopover() {
     const infoButton = document.querySelector(".shop-basket-info");
     const popover = document.getElementById("collection-info-popover");
     const closeButton = document.querySelector(".shop-basket-info-popover__close");
 
+
     if (!infoButton || !popover || !closeButton) return;
 
+
     let lastFocusedElement = null;
+
 
     function openInfoPopover() {
       lastFocusedElement = document.activeElement;
@@ -381,6 +486,7 @@ document.addEventListener("DOMContentLoaded", () => {
       requestAnimationFrame(() => { closeButton.focus(); });
     }
 
+
     function closeInfoPopover() {
       popover.hidden = true;
       infoButton.setAttribute("aria-expanded", "false");
@@ -388,15 +494,18 @@ document.addEventListener("DOMContentLoaded", () => {
       if (lastFocusedElement && typeof lastFocusedElement.focus === "function") lastFocusedElement.focus();
     }
 
+
     infoButton.addEventListener("click", (event) => {
       event.preventDefault();
       event.stopPropagation();
       if (popover.hidden) openInfoPopover();
     });
 
+
     closeButton.addEventListener("click", closeInfoPopover);
     document.addEventListener("keydown", (event) => { if (event.key === "Escape" && !popover.hidden) closeInfoPopover(); });
   }
+
 
   function setupFulfilmentSelector() {
     updateFulfilmentUI();
@@ -406,6 +515,7 @@ document.addEventListener("DOMContentLoaded", () => {
       saveFulfilment(); syncFulfilmentInputs(); updateFulfilmentUI(); renderBasket();
     }));
   }
+
 
   function renderBasket() {
     const count = basket.reduce((sum, item) => sum + item.quantity, 0);
@@ -445,6 +555,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const item = basket[index];
       if (!item) return;
 
+
       // Send remove_from_cart event
       pushDataLayerEvent(
         "remove_from_cart",
@@ -458,11 +569,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       );
 
+
       basket.splice(index, 1);
       saveBasket();
       renderBasket();
     }));
   }
+
 
   function setupShopProductForms() {
     function updateProductPanel(prefix, priceMap) {
@@ -473,7 +586,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const priceEl = document.getElementById(`${prefix}-price`);
       const noteEl = document.getElementById(`${prefix}-note`);
 
+
       if (!weightEl || !grindEl || !quantityEl || !summaryEl || !priceEl) return;
+
 
       const quantity = Math.max(1, Math.min(MAX_QUANTITY, Number(quantityEl.value) || 1));
       quantityEl.value = quantity;
@@ -482,7 +597,9 @@ document.addEventListener("DOMContentLoaded", () => {
       if (noteEl) noteEl.textContent = "Choose delivery or local collection later in the basket before checkout.";
     }
 
+
     const hasProductForms = document.querySelector("[data-add-to-basket]");
+
 
     if (hasProductForms) {
       [["serra", PRODUCTS.serra.prices], ["peru", PRODUCTS.peru.prices]].forEach(([prefix, prices]) => {
@@ -494,11 +611,13 @@ document.addEventListener("DOMContentLoaded", () => {
         updateProductPanel(prefix, prices);
       });
 
+
       document.querySelectorAll("[data-add-to-basket]").forEach((button) => {
         button.addEventListener("click", () => {
           const key = button.getAttribute("data-add-to-basket");
           const product = PRODUCTS[key];
           if (!product) return;
+
 
           const prefix = key === "serra" ? "serra" : "peru";
           const weightEl = document.getElementById(`${prefix}-weight`);
@@ -506,8 +625,10 @@ document.addEventListener("DOMContentLoaded", () => {
           const quantityEl = document.getElementById(`${prefix}-quantity`);
           if (!weightEl || !grindEl || !quantityEl) return;
 
+
           const quantity = Math.max(1, Math.min(MAX_QUANTITY, Number(quantityEl.value) || 1));
           const unitPrice = product.prices[weightEl.value];
+
 
           addBasketItem({
             product: product.name,
@@ -517,9 +638,11 @@ document.addEventListener("DOMContentLoaded", () => {
             unitPrice
           });
 
+
           saveBasket();
           renderBasket();
           openBasket();
+
 
           const originalText = button.textContent;
           button.textContent = "Added";
@@ -527,6 +650,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
     }
+
 
     // This listener deliberately sits outside the product-form block so the shared basket works on every page.
     checkoutButton?.addEventListener("click", async () => {
@@ -542,6 +666,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+
       pushDataLayerEvent(
         "begin_checkout",
         {
@@ -554,10 +679,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       );
 
+
       const originalText = checkoutButton.textContent;
+
 
       checkoutButton.disabled = true;
       checkoutButton.textContent = "Redirecting...";
+
 
       try {
         const payload = {
@@ -570,14 +698,17 @@ document.addEventListener("DOMContentLoaded", () => {
           }))
         };
 
+
         const response = await fetch("/api/create-checkout-session", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload)
         });
 
+
         const rawText = await response.text();
         let data = {};
+
 
         try {
           data = rawText ? JSON.parse(rawText) : {};
@@ -585,9 +716,11 @@ document.addEventListener("DOMContentLoaded", () => {
           throw new Error(`Invalid response from checkout endpoint: ${rawText || "empty response"}`);
         }
 
+
         if (!response.ok || !data.url) {
           throw new Error(data.error || "Unable to create checkout session.");
         }
+
 
         // window.dataLayer.push({
         //   event: "begin_checkout",
@@ -604,6 +737,7 @@ document.addEventListener("DOMContentLoaded", () => {
         //   fulfilment
         // });
 
+
         // Keep the basket intact while checkout loads.
         window.location.href = data.url;
       } catch (error) {
@@ -616,11 +750,13 @@ document.addEventListener("DOMContentLoaded", () => {
           );
         }
 
+
         checkoutButton.disabled = false;
         checkoutButton.textContent = originalText;
       }
     });
   }
+
 
   function setupHomepageFeaturedCoffee() {
     const nameEl = document.querySelector("[data-featured-name]"), copyEl = document.querySelector("[data-featured-copy]"), notesEl = document.querySelector("[data-featured-notes]"), priceEl = document.querySelector("[data-featured-price]"), linkEl = document.querySelector("[data-featured-link]"), imageEl = document.querySelector("[data-featured-image]");
@@ -630,6 +766,7 @@ document.addEventListener("DOMContentLoaded", () => {
     nameEl.textContent = selected.name; copyEl.textContent = selected.copy; notesEl.textContent = selected.notes; priceEl.textContent = selected.price; linkEl.href = selected.link; imageEl.src = selected.image; imageEl.alt = selected.imageAlt;
     imageEl.onerror = () => { imageEl.onerror = null; imageEl.src = selected.fallbackImage; };
   }
+
 
   function escapeHtml(value) {
     return String(value).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#39;");
