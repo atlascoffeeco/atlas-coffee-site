@@ -386,6 +386,21 @@
       };
 
 
+      const isPaidCheckout = (status) => {
+        const value = String(status || "paid").toLowerCase();
+        return value === "paid" || value === "no_payment_required" || value === "confirmed";
+      };
+
+
+      const clearPaidBasket = () => {
+        try {
+          localStorage.removeItem("atlas-basket");
+        } catch (storageError) {
+          console.warn("Could not clear the basket after payment:", storageError);
+        }
+      };
+
+
       const applyFulfilmentCopy = (fulfilment) => {
         const isCollection = fulfilment === "collection";
 
@@ -459,6 +474,11 @@
 
 
         const fulfilment = order.fulfilment === "collection" ? "collection" : "delivery";
+
+
+        if (isPaidCheckout(order.paymentStatus)) {
+          clearPaidBasket();
+        }
 
 
         paymentStatusEl.textContent = formatPaymentStatus(order.paymentStatus || "confirmed");
