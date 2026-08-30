@@ -530,6 +530,14 @@
         }
 
         if (!purchaseAlreadySent) {
+          const purchaseItems = Array.isArray(order.items)
+            ? order.items.filter((item) => {
+                const category = String(item.item_category || "").toLowerCase();
+                const name = String(item.item_name || "").toLowerCase();
+                return category !== "shipping" && !name.includes("uk delivery");
+              })
+            : [];
+
           window.dataLayer.push({ ecommerce: null });
 
           window.dataLayer.push({
@@ -540,7 +548,7 @@
               value: Number(order.value) || 0,
               shipping: Number(order.shipping) || 0,
               tax: Number(order.tax) || 0,
-              items: Array.isArray(order.items) ? order.items : []
+              items: purchaseItems
             },
             fulfilment_method: fulfilment
           });

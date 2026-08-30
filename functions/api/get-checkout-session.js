@@ -1,3 +1,5 @@
+import { isDeliveryLineName } from "../../catalog.js";
+
 export async function onRequest(context) {
   const { request, env } = context;
 
@@ -42,17 +44,26 @@ export async function onRequest(context) {
         ? "collection"
         : "delivery";
 
+    const stripeShippingPence = Number(session.total_details?.amount_shipping || 0);
+    let deliveryLinePence = 0;
+
     const items = (session.line_items?.data || []).map((line) => {
       const quantity = line.quantity || 1;
       const amountTotal = Number(line.amount_total || 0);
       const amountEach = quantity > 0 ? amountTotal / quantity / 100 : 0;
+      const itemName = line.description || line.price?.product?.name || "Product";
+      const isDelivery = isDeliveryLineName(itemName);
+
+      if (isDelivery) {
+        deliveryLinePence += amountTotal;
+      }
 
       return {
         item_id: line.price?.id || "",
-        item_name: line.description || line.price?.product?.name || "Product",
+        item_name: itemName,
         item_brand: "Atlas Coffee",
-        item_category: "Coffee",
-        item_variant: line.price?.product?.description || "",
+        item_category: isDelivery ? "Shipping" : "Coffee",
+        item_variant: isDelivery ? "" : (line.price?.product?.description || ""),
         price: amountEach,
         quantity
       };
@@ -64,7 +75,7 @@ export async function onRequest(context) {
       fulfilment,
       currency: (session.currency || "gbp").toUpperCase(),
       value: (session.amount_total || 0) / 100,
-      shipping: (session.total_details?.amount_shipping || 0) / 100,
+      shipping: (stripeShippingPence || deliveryLinePence) / 100,
       tax: (session.total_details?.amount_tax || 0) / 100,
       items
     });

@@ -7,7 +7,7 @@
 // - Create a Stripe Checkout Session
 // - Return the Stripe-hosted checkout URL
 
-import { DELIVERY_FEE_PENCE, getStripePriceMap } from "../../catalog.js";
+import { DELIVERY_FEE_PENCE, DELIVERY_LINE_DESCRIPTION, DELIVERY_LINE_NAME, getStripePriceMap } from "../../catalog.js";
 
 export async function onRequest(context) {
   const { request, env } = context;
@@ -109,8 +109,8 @@ export async function onRequest(context) {
         price_data: {
           currency: "gbp",
           product_data: {
-            name: "UK delivery",
-            description: "Flat postage and packaging"
+            name: DELIVERY_LINE_NAME,
+            description: DELIVERY_LINE_DESCRIPTION
           },
           unit_amount: DELIVERY_FEE
         },

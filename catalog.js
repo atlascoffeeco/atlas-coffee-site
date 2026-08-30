@@ -2,6 +2,12 @@
 // Amounts are integer pence. The shop UI converts to pounds; Stripe charges these values.
 
 export const DELIVERY_FEE_PENCE = 450;
+export const DELIVERY_LINE_NAME = "UK delivery";
+export const DELIVERY_LINE_DESCRIPTION = "Flat postage and packaging";
+
+export function isDeliveryLineName(name) {
+  return String(name || "").toLowerCase().includes(DELIVERY_LINE_NAME.toLowerCase());
+}
 
 export const PRODUCTS = {
   serra: {
