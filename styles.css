@@ -9584,3 +9584,560 @@ body.basket-open {
     padding: 1.5rem;
   }
 }
+/* =========================================================
+   Shop — grind guide
+   ========================================================= */
+
+.field-group--grind {
+  position: relative;
+}
+
+.field-group__label-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.grind-guide-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0;
+  color: var(--text);
+  background: transparent;
+  border: 0;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.grind-guide-trigger:hover,
+.grind-guide-trigger:focus-visible {
+  color: var(--primary-strong);
+}
+
+.grind-guide-trigger span {
+  color: var(--primary-strong);
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* Grind Guide Modal shell */
+.grind-guide-dialog {
+  position: fixed;
+  z-index: 1200;
+  inset: 0;
+  display: grid;
+  padding: clamp(1rem, 4vw, 2.5rem);
+  place-items: center;
+  background: rgba(19, 14, 10, 0.64);
+  backdrop-filter: blur(5px);
+}
+
+.grind-guide-dialog[hidden] {
+  display: none;
+}
+
+.grind-guide-dialog__backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background: transparent;
+  border: 0;
+}
+
+.grind-guide-dialog__panel {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 1080px);
+  max-height: min(90vh, 860px);
+  overflow-y: auto;
+  padding: clamp(1.5rem, 4vw, 3.5rem);
+  background: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
+  box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.26);
+}
+
+.grind-guide-dialog__close {
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  color: var(--text);
+  background: transparent;
+  border: 0;
+  font-size: 2rem;
+  font-weight: 300;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.grind-guide-dialog__close:hover,
+.grind-guide-dialog__close:focus-visible {
+  color: var(--primary-strong);
+}
+
+.grind-guide-dialog__intro {
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.grind-guide-dialog__intro h2 {
+  margin: 0.75rem 0 1rem;
+  font-size: clamp(2rem, 4vw, 3.35rem);
+  letter-spacing: -0.06em;
+  line-height: 0.95;
+}
+
+.grind-guide-dialog__intro p {
+  margin: 0 auto;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.grind-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(1rem, 3vw, 2rem);
+  margin-top: clamp(2rem, 4vw, 3.5rem);
+}
+
+.grind-guide-item {
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  text-align: center;
+}
+
+.grind-guide-item__image {
+  display: grid;
+  width: 100%;
+  min-height: 145px;
+  place-items: center;
+  margin-bottom: 1.1rem;
+}
+
+.grind-guide-item__image img {
+  display: block;
+  width: min(100%, 150px);
+  height: 145px;
+  object-fit: contain;
+}
+
+.grind-guide-item__image.is-missing-image::after {
+  content: "Image to add";
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.grind-guide-item__image.is-missing-image img {
+  display: none;
+}
+
+.grind-guide-item h3 {
+  margin: 0;
+  font-size: clamp(1.2rem, 2vw, 1.65rem);
+  letter-spacing: -0.04em;
+}
+
+.grind-guide-item p {
+  max-width: 13rem;
+  margin: 0.45rem auto 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.48;
+}
+
+.grind-guide-dialog__help {
+  margin: clamp(2rem, 4vw, 3rem) 0 0;
+  color: var(--muted);
+  text-align: center;
+}
+
+.grind-guide-dialog__help a {
+  color: var(--text);
+  font-weight: 600;
+}
+
+body.grind-guide-open {
+  overflow: hidden;
+}
+
+@media (max-width: 760px) {
+  .grind-guide-dialog {
+    padding: 0;
+    align-items: end;
+  }
+
+  .grind-guide-dialog__panel {
+    width: 100%;
+    max-height: 92vh;
+    padding: 2rem 1.25rem 1.5rem;
+    border-right: 0;
+    border-bottom: 0;
+    border-left: 0;
+    border-radius: 1.25rem 1.25rem 0 0;
+  }
+
+  .grind-guide-dialog__close {
+    top: 0.75rem;
+    right: 0.9rem;
+  }
+
+  .grind-guide-dialog__intro {
+    padding-right: 2rem;
+    text-align: left;
+  }
+
+  .grind-guide-dialog__intro h2 {
+    font-size: 2.25rem;
+  }
+
+  .grind-guide-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .grind-guide-item__image {
+    min-height: 105px;
+    margin-bottom: 0.75rem;
+  }
+
+  .grind-guide-item__image img {
+    width: min(100%, 110px);
+    height: 105px;
+  }
+
+  .grind-guide-item h3 {
+    font-size: 1.15rem;
+  }
+
+  .grind-guide-item p {
+    max-width: 10rem;
+    font-size: 0.84rem;
+  }
+
+  .grind-guide-dialog__help {
+    font-size: 0.9rem;
+    text-align: left;
+  }
+}
+
+/* =========================================================
+   Shop grind controls — consistent mobile layout
+   ========================================================= */
+
+.field-group--grind {
+  min-width: 0;
+}
+
+.field-group__label-row {
+  display: flex;
+  min-height: 2.35rem;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.field-group__label-row label {
+  flex: 0 0 auto;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.grind-guide-trigger {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.3rem;
+  min-width: 0;
+  padding: 0;
+  color: var(--text);
+  background: transparent;
+  border: 0;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.05;
+  text-align: right;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.grind-guide-trigger:hover,
+.grind-guide-trigger:focus-visible {
+  color: var(--primary-strong);
+}
+
+.grind-guide-trigger > span:last-child {
+  color: var(--primary-strong);
+  font-size: 1rem;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.field-group--grind select {
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .field-group__label-row {
+    min-height: 2rem;
+    align-items: center;
+  }
+
+  .field-group__label-row label {
+    font-size: 0.78rem;
+  }
+
+  .grind-guide-trigger {
+    font-size: 0.75rem;
+  }
+
+  .grind-guide-trigger > span:last-child {
+    font-size: 0.95rem;
+  }
+}
+
+
+/* =========================================================
+   SHOP MOBILE — keep "Grind guide" in the label row
+   ========================================================= */
+
+@media (max-width: 640px) {
+  /* The three purchase-option fields must be allowed to shrink */
+  .shop-page .coffee-form .field-group {
+    min-width: 0 !important;
+  }
+
+  /* Prevent the Grind field's heading content from forcing its column wider */
+  .shop-page .coffee-form .field-group--grind,
+  .shop-page .coffee-form .field-group--grind .field-group__label-row {
+    min-width: 0 !important;
+  }
+
+  .shop-page .coffee-form .field-group--grind .field-group__label-row {
+    display: flex !important;
+    width: 100%;
+    min-height: 1.25rem !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 0.25rem !important;
+    margin-bottom: 0.55rem !important;
+    overflow: visible !important;
+  }
+
+  .shop-page .coffee-form .field-group--grind .field-group__label-row > label {
+    flex: 0 0 auto !important;
+    margin: 0 !important;
+    color: var(--text) !important;
+    font-size: 0.68rem !important;
+    letter-spacing: 0.05em !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  .shop-page .coffee-form .field-group--grind .grind-guide-trigger {
+    display: inline-flex !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 0.16rem !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    color: var(--primary-strong) !important;
+    background: transparent !important;
+    border: 0 !important;
+    font-family: var(--font-display) !important;
+    font-size: 0.58rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0 !important;
+    line-height: 1 !important;
+    text-align: left !important;
+    text-decoration: underline !important;
+    text-underline-offset: 0.16em !important;
+    white-space: nowrap !important;
+    cursor: pointer !important;
+  }
+
+  .shop-page .coffee-form .field-group--grind .grind-guide-trigger > span:first-child {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+  .shop-page .coffee-form .field-group--grind .grind-guide-trigger > span:last-child {
+    display: inline-block !important;
+    flex: 0 0 auto !important;
+    color: var(--primary-strong) !important;
+    font-size: 0.66rem !important;
+    line-height: 1 !important;
+    text-decoration: none !important;
+  }
+
+  /* Keep the middle select box inside its own equal-width column */
+  .shop-page .coffee-form .field-group--grind select {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+}
+
+/* =========================================================
+   SHOP MOBILE — replace "Grind guide" text with ? icon
+   ========================================================= */
+
+@media (max-width: 640px) {
+  .shop-page button.grind-guide-trigger,
+  .shop-page .field-group--grind button.grind-guide-trigger {
+    display: inline-grid !important;
+    width: 1.4rem !important;
+    min-width: 1.4rem !important;
+    height: 1.4rem !important;
+    min-height: 1.4rem !important;
+    flex: 0 0 1.4rem !important;
+    place-items: center !important;
+    margin: 0 0 0 0.25rem !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    color: transparent !important;
+    background: var(--primary) !important;
+    border: 0 !important;
+    border-radius: 50% !important;
+    box-shadow: none !important;
+    font-size: 0 !important;
+    line-height: 1 !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    vertical-align: middle !important;
+  }
+
+  .shop-page button.grind-guide-trigger::after,
+  .shop-page .field-group--grind button.grind-guide-trigger::after {
+    content: "?" !important;
+    display: block !important;
+    color: #1c140c !important;
+    font-family: Arial, sans-serif !important;
+    font-size: 0.88rem !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+  }
+
+  /* Hide all original text/star nodes, whatever their markup is */
+  .shop-page button.grind-guide-trigger *,
+  .shop-page .field-group--grind button.grind-guide-trigger * {
+    display: none !important;
+  }
+
+  /* Keep the Grind label and icon in one stable row */
+  .shop-page .field-group--grind .field-group__label-row {
+    display: flex !important;
+    min-width: 0 !important;
+    min-height: 1.25rem !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 0 !important;
+    margin-bottom: 0.55rem !important;
+  }
+
+  .shop-page .field-group--grind .field-group__label-row label {
+    flex: 0 0 auto !important;
+    margin: 0 !important;
+    font-size: 0.72rem !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+}
+
+/* =========================================================
+   SHOP MOBILE — align Grind label with other field labels
+   ========================================================= */
+
+@media (max-width: 640px) {
+  .shop-page .coffee-form .field-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  /* Match the plain label box used by Bag Size and Quantity */
+  .shop-page .coffee-form .field-group > label,
+  .shop-page .coffee-form .field-group--grind .field-group__label-row {
+    min-height: 1rem !important;
+    height: 1rem !important;
+    margin: 0 0 0.65rem !important;
+    padding: 0 !important;
+    line-height: 1rem !important;
+  }
+
+  .shop-page .coffee-form .field-group--grind .field-group__label-row {
+    display: flex !important;
+    align-items: baseline !important;
+  }
+
+  .shop-page .coffee-form .field-group--grind .field-group__label-row label {
+    display: block !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1rem !important;
+  }
+
+  /* Keep the icon on the exact same baseline as “GRIND” */
+  .shop-page .coffee-form .field-group--grind button.grind-guide-trigger {
+    position: relative !important;
+    top: 0.08rem !important;
+    align-self: baseline !important;
+    margin: 0 0 0 0.25rem !important;
+  }
+}
+
+/* Force purchase reassurance to span and centre within the buy box */
+.shop-page .coffee-form .buy-box > p.purchase-reassurance {
+  display: block !important;
+  grid-column: 1 / -1 !important;
+  justify-self: stretch !important;
+  align-self: stretch !important;
+  align-items: unset !important;
+
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+
+  margin: 0.9rem 0 0 !important;
+  padding: 0 !important;
+
+  text-align: center !important;
+}
+
+/* Tighten the gap before the product purchase options */
+.shop-page .product-card--detailed {
+  row-gap: 0 !important;
+}
+
+.shop-page .product-card--detailed > .product-options-heading {
+  margin-top: 1rem !important;
+  margin-bottom: 0.4rem !important;
+}
+
+.shop-page .product-card--detailed > .coffee-form {
+  margin-top: 0 !important;
+}

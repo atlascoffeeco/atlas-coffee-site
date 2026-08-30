@@ -1,7 +1,31 @@
 <!DOCTYPE html>
 <html lang="en" class="js-disabled">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Shop | Atlas Coffee</title>
+
+  <meta
+    name="description"
+    content="Shop freshly roasted single-origin coffee from Atlas Coffee. UK delivery for £4.50 or free local collection near Redditch."
+  >
+
+  <meta name="robots" content="index,follow">
+
   <link rel="canonical" href="https://www.atlascoffee.uk/shop">
+  <link rel="icon" type="image/jpeg" href="./assets/logo.jpg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Work+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="./styles.css?v=shop-grind-guide-20260830-1">
+
   <script>
     window.dataLayer = window.dataLayer || [];
 
@@ -38,31 +62,11 @@
   </script>
   <!-- End Google Tag Manager -->
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Shop | Atlas Coffee</title>
-
-  <meta name="description"
-    content="Shop freshly roasted single-origin coffee from Atlas Coffee. UK delivery for £4.50 or free local collection near Redditch.">
-
-  <meta name="robots" content="index,follow">
-
-  <link rel="icon" type="image/jpeg" href="./assets/logo.jpg">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Work+Sans:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet">
-
-  <link rel="stylesheet" href="./styles.css">
-
   <script>
     document.documentElement.classList.add("js");
     window.dataLayer = window.dataLayer || [];
   </script>
+
   <script src="/consent.js" defer></script>
 </head>
 
@@ -70,8 +74,12 @@
 
   <!-- Google Tag Manager noscript -->
   <noscript>
-    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TMRKXCQQ" height="0" width="0"
-      style="display:none;visibility:hidden"></iframe>
+    <iframe
+      src="https://www.googletagmanager.com/ns.html?id=GTM-TMRKXCQQ"
+      height="0"
+      width="0"
+      style="display:none;visibility:hidden"
+    ></iframe>
   </noscript>
   <!-- End Google Tag Manager noscript -->
 
@@ -80,7 +88,13 @@
   <header class="site-header">
     <div class="container nav-shell">
       <a class="brand" href="./index" aria-label="Atlas Coffee home">
-        <img src="./assets/logo.jpg" alt="Atlas Coffee logo" width="80" height="80" loading="eager">
+        <img
+          src="./assets/logo.jpg"
+          alt="Atlas Coffee logo"
+          width="80"
+          height="80"
+          loading="eager"
+        >
 
         <span class="brand-lockup">
           <span>Atlas Coffee Company</span>
@@ -96,11 +110,24 @@
       </nav>
 
       <div class="actions">
-        <button class="ghost-button basket-link" type="button" id="basket-toggle" aria-haspopup="dialog"
-          aria-expanded="false" aria-controls="basket-popover" data-basket-trigger data-has-items="false">
+        <button
+          class="ghost-button basket-link"
+          type="button"
+          id="basket-toggle"
+          aria-haspopup="dialog"
+          aria-expanded="false"
+          aria-controls="basket-popover"
+          data-basket-trigger
+          data-has-items="false"
+        >
           <span class="basket-link__icon-wrap" aria-hidden="true">
-            <img src="./assets/basket-outlined-shopping-svgrepo-com.svg" alt="" class="basket-link__icon" width="20"
-              height="20">
+            <img
+              src="./assets/basket-outlined-shopping-svgrepo-com.svg"
+              alt=""
+              class="basket-link__icon"
+              width="20"
+              height="20"
+            >
             <span class="basket-link__dot" aria-hidden="true"></span>
           </span>
 
@@ -108,8 +135,14 @@
           <span class="basket-link__count" data-basket-count>0</span>
         </button>
 
-        <button class="mobile-menu-toggle" type="button" data-mobile-toggle aria-expanded="false"
-          aria-controls="mobile-panel" aria-label="Open menu">
+        <button
+          class="mobile-menu-toggle"
+          type="button"
+          data-mobile-toggle
+          aria-expanded="false"
+          aria-controls="mobile-panel"
+          aria-label="Open menu"
+        >
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
@@ -119,7 +152,7 @@
 
     <div class="container mobile-panel" data-mobile-panel>
       <a href="./index">Home</a>
-      <a href="./shop">Shop Coffee</a>
+      <a href="./shop" aria-current="page">Shop Coffee</a>
       <a href="./why-atlas">Why Atlas</a>
       <a href="./contact">Contact Us</a>
     </div>
@@ -177,20 +210,30 @@
         <div class="shop-product-grid-redesign shop-product-grid-redesign--first">
 
           <!-- Peru Cajamarca -->
-          <article class="product-card product-card--detailed reveal" id="peru-product" data-product-view="peru">
+          <article
+            class="product-card product-card--detailed reveal"
+            id="peru-product"
+            data-product-view="peru"
+          >
             <div class="product-top">
               <div class="meta">
                 <span class="product-tag">Peru</span>
-                <span>Single Origin</span>
+                <span>Blend</span>
               </div>
 
               <div class="price">From £13.95</div>
             </div>
 
             <div class="featured-product-image-wrap">
-              <img src="./assets/cajamarca-bag.png" alt="Atlas Coffee Company Peru Cajamarca 250g coffee bag"
-                class="featured-product-image" width="900" height="1125" loading="lazy"
-                onerror="this.style.display='none'; this.parentNode.classList.add('is-fallback');">
+              <img
+                src="./assets/cajamarca-bag.png"
+                alt="Atlas Coffee Company Peru Cajamarca 250g coffee bag"
+                class="featured-product-image"
+                width="900"
+                height="1125"
+                loading="lazy"
+                onerror="this.style.display='none'; this.parentNode.classList.add('is-fallback');"
+              >
 
               <div class="shop-product-card__image-fallback">
                 <span>Atlas</span>
@@ -203,11 +246,14 @@
                 <h2 id="peru-title">Peru Cajamarca</h2>
 
                 <p class="featured-product-lead">
-                  A bright, lifted Peruvian with panela, vanilla, cooked citrus and soft fruit sweetness. Light, lively and gently winey, with hints of cocoa, almond, plum and sweet cherry.
+                  A bright, lifted Peruvian with panela, vanilla, cooked citrus
+                  and soft fruit sweetness. Light, lively and gently winey,
+                  with hints of cocoa, almond, plum and sweet cherry.
                 </p>
 
                 <p class="product-best-for">
-                  <strong>Best for:</strong> Filter drinkers and anyone who enjoys bright, fruity coffees.
+                  <strong>Best for:</strong> Filter drinkers and anyone who
+                  enjoys bright, fruity coffees.
                 </p>
 
                 <ul class="product-taste-cues" aria-label="Peru Cajamarca taste profile">
@@ -264,8 +310,14 @@
                 </details>
               </div>
             </div>
+
             <p class="product-options-heading">Make it yours</p>
-            <form class="coffee-form" aria-labelledby="peru-title" data-product="Peru Cajamarca">
+
+            <form
+              class="coffee-form"
+              aria-labelledby="peru-title"
+              data-product="Peru Cajamarca"
+            >
               <div class="field-group">
                 <label for="peru-weight">Bag size</label>
 
@@ -274,28 +326,46 @@
                   <option value="500g">500g</option>
                   <option value="1kg">1kg</option>
                 </select>
-              </div>
+                </div>
+                
+                <div class="field-group field-group--grind">
+                  <div class="field-group__label-row">
+                    <label for="peru-grind">Grind</label>
+                
+                    <button class="grind-guide-trigger" type="button" data-grind-guide-trigger aria-haspopup="dialog"
+                      aria-controls="grind-guide-dialog">
+                      <span>Grind guide</span>
+                      <span aria-hidden="true">✦</span>
+                    </button>
+                  </div>
+                
+                  <select id="peru-grind" name="grind" required>
+                    <option value="whole_bean">Whole bean</option>
+                    <option value="coarse">Coarse</option>
+                    <option value="medium">Medium</option>
+                    <option value="fine">Fine</option>
+                  </select>
+                </div>
+                
+                <div class="field-group">
+                  <label for="peru-quantity">Quantity</label>
 
-              <div class="field-group">
-                <label for="peru-grind">Grind</label>
-
-                <select id="peru-grind" name="grind" required>
-                  <option value="whole_bean">Whole bean</option>
-                  <option value="coarse">Coarse</option>
-                  <option value="medium">Medium</option>
-                  <option value="fine">Fine</option>
-                </select>
-              </div>
-
-              <div class="field-group">
-                <label for="peru-quantity">Quantity</label>
-
-                <input id="peru-quantity" name="quantity" type="number" min="1" max="10" step="1" value="1" required>
+                <input
+                  id="peru-quantity"
+                  name="quantity"
+                  type="number"
+                  min="1"
+                  max="10"
+                  step="1"
+                  value="1"
+                  required
+                >
               </div>
 
               <div class="buy-box">
                 <p class="freshness-promise">
-                  <strong>Roasted in small batches.</strong> Packed fresh upon your order.
+                  <strong>Roasted in small batches.</strong>
+                  Packed fresh upon your order.
                 </p>
 
                 <p class="buy-box-summary" id="peru-summary-line">
@@ -312,14 +382,20 @@
                 </button>
 
                 <p class="purchase-reassurance">
-                  £4.50 UK delivery <span aria-hidden="true">·</span> Free collection near Redditch
+                  £4.50 UK delivery
+                  <span aria-hidden="true">·</span>
+                  Free collection near Redditch
                 </p>
               </div>
             </form>
           </article>
 
           <!-- Serra Negra -->
-          <article class="product-card product-card--detailed reveal" id="serra-negra" data-product-view="serra">
+          <article
+            class="product-card product-card--detailed reveal"
+            id="serra-negra"
+            data-product-view="serra"
+          >
             <div class="product-top">
               <div class="meta">
                 <span class="product-tag">Brazil</span>
@@ -330,9 +406,15 @@
             </div>
 
             <div class="featured-product-image-wrap">
-              <img src="./assets/serra-negra-bag.png" alt="Atlas Coffee Company Serra Negra 250g coffee bag"
-                class="featured-product-image" width="900" height="1125" loading="lazy"
-                onerror="this.style.display='none'; this.parentNode.classList.add('is-fallback');">
+              <img
+                src="./assets/serra-negra-bag.png"
+                alt="Atlas Coffee Company Serra Negra 250g coffee bag"
+                class="featured-product-image"
+                width="900"
+                height="1125"
+                loading="lazy"
+                onerror="this.style.display='none'; this.parentNode.classList.add('is-fallback');"
+              >
 
               <div class="shop-product-card__image-fallback">
                 <span>Atlas</span>
@@ -345,11 +427,14 @@
                 <h2 id="serra-title">Serra Negra</h2>
 
                 <p class="featured-product-lead">
-                  A smooth, full-bodied Brazilian with praline, milk chocolate and toasted nuts. Comforting, sweet and easy to brew every day, with a gentle lemon-like lift.
+                  A smooth, full-bodied Brazilian with praline, milk chocolate
+                  and toasted nuts. Comforting, sweet and easy to brew every
+                  day, with a gentle lemon-like lift.
                 </p>
 
                 <p class="product-best-for">
-                  <strong>Best for:</strong> Espresso, cafetière and bean-to-cup drinkers who prefer smooth, chocolatey coffee.
+                  <strong>Best for:</strong> Espresso, cafetière and bean-to-cup
+                  drinkers who prefer smooth, chocolatey coffee.
                 </p>
 
                 <ul class="product-taste-cues" aria-label="Serra Negra taste profile">
@@ -403,38 +488,62 @@
                 </details>
               </div>
             </div>
+
             <p class="product-options-heading">Make it yours</p>
-            <form class="coffee-form" aria-labelledby="serra-title" data-product="Serra Negra">
+
+            <form
+              class="coffee-form"
+              aria-labelledby="serra-title"
+              data-product="Serra Negra"
+            >
               <div class="field-group">
                 <label for="serra-weight">Bag size</label>
-
+                
                 <select id="serra-weight" name="weight" required>
                   <option value="250g">250g</option>
                   <option value="500g">500g</option>
                   <option value="1kg">1kg</option>
                 </select>
-              </div>
+                </div>
+                
+                <div class="field-group field-group--grind">
+                  <div class="field-group__label-row">
+                    <label for="serra-grind">Grind</label>
+                
+                    <button class="grind-guide-trigger" type="button" data-grind-guide-trigger aria-haspopup="dialog"
+                      aria-controls="grind-guide-dialog">
+                      <span>Grind guide</span>
+                      <span aria-hidden="true">✦</span>
+                    </button>
+                  </div>
+                
+                  <select id="serra-grind" name="grind" required>
+                    <option value="whole_bean">Whole bean</option>
+                    <option value="coarse">Coarse</option>
+                    <option value="medium">Medium</option>
+                    <option value="fine">Fine</option>
+                  </select>
+                </div>
+                
+                <div class="field-group">
+                  <label for="serra-quantity">Quantity</label>
 
-              <div class="field-group">
-                <label for="serra-grind">Grind</label>
-
-                <select id="serra-grind" name="grind" required>
-                  <option value="whole_bean">Whole bean</option>
-                  <option value="coarse">Coarse</option>
-                  <option value="medium">Medium</option>
-                  <option value="fine">Fine</option>
-                </select>
-              </div>
-
-              <div class="field-group">
-                <label for="serra-quantity">Quantity</label>
-
-                <input id="serra-quantity" name="quantity" type="number" min="1" max="10" step="1" value="1" required>
+                <input
+                  id="serra-quantity"
+                  name="quantity"
+                  type="number"
+                  min="1"
+                  max="10"
+                  step="1"
+                  value="1"
+                  required
+                >
               </div>
 
               <div class="buy-box">
                 <p class="freshness-promise">
-                  <strong>Roasted in small batches.</strong> Packed fresh upon your order.
+                  <strong>Roasted in small batches.</strong>
+                  Packed fresh upon your order.
                 </p>
 
                 <p class="buy-box-summary" id="serra-summary-line">
@@ -447,11 +556,13 @@
                 </div>
 
                 <button class="button" type="button" data-add-to-basket="serra">
-                 Add to basket
+                  Add to basket
                 </button>
 
                 <p class="purchase-reassurance">
-                  £4.50 UK delivery <span aria-hidden="true">·</span> Free collection near Redditch
+                  £4.50 UK delivery
+                  <span aria-hidden="true">·</span>
+                  Free collection near Redditch
                 </p>
               </div>
             </form>
@@ -476,7 +587,10 @@
 
           <article class="shop-support-strip__item">
             <strong>Secure checkout</strong>
-            <p>Pay securely through Stripe. Need help choosing? <a href="./contact">Contact us</a>.</p>
+            <p>
+              Pay securely through Stripe. Need help choosing?
+              <a href="./contact">Contact us</a>.
+            </p>
           </article>
         </div>
       </div>
@@ -486,27 +600,51 @@
 
   <!-- Basket overlay -->
   <div class="shop-basket-popover" id="basket-popover" aria-hidden="true">
-    <button class="shop-basket-popover__backdrop" type="button" tabindex="-1" aria-label="Close basket"></button>
+    <button
+      class="shop-basket-popover__backdrop"
+      type="button"
+      tabindex="-1"
+      aria-label="Close basket"
+    ></button>
 
-    <aside class="shop-basket-drawer" role="dialog" aria-modal="true" aria-labelledby="basket-title">
+    <aside
+      class="shop-basket-drawer"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="basket-title"
+    >
       <div class="shop-basket-drawer__header">
-        <button class="shop-basket-drawer__handle" type="button" data-basket-handle aria-label="Minimise basket">
+        <button
+          class="shop-basket-drawer__handle"
+          type="button"
+          data-basket-handle
+          aria-label="Minimise basket"
+        >
           <span aria-hidden="true"></span>
         </button>
 
         <div class="shop-basket-drawer__heading">
           <span class="eyebrow">Basket</span>
-
           <h2 id="basket-title">Your selected coffees.</h2>
         </div>
 
-        <button class="shop-basket-drawer__close" type="button" data-basket-close aria-label="Close basket">
+        <button
+          class="shop-basket-drawer__close"
+          type="button"
+          data-basket-close
+          aria-label="Close basket"
+        >
           Close
         </button>
       </div>
 
       <div class="shop-basket-drawer__body">
-        <div id="basket-items" class="shop-basket-list" aria-live="polite" aria-relevant="additions removals">
+        <div
+          id="basket-items"
+          class="shop-basket-list"
+          aria-live="polite"
+          aria-relevant="additions removals"
+        >
           <div class="shop-basket-empty">
             <p>Your basket is currently empty.</p>
 
@@ -518,12 +656,30 @@
       </div>
 
       <div class="shop-basket-drawer__footer">
-        <div class="shop-basket-fulfilment" aria-labelledby="basket-fulfilment-label">
-          <span class="shop-basket-total-label" id="basket-fulfilment-label">Fulfilment</span>
+        <div
+          class="shop-basket-fulfilment"
+          aria-labelledby="basket-fulfilment-label"
+        >
+          <span
+            class="shop-basket-total-label"
+            id="basket-fulfilment-label"
+          >
+            Fulfilment
+          </span>
 
-          <div class="shop-basket-fulfilment__options" role="radiogroup" aria-label="Choose fulfilment">
+          <div
+            class="shop-basket-fulfilment__options"
+            role="radiogroup"
+            aria-label="Choose fulfilment"
+          >
             <label class="shop-basket-fulfilment__option">
-              <input type="radio" name="basket-fulfilment" id="basket-fulfilment-delivery" value="delivery" checked>
+              <input
+                type="radio"
+                name="basket-fulfilment"
+                id="basket-fulfilment-delivery"
+                value="delivery"
+                checked
+              >
 
               <span>
                 <strong>Delivery</strong>
@@ -532,14 +688,24 @@
             </label>
 
             <label class="shop-basket-fulfilment__option">
-              <input type="radio" name="basket-fulfilment" id="basket-fulfilment-collection" value="collection">
+              <input
+                type="radio"
+                name="basket-fulfilment"
+                id="basket-fulfilment-collection"
+                value="collection"
+              >
 
               <span class="shop-basket-fulfilment__copy">
                 <strong class="shop-basket-fulfilment__title">
                   Local collection
 
-                  <button type="button" class="shop-basket-info" aria-label="More information about local collection"
-                    aria-expanded="false" aria-controls="collection-info-popover">
+                  <button
+                    type="button"
+                    class="shop-basket-info"
+                    aria-label="More information about local collection"
+                    aria-expanded="false"
+                    aria-controls="collection-info-popover"
+                  >
                     i
                   </button>
                 </strong>
@@ -550,18 +716,21 @@
           </div>
 
           <p class="shop-basket-note" id="basket-fulfilment-note">
-            Delivery is calculated at checkout. Switch to local collection
-            to skip the delivery charge.
+            Delivery is calculated at checkout. Switch to local collection to
+            skip the delivery charge.
           </p>
         </div>
 
         <div class="shop-basket-total">
           <span class="shop-basket-total-label">Estimated total</span>
-
           <strong id="basket-total">£0.00</strong>
         </div>
 
-        <button class="button shop-basket-checkout" type="button" id="checkout-button">
+        <button
+          class="button shop-basket-checkout"
+          type="button"
+          id="checkout-button"
+        >
           Proceed to checkout
         </button>
 
@@ -578,35 +747,180 @@
     <div class="container mobile-buy-bar__inner">
       <div class="mobile-buy-bar__meta">
         <strong>Your basket</strong>
-
-        <span id="mobile-basket-summary" aria-live="polite">No items selected yet</span>
+        <span id="mobile-basket-summary" aria-live="polite">
+          No items selected yet
+        </span>
       </div>
 
-      <button class="button mobile-buy-bar__button" type="button" id="mobile-basket-bar-toggle"
-        aria-controls="basket-popover" aria-label="View your basket">
+      <button
+        class="button mobile-buy-bar__button"
+        type="button"
+        id="mobile-basket-bar-toggle"
+        aria-controls="basket-popover"
+        aria-label="View your basket"
+      >
         View basket
       </button>
     </div>
   </div>
 
   <!-- Local collection information modal -->
-  <div class="shop-basket-info-popover" id="collection-info-popover" role="dialog" aria-modal="true"
-    aria-labelledby="collection-info-title" hidden>
+  <div
+    class="shop-basket-info-popover"
+    id="collection-info-popover"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="collection-info-title"
+    hidden
+  >
     <div class="shop-basket-info-popover__panel">
-      <button class="shop-basket-info-popover__close" type="button" aria-label="Close local collection information">
+      <button
+        class="shop-basket-info-popover__close"
+        type="button"
+        aria-label="Close local collection information"
+      >
         ×
       </button>
 
       <h2 id="collection-info-title">Local collection</h2>
 
       <p>
-        Collection is from our small roasting space in Redditch.
-        We’ll send you the exact address after payment.
+        Collection is from our small roasting space in Redditch. We’ll send you
+        the exact address after payment.
       </p>
 
       <p>
-        Choose collection if you’re local and able to come by.
-        We’ll arrange a time that works for you.
+        Choose collection if you’re local and able to come by. We’ll arrange a
+        time that works for you.
+      </p>
+    </div>
+  </div>
+
+  <!-- Grind guide dialog -->
+  <div
+    class="grind-guide-dialog"
+    id="grind-guide-dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="grind-guide-title"
+    aria-describedby="grind-guide-description"
+    hidden
+  >
+    <button
+      class="grind-guide-dialog__backdrop"
+      type="button"
+      data-grind-guide-close
+      tabindex="-1"
+      aria-label="Close grind guide"
+    ></button>
+
+    <div class="grind-guide-dialog__panel">
+      <button
+        class="grind-guide-dialog__close"
+        type="button"
+        data-grind-guide-close
+        aria-label="Close grind guide"
+      >
+        ×
+      </button>
+
+      <div class="grind-guide-dialog__intro">
+        <span class="eyebrow">Grind guide</span>
+
+        <h2 id="grind-guide-title">
+          Choose how you brew.
+        </h2>
+
+        <p id="grind-guide-description">
+          Atlas coffee is supplied as whole beans by default. If you need your
+          coffee ground, select the option closest to how you brew before
+          adding it to your basket.
+        </p>
+      </div>
+
+      <div class="grind-guide-grid">
+
+        <article class="grind-guide-item grind-guide-item--whole">
+          <div class="grind-guide-item__image">
+            <img
+              src="./assets/grind-whole-bean.png"
+              alt="Whole coffee beans"
+              width="240"
+              height="240"
+              loading="lazy"
+              onerror="this.closest('.grind-guide-item__image').classList.add('is-missing-image');"
+            >
+          </div>
+
+          <h3>Whole bean</h3>
+
+          <p>
+            Best if you grind your coffee fresh at home.
+          </p>
+        </article>
+
+        <article class="grind-guide-item">
+          <div class="grind-guide-item__image">
+            <img
+              src="./assets/grind-fine.png"
+              alt="Fine coffee grounds"
+              width="240"
+              height="240"
+              loading="lazy"
+              onerror="this.closest('.grind-guide-item__image').classList.add('is-missing-image');"
+            >
+          </div>
+
+          <h3>Fine</h3>
+
+          <p>
+            Espresso and moka pot.
+          </p>
+        </article>
+
+        <article class="grind-guide-item">
+          <div class="grind-guide-item__image">
+            <img
+              src="./assets/grind-medium.png"
+              alt="Medium coffee grounds"
+              width="240"
+              height="240"
+              loading="lazy"
+              onerror="this.closest('.grind-guide-item__image').classList.add('is-missing-image');"
+            >
+          </div>
+
+          <h3>Medium</h3>
+
+          <p>
+            V60, Kalita Wave, Chemex and AeroPress.
+          </p>
+        </article>
+
+        <article class="grind-guide-item">
+          <div class="grind-guide-item__image">
+            <img
+              src="./assets/grind-coarse.png"
+              alt="Coarse coffee grounds"
+              width="240"
+              height="240"
+              loading="lazy"
+              onerror="this.closest('.grind-guide-item__image').classList.add('is-missing-image');"
+            >
+          </div>
+
+          <h3>Coarse</h3>
+
+          <p>
+            Cafetière, French press and cold brew.
+          </p>
+        </article>
+
+      </div>
+
+      <p class="grind-guide-dialog__help">
+        Not sure which option fits your brewer?
+        <a href="./contact">Get in touch and we’ll help.</a>
       </p>
     </div>
   </div>
@@ -615,7 +929,13 @@
     <div class="container footer-grid">
       <div>
         <div class="brand">
-          <img src="./assets/logo.jpg" alt="Atlas Coffee logo" width="80" height="80" loading="lazy">
+          <img
+            src="./assets/logo.jpg"
+            alt="Atlas Coffee logo"
+            width="80"
+            height="80"
+            loading="lazy"
+          >
 
           <span class="brand-lockup">
             <span>Atlas Coffee</span>
@@ -627,7 +947,7 @@
       <div>
         <strong>Pages</strong>
 
-        <ul style="display:grid;gap:.6rem;margin-top:1rem;list-style:none;">
+        <ul class="footer-links">
           <li><a href="./index">Home</a></li>
           <li><a href="./shop">Shop Coffee</a></li>
           <li><a href="./why-atlas">Why Atlas</a></li>
@@ -638,7 +958,7 @@
       <div>
         <strong>Legal</strong>
 
-        <ul style="display:grid;gap:.6rem;margin-top:1rem;list-style:none;">
+        <ul class="footer-links">
           <li><a href="./privacy">Privacy Policy</a></li>
           <li><a href="./terms">Terms &amp; Conditions</a></li>
           <li><a href="./delivery-returns">Delivery &amp; Returns</a></li>

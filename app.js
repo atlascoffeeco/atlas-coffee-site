@@ -771,4 +771,46 @@ document.addEventListener("DOMContentLoaded", () => {
   function escapeHtml(value) {
     return String(value).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#39;");
   }
+
+  (() => {
+  const dialog = document.querySelector("#grind-guide-dialog");
+  const triggers = document.querySelectorAll("[data-grind-guide-trigger]");
+
+  if (!dialog || !triggers.length) return;
+
+  const closeButtons = dialog.querySelectorAll("[data-grind-guide-close]");
+  const closeButton = dialog.querySelector(".grind-guide-dialog__close");
+  let previouslyFocusedElement = null;
+
+  function openGrindGuide(event) {
+    previouslyFocusedElement = event.currentTarget;
+    dialog.hidden = false;
+    document.body.classList.add("grind-guide-open");
+
+    window.setTimeout(() => {
+      closeButton?.focus();
+    }, 0);
+  }
+
+  function closeGrindGuide() {
+    dialog.hidden = true;
+    document.body.classList.remove("grind-guide-open");
+    previouslyFocusedElement?.focus();
+  }
+
+  triggers.forEach((trigger) => {
+    trigger.addEventListener("click", openGrindGuide);
+  });
+
+  closeButtons.forEach((button) => {
+    button.addEventListener("click", closeGrindGuide);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !dialog.hidden) {
+      closeGrindGuide();
+    }
+  });
+})();
+
 });
