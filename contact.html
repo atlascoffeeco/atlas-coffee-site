@@ -606,7 +606,8 @@
         const honeypot = (formData.get("website") || "").toString().trim();
 
         if (honeypot) {
-          setStatus("Spam check triggered.", true);
+          setStatus("Thanks. Your message has been sent. We’ll get back to you as soon as we can.");
+          form.reset();
           return;
         }
 
@@ -618,7 +619,7 @@
 
         if (!turnstileToken) {
           if (turnstileFailed) {
-            setStatus("Verification is currently unavailable. Please fix the Turnstile setup in Cloudflare before using this form.", true);
+            setStatus("Verification is currently unavailable. Please refresh the page and try again.", true);
           } else {
             setStatus("Please complete the verification before sending your message.", true);
           }
@@ -629,10 +630,33 @@
         setStatus("Sending...");
 
         try {
-          // Replace this block with your real form endpoint
-          await new Promise((resolve) => setTimeout(resolve, 900));
+          const response = await fetch("/api/contact", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name: (formData.get("name") || "").toString().trim(),
+              email: (formData.get("email") || "").toString().trim(),
+              subject: (formData.get("subject") || "").toString().trim(),
+              message: (formData.get("message") || "").toString().trim(),
+              website: honeypot,
+              turnstileToken
+            })
+          });
 
-          setStatus("Message ready to send. Next step is wiring this form to your live contact endpoint.");
+          const rawText = await response.text();
+          let data = {};
+
+          try {
+            data = rawText ? JSON.parse(rawText) : {};
+          } catch {
+            throw new Error("Invalid response from the contact form.");
+          }
+
+          if (!response.ok || !data.ok) {
+            throw new Error(data.error || "Unable to send your message. Please try again.");
+          }
+
+          setStatus("Thanks. Your message has been sent. We’ll get back to you as soon as we can.");
           form.reset();
           turnstileToken = "";
           turnstileReady = false;
@@ -641,7 +665,7 @@
             window.turnstile.reset(widgetId);
           }
         } catch (error) {
-          setStatus("Something went wrong while sending your message. Please try again.", true);
+          setStatus(error.message || "Something went wrong while sending your message. Please try again.", true);
         } finally {
           submitButton.disabled = false;
         }
