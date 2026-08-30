@@ -1,3 +1,5 @@
+import { getDeliveryFeePounds, getUiProducts, fromPriceLabel } from "./catalog.js";
+
 // Mark the document as JS-enabled for CSS hooks.
 document.documentElement.classList.add("js");
 window.dataLayer = window.dataLayer || [];
@@ -53,14 +55,9 @@ function toAnalyticsItem(item) {
 document.addEventListener("DOMContentLoaded", () => {
   const BASKET_STORAGE_KEY = "atlas-basket";
   const FULFILMENT_STORAGE_KEY = "atlas-fulfilment";
-  const DELIVERY_FEE = 4.5;
+  const DELIVERY_FEE = getDeliveryFeePounds();
   const MAX_QUANTITY = 10;
-
-
-  const PRODUCTS = {
-    serra: { id: "serra", name: "Serra Negra", prices: { "250g": 10.95, "500g": 19.5, "1kg": 35.95 } },
-    peru: { id: "peru", name: "Peru Cajamarca", prices: { "250g": 13.95, "500g": 26.95, "1kg": 49.95 } }
-  };
+  const PRODUCTS = getUiProducts();
 
 
   const HOME_FEATURED_PRODUCTS = [
@@ -72,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
       use: "Everyday brewing",
       profile: "Sweet & balanced",
       notes: "Praline · Milk chocolate · Toasted nuts",
-      price: "From £10.95",
+      price: fromPriceLabel("serra"),
       image: "/assets/serra-negra-bag.webp",
       fallbackImage: "/assets/serra-negra-bag.png",
       imageAlt: "Serra Negra Brazilian coffee bag from Atlas Coffee",
@@ -86,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
       use: "Morning filter",
       profile: "Bright & layered",
       notes: "Panela · Vanilla · Plum · Sweet Cherry",
-      price: "From £13.95",
+      price: fromPriceLabel("peru"),
       image: "/assets/cajamarca-bag.webp",
       fallbackImage: "/assets/cajamarca-bag.png",
       imageAlt: "Peru Cajamarca coffee bag from Atlas Coffee",
@@ -160,6 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setupShopProductForms();
   setupProductViewTracking();
   setupHomepageFeaturedCoffee();
+  applyCatalogPrices();
   renderBasket();
 
 
@@ -243,6 +241,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function formatMoney(value) {
     return new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP" }).format(value);
+  }
+
+
+  function applyCatalogPrices() {
+    document.querySelectorAll("[data-from-price]").forEach((el) => {
+      const label = fromPriceLabel(el.getAttribute("data-from-price"));
+      if (label) el.textContent = label;
+    });
+
+    document.querySelectorAll("[data-delivery-copy]").forEach((el) => {
+      el.textContent = `${formatMoney(DELIVERY_FEE)} UK delivery`;
+    });
   }
 
 

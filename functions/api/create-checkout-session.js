@@ -7,6 +7,8 @@
 // - Create a Stripe Checkout Session
 // - Return the Stripe-hosted checkout URL
 
+import { DELIVERY_FEE_PENCE, getStripePriceMap } from "../../catalog.js";
+
 export async function onRequest(context) {
   const { request, env } = context;
 
@@ -56,20 +58,9 @@ export async function onRequest(context) {
     return json({ error: "Invalid fulfilment option." }, 400);
   }
 
-  // Server-side price map in pence
+  // Server-side price map in pence (from catalog.js)
   // Never trust prices from the browser
-  const PRICE_MAP = {
-    "Serra Negra": {
-      "250g": 1095,
-      "500g": 1950,
-      "1kg": 3595
-    },
-    "Peru Cajamarca": {
-      "250g": 1395,
-      "500g": 2695,
-      "1kg": 4995
-    }
-  };
+  const PRICE_MAP = getStripePriceMap();
 
   // Normalise grind values from the frontend into readable labels
   const GRIND_LABELS = {
@@ -80,7 +71,7 @@ export async function onRequest(context) {
     fine: "Fine"
   };
 
-  const DELIVERY_FEE = 450;
+  const DELIVERY_FEE = DELIVERY_FEE_PENCE;
 
   try {
     // Build Stripe line items from validated basket items
