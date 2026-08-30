@@ -274,12 +274,12 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateFulfilmentUI() {
     if (fulfilmentNoteEl) {
       fulfilmentNoteEl.textContent = fulfilment === "collection"
-        ? "We’ll contact you after payment to arrange pickup."
+        ? "We’ll contact you after payment to arrange pickup in Redditch."
         : "Switch to local collection to skip the delivery charge.";
     }
     if (checkoutNoteEl) {
       checkoutNoteEl.textContent = fulfilment === "collection"
-        ? "Your order will be marked for local collection after payment."
+        ? "Your order will be marked for local collection in Redditch after payment."
         : `Delivery charges of ${formatMoney(DELIVERY_FEE)} will be applied during checkout.`;
     }
     if (basketTotalLabelEl) basketTotalLabelEl.textContent = fulfilment === "collection" ? "Total" : "Total incl. delivery";
