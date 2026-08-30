@@ -10133,6 +10133,15 @@ body.grind-guide-open {
   row-gap: 0 !important;
 }
 
+/* Keep space between origin pills / price and the bag image */
+.shop-page .product-card--detailed > .product-top {
+  margin-bottom: var(--space-5);
+}
+
+.shop-page .product-card--detailed > .featured-product-image-wrap {
+  margin-bottom: var(--space-5);
+}
+
 .shop-page .product-card--detailed > .product-options-heading {
   margin-top: 1rem !important;
   margin-bottom: 0.4rem !important;
@@ -10140,4 +10149,25 @@ body.grind-guide-open {
 
 .shop-page .product-card--detailed > .coffee-form {
   margin-top: 0 !important;
+}
+
+/* Remove mobile tap flash from the Grind Guide icon button */
+.shop-page .grind-guide-trigger {
+  -webkit-tap-highlight-color: transparent;
+  tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.shop-page .grind-guide-trigger:active,
+.shop-page .grind-guide-trigger:focus {
+  outline: none;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Show a clear focus ring only for keyboard navigation */
+.shop-page .grind-guide-trigger:focus-visible {
+  outline: 2px solid var(--primary-strong);
+  outline-offset: 3px;
+  box-shadow: none;
 }
