@@ -9631,17 +9631,21 @@ body.basket-open {
 /* Grind Guide Modal shell */
 .grind-guide-dialog {
   position: fixed;
-  z-index: 1200;
+  z-index: 2147483647;
   inset: 0;
-  display: grid;
+  display: none;
   padding: clamp(1rem, 4vw, 2.5rem);
   place-items: center;
   background: rgba(19, 14, 10, 0.64);
   backdrop-filter: blur(5px);
 }
 
+.grind-guide-dialog.is-open {
+  display: grid;
+}
+
 .grind-guide-dialog[hidden] {
-  display: none;
+  display: none !important;
 }
 
 .grind-guide-dialog__backdrop {
@@ -10050,10 +10054,12 @@ body.grind-guide-open {
   .shop-page .field-group--grind .field-group__label-row {
     display: flex !important;
     min-width: 0 !important;
-    min-height: 1.25rem !important;
+    min-height: 1.5rem !important;
+    height: auto !important;
+    overflow: visible !important;
     align-items: center !important;
     justify-content: flex-start !important;
-    gap: 0 !important;
+    gap: 0.35rem !important;
     margin-bottom: 0.55rem !important;
   }
 
@@ -10080,11 +10086,12 @@ body.grind-guide-open {
   /* Match the plain label box used by Bag Size and Quantity */
   .shop-page .coffee-form .field-group > label,
   .shop-page .coffee-form .field-group--grind .field-group__label-row {
-    min-height: 1rem !important;
-    height: 1rem !important;
+    min-height: 1.5rem !important;
+    height: auto !important;
     margin: 0 0 0.65rem !important;
     padding: 0 !important;
     line-height: 1rem !important;
+    overflow: visible !important;
   }
 
   .shop-page .coffee-form .field-group--grind .field-group__label-row {
@@ -10104,9 +10111,12 @@ body.grind-guide-open {
   /* Keep the icon on the exact same baseline as “GRIND” */
   .shop-page .coffee-form .field-group--grind button.grind-guide-trigger {
     position: relative !important;
-    top: 0.08rem !important;
-    align-self: baseline !important;
+    top: 0 !important;
+    z-index: 2 !important;
+    align-self: center !important;
     margin: 0 0 0 0.25rem !important;
+    overflow: visible !important;
+    pointer-events: auto !important;
   }
 }
 

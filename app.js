@@ -52,7 +52,7 @@ function toAnalyticsItem(item) {
 }
 
 
-document.addEventListener("DOMContentLoaded", () => {
+function startShopPage() {
   const BASKET_STORAGE_KEY = "atlas-basket";
   const FULFILMENT_STORAGE_KEY = "atlas-fulfilment";
   const DELIVERY_FEE = getDeliveryFeePounds();
@@ -157,6 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setupShopProductForms();
   setupProductViewTracking();
   setupHomepageFeaturedCoffee();
+  setupGrindGuide();
   applyCatalogPrices();
   renderBasket();
 
@@ -682,6 +683,7 @@ document.addEventListener("DOMContentLoaded", () => {
         {
           currency: "GBP",
           value: getBasketSubtotal() + getBasketDeliveryFee(),
+          shipping: getBasketDeliveryFee(),
           items: basket.map(toAnalyticsItem)
         },
         {
@@ -778,49 +780,62 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
+  function setupGrindGuide() {
+    const dialog = document.querySelector("#grind-guide-dialog");
+    const triggers = document.querySelectorAll("[data-grind-guide-trigger]");
+
+    if (!dialog || !triggers.length) return;
+
+    const closeButtons = dialog.querySelectorAll("[data-grind-guide-close]");
+    const closeButton = dialog.querySelector(".grind-guide-dialog__close");
+    let previouslyFocusedElement = null;
+
+    function openGrindGuide(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      previouslyFocusedElement = event.currentTarget;
+      dialog.removeAttribute("hidden");
+      dialog.classList.add("is-open");
+      document.body.classList.add("grind-guide-open");
+
+      window.setTimeout(() => {
+        closeButton?.focus();
+      }, 0);
+    }
+
+    function closeGrindGuide(event) {
+      event?.preventDefault();
+      event?.stopPropagation();
+      dialog.setAttribute("hidden", "");
+      dialog.classList.remove("is-open");
+      document.body.classList.remove("grind-guide-open");
+      previouslyFocusedElement?.focus();
+    }
+
+    triggers.forEach((trigger) => {
+      trigger.addEventListener("click", openGrindGuide);
+    });
+
+    closeButtons.forEach((button) => {
+      button.addEventListener("click", closeGrindGuide);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && dialog.classList.contains("is-open")) {
+        closeGrindGuide(event);
+      }
+    });
+  }
+
+
   function escapeHtml(value) {
     return String(value).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#39;");
   }
 
-  (() => {
-  const dialog = document.querySelector("#grind-guide-dialog");
-  const triggers = document.querySelectorAll("[data-grind-guide-trigger]");
+}
 
-  if (!dialog || !triggers.length) return;
-
-  const closeButtons = dialog.querySelectorAll("[data-grind-guide-close]");
-  const closeButton = dialog.querySelector(".grind-guide-dialog__close");
-  let previouslyFocusedElement = null;
-
-  function openGrindGuide(event) {
-    previouslyFocusedElement = event.currentTarget;
-    dialog.hidden = false;
-    document.body.classList.add("grind-guide-open");
-
-    window.setTimeout(() => {
-      closeButton?.focus();
-    }, 0);
-  }
-
-  function closeGrindGuide() {
-    dialog.hidden = true;
-    document.body.classList.remove("grind-guide-open");
-    previouslyFocusedElement?.focus();
-  }
-
-  triggers.forEach((trigger) => {
-    trigger.addEventListener("click", openGrindGuide);
-  });
-
-  closeButtons.forEach((button) => {
-    button.addEventListener("click", closeGrindGuide);
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && !dialog.hidden) {
-      closeGrindGuide();
-    }
-  });
-})();
-
-});
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", startShopPage);
+} else {
+  startShopPage();
+}
