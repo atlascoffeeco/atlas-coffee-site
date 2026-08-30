@@ -1,4 +1,4 @@
-import { getDeliveryFeePounds, getUiProducts, fromPriceLabel } from "./catalog.js";
+import { getDeliveryFeePounds, getUiProducts, fromPriceLabel } from "./catalog.js?v=20260830-2";
 
 // Mark the document as JS-enabled for CSS hooks.
 document.documentElement.classList.add("js");
