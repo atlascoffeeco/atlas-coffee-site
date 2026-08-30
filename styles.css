@@ -1063,6 +1063,14 @@ main section{
 
 .footer-grid{align-items:start}
 
+.footer-links{
+  display:grid;
+  gap:.6rem;
+  margin-top:1rem;
+  padding:0;
+  list-style:none;
+}
+
 .legal{
   font-size:var(--text-sm);
   color:var(--muted)

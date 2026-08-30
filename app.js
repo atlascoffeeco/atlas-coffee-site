@@ -1,4 +1,4 @@
-import { getDeliveryFeePounds, getUiProducts, fromPriceLabel } from "./catalog.js?v=20260830-2";
+import { getDeliveryFeePounds, getUiProducts, fromPriceLabel } from "./catalog.js?v=20260830-3";
 
 // Mark the document as JS-enabled for CSS hooks.
 document.documentElement.classList.add("js");
@@ -124,8 +124,6 @@ function startShopPage() {
   }
 
 
-  const mobileToggle = document.querySelector("[data-mobile-toggle]");
-  const mobilePanel = document.querySelector("[data-mobile-panel]");
   const revealItems = document.querySelectorAll(".reveal");
   const basketPopover = document.getElementById("basket-popover");
   const basketDrawer = document.querySelector(".shop-basket-drawer");
@@ -149,7 +147,6 @@ function startShopPage() {
 
 
   syncFulfilmentInputs();
-  setupMobileMenu();
   setupReveal();
   setupBasketDrawer();
   setupFulfilmentSelector();
@@ -302,37 +299,6 @@ function startShopPage() {
   }
 
 
-  // Only this mobile-menu function has been updated.
-  function setupMobileMenu() {
-    if (!mobileToggle || !mobilePanel) return;
-
-
-    const setMobileMenu = (open) => {
-      mobileToggle.setAttribute("aria-expanded", String(open));
-      mobileToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-      mobilePanel.classList.toggle("is-open", open);
-    };
-
-
-    mobileToggle.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      const isOpen = mobileToggle.getAttribute("aria-expanded") === "true";
-      setMobileMenu(!isOpen);
-    });
-
-
-    mobilePanel.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => setMobileMenu(false));
-    });
-
-
-    window.addEventListener("resize", () => {
-      if (window.innerWidth > 860) setMobileMenu(false);
-    });
-  }
-
-
   function setupReveal() {
     if (!revealItems.length) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -403,7 +369,7 @@ function startShopPage() {
 
 
   function openBasket() {
-    if (!basketPopover) { window.location.href = "./shop.html#basket"; return; }
+    if (!basketPopover) { window.location.href = "/shop"; return; }
     renderBasket();
     basketPopover.classList.add("is-open");
     basketPopover.setAttribute("aria-hidden", "false");

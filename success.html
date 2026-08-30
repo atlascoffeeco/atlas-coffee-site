@@ -57,7 +57,7 @@
 
 
   <!-- Shared site stylesheet -->
-  <link rel="stylesheet" href="/styles.css?v=20260830-2">
+  <link rel="stylesheet" href="/styles.css?v=20260830-3">
   
   <!-- Global site bootstrapping -->
   <script>
@@ -67,7 +67,7 @@
   <script src="/consent.js" defer></script>
   </head>
   
-  <body>
+  <body data-page="success" data-chrome-basket="false">
     <!-- Google Tag Manager (noscript) -->
     <noscript>
     <iframe
@@ -80,52 +80,8 @@
   <!-- End Google Tag Manager (noscript) -->
 
 
-  <!-- Accessibility shortcut -->
-  <a class="skip-link" href="#content">Skip to content</a>
-
-
-  <!-- Shared Atlas header -->
-  <header class="site-header">
-    <div class="container nav-shell">
-      <!-- Brand -->
-      <a class="brand" href="./index" aria-label="Atlas Coffee home">
-        <img src="./assets/logo.jpg" alt="Atlas Coffee logo" width="80" height="80" loading="eager">
-        <span class="brand-lockup">
-          <span>Atlas Coffee Company</span>
-          <small>Independent coffee roasters</small>
-        </span>
-      </a>
-
-
-      <!-- Primary navigation -->
-      <nav class="nav-links" aria-label="Primary navigation">
-        <a href="./index">Home</a>
-        <a href="./shop">Shop Coffee</a>
-        <a href="./why-atlas">Why Atlas</a>
-        <a href="./contact">Contact</a>
-        </nav>
-        
-        <!-- Success page uses a simple CTA rather than a basket trigger -->
-        <div class="actions">
-          <a class="button" href="./shop">Shop coffee</a>
-          <button class="mobile-menu-toggle" type="button" data-mobile-toggle aria-expanded="false" aria-controls="mobile-panel"
-            aria-label="Open menu">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </button>
-        </div>
-        </div>
-        
-        <!-- Mobile navigation panel -->
-    <div class="container mobile-panel" data-mobile-panel>
-      <a href="./index">Home</a>
-      <a href="./why-atlas">Why Atlas</a>
-      <a href="./shop">Shop Coffee</a>
-      <a href="./contact">Contact</a>
-      <a class="button" href="./shop">Shop coffee</a>
-    </div>
-  </header>
+  <div data-site-header></div>
+  <script src="/site-chrome.js?v=20260830-3"></script>
 
 
   <!-- Main content -->
@@ -245,80 +201,13 @@
   </main>
 
 
-  <!-- Shared Atlas footer -->
-  <footer class="site-footer">
-    <div class="container footer-grid">
-      <div>
-        <div class="brand">
-          <img src="./assets/logo.jpg" alt="Atlas Coffee logo" width="80" height="80" loading="lazy">
-          <span class="brand-lockup">
-            <span>Atlas Coffee</span>
-            <small>Freshly roasted single-origin coffee for delivery or local collection.</small>
-          </span>
-        </div>
-      </div>
-
-
-      <div>
-        <strong>Pages</strong>
-        <ul style="display:grid;gap:.6rem;margin-top:1rem;list-style:none;">
-          <li><a href="./index">Home</a></li>
-          <li><a href="./why-atlas">Why Atlas</a></li>
-          <li><a href="./shop">Shop Coffee</a></li>
-          <li><a href="./contact">Contact</a></li>
-        </ul>
-      </div>
-
-
-      <div>
-        <strong>Legal</strong>
-        <ul style="display:grid;gap:.6rem;margin-top:1rem;list-style:none;">
-          <li><a href="./privacy">Privacy Policy</a></li>
-          <li><a href="./terms">Terms &amp; Conditions</a></li>
-          <li><a href="./delivery-returns">Delivery &amp; Returns</a></li>
-        </ul>
-      </div>
-    </div>
-  </footer>
+  <div data-site-footer></div>
+  <script src="/site-chrome.js?v=20260830-3"></script>
 
 
   <!-- Shared page interactions -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const mobileToggle = document.querySelector("[data-mobile-toggle]");
-      const mobilePanel = document.querySelector("[data-mobile-panel]");
-
-
-      if (mobileToggle && mobilePanel) {
-        const mobileLinks = mobilePanel.querySelectorAll("a");
-
-
-        const setMobileMenu = (open) => {
-          mobileToggle.setAttribute("aria-expanded", String(open));
-          mobileToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-          mobilePanel.classList.toggle("is-open", open);
-        };
-
-
-        mobileToggle.addEventListener("click", () => {
-          const isOpen = mobileToggle.getAttribute("aria-expanded") === "true";
-          setMobileMenu(!isOpen);
-        });
-
-
-        mobileLinks.forEach((link) => {
-          link.addEventListener("click", () => setMobileMenu(false));
-        });
-
-
-        window.addEventListener("resize", () => {
-          if (window.innerWidth > 860) {
-            setMobileMenu(false);
-          }
-        });
-      }
-
-
       const revealItems = document.querySelectorAll(".reveal");
       const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
