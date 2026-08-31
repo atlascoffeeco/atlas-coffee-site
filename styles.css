@@ -5819,11 +5819,23 @@ body[data-page="home"] .site-header .mobile-panel a[href="/shop"]:hover {
     height: auto;
     display: grid;
     align-content: start;
+    grid-template-rows: auto auto minmax(0, 1fr) auto auto;
   }
 
   .shop-page .product-card--detailed .product-card__content {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: var(--space-4);
+    min-height: 0;
+    align-self: stretch;
+  }
+
+  .shop-page .product-card--detailed .product-card__intro {
+    flex: 0 0 auto;
+  }
+
+  .shop-page .product-card--detailed .product-accordion-group {
+    margin-top: auto;
   }
 
   .shop-page .product-card--detailed .product-card__intro,
@@ -5972,6 +5984,7 @@ body[data-page="home"] .site-header .mobile-panel a[href="/shop"]:hover {
   .shop-page .shop-product-grid-redesign--first > .product-card--detailed {
     width: 100%;
     min-width: 0;
+    height: auto;
   }
 }
 
@@ -8204,4 +8217,43 @@ body.grind-guide-open {
   width: 0.55rem;
   height: 0.55rem;
   margin-top: 0;
+}
+
+@media (min-width: 860px) {
+  .shop-page .shop-product-grid-redesign,
+  .shop-page .shop-product-grid-redesign--first {
+    align-items: start;
+  }
+
+  .shop-page .shop-product-grid-redesign--first > .product-card--detailed {
+    height: auto;
+    align-content: stretch;
+    grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+  }
+
+  .shop-page .shop-product-grid-redesign--first > .product-card--detailed > .product-card__content {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    height: 100%;
+  }
+
+  .shop-page .shop-product-grid-redesign--first > .product-card--detailed .product-card__intro {
+    flex: 0 0 auto;
+  }
+
+  .shop-page .shop-product-grid-redesign--first > .product-card--detailed .product-accordion-group {
+    margin-top: auto;
+  }
+
+  .shop-page .product-taste-cues {
+    align-items: flex-start;
+    align-content: flex-start;
+  }
+
+  .shop-page .product-taste-cues li {
+    flex: 0 0 auto;
+    align-self: flex-start;
+    height: auto;
+  }
 }

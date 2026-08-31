@@ -164,6 +164,7 @@ function startShopPage() {
   setupProductViewTracking();
   setupHomepageFeaturedCoffee();
   setupGrindGuide();
+  setupShopCardHeights();
   applyCatalogPrices();
   renderBasket();
 
@@ -1037,6 +1038,59 @@ function startShopPage() {
         closeGrindGuide(event);
       }
     });
+  }
+
+  function setupShopCardHeights() {
+    const grid = document.querySelector(".shop-product-grid-redesign--first");
+    if (!grid) return;
+
+    const cards = [...grid.querySelectorAll(":scope > .product-card--detailed")];
+    if (cards.length < 2) return;
+
+    const mq = window.matchMedia("(min-width: 860px)");
+    let resizeTimer = 0;
+
+    const closedCardHeight = (card) => {
+      const details = card.querySelector("details.product-disclosure");
+      const summary = details?.querySelector("summary");
+      const extra = details?.open && summary
+        ? Math.max(0, details.getBoundingClientRect().height - summary.getBoundingClientRect().height)
+        : 0;
+      return card.getBoundingClientRect().height - extra;
+    };
+
+    const sync = ({ reset = false } = {}) => {
+      if (!mq.matches) {
+        cards.forEach((card) => {
+          card.style.minHeight = "";
+        });
+        return;
+      }
+      if (reset) {
+        cards.forEach((card) => {
+          card.style.minHeight = "";
+        });
+      }
+      const max = Math.ceil(Math.max(...cards.map(closedCardHeight)));
+      cards.forEach((card) => {
+        card.style.minHeight = `${max}px`;
+      });
+    };
+
+    cards.forEach((card) => {
+      card.querySelector("details.product-disclosure")?.addEventListener("toggle", () => {
+        window.requestAnimationFrame(() => sync());
+      });
+      card.querySelectorAll("img").forEach((img) => {
+        if (!img.complete) img.addEventListener("load", () => sync({ reset: true }), { once: true });
+      });
+    });
+    mq.addEventListener("change", () => sync({ reset: true }));
+    window.addEventListener("resize", () => {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(() => sync({ reset: true }), 100);
+    });
+    sync({ reset: true });
   }
 
 
