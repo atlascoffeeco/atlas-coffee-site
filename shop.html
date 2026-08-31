@@ -8,7 +8,7 @@
 
   <meta
     name="description"
-    content="Shop freshly roasted single-origin coffee from Atlas Coffee. UK delivery for £4.50 or free local collection in Redditch."
+    content="Shop freshly roasted single-origin coffee from Atlas Coffee. Free UK delivery on 500g, 1kg, and orders of £25 or more, or collect free in Redditch."
   >
 
   <meta name="robots" content="index,follow">
@@ -24,7 +24,7 @@
     rel="stylesheet"
   >
 
-  <link rel="stylesheet" href="/styles.css?v=20260831-17">
+  <link rel="stylesheet" href="/styles.css?v=20260831-18">
 
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -84,7 +84,7 @@
   <!-- End Google Tag Manager noscript -->
 
   <div data-site-header></div>
-  <script src="/site-chrome.js?v=20260831-17"></script>
+  <script src="/site-chrome.js?v=20260831-18"></script>
 
   <main id="content">
 
@@ -133,6 +133,49 @@
       </div>
     </section>
 
+    <section class="shop-duo" aria-labelledby="shop-duo-title">
+      <div class="container">
+        <div class="shop-duo__inner reveal">
+          <div class="shop-duo__copy">
+            <span class="eyebrow">Try both</span>
+            <h2 id="shop-duo-title">Take a 250g bag of each.</h2>
+            <p>
+              Serra Negra and Peru Cajamarca together. One order, two cups.
+              Free UK delivery.
+            </p>
+            <p class="shop-duo__price">
+              <span>Pair</span>
+              <strong id="duo-price">£30.00</strong>
+            </p>
+          </div>
+
+          <div class="shop-duo__form">
+            <div class="shop-duo__grinds">
+              <div class="field-group">
+                <label for="duo-serra-grind">Serra Negra grind</label>
+                <select id="duo-serra-grind" name="duo-serra-grind">
+                  <option value="whole_bean">Whole bean</option>
+                  <option value="coarse">Coarse</option>
+                  <option value="medium">Medium</option>
+                  <option value="fine">Fine</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <label for="duo-peru-grind">Peru Cajamarca grind</label>
+                <select id="duo-peru-grind" name="duo-peru-grind">
+                  <option value="whole_bean">Whole bean</option>
+                  <option value="coarse">Coarse</option>
+                  <option value="medium">Medium</option>
+                  <option value="fine">Fine</option>
+                </select>
+              </div>
+            </div>
+            <button class="button" type="button" data-add-duo>Add both 250g bags</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="shop-grid-section">
       <div class="container">
         <div class="shop-product-grid-redesign shop-product-grid-redesign--first">
@@ -149,7 +192,7 @@
                 <span>Blend</span>
               </div>
 
-              <div class="price" data-from-price="peru">From £13.95</div>
+              <div class="price" data-from-price="peru">From £16.50</div>
             </div>
 
             <div class="featured-product-image-wrap">
@@ -303,16 +346,18 @@
               <div class="buy-box">
                 <p class="freshness-promise">
                   <strong>Roasted in small batches.</strong>
-                  Packed fresh upon your order.
+                  Packed fresh, then posted within 2–4 working days.
                 </p>
 
                 <p class="buy-box-summary" id="peru-summary-line">
                   250g · Whole bean · Qty: 1
                 </p>
 
+                <p class="bag-size-value" id="peru-bag-value"></p>
+
                 <div class="buy-box-price-row">
                   <span>Subtotal</span>
-                  <strong id="peru-price">£13.95</strong>
+                  <strong id="peru-price">£16.50</strong>
                 </div>
 
                 <button class="button" type="button" data-add-to-basket="peru">
@@ -320,9 +365,9 @@
                 </button>
 
                 <p class="purchase-reassurance">
-                  <span data-delivery-copy>£4.50 UK delivery</span>
+                  <span id="peru-delivery-hint">£4.50 UK delivery under £25 · Free on 500g, 1kg, and £25+</span>
                   <span aria-hidden="true">·</span>
-                  Free collection in Redditch
+                  <span>Free collection in Redditch</span>
                 </p>
               </div>
             </form>
@@ -340,7 +385,7 @@
                 <span>Single Origin</span>
               </div>
 
-              <div class="price" data-from-price="serra">From £10.95</div>
+              <div class="price" data-from-price="serra">From £13.50</div>
             </div>
 
             <div class="featured-product-image-wrap">
@@ -491,16 +536,18 @@
               <div class="buy-box">
                 <p class="freshness-promise">
                   <strong>Roasted in small batches.</strong>
-                  Packed fresh upon your order.
+                  Packed fresh, then posted within 2–4 working days.
                 </p>
 
                 <p class="buy-box-summary" id="serra-summary-line">
                   250g · Whole bean · Qty: 1
                 </p>
 
+                <p class="bag-size-value" id="serra-bag-value"></p>
+
                 <div class="buy-box-price-row">
                   <span>Subtotal</span>
-                  <strong id="serra-price">£10.95</strong>
+                  <strong id="serra-price">£13.50</strong>
                 </div>
 
                 <button class="button" type="button" data-add-to-basket="serra">
@@ -508,9 +555,9 @@
                 </button>
 
                 <p class="purchase-reassurance">
-                  <span data-delivery-copy>£4.50 UK delivery</span>
+                  <span id="serra-delivery-hint">£4.50 UK delivery under £25 · Free on 500g, 1kg, and £25+</span>
                   <span aria-hidden="true">·</span>
-                  Free collection in Redditch
+                  <span>Free collection in Redditch</span>
                 </p>
               </div>
             </form>
@@ -525,12 +572,12 @@
         <div class="shop-support-strip__grid reveal">
           <article class="shop-support-strip__item">
             <strong>Freshly prepared</strong>
-            <p>Small-batch roasted coffee, packed fresh and prepared for your order.</p>
+            <p>Small-batch roasted, packed fresh, and posted within 2–4 working days.</p>
           </article>
 
           <article class="shop-support-strip__item">
             <strong>Delivery or collection</strong>
-            <p>Choose delivery or free local collection at checkout.</p>
+            <p>Free UK delivery on 500g, 1kg, and orders of £25 or more. Or collect free in Redditch.</p>
           </article>
 
           <article class="shop-support-strip__item">
@@ -676,8 +723,8 @@
   </div>
 
   <div data-site-footer></div>
-  <script src="/site-chrome.js?v=20260831-17"></script>
+  <script src="/site-chrome.js?v=20260831-18"></script>
 
-  <script type="module" src="/app.js?v=20260831-17"></script>
+  <script type="module" src="/app.js?v=20260831-18"></script>
 </body>
 </html>

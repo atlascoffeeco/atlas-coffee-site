@@ -98,7 +98,7 @@
               '<div class="shop-basket-fulfilment__options" role="radiogroup" aria-label="Choose fulfilment">' +
                 '<label class="shop-basket-fulfilment__option">' +
                   '<input type="radio" name="basket-fulfilment" id="basket-fulfilment-delivery" value="delivery" checked>' +
-                  '<span><strong>Delivery</strong><small data-delivery-copy>£4.50 UK delivery</small></span>' +
+                  '<span><strong>Delivery</strong><small data-delivery-copy>£4.50 UK delivery under £25 · Free on 500g, 1kg, and £25+</small></span>' +
                 "</label>" +
                 '<label class="shop-basket-fulfilment__option">' +
                   '<input type="radio" name="basket-fulfilment" id="basket-fulfilment-collection" value="collection">' +

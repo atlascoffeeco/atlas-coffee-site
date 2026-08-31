@@ -7,7 +7,7 @@
 // - Create a Stripe Checkout Session
 // - Return the Stripe-hosted checkout URL
 
-import { DELIVERY_FEE_PENCE, DELIVERY_LINE_DESCRIPTION, DELIVERY_LINE_NAME, getStripePriceMap } from "../../catalog.js";
+import { DELIVERY_LINE_DESCRIPTION, DELIVERY_LINE_NAME, getDeliveryFeePenceForBasket, getStripePriceMap } from "../../catalog.js";
 
 export async function onRequest(context) {
   const { request, env } = context;
@@ -71,11 +71,8 @@ export async function onRequest(context) {
     fine: "Fine"
   };
 
-  const DELIVERY_FEE = DELIVERY_FEE_PENCE;
-
   try {
-    // Build Stripe line items from validated basket items
-    const lineItems = items.map((item) => {
+    const validatedItems = items.map((item) => {
       const product = typeof item?.product === "string" ? item.product.trim() : "";
       const weight = typeof item?.weight === "string" ? item.weight.trim() : "";
       const rawGrind = typeof item?.grind === "string" ? item.grind.trim() : "";
@@ -90,21 +87,24 @@ export async function onRequest(context) {
         );
       }
 
-      return {
-        price_data: {
-          currency: "gbp",
-          product_data: {
-            name: `${product} — ${weight}`,
-            description: `Grind: ${GRIND_LABELS[grind] || rawGrind || "Not specified"}`
-          },
-          unit_amount: unitAmount
-        },
-        quantity
-      };
+      return { product, weight, grind, rawGrind, quantity, unitAmount };
     });
 
-    // Add delivery as a separate Stripe line item when needed
-    if (fulfilment === "delivery") {
+    const lineItems = validatedItems.map((item) => ({
+      price_data: {
+        currency: "gbp",
+        product_data: {
+          name: `${item.product} — ${item.weight}`,
+          description: `Grind: ${GRIND_LABELS[item.grind] || item.rawGrind || "Not specified"}`
+        },
+        unit_amount: item.unitAmount
+      },
+      quantity: item.quantity
+    }));
+
+    const deliveryFeePence = getDeliveryFeePenceForBasket(validatedItems, fulfilment);
+
+    if (deliveryFeePence > 0) {
       lineItems.push({
         price_data: {
           currency: "gbp",
@@ -112,7 +112,7 @@ export async function onRequest(context) {
             name: DELIVERY_LINE_NAME,
             description: DELIVERY_LINE_DESCRIPTION
           },
-          unit_amount: DELIVERY_FEE
+          unit_amount: deliveryFeePence
         },
         quantity: 1
       });
@@ -123,7 +123,7 @@ export async function onRequest(context) {
 
     formData.set("mode", "payment");
     formData.set("success_url", `${origin}/success.html?session_id={CHECKOUT_SESSION_ID}`);
-    formData.set("cancel_url", `${origin}/shop.html`);
+    formData.set("cancel_url", `${origin}/shop`);
     formData.set("billing_address_collection", "required");
 
     // Store fulfilment choice in metadata

@@ -1,4 +1,15 @@
-import { getDeliveryFeePounds, getUiProducts, fromPriceLabel } from "./catalog.js?v=20260830-3";
+import {
+  amountToFreeDeliveryPounds,
+  bagSizeSavingCopy,
+  formatPoundsCompact,
+  fromPriceLabel,
+  getDeliveryFeePoundsForBasket,
+  getDeliveryPolicyCopy,
+  getFreeDeliveryThresholdPounds,
+  getUiProducts,
+  isFreeDeliveryBagSize,
+  weightGrams
+} from "./catalog.js?v=20260831-18";
 
 // Mark the document as JS-enabled for CSS hooks.
 document.documentElement.classList.add("js");
@@ -55,7 +66,6 @@ function toAnalyticsItem(item) {
 function startShopPage() {
   const BASKET_STORAGE_KEY = "atlas-basket";
   const FULFILMENT_STORAGE_KEY = "atlas-fulfilment";
-  const DELIVERY_FEE = getDeliveryFeePounds();
   const MAX_QUANTITY = 10;
   const PRODUCTS = getUiProducts();
 
@@ -176,7 +186,9 @@ function startShopPage() {
     items.forEach((item) => {
       if (!item || typeof item !== "object") return;
       const quantity = Math.max(1, Math.min(MAX_QUANTITY, Number(item.quantity) || 1));
-      const unitPrice = Number(item.unitPrice);
+      const catalogProduct = Object.values(PRODUCTS).find((product) => product.name === String(item.product));
+      const catalogPrice = catalogProduct?.prices[String(item.weight)];
+      const unitPrice = Number.isFinite(catalogPrice) ? catalogPrice : Number(item.unitPrice);
       if (!item.product || !item.weight || !item.grind || !Number.isFinite(unitPrice) || unitPrice < 0) return;
       const cleanItem = {
         product: String(item.product), weight: String(item.weight), grind: String(item.grind),
@@ -247,7 +259,7 @@ function startShopPage() {
     });
 
     document.querySelectorAll("[data-delivery-copy]").forEach((el) => {
-      el.textContent = `${formatMoney(DELIVERY_FEE)} UK delivery`;
+      el.textContent = getDeliveryPolicyCopy();
     });
   }
 
@@ -268,7 +280,7 @@ function startShopPage() {
 
 
   function getBasketDeliveryFee() {
-    return basket.length && fulfilment === "delivery" ? DELIVERY_FEE : 0;
+    return getDeliveryFeePoundsForBasket(basket, fulfilment);
   }
 
 
@@ -278,15 +290,30 @@ function startShopPage() {
 
 
   function updateFulfilmentUI() {
+    const deliveryFee = getBasketDeliveryFee();
+    const remaining = amountToFreeDeliveryPounds(basket);
+
     if (fulfilmentNoteEl) {
-      fulfilmentNoteEl.textContent = fulfilment === "collection"
-        ? "We’ll contact you after payment to arrange pickup in Redditch."
-        : "Switch to local collection to skip the delivery charge.";
+      if (fulfilment === "collection") {
+        fulfilmentNoteEl.textContent = "We’ll contact you after payment to arrange pickup in Redditch.";
+      } else if (!basket.length) {
+        fulfilmentNoteEl.textContent = getDeliveryPolicyCopy();
+      } else if (deliveryFee === 0) {
+        fulfilmentNoteEl.textContent = "UK delivery is free on this order.";
+      } else {
+        fulfilmentNoteEl.textContent = `Add ${formatMoney(remaining)} more for free delivery, or choose 500g or 1kg.`;
+      }
     }
-    if (basketTotalLabelEl) basketTotalLabelEl.textContent = fulfilment === "collection" ? "Total" : "Total incl. delivery";
+    if (basketTotalLabelEl) {
+      basketTotalLabelEl.textContent = fulfilment === "collection" || deliveryFee === 0 ? "Total" : "Total incl. delivery";
+    }
     if (basketTotalNoteEl) {
       basketTotalNoteEl.textContent = basket.length
-        ? fulfilment === "collection" ? "Collection selected. No delivery charge added." : `Includes ${formatMoney(DELIVERY_FEE)} delivery.`
+        ? fulfilment === "collection"
+          ? "Collection selected. No delivery charge added."
+          : deliveryFee === 0
+            ? "UK delivery is free on this order."
+            : `Includes ${formatMoney(deliveryFee)} delivery.`
         : "";
     }
   }
@@ -635,8 +662,27 @@ function startShopPage() {
       const quantity = clampQuantity(quantityEl.value);
       if (!editing) quantityEl.value = String(quantity);
       syncQtyStepper(quantityEl, quantity);
+
+      const lineTotal = priceMap[weightEl.value] * quantity;
+      const grams = weightGrams(weightEl.value);
+      const per100 = grams ? lineTotal / quantity / (grams / 100) : 0;
+      const valueEl = document.getElementById(`${prefix}-bag-value`);
+      if (valueEl) {
+        const saving = bagSizeSavingCopy(priceMap, weightEl.value);
+        const weekly = weightEl.value === "250g" ? " 500g is the usual weekly bag." : "";
+        const per100Copy = per100 ? `£${formatPoundsCompact(per100)} per 100g.` : "";
+        valueEl.textContent = [per100Copy, saving ? `${saving}.` : "", weekly].filter(Boolean).join(" ");
+      }
+
       summaryEl.textContent = `${weightEl.value} · ${prettyGrind(grindEl.value)} · Quantity: ${quantity}`;
-      priceEl.textContent = formatMoney(priceMap[weightEl.value] * quantity);
+      priceEl.textContent = formatMoney(lineTotal);
+      const hintEl = document.getElementById(`${prefix}-delivery-hint`);
+      if (hintEl) {
+        const qualifies = isFreeDeliveryBagSize(weightEl.value) || lineTotal >= getFreeDeliveryThresholdPounds();
+        hintEl.textContent = qualifies
+          ? "UK delivery is free on this selection."
+          : getDeliveryPolicyCopy();
+      }
       if (noteEl) noteEl.textContent = "Choose delivery or local collection later in the basket before checkout.";
     }
 
@@ -679,6 +725,47 @@ function startShopPage() {
       });
     }
 
+    function setupDuoForm() {
+      const button = document.querySelector("[data-add-duo]");
+      if (!button) return;
+
+      const serra = PRODUCTS.serra;
+      const peru = PRODUCTS.peru;
+      if (!serra || !peru) return;
+
+      const duoPrice = serra.prices["250g"] + peru.prices["250g"];
+      const priceEl = document.getElementById("duo-price");
+      if (priceEl) priceEl.textContent = formatMoney(duoPrice);
+
+      button.addEventListener("click", () => {
+        const serraGrind = document.getElementById("duo-serra-grind")?.value || "whole_bean";
+        const peruGrind = document.getElementById("duo-peru-grind")?.value || "whole_bean";
+
+        addBasketItem({
+          product: serra.name,
+          weight: "250g",
+          grind: serraGrind,
+          quantity: 1,
+          unitPrice: serra.prices["250g"]
+        });
+        addBasketItem({
+          product: peru.name,
+          weight: "250g",
+          grind: peruGrind,
+          quantity: 1,
+          unitPrice: peru.prices["250g"]
+        });
+
+        saveBasket();
+        renderBasket();
+        openBasket();
+
+        const originalText = button.textContent;
+        button.textContent = "Added";
+        window.setTimeout(() => { button.textContent = originalText; }, 1200);
+      });
+    }
+
 
     const hasProductForms = document.querySelector("[data-add-to-basket]");
 
@@ -694,6 +781,7 @@ function startShopPage() {
         updateProductPanel(prefix, prices);
       });
 
+      setupDuoForm();
 
       document.querySelectorAll("[data-add-to-basket]").forEach((button) => {
         button.addEventListener("click", () => {
@@ -878,7 +966,7 @@ function startShopPage() {
       };
     }
     if (fulfilmentEl) {
-      fulfilmentEl.textContent = `${formatMoney(DELIVERY_FEE)} UK delivery · Free collection in Redditch`;
+      fulfilmentEl.textContent = `${getDeliveryPolicyCopy()}. Free collection in Redditch`;
     }
 
     if (!other) return;
