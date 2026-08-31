@@ -112,7 +112,7 @@
                 "</label>" +
               "</div>" +
               '<p class="shop-basket-note" id="basket-fulfilment-note">' +
-                "Delivery is calculated at checkout. Switch to local collection to skip the delivery charge." +
+                "£4.50 UK delivery under £25 · Free on 500g, 1kg, and £25+" +
               "</p>" +
             "</div>" +
             '<div class="shop-basket-total">' +

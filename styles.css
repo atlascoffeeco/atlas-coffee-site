@@ -7732,6 +7732,24 @@ body.grind-guide-open {
   width: 100%;
 }
 
+.shop-page .product-card--detailed .coffee-form .field-group--grind {
+  grid-template-rows: 1.15rem auto auto;
+}
+
+.shop-page .product-card--detailed .product-brew-start,
+.shop-page .product-card--detailed .grind-hint,
+.shop-duo .grind-hint {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: 1.45;
+}
+
+.shop-page .product-card--detailed .grind-hint,
+.shop-duo .grind-hint {
+  font-size: var(--text-xs);
+}
+
 .shop-page .product-card--detailed .coffee-form .field-group select,
 .shop-page .product-card--detailed .coffee-form .field-group .shop-qty-stepper {
   justify-self: stretch !important;
@@ -7777,6 +7795,10 @@ body.grind-guide-open {
     grid-template-columns: minmax(0, 1fr) !important;
     grid-template-rows: 1.1rem auto;
     gap: 0.4rem !important;
+  }
+
+  .shop-page .product-card--detailed .coffee-form .field-group--grind {
+    grid-template-rows: 1.1rem auto auto;
   }
 
   .shop-page .product-card--detailed .coffee-form .field-group > label,
@@ -7939,13 +7961,20 @@ body.grind-guide-open {
 }
 
 .shop-duo {
-  padding: 0 0 var(--space-8);
+  padding: var(--space-8) 0;
 }
 
+.shop-page.shop-page-compact .coffee-choice-guide + .shop-duo,
+.shop-page .coffee-choice-guide + .shop-duo {
+  padding-top: var(--space-8) !important;
+}
+
+.shop-page .shop-duo .shop-duo__inner,
 .shop-duo__inner {
   display: grid;
-  gap: var(--space-5);
-  padding: var(--space-6);
+  gap: var(--space-6);
+  box-sizing: border-box;
+  padding: var(--space-8) !important;
   border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
   border-radius: var(--radius-xl);
   background: var(--surface);
@@ -7988,11 +8017,66 @@ body.grind-guide-open {
 }
 
 .shop-duo__form .field-group {
+  display: grid;
+  gap: 0.45rem;
   min-width: 0;
 }
 
+.shop-duo__form .field-group label {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
 .shop-duo__form .field-group select {
+  display: block;
+  box-sizing: border-box;
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  height: 48px;
+  min-height: 48px;
+  margin: 0;
+  padding: 0 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--text) 16%, transparent);
+  border-radius: 0.9rem;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.86rem;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(22, 17, 13, 0.04);
+  transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+}
+
+.shop-duo__form .field-group select:hover {
+  border-color: color-mix(in srgb, var(--primary-strong) 50%, var(--text));
+  background: color-mix(in srgb, var(--primary) 4%, var(--surface));
+}
+
+.shop-duo__form .field-group select:focus {
+  outline: 2px solid color-mix(in srgb, var(--primary) 70%, transparent);
+  outline-offset: 2px;
+  border-color: var(--primary-strong);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 18%, transparent);
+}
+
+@media (max-width: 640px) {
+  .shop-duo__form .field-group label {
+    font-size: 0.66rem;
+  }
+
+  .shop-duo__form .field-group select {
+    height: 46px;
+    min-height: 46px;
+    padding-inline: 0.65rem;
+    font-size: 0.8rem;
+  }
 }
 
 .shop-duo__form .button {
@@ -8036,4 +8120,15 @@ body.grind-guide-open {
   .shop-page .product-card--detailed .purchase-reassurance span[aria-hidden] {
     display: none;
   }
+}
+
+.shop-page .product-card--detailed .product-disclosure summary {
+  min-height: 2.5rem;
+  padding: 0.5rem 0.9rem;
+}
+
+.shop-page .product-card--detailed .product-disclosure summary::after {
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-top: 0;
 }

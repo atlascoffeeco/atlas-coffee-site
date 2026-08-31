@@ -8,8 +8,9 @@ import {
   getFreeDeliveryThresholdPounds,
   getUiProducts,
   isFreeDeliveryBagSize,
+  PRODUCTS as CATALOG_PRODUCTS,
   weightGrams
-} from "./catalog.js?v=20260831-18";
+} from "./catalog.js?v=20260831-26";
 
 // Mark the document as JS-enabled for CSS hooks.
 document.documentElement.classList.add("js");
@@ -33,7 +34,10 @@ function pushDataLayerEvent(event, ecommerce = {}, extra = {}) {
 
 
 function toAnalyticsItem(item) {
-  const productId = String(item.product || "").toLowerCase();
+  const catalogProduct = Object.values(CATALOG_PRODUCTS).find(
+    (product) => product.name === String(item.product || "").trim()
+  );
+  const productId = catalogProduct?.id || String(item.product || "").toLowerCase();
   const weight = String(item.weight || "").toLowerCase();
   const grind = String(item.grind || "").toLowerCase();
 
@@ -46,10 +50,7 @@ function toAnalyticsItem(item) {
   }[grind] || item.grind;
 
 
-  const itemName =
-    productId === "peru"
-      ? "Peru Cajamarca"
-      : "Serra Negra";
+  const itemName = catalogProduct?.displayName || catalogProduct?.name || String(item.product || "");
 
 
   return {
@@ -70,31 +71,31 @@ function startShopPage() {
   const PRODUCTS = getUiProducts();
 
 
-  const HOME_FEATURED_ID = "peru";
+  const HOME_FEATURED_ID = "serra";
   const HOME_FEATURED_PRODUCTS = [
     {
       id: "serra",
-      name: "Serra Negra",
+      name: "Serra",
       copy: "Prefer chocolatey and smooth? This Brazilian is praline, milk chocolate, and toasted nuts — an everyday cup with a gentle lift.",
       origin: "Brazil · Natural",
       notes: "Praline · Milk chocolate · Toasted nuts",
       price: fromPriceLabel("serra"),
       image: "/assets/serra-negra-bag.webp",
       fallbackImage: "/assets/serra-negra-bag.png",
-      imageAlt: "Serra Negra Brazilian coffee bag from Atlas Coffee",
+      imageAlt: "Serra coffee bag from Atlas Coffee",
       link: "/shop#serra-negra",
       otherCopy: "Bright, lifted, and clean. Panela sweetness, vanilla, cooked citrus, and a fresh-fruit finish."
     },
     {
       id: "peru",
-      name: "Peru Cajamarca",
+      name: "Cajamarca",
       copy: "Bright, lifted, and clean. Panela sweetness, vanilla, cooked citrus, and a fresh-fruit finish.",
       origin: "Peru · Washed",
       notes: "Panela · Vanilla · Plum · Sweet cherry",
       price: fromPriceLabel("peru"),
       image: "/assets/cajamarca-bag.webp",
       fallbackImage: "/assets/cajamarca-bag.png",
-      imageAlt: "Peru Cajamarca coffee bag from Atlas Coffee",
+      imageAlt: "Cajamarca coffee bag from Atlas Coffee",
       link: "/shop#peru-product",
       otherCopy: "Prefer chocolatey and smooth? This Brazilian is praline, milk chocolate, and toasted nuts — an everyday cup with a gentle lift."
     }
@@ -271,6 +272,11 @@ function startShopPage() {
 
   function prettyFulfilment(value) {
     return value === "collection" ? "Local collection" : "Delivery";
+  }
+
+  function productDisplayName(item) {
+    const match = Object.values(PRODUCTS).find((product) => product.name === item.product);
+    return match?.displayName || item.product;
   }
 
 
@@ -574,16 +580,16 @@ function startShopPage() {
     basketItemsEl.innerHTML = basket.map((item, index) => `
       <div class="shop-basket-item">
         <div class="shop-basket-item__heading">
-          <strong class="shop-basket-item__name">${escapeHtml(item.product)}</strong>
-          <div class="shop-basket-item__qty" role="group" aria-label="Quantity for ${escapeHtml(item.product)}">
-            <button type="button" class="shop-basket-item__qty-btn" data-qty-index="${index}" data-qty-delta="-1" aria-label="Decrease quantity of ${escapeHtml(item.product)}" ${item.quantity <= 1 ? "disabled" : ""}>−</button>
+          <strong class="shop-basket-item__name">${escapeHtml(productDisplayName(item))}</strong>
+          <div class="shop-basket-item__qty" role="group" aria-label="Quantity for ${escapeHtml(productDisplayName(item))}">
+            <button type="button" class="shop-basket-item__qty-btn" data-qty-index="${index}" data-qty-delta="-1" aria-label="Decrease quantity of ${escapeHtml(productDisplayName(item))}" ${item.quantity <= 1 ? "disabled" : ""}>−</button>
             <span class="shop-basket-item__qty-value" aria-live="polite">× ${item.quantity}</span>
-            <button type="button" class="shop-basket-item__qty-btn" data-qty-index="${index}" data-qty-delta="1" aria-label="Increase quantity of ${escapeHtml(item.product)}" ${item.quantity >= MAX_QUANTITY ? "disabled" : ""}>+</button>
+            <button type="button" class="shop-basket-item__qty-btn" data-qty-index="${index}" data-qty-delta="1" aria-label="Increase quantity of ${escapeHtml(productDisplayName(item))}" ${item.quantity >= MAX_QUANTITY ? "disabled" : ""}>+</button>
           </div>
         </div>
         <strong class="shop-basket-item__price">${formatMoney(item.lineTotal)}</strong>
         <p class="shop-basket-item__meta">${escapeHtml(item.weight)} · ${escapeHtml(prettyGrind(item.grind))}</p>
-        <button type="button" class="shop-basket-remove" data-remove-index="${index}" aria-label="Remove ${escapeHtml(item.product)} from basket">
+        <button type="button" class="shop-basket-remove" data-remove-index="${index}" aria-label="Remove ${escapeHtml(productDisplayName(item))} from basket">
           <svg class="shop-basket-remove__icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
             <path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M9 7V5.8A1.8 1.8 0 0 1 10.8 4h2.4A1.8 1.8 0 0 1 15 5.8V7m3 0v12.2A1.8 1.8 0 0 1 16.2 21H7.8A1.8 1.8 0 0 1 6 19.2V7m3.5 4v6.5m5-6.5v6.5"/>
           </svg>

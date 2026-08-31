@@ -15,6 +15,7 @@ export const PRODUCTS = {
   serra: {
     id: "serra",
     name: "Serra Negra",
+    displayName: "Serra",
     pricesPence: {
       "250g": 1350,
       "500g": 2400,
@@ -24,6 +25,7 @@ export const PRODUCTS = {
   peru: {
     id: "peru",
     name: "Peru Cajamarca",
+    displayName: "Cajamarca",
     pricesPence: {
       "250g": 1650,
       "500g": 3000,
@@ -125,6 +127,7 @@ export function getUiProducts() {
     products[product.id] = {
       id: product.id,
       name: product.name,
+      displayName: product.displayName || product.name,
       prices
     };
   });
