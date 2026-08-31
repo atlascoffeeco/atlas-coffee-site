@@ -60,34 +60,33 @@ function startShopPage() {
   const PRODUCTS = getUiProducts();
 
 
+  const HOME_FEATURED_ID = "peru";
   const HOME_FEATURED_PRODUCTS = [
     {
       id: "serra",
       name: "Serra Negra",
-      copy: "A smooth Brazilian coffee with praline sweetness, soft milk chocolate, and a balanced finish that works beautifully as an everyday brew.",
-      origin: "Brazil",
-      use: "Everyday brewing",
-      profile: "Sweet & balanced",
+      copy: "Prefer chocolatey and smooth? This Brazilian is praline, milk chocolate, and toasted nuts — an everyday cup with a gentle lift.",
+      origin: "Brazil · Natural",
       notes: "Praline · Milk chocolate · Toasted nuts",
       price: fromPriceLabel("serra"),
       image: "/assets/serra-negra-bag.webp",
       fallbackImage: "/assets/serra-negra-bag.png",
       imageAlt: "Serra Negra Brazilian coffee bag from Atlas Coffee",
-      link: "/shop#serra-negra"
+      link: "/shop#serra-negra",
+      otherCopy: "Bright, lifted, and clean. Panela sweetness, vanilla, cooked citrus, and a fresh-fruit finish."
     },
     {
       id: "peru",
       name: "Peru Cajamarca",
-      copy: "A bright, lifted Peruvian with mellow panela sweetness, vanilla, cooked citrus, and a fresh-fruit finish. Clean and balanced.",
-      origin: "Peru",
-      use: "Morning filter",
-      profile: "Bright & layered",
-      notes: "Panela · Vanilla · Plum · Sweet Cherry",
+      copy: "Bright, lifted, and clean. Panela sweetness, vanilla, cooked citrus, and a fresh-fruit finish.",
+      origin: "Peru · Washed",
+      notes: "Panela · Vanilla · Plum · Sweet cherry",
       price: fromPriceLabel("peru"),
       image: "/assets/cajamarca-bag.webp",
       fallbackImage: "/assets/cajamarca-bag.png",
       imageAlt: "Peru Cajamarca coffee bag from Atlas Coffee",
-      link: "/shop#peru-product"
+      link: "/shop#peru-product",
+      otherCopy: "Prefer chocolatey and smooth? This Brazilian is praline, milk chocolate, and toasted nuts — an everyday cup with a gentle lift."
     }
   ];
 
@@ -143,7 +142,6 @@ function startShopPage() {
   const mobileBasketBarToggle = document.getElementById("mobile-basket-bar-toggle");
   const fulfilmentInputs = document.querySelectorAll('input[name="basket-fulfilment"]');
   const fulfilmentNoteEl = document.getElementById("basket-fulfilment-note");
-  const checkoutNoteEl = document.getElementById("basket-checkout-note");
 
 
   syncFulfilmentInputs();
@@ -284,11 +282,6 @@ function startShopPage() {
       fulfilmentNoteEl.textContent = fulfilment === "collection"
         ? "We’ll contact you after payment to arrange pickup in Redditch."
         : "Switch to local collection to skip the delivery charge.";
-    }
-    if (checkoutNoteEl) {
-      checkoutNoteEl.textContent = fulfilment === "collection"
-        ? "Your order will be marked for local collection in Redditch after payment."
-        : `Delivery charges of ${formatMoney(DELIVERY_FEE)} will be applied during checkout.`;
     }
     if (basketTotalLabelEl) basketTotalLabelEl.textContent = fulfilment === "collection" ? "Total" : "Total incl. delivery";
     if (basketTotalNoteEl) {
@@ -494,7 +487,34 @@ function startShopPage() {
   }
 
 
-  function renderBasket() {
+  function setBasketItemQuantity(index, nextQuantity) {
+    const item = basket[index];
+    if (!item) return;
+
+    const next = Math.max(1, Math.min(MAX_QUANTITY, Number(nextQuantity) || 1));
+    if (next === item.quantity) return;
+
+    const delta = next - item.quantity;
+    pushDataLayerEvent(
+      delta > 0 ? "add_to_cart" : "remove_from_cart",
+      {
+        currency: "GBP",
+        value: Number(item.unitPrice) * Math.abs(delta),
+        items: [toAnalyticsItem({ ...item, quantity: Math.abs(delta) })]
+      },
+      {
+        fulfilment_method: fulfilment
+      }
+    );
+
+    item.quantity = next;
+    item.lineTotal = item.unitPrice * next;
+    saveBasket();
+    renderBasket({ qtyFocus: { index, delta } });
+  }
+
+
+  function renderBasket(options = {}) {
     const count = basket.reduce((sum, item) => sum + item.quantity, 0);
     const grandTotal = getBasketSubtotal() + getBasketDeliveryFee();
     if (checkoutButton) checkoutButton.disabled = basket.length === 0;
@@ -507,6 +527,13 @@ function startShopPage() {
     if (!basket.length) {
       basketItemsEl.innerHTML = `
         <div class="shop-basket-empty">
+          <svg class="shop-basket-empty__icon" viewBox="0 0 24 24" width="56" height="56" aria-hidden="true" focusable="false">
+            <g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7.3 10.6c0-4.25 3.6-4.25 3.6 0"/>
+              <path d="M13.1 10.6c0-4.25 3.6-4.25 3.6 0"/>
+              <path d="M5.15 10.6h13.7l-1.12 9.55A1.55 1.55 0 0 1 16.2 21.7H7.8A1.55 1.55 0 0 1 6.27 20.15L5.15 10.6z"/>
+            </g>
+          </svg>
           <p>Your basket is currently empty.</p>
           <div class="shop-basket-empty__actions">
             <a class="button" href="./shop">Shop coffee</a>
@@ -519,14 +546,37 @@ function startShopPage() {
     }
     basketItemsEl.innerHTML = basket.map((item, index) => `
       <div class="shop-basket-item">
-        <div class="shop-basket-item__copy">
-          <div class="shop-basket-item__title-row"><strong>${escapeHtml(item.product)}</strong><strong class="shop-basket-item__price">${formatMoney(item.lineTotal)}</strong></div>
-          <span>${escapeHtml(item.weight)} · ${escapeHtml(prettyGrind(item.grind))} · Quantity ${item.quantity}</span>
+        <div class="shop-basket-item__heading">
+          <strong class="shop-basket-item__name">${escapeHtml(item.product)}</strong>
+          <div class="shop-basket-item__qty" role="group" aria-label="Quantity for ${escapeHtml(item.product)}">
+            <button type="button" class="shop-basket-item__qty-btn" data-qty-index="${index}" data-qty-delta="-1" aria-label="Decrease quantity of ${escapeHtml(item.product)}" ${item.quantity <= 1 ? "disabled" : ""}>−</button>
+            <span class="shop-basket-item__qty-value" aria-live="polite">× ${item.quantity}</span>
+            <button type="button" class="shop-basket-item__qty-btn" data-qty-index="${index}" data-qty-delta="1" aria-label="Increase quantity of ${escapeHtml(item.product)}" ${item.quantity >= MAX_QUANTITY ? "disabled" : ""}>+</button>
+          </div>
         </div>
-        <button type="button" class="shop-basket-remove" data-remove-index="${index}" aria-label="Remove ${escapeHtml(item.product)} from basket">Remove</button>
+        <strong class="shop-basket-item__price">${formatMoney(item.lineTotal)}</strong>
+        <p class="shop-basket-item__meta">${escapeHtml(item.weight)} · ${escapeHtml(prettyGrind(item.grind))}</p>
+        <button type="button" class="shop-basket-remove" data-remove-index="${index}" aria-label="Remove ${escapeHtml(item.product)} from basket">
+          <svg class="shop-basket-remove__icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+            <path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M9 7V5.8A1.8 1.8 0 0 1 10.8 4h2.4A1.8 1.8 0 0 1 15 5.8V7m3 0v12.2A1.8 1.8 0 0 1 16.2 21H7.8A1.8 1.8 0 0 1 6 19.2V7m3.5 4v6.5m5-6.5v6.5"/>
+          </svg>
+        </button>
       </div>`).join("");
     basketTotalEl.textContent = formatMoney(grandTotal);
     updateFulfilmentUI();
+    basketItemsEl.querySelectorAll("[data-qty-index]").forEach((button) => button.addEventListener("click", () => {
+      const index = Number(button.dataset.qtyIndex);
+      const delta = Number(button.dataset.qtyDelta);
+      const item = basket[index];
+      if (!item || !delta) return;
+      setBasketItemQuantity(index, item.quantity + delta);
+    }));
+    const qtyFocus = options.qtyFocus;
+    if (qtyFocus && Number.isInteger(qtyFocus.index)) {
+      const selector = `[data-qty-index="${qtyFocus.index}"][data-qty-delta="${qtyFocus.delta}"]`;
+      const focusButton = basketItemsEl.querySelector(selector) || basketItemsEl.querySelector(`[data-qty-index="${qtyFocus.index}"]`);
+      if (focusButton && !focusButton.disabled) focusButton.focus();
+    }
     basketItemsEl.querySelectorAll("[data-remove-index]").forEach((button) => button.addEventListener("click", () => {
       const index = Number(button.dataset.removeIndex);
       const item = basket[index];
@@ -555,6 +605,20 @@ function startShopPage() {
 
 
   function setupShopProductForms() {
+    function clampQuantity(value) {
+      return Math.max(1, Math.min(MAX_QUANTITY, Number.parseInt(String(value), 10) || 1));
+    }
+
+    function syncQtyStepper(quantityEl, quantity) {
+      quantityEl.setAttribute("aria-valuenow", String(quantity));
+      const stepper = quantityEl.closest(".shop-qty-stepper");
+      if (!stepper) return;
+      const minus = stepper.querySelector('[data-qty-delta="-1"]');
+      const plus = stepper.querySelector('[data-qty-delta="1"]');
+      if (minus) minus.disabled = quantity <= 1;
+      if (plus) plus.disabled = quantity >= MAX_QUANTITY;
+    }
+
     function updateProductPanel(prefix, priceMap) {
       const weightEl = document.getElementById(`${prefix}-weight`);
       const grindEl = document.getElementById(`${prefix}-grind`);
@@ -567,11 +631,52 @@ function startShopPage() {
       if (!weightEl || !grindEl || !quantityEl || !summaryEl || !priceEl) return;
 
 
-      const quantity = Math.max(1, Math.min(MAX_QUANTITY, Number(quantityEl.value) || 1));
-      quantityEl.value = quantity;
+      const editing = document.activeElement === quantityEl && quantityEl.value === "";
+      const quantity = clampQuantity(quantityEl.value);
+      if (!editing) quantityEl.value = String(quantity);
+      syncQtyStepper(quantityEl, quantity);
       summaryEl.textContent = `${weightEl.value} · ${prettyGrind(grindEl.value)} · Quantity: ${quantity}`;
       priceEl.textContent = formatMoney(priceMap[weightEl.value] * quantity);
       if (noteEl) noteEl.textContent = "Choose delivery or local collection later in the basket before checkout.";
+    }
+
+    function setupQtyStepper(prefix, prices) {
+      const quantityEl = document.getElementById(`${prefix}-quantity`);
+      if (!quantityEl) return;
+      const stepper = quantityEl.closest(".shop-qty-stepper");
+      if (!stepper) return;
+
+      stepper.querySelectorAll("[data-qty-delta]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const delta = Number(button.dataset.qtyDelta);
+          if (!delta) return;
+          quantityEl.value = String(clampQuantity(Number(quantityEl.value) + delta));
+          updateProductPanel(prefix, prices);
+        });
+      });
+
+      quantityEl.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          quantityEl.blur();
+          return;
+        }
+        if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+          event.preventDefault();
+          const delta = event.key === "ArrowUp" ? 1 : -1;
+          quantityEl.value = String(clampQuantity(Number(quantityEl.value) + delta));
+          updateProductPanel(prefix, prices);
+        }
+      });
+
+      quantityEl.addEventListener("input", () => {
+        quantityEl.value = String(quantityEl.value).replace(/[^\d]/g, "");
+      });
+
+      quantityEl.addEventListener("blur", () => {
+        quantityEl.value = String(clampQuantity(quantityEl.value));
+        updateProductPanel(prefix, prices);
+      });
     }
 
 
@@ -585,6 +690,7 @@ function startShopPage() {
           if (!element) return;
           element.addEventListener(field === "quantity" ? "input" : "change", () => updateProductPanel(prefix, prices));
         });
+        setupQtyStepper(prefix, prices);
         updateProductPanel(prefix, prices);
       });
 
@@ -603,7 +709,7 @@ function startShopPage() {
           if (!weightEl || !grindEl || !quantityEl) return;
 
 
-          const quantity = Math.max(1, Math.min(MAX_QUANTITY, Number(quantityEl.value) || 1));
+          const quantity = clampQuantity(quantityEl.value);
           const unitPrice = product.prices[weightEl.value];
 
 
@@ -658,11 +764,13 @@ function startShopPage() {
       );
 
 
-      const originalText = checkoutButton.textContent;
-
+      const checkoutLabel = checkoutButton.querySelector(".shop-basket-checkout__label");
+      const originalText = checkoutLabel ? checkoutLabel.textContent : checkoutButton.textContent;
 
       checkoutButton.disabled = true;
-      checkoutButton.textContent = "Redirecting...";
+      checkoutButton.setAttribute("aria-busy", "true");
+      if (checkoutLabel) checkoutLabel.textContent = "Opening secure checkout…";
+      else checkoutButton.textContent = "Opening secure checkout…";
 
 
       try {
@@ -730,19 +838,63 @@ function startShopPage() {
 
 
         checkoutButton.disabled = false;
-        checkoutButton.textContent = originalText;
+        checkoutButton.removeAttribute("aria-busy");
+        if (checkoutLabel) checkoutLabel.textContent = originalText;
+        else checkoutButton.textContent = originalText;
       }
     });
   }
 
 
   function setupHomepageFeaturedCoffee() {
-    const nameEl = document.querySelector("[data-featured-name]"), copyEl = document.querySelector("[data-featured-copy]"), notesEl = document.querySelector("[data-featured-notes]"), priceEl = document.querySelector("[data-featured-price]"), linkEl = document.querySelector("[data-featured-link]"), imageEl = document.querySelector("[data-featured-image]");
-    if (!nameEl || !copyEl || !notesEl || !priceEl || !linkEl || !imageEl) return;
-    const selected = HOME_FEATURED_PRODUCTS.find((product) => product.id === "peru");
-    if (!selected) return;
-    nameEl.textContent = selected.name; copyEl.textContent = selected.copy; notesEl.textContent = selected.notes; priceEl.textContent = selected.price; linkEl.href = selected.link; imageEl.src = selected.image; imageEl.alt = selected.imageAlt;
-    imageEl.onerror = () => { imageEl.onerror = null; imageEl.src = selected.fallbackImage; };
+    const featured = HOME_FEATURED_PRODUCTS.find((product) => product.id === HOME_FEATURED_ID);
+    const other = HOME_FEATURED_PRODUCTS.find((product) => product.id !== HOME_FEATURED_ID);
+    if (!featured) return;
+
+    const nameEl = document.querySelector("[data-featured-name]");
+    const copyEl = document.querySelector("[data-featured-copy]");
+    const notesEl = document.querySelector("[data-featured-notes]");
+    const priceEl = document.querySelector("[data-featured-price]");
+    const linkEl = document.querySelector("[data-featured-link]");
+    const imageEl = document.querySelector("[data-featured-image]");
+    const originEl = document.querySelector("[data-featured-origin]");
+    const fulfilmentEl = document.querySelector("[data-featured-fulfilment]");
+
+    if (nameEl) nameEl.textContent = featured.name;
+    if (copyEl) copyEl.textContent = featured.copy;
+    if (notesEl) notesEl.textContent = featured.notes;
+    if (priceEl) priceEl.textContent = featured.price;
+    if (originEl) originEl.textContent = featured.origin;
+    if (linkEl) {
+      linkEl.href = featured.link;
+      linkEl.textContent = `Shop ${featured.name}`;
+    }
+    if (imageEl) {
+      imageEl.src = featured.image;
+      imageEl.alt = featured.imageAlt;
+      imageEl.onerror = () => {
+        imageEl.onerror = null;
+        imageEl.src = featured.fallbackImage;
+      };
+    }
+    if (fulfilmentEl) {
+      fulfilmentEl.textContent = `${formatMoney(DELIVERY_FEE)} UK delivery · Free collection in Redditch`;
+    }
+
+    if (!other) return;
+
+    const otherNameEl = document.querySelector("[data-other-name]");
+    const otherCopyEl = document.querySelector("[data-other-copy]");
+    const otherPriceEl = document.querySelector("[data-other-price]");
+    const otherLinkEl = document.querySelector("[data-other-link]");
+
+    if (otherNameEl) otherNameEl.textContent = other.name;
+    if (otherCopyEl) otherCopyEl.textContent = featured.otherCopy || other.copy;
+    if (otherPriceEl) otherPriceEl.textContent = other.price;
+    if (otherLinkEl) {
+      otherLinkEl.href = other.link;
+      otherLinkEl.textContent = `Shop ${other.name}`;
+    }
   }
 
 

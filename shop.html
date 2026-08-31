@@ -24,7 +24,7 @@
     rel="stylesheet"
   >
 
-  <link rel="stylesheet" href="/styles.css?v=20260830-5">
+  <link rel="stylesheet" href="/styles.css?v=20260831-17">
 
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -84,7 +84,7 @@
   <!-- End Google Tag Manager noscript -->
 
   <div data-site-header></div>
-  <script src="/site-chrome.js?v=20260830-3"></script>
+  <script src="/site-chrome.js?v=20260831-17"></script>
 
   <main id="content">
 
@@ -260,7 +260,7 @@
                   <div class="field-group__label-row">
                     <label for="peru-grind">Grind</label>
                 
-                    <button class="grind-guide-trigger" type="button" data-grind-guide-trigger aria-haspopup="dialog"
+                    <button class="grind-guide-trigger" type="button" data-grind-guide-trigger aria-label="Grind guide" aria-haspopup="dialog"
                       aria-controls="grind-guide-dialog">
                       <span>Grind guide</span>
                       <span aria-hidden="true">✦</span>
@@ -275,19 +275,29 @@
                   </select>
                 </div>
                 
-                <div class="field-group">
+                <div class="field-group field-group--quantity">
                   <label for="peru-quantity">Quantity</label>
 
-                <input
-                  id="peru-quantity"
-                  name="quantity"
-                  type="number"
-                  min="1"
-                  max="10"
-                  step="1"
-                  value="1"
-                  required
-                >
+                  <div class="shop-qty-stepper shop-basket-item__qty" role="group" aria-label="Quantity">
+                    <button type="button" class="shop-basket-item__qty-btn" data-qty-delta="-1" aria-label="Decrease quantity" disabled>−</button>
+                    <input
+                      id="peru-quantity"
+                      class="shop-qty-stepper__value shop-basket-item__qty-value"
+                      name="quantity"
+                      type="text"
+                      inputmode="numeric"
+                      pattern="[1-9]|10"
+                      autocomplete="off"
+                      maxlength="2"
+                      value="1"
+                      required
+                      role="spinbutton"
+                      aria-valuemin="1"
+                      aria-valuemax="10"
+                      aria-valuenow="1"
+                    >
+                    <button type="button" class="shop-basket-item__qty-btn" data-qty-delta="1" aria-label="Increase quantity">+</button>
+                  </div>
               </div>
 
               <div class="buy-box">
@@ -438,7 +448,7 @@
                   <div class="field-group__label-row">
                     <label for="serra-grind">Grind</label>
                 
-                    <button class="grind-guide-trigger" type="button" data-grind-guide-trigger aria-haspopup="dialog"
+                    <button class="grind-guide-trigger" type="button" data-grind-guide-trigger aria-label="Grind guide" aria-haspopup="dialog"
                       aria-controls="grind-guide-dialog">
                       <span>Grind guide</span>
                       <span aria-hidden="true">✦</span>
@@ -453,19 +463,29 @@
                   </select>
                 </div>
                 
-                <div class="field-group">
+                <div class="field-group field-group--quantity">
                   <label for="serra-quantity">Quantity</label>
 
-                <input
-                  id="serra-quantity"
-                  name="quantity"
-                  type="number"
-                  min="1"
-                  max="10"
-                  step="1"
-                  value="1"
-                  required
-                >
+                  <div class="shop-qty-stepper shop-basket-item__qty" role="group" aria-label="Quantity">
+                    <button type="button" class="shop-basket-item__qty-btn" data-qty-delta="-1" aria-label="Decrease quantity" disabled>−</button>
+                    <input
+                      id="serra-quantity"
+                      class="shop-qty-stepper__value shop-basket-item__qty-value"
+                      name="quantity"
+                      type="text"
+                      inputmode="numeric"
+                      pattern="[1-9]|10"
+                      autocomplete="off"
+                      maxlength="2"
+                      value="1"
+                      required
+                      role="spinbutton"
+                      aria-valuemin="1"
+                      aria-valuemax="10"
+                      aria-valuenow="1"
+                    >
+                    <button type="button" class="shop-basket-item__qty-btn" data-qty-delta="1" aria-label="Increase quantity">+</button>
+                  </div>
               </div>
 
               <div class="buy-box">
@@ -656,8 +676,8 @@
   </div>
 
   <div data-site-footer></div>
-  <script src="/site-chrome.js?v=20260830-3"></script>
+  <script src="/site-chrome.js?v=20260831-17"></script>
 
-  <script type="module" src="/app.js?v=20260830-3"></script>
+  <script type="module" src="/app.js?v=20260831-17"></script>
 </body>
 </html>

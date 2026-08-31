@@ -6,14 +6,10 @@
     return page === id ? ' aria-current="page"' : "";
   }
 
-  function shopNavClass() {
-    return page === "home" ? ' class="nav-shop-link"' : "";
-  }
-
   function navAnchors() {
     return (
       '<a href="/"' + current("home") + ">Home</a>" +
-      '<a href="/shop"' + shopNavClass() + current("shop") + ">Shop Coffee</a>" +
+      '<a href="/shop"' + current("shop") + ">Shop Coffee</a>" +
       '<a href="/why-atlas"' + current("why-atlas") + ">Why Atlas</a>" +
       '<a href="/contact"' + current("contact") + ">Contact Us</a>"
     );
@@ -82,6 +78,13 @@
           '<div class="shop-basket-drawer__body">' +
             '<div id="basket-items" class="shop-basket-list" aria-live="polite" aria-relevant="additions removals">' +
               '<div class="shop-basket-empty">' +
+                '<svg class="shop-basket-empty__icon" viewBox="0 0 24 24" width="56" height="56" aria-hidden="true" focusable="false">' +
+                  '<g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' +
+                    '<path d="M7.3 10.6c0-4.25 3.6-4.25 3.6 0"/>' +
+                    '<path d="M13.1 10.6c0-4.25 3.6-4.25 3.6 0"/>' +
+                    '<path d="M5.15 10.6h13.7l-1.12 9.55A1.55 1.55 0 0 1 16.2 21.7H7.8A1.55 1.55 0 0 1 6.27 20.15L5.15 10.6z"/>' +
+                  "</g>" +
+                "</svg>" +
                 "<p>Your basket is currently empty.</p>" +
                 '<div class="shop-basket-empty__actions">' +
                   '<a class="button" href="/shop">Shop coffee</a>' +
@@ -95,7 +98,7 @@
               '<div class="shop-basket-fulfilment__options" role="radiogroup" aria-label="Choose fulfilment">' +
                 '<label class="shop-basket-fulfilment__option">' +
                   '<input type="radio" name="basket-fulfilment" id="basket-fulfilment-delivery" value="delivery" checked>' +
-                  "<span><strong>Delivery</strong><small>Shipping is added at checkout.</small></span>" +
+                  '<span><strong>Delivery</strong><small data-delivery-copy>£4.50 UK delivery</small></span>' +
                 "</label>" +
                 '<label class="shop-basket-fulfilment__option">' +
                   '<input type="radio" name="basket-fulfilment" id="basket-fulfilment-collection" value="collection">' +
@@ -116,10 +119,13 @@
               '<span class="shop-basket-total-label">Estimated total</span>' +
               '<strong id="basket-total">£0.00</strong>' +
             "</div>" +
-            '<button class="button shop-basket-checkout" type="button" id="checkout-button">Proceed to checkout</button>' +
-            '<p class="shop-basket-note" id="basket-checkout-note">' +
-              "Checkout is handled securely. Your fulfilment choice will be included with the order." +
-            "</p>" +
+            '<button class="button shop-basket-checkout" type="button" id="checkout-button">' +
+              '<svg class="shop-basket-checkout__lock" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">' +
+                '<path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M7 11V8.2A5 5 0 0 1 17 8.2V11"/>' +
+                '<rect x="5" y="11" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/>' +
+              "</svg>" +
+              '<span class="shop-basket-checkout__label">Proceed to checkout</span>' +
+            "</button>" +
           "</div>" +
         "</aside>" +
       "</div>" +
