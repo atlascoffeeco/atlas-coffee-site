@@ -10,7 +10,7 @@ import {
   isFreeDeliveryBagSize,
   PRODUCTS as CATALOG_PRODUCTS,
   weightGrams
-} from "./catalog.js?v=20260831-26";
+} from "./catalog.js?v=20260831-33";
 
 // Mark the document as JS-enabled for CSS hooks.
 document.documentElement.classList.add("js");

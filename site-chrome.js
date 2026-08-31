@@ -64,7 +64,7 @@
     return (
       '<div class="shop-basket-popover" id="basket-popover" aria-hidden="true">' +
         '<button class="shop-basket-popover__backdrop" type="button" tabindex="-1" aria-label="Close basket"></button>' +
-        '<aside class="shop-basket-drawer" role="dialog" aria-modal="true" aria-labelledby="basket-title">' +
+        '<aside class="shop-basket-drawer" role="dialog" aria-modal="true" aria-labelledby="basket-title" data-has-items="false">' +
           '<div class="shop-basket-drawer__header">' +
             '<button class="shop-basket-drawer__handle" type="button" data-basket-handle aria-label="Minimise basket">' +
               '<span aria-hidden="true"></span>' +

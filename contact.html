@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="js-disabled">
 <head>
-  <link rel="canonical" href="https://www.atlascoffee.uk/contact">
-
   <script>
     window.dataLayer = window.dataLayer || [];
 
@@ -60,7 +58,7 @@
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
   
   <!-- Main stylesheet -->
-  <link rel="stylesheet" href="/styles.css?v=20260831-26" />
+  <link rel="stylesheet" href="/styles.css?v=20260831-33" />
 </head>
 <body class="shop-page content-page" data-page="contact">
   <!-- Google Tag Manager (noscript) -->
@@ -75,17 +73,19 @@
   <!-- End Google Tag Manager (noscript) -->
 
   <div data-site-header></div>
-  <script src="/site-chrome.js?v=20260831-26"></script>
+  <script src="/site-chrome.js?v=20260831-33"></script>
 
   <!-- Main content -->
   <main id="content">
     <section class="page-hero">
       <div class="container contact-layout">
-        <!-- Intro card -->
-        <div class="card reveal contact-intro-card">
+        <div class="contact-intro reveal">
           <span class="eyebrow">Contact</span>
           <h1 class="contact-title">Get in touch.</h1>
-          <p class="contact-lead">For orders, delivery questions, or local collection in Redditch.</p>
+          <p class="contact-lead">
+            Questions about an order, grind, delivery, or collection in Redditch.
+            I usually reply within 1–2 working days.
+          </p>
         </div>
 
         <!-- Contact form card -->
@@ -113,12 +113,8 @@
               <textarea class="input" name="message" rows="6" placeholder="How can I help?" required></textarea>
             </label>
 
-            <!-- Honeypot spam field -->
-            <div style="position:absolute;left:-9999px;opacity:0;pointer-events:none;" aria-hidden="true">
-              <label>
-                Leave this field empty
-                <input type="text" name="website" tabindex="-1" autocomplete="off" />
-              </label>
+            <div class="contact-honeypot" aria-hidden="true" inert>
+              <input type="text" name="website" tabindex="-1" autocomplete="off" />
             </div>
 
             <!-- Turnstile mount point -->
@@ -141,7 +137,12 @@
             <button type="submit" class="button" id="contact-submit">Send message</button>
             <p class="muted contact-status" id="contact-status" aria-live="polite"></p>
 
-            <p class="muted" style="font-size:var(--text-sm);margin-top:.35rem;">
+            <p class="muted contact-fallback">
+              Prefer email?
+              <a href="mailto:atlascoffeeroasters@gmail.com">atlascoffeeroasters@gmail.com</a>.
+            </p>
+
+            <p class="muted contact-privacy">
               By sending this message, you agree to the handling of your data as set out in our
               <a href="./privacy">Privacy Policy</a>.
             </p>
@@ -160,24 +161,34 @@
           </div>
 
           <div class="faq">
-            <details open>
-              <summary>Where is collection available?</summary>
-              <p style="margin-top:1rem;color:var(--muted);">
-                Collection is available from Redditch. Exact pickup details can be shared after order confirmation.
+            <details>
+              <summary>How does local collection work?</summary>
+              <p>
+                Collection is free in Redditch. After you pay, I’ll send the exact address
+                and we’ll agree a time that works.
               </p>
             </details>
 
             <details>
-              <summary>Do you offer delivery?</summary>
-              <p style="margin-top:1rem;color:var(--muted);">
-                Yes. UK delivery is £4.50 on orders under £25, and free on 500g, 1kg, and orders of £25 or more. Collection in Redditch is free.
+              <summary>How much is UK delivery?</summary>
+              <p>
+                UK delivery is £4.50 on orders under £25, and free on 500g, 1kg, and orders of £25 or more.
               </p>
             </details>
 
             <details>
-              <summary>What kind of coffee do you roast?</summary>
-              <p style="margin-top:1rem;color:var(--muted);">
-                Small-batch, single-origin coffees roasted for clarity, balance and character.
+              <summary>When will my coffee be posted?</summary>
+              <p>
+                Coffee is roasted in small batches and posted within 2–4 working days,
+                excluding weekends and bank holidays.
+              </p>
+            </details>
+
+            <details>
+              <summary>Unsure which grind to choose?</summary>
+              <p>
+                If you grind at home, choose whole bean. If you need it ground, use the
+                <a href="./shop">grind guide on the shop page</a>, or ask here and I’ll help.
               </p>
             </details>
           </div>
@@ -187,10 +198,10 @@
   </main>
 
   <div data-site-footer></div>
-  <script src="/site-chrome.js?v=20260831-26"></script>
+  <script src="/site-chrome.js?v=20260831-33"></script>
 
   <!-- Shared site script -->
-  <script type="module" src="/app.js?v=20260831-26"></script>
+  <script type="module" src="/app.js?v=20260831-33"></script>
 
   <!-- Contact page Turnstile handling -->
   <script>
