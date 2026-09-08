@@ -124,14 +124,16 @@ export async function onRequest(context) {
     formData.set("mode", "payment");
     formData.set("success_url", `${origin}/success.html?session_id={CHECKOUT_SESSION_ID}`);
     formData.set("cancel_url", `${origin}/shop`);
-    formData.set("billing_address_collection", "required");
 
-    // Store fulfilment choice in metadata
     formData.set("payment_intent_data[metadata][fulfilment]", fulfilment);
     formData.set("metadata[fulfilment]", fulfilment);
 
-    // Only collect shipping addresses for delivery orders
-    if (fulfilment === "delivery") {
+    if (fulfilment === "collection") {
+      formData.set("phone_number_collection[enabled]", "true");
+      formData.set("name_collection[individual][enabled]", "true");
+      formData.set("billing_address_collection", "auto");
+    } else {
+      formData.set("billing_address_collection", "required");
       formData.append("shipping_address_collection[allowed_countries][]", "GB");
     }
 

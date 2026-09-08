@@ -94,7 +94,7 @@
             <span class="eyebrow">Order confirmed</span>
             <h1>Thank you — your coffee order is locked in.</h1>
             <p class="confirmation-lead" id="confirmation-lead">
-              Your order has been received successfully. We’ll now prepare it for delivery or collection.
+              Your order has been received. A confirmation is on its way to your email. We’ll prepare the coffee for delivery or collection.
             </p>
 
 
@@ -296,8 +296,8 @@
 
         if (confirmationLeadEl) {
           confirmationLeadEl.textContent = isCollection
-            ? "Your order has been received successfully. We’ll now prepare it and contact you to arrange local collection."
-            : "Your order has been received successfully. We’ll now prepare it for roasting, packing, and delivery.";
+            ? "A confirmation is on its way to your email. We’ll prepare the coffee and contact you to arrange collection."
+            : "A confirmation is on its way to your email. We’ll prepare the coffee for roasting, packing, and delivery.";
         }
 
 
