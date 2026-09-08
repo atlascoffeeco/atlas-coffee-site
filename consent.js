@@ -3,10 +3,6 @@
 
   const STORAGE_KEY = "atlas-cookie-consent-v1";
 
-  const DEFAULT_CONSENT = {
-    analytics: false
-  };
-
   function readConsent() {
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
@@ -51,6 +47,9 @@
 
   function sendConsentUpdate(consent) {
     window.dataLayer = window.dataLayer || [];
+    document.documentElement.dataset.atlasConsent = consent.analytics
+      ? "granted"
+      : "denied";
 
     if (typeof window.gtag === "function") {
       window.gtag("consent", "update", {
@@ -140,6 +139,7 @@
       return;
     }
 
+    delete document.documentElement.dataset.atlasConsent;
     renderBanner();
   }
 
@@ -166,6 +166,7 @@
         console.warn("[Atlas consent] Could not reset consent preference.", error);
       }
 
+      delete document.documentElement.dataset.atlasConsent;
       renderBanner();
     }
   };
@@ -177,4 +178,10 @@
   } else {
     initialiseConsentBanner();
   }
+
+  window.addEventListener("pageshow", (event) => {
+    if (event.persisted) {
+      initialiseConsentBanner();
+    }
+  });
 })();

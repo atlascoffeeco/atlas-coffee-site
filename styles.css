@@ -5341,6 +5341,10 @@ body[data-page="home"] .site-header .mobile-panel a[href="/shop"]:hover {
    Atlas cookie banner
    ========================================================= */
 
+html[data-atlas-consent] #atlas-cookie-banner {
+  display: none !important;
+}
+
 /* Atlas cookie banner */
 #atlas-cookie-banner {
   position: fixed;
