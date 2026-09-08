@@ -105,17 +105,15 @@ export async function onRequest(context) {
     });
 
     const customerEmail = session.customer_details?.email || session.customer_email;
+    const merchantTo = env.CONTACT_TO_EMAIL || "atlascoffeeroasters@gmail.com";
     const resendBody = {
       from: env.CONTACT_FROM_EMAIL,
       to: [to],
+      reply_to: merchantTo,
       subject: email.subject,
       html: email.html,
       text: email.text
     };
-
-    if (env.CONTACT_TO_EMAIL) {
-      resendBody.reply_to = env.CONTACT_TO_EMAIL;
-    }
 
     const resendResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
@@ -139,52 +137,50 @@ export async function onRequest(context) {
       );
     }
 
-    if (env.CONTACT_TO_EMAIL) {
-      const shipping = session.shipping_details || session.collected_information?.shipping_details || {};
-      const merchant = buildMerchantOrderEmail({
-        customerName: session.customer_details?.name || "",
-        customerEmail,
-        customerPhone: session.customer_details?.phone || "",
-        fulfilment,
-        items,
-        totalPence: Number(session.amount_total || 0),
-        shippingName: shipping.name || "",
-        shippingAddress: shipping.address || null
-      });
+    const shipping = session.shipping_details || session.collected_information?.shipping_details || {};
+    const merchant = buildMerchantOrderEmail({
+      customerName: session.customer_details?.name || "",
+      customerEmail,
+      customerPhone: session.customer_details?.phone || "",
+      fulfilment,
+      items,
+      totalPence: Number(session.amount_total || 0),
+      shippingName: shipping.name || "",
+      shippingAddress: shipping.address || null
+    });
 
-      const merchantResponse = await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${env.RESEND_API_KEY}`,
-          "Content-Type": "application/json",
-          "Idempotency-Key": `atlas-merchant-${sessionId}`
+    const merchantResponse = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${env.RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+        "Idempotency-Key": `atlas-merchant-${sessionId}`
+      },
+      body: JSON.stringify({
+        from: env.CONTACT_FROM_EMAIL,
+        to: [merchantTo],
+        subject: merchant.subject,
+        html: merchant.html,
+        text: merchant.text
+      })
+    });
+
+    if (!merchantResponse.ok) {
+      const merchantData = await merchantResponse.json().catch(() => ({}));
+      return json(
+        {
+          error: merchantData.message || "Merchant email failed.",
+          customerEmailed: true,
+          retrieveError: retrieveError || undefined
         },
-        body: JSON.stringify({
-          from: env.CONTACT_FROM_EMAIL,
-          to: [env.CONTACT_TO_EMAIL],
-          subject: merchant.subject,
-          html: merchant.html,
-          text: merchant.text
-        })
-      });
-
-      if (!merchantResponse.ok) {
-        const merchantData = await merchantResponse.json().catch(() => ({}));
-        return json(
-          {
-            error: merchantData.message || "Merchant email failed.",
-            customerEmailed: true,
-            retrieveError: retrieveError || undefined
-          },
-          500
-        );
-      }
+        500
+      );
     }
 
     return json({
       received: true,
       emailed: true,
-      merchant: env.CONTACT_TO_EMAIL ? "sent" : "skipped",
+      merchant: "sent",
       retrieveError: retrieveError || undefined
     }, 200);
   } catch (error) {
