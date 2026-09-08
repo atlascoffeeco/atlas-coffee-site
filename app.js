@@ -1,6 +1,7 @@
 import {
   amountToFreeDeliveryPounds,
   bagSizeSavingCopy,
+  findCatalogProduct,
   formatPoundsCompact,
   fromPriceLabel,
   getDeliveryFeePoundsForBasket,
@@ -8,9 +9,8 @@ import {
   getFreeDeliveryThresholdPounds,
   getUiProducts,
   isFreeDeliveryBagSize,
-  PRODUCTS as CATALOG_PRODUCTS,
   weightGrams
-} from "./catalog.js?v=20260831-33";
+} from "./catalog.js?v=20260905-3";
 
 // Mark the document as JS-enabled for CSS hooks.
 document.documentElement.classList.add("js");
@@ -34,9 +34,7 @@ function pushDataLayerEvent(event, ecommerce = {}, extra = {}) {
 
 
 function toAnalyticsItem(item) {
-  const catalogProduct = Object.values(CATALOG_PRODUCTS).find(
-    (product) => product.name === String(item.product || "").trim()
-  );
+  const catalogProduct = findCatalogProduct(item.product);
   const productId = catalogProduct?.id || String(item.product || "").toLowerCase();
   const weight = String(item.weight || "").toLowerCase();
   const grind = String(item.grind || "").toLowerCase();
@@ -75,29 +73,29 @@ function startShopPage() {
   const HOME_FEATURED_PRODUCTS = [
     {
       id: "serra",
-      name: "Serra",
-      copy: "Prefer chocolatey and smooth? This Brazilian is praline, milk chocolate, and toasted nuts — an everyday cup with a gentle lift.",
-      origin: "Brazil · Natural",
+      name: "Black Mountain",
+      copy: "Start with Black Mountain. Smooth, chocolate-led, and made for the cup you drink every morning.",
+      origin: "Serra Negra · Brazil · Natural",
       notes: "Praline · Milk chocolate · Toasted nuts",
       price: fromPriceLabel("serra"),
-      image: "/assets/serra-negra-bag.webp",
-      fallbackImage: "/assets/serra-negra-bag.png",
-      imageAlt: "Serra coffee bag from Atlas Coffee",
-      link: "/shop#serra-negra",
+      image: "/assets/black-mountain-bag.png?v=20260905-9",
+      fallbackImage: "/assets/black-mountain-bag.png?v=20260905-9",
+      imageAlt: "Black Mountain coffee bag from Atlas Coffee",
+      link: "/shop/serra",
       otherCopy: "Bright, lifted, and clean. Panela sweetness, vanilla, cooked citrus, and a fresh-fruit finish."
     },
     {
       id: "peru",
-      name: "Cajamarca",
+      name: "Highlands",
       copy: "Bright, lifted, and clean. Panela sweetness, vanilla, cooked citrus, and a fresh-fruit finish.",
-      origin: "Peru · Washed",
+      origin: "Cajamarca · Peru · Washed",
       notes: "Panela · Vanilla · Plum · Sweet cherry",
       price: fromPriceLabel("peru"),
-      image: "/assets/cajamarca-bag.webp",
-      fallbackImage: "/assets/cajamarca-bag.png",
-      imageAlt: "Cajamarca coffee bag from Atlas Coffee",
-      link: "/shop#peru-product",
-      otherCopy: "Prefer chocolatey and smooth? This Brazilian is praline, milk chocolate, and toasted nuts — an everyday cup with a gentle lift."
+      image: "/assets/highlands-bag.png?v=20260905-9",
+      fallbackImage: "/assets/highlands-bag.png?v=20260905-9",
+      imageAlt: "Highlands coffee bag from Atlas Coffee",
+      link: "/shop/cajamarca",
+      otherCopy: "Start with Black Mountain. Smooth, chocolate-led, and made for the cup you drink every morning."
     }
   ];
 
@@ -165,6 +163,7 @@ function startShopPage() {
   setupHomepageFeaturedCoffee();
   setupGrindGuide();
   setupShopCardHeights();
+  setupFocusedProduct();
   applyCatalogPrices();
   renderBasket();
 
@@ -188,7 +187,7 @@ function startShopPage() {
     items.forEach((item) => {
       if (!item || typeof item !== "object") return;
       const quantity = Math.max(1, Math.min(MAX_QUANTITY, Number(item.quantity) || 1));
-      const catalogProduct = Object.values(PRODUCTS).find((product) => product.name === String(item.product));
+      const catalogProduct = findCatalogProduct(item.product);
       const catalogPrice = catalogProduct?.prices[String(item.weight)];
       const unitPrice = Number.isFinite(catalogPrice) ? catalogPrice : Number(item.unitPrice);
       if (!item.product || !item.weight || !item.grind || !Number.isFinite(unitPrice) || unitPrice < 0) return;
@@ -276,7 +275,7 @@ function startShopPage() {
   }
 
   function productDisplayName(item) {
-    const match = Object.values(PRODUCTS).find((product) => product.name === item.product);
+    const match = findCatalogProduct(item.product);
     return match?.displayName || item.product;
   }
 
@@ -1039,6 +1038,26 @@ function startShopPage() {
       }
     });
   }
+
+  function setupFocusedProduct() {
+    const focusKey = document.body.getAttribute("data-focus-product");
+    if (!focusKey) return;
+
+    const card = document.querySelector(`[data-product-view="${focusKey}"]`);
+    if (!card) return;
+
+    card.classList.add("is-focused-product", "revealed");
+
+    if (window.location.hash) return;
+
+    const scrollToCard = () => {
+      card.scrollIntoView({ block: "start", behavior: "auto" });
+    };
+
+    scrollToCard();
+    window.requestAnimationFrame(scrollToCard);
+  }
+
 
   function setupShopCardHeights() {
     const grid = document.querySelector(".shop-product-grid-redesign--first");

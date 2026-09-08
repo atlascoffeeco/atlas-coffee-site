@@ -14,8 +14,9 @@ export function isDeliveryLineName(name) {
 export const PRODUCTS = {
   serra: {
     id: "serra",
-    name: "Serra Negra",
-    displayName: "Serra",
+    name: "Black Mountain",
+    displayName: "Black Mountain",
+    legacyNames: ["Serra Negra"],
     pricesPence: {
       "250g": 1350,
       "500g": 2400,
@@ -24,8 +25,9 @@ export const PRODUCTS = {
   },
   peru: {
     id: "peru",
-    name: "Peru Cajamarca",
-    displayName: "Cajamarca",
+    name: "Highlands",
+    displayName: "Highlands",
+    legacyNames: ["Peru Cajamarca"],
     pricesPence: {
       "250g": 1650,
       "500g": 3000,
@@ -33,6 +35,21 @@ export const PRODUCTS = {
     }
   }
 };
+
+export function catalogNameKeys(product) {
+  return [product.name, product.displayName, ...(product.legacyNames || [])].filter(Boolean);
+}
+
+export function findCatalogProduct(label) {
+  const raw = String(label || "").trim();
+  if (!raw) return null;
+
+  return (
+    Object.values(PRODUCTS).find((product) =>
+      catalogNameKeys(product).some((key) => raw === key || raw.startsWith(`${key} `) || raw.startsWith(`${key}—`) || raw.startsWith(`${key} –`))
+    ) || null
+  );
+}
 
 export function penceToPounds(pence) {
   return Number(pence) / 100;
@@ -58,10 +75,18 @@ export function getStripePriceMap() {
   const priceMap = {};
 
   Object.values(PRODUCTS).forEach((product) => {
-    priceMap[product.name] = { ...product.pricesPence };
+    catalogNameKeys(product).forEach((key) => {
+      priceMap[key] = { ...product.pricesPence };
+    });
   });
 
   return priceMap;
+}
+
+export function stripeLineName(productLabel, weight) {
+  const product = findCatalogProduct(productLabel);
+  const title = product?.displayName || product?.name || String(productLabel || "Coffee");
+  return `${title} — ${weight}`;
 }
 
 export function basketCoffeeSubtotalPence(items) {

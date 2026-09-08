@@ -7,7 +7,7 @@
 // - Create a Stripe Checkout Session
 // - Return the Stripe-hosted checkout URL
 
-import { DELIVERY_LINE_DESCRIPTION, DELIVERY_LINE_NAME, getDeliveryFeePenceForBasket, getStripePriceMap } from "../../catalog.js";
+import { DELIVERY_LINE_DESCRIPTION, DELIVERY_LINE_NAME, getDeliveryFeePenceForBasket, getStripePriceMap, stripeLineName } from "../../catalog.js";
 
 export async function onRequest(context) {
   const { request, env } = context;
@@ -94,7 +94,7 @@ export async function onRequest(context) {
       price_data: {
         currency: "gbp",
         product_data: {
-          name: `${item.product} — ${item.weight}`,
+          name: stripeLineName(item.product, item.weight),
           description: `Grind: ${GRIND_LABELS[item.grind] || item.rawGrind || "Not specified"}`
         },
         unit_amount: item.unitAmount
