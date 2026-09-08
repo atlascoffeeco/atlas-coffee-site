@@ -6007,11 +6007,11 @@ body[data-page="home"] .site-header .mobile-panel a[href="/shop"]:hover {
 }
 
 .about-page-story main > section {
-  padding: clamp(var(--space-10), 5vw, var(--space-16)) 0;
+  padding: clamp(var(--space-12), 6vw, var(--space-20)) 0;
 }
 
 .about-page-story main > section + section {
-  padding-top: 0;
+  padding-top: clamp(var(--space-12), 6vw, var(--space-20));
 }
 
 .about-page-story .atlas-story-hero {
@@ -6242,11 +6242,16 @@ body[data-page="home"] .site-header .mobile-panel a[href="/shop"]:hover {
 
 @media (max-width: 640px) {
   .about-page-story main > section {
-    padding: var(--space-10) 0;
+    padding: var(--space-12) 0;
+  }
+
+  .about-page-story main > section + section {
+    padding-top: var(--space-12);
   }
 
   .about-page-story .atlas-story-hero {
     padding-top: var(--space-6);
+    padding-bottom: var(--space-8);
   }
 
   .atlas-story-hero__copy h1 {
@@ -6312,7 +6317,7 @@ body[data-page="home"] .site-header .mobile-panel a[href="/shop"]:hover {
 
 .about-page-story .atlas-story-hero {
   padding-top: clamp(var(--space-6), 3.5vw, var(--space-10));
-  padding-bottom: 0;
+  padding-bottom: clamp(var(--space-10), 5vw, var(--space-16));
   overflow: hidden;
 }
 
@@ -6517,6 +6522,7 @@ body[data-page="home"] .site-header .mobile-panel a[href="/shop"]:hover {
 @media (max-width: 640px) {
   .about-page-story .atlas-story-hero {
     padding-top: var(--space-6);
+    padding-bottom: var(--space-8);
   }
 
   .about-page-story .atlas-story-hero__inner {

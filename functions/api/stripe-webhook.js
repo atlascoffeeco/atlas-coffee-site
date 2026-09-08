@@ -8,6 +8,8 @@ import { isDeliveryLineName } from "../../catalog.js";
 import { buildMerchantOrderEmail, buildOrderConfirmationEmail } from "../../lib/order-confirmation-email.js";
 import { verifyStripeWebhook } from "../../lib/stripe-webhook-signature.js";
 
+const SHOP_INBOX = "atlascoffeeroasters@gmail.com";
+
 const HANDLED_EVENTS = new Set([
   "checkout.session.completed",
   "checkout.session.async_payment_succeeded",
@@ -105,11 +107,11 @@ export async function onRequest(context) {
     });
 
     const customerEmail = session.customer_details?.email || session.customer_email;
-    const merchantTo = env.CONTACT_TO_EMAIL || "atlascoffeeroasters@gmail.com";
+    const merchantTo = SHOP_INBOX;
     const resendBody = {
       from: env.CONTACT_FROM_EMAIL,
       to: [to],
-      reply_to: merchantTo,
+      reply_to: SHOP_INBOX,
       subject: email.subject,
       html: email.html,
       text: email.text
@@ -127,7 +129,7 @@ export async function onRequest(context) {
 
     const resendData = await resendResponse.json().catch(() => ({}));
 
-    if (!resendResponse.ok) {
+    if (!resendResponse.ok && resendResponse.status !== 409) {
       return json(
         {
           error: resendData.message || "Resend error.",
@@ -137,50 +139,54 @@ export async function onRequest(context) {
       );
     }
 
-    const shipping = session.shipping_details || session.collected_information?.shipping_details || {};
-    const merchant = buildMerchantOrderEmail({
-      customerName: session.customer_details?.name || "",
-      customerEmail,
-      customerPhone: session.customer_details?.phone || "",
-      fulfilment,
-      items,
-      totalPence: Number(session.amount_total || 0),
-      shippingName: shipping.name || "",
-      shippingAddress: shipping.address || null
-    });
+    let merchantStatus = "sent";
+    let merchantError;
+    try {
+      const shipping = session.shipping_details || session.collected_information?.shipping_details || {};
+      const merchant = buildMerchantOrderEmail({
+        customerName: session.customer_details?.name || "",
+        customerEmail,
+        customerPhone: session.customer_details?.phone || "",
+        fulfilment,
+        items,
+        totalPence: Number(session.amount_total || 0),
+        shippingName: shipping.name || "",
+        shippingAddress: shipping.address || null
+      });
 
-    const merchantResponse = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${env.RESEND_API_KEY}`,
-        "Content-Type": "application/json",
-        "Idempotency-Key": `atlas-merchant-${sessionId}`
-      },
-      body: JSON.stringify({
-        from: env.CONTACT_FROM_EMAIL,
-        to: [merchantTo],
-        subject: merchant.subject,
-        html: merchant.html,
-        text: merchant.text
-      })
-    });
-
-    if (!merchantResponse.ok) {
-      const merchantData = await merchantResponse.json().catch(() => ({}));
-      return json(
-        {
-          error: merchantData.message || "Merchant email failed.",
-          customerEmailed: true,
-          retrieveError: retrieveError || undefined
+      const merchantResponse = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${env.RESEND_API_KEY}`,
+          "Content-Type": "application/json",
+          "Idempotency-Key": `atlas-ticket-${sessionId}`
         },
-        500
-      );
+        body: JSON.stringify({
+          from: env.CONTACT_FROM_EMAIL,
+          to: [merchantTo],
+          reply_to: SHOP_INBOX,
+          subject: merchant.subject,
+          html: merchant.html,
+          text: merchant.text
+        })
+      });
+
+      const merchantData = await merchantResponse.json().catch(() => ({}));
+      if (!merchantResponse.ok) {
+        merchantStatus = "failed";
+        merchantError = merchantData.message || "Merchant email failed.";
+      }
+    } catch (error) {
+      merchantStatus = "failed";
+      merchantError = error?.message || "Merchant email failed.";
     }
 
     return json({
       received: true,
       emailed: true,
-      merchant: "sent",
+      merchant: merchantStatus,
+      merchantTo,
+      merchantError,
       retrieveError: retrieveError || undefined
     }, 200);
   } catch (error) {
