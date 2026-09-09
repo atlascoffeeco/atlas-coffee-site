@@ -2,32 +2,49 @@
   "use strict";
 
   const STORAGE_KEY = "atlas-cookie-consent-v1";
+  const COOKIE_NAME = "atlas_consent";
 
-  function readConsent() {
+  function cookieOptions(maxAgeSeconds) {
+    const parts = ["Path=/", `Max-Age=${maxAgeSeconds}`, "SameSite=Lax"];
+
+    if (location.protocol === "https:") {
+      parts.push("Secure");
+    }
+
+    const host = location.hostname;
+    if (host === "atlascoffee.uk" || host.endsWith(".atlascoffee.uk")) {
+      parts.push("Domain=.atlascoffee.uk");
+    }
+
+    return parts.join("; ");
+  }
+
+  function readCookieConsent() {
+    const match = document.cookie.match(/(?:^|; )atlas_consent=(1|0)(?:;|$)/);
+    if (!match) {
+      return null;
+    }
+    return { analytics: match[1] === "1" };
+  }
+
+  function readStorageConsent() {
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
-
       if (!raw) {
         return null;
       }
-
       const parsed = JSON.parse(raw);
-
-      if (
-        !parsed ||
-        typeof parsed !== "object" ||
-        typeof parsed.analytics !== "boolean"
-      ) {
+      if (!parsed || typeof parsed.analytics !== "boolean") {
         return null;
       }
-
-      return {
-        analytics: parsed.analytics
-      };
+      return { analytics: parsed.analytics };
     } catch (error) {
-      console.warn("[Atlas consent] Could not read consent preference.", error);
       return null;
     }
+  }
+
+  function readConsent() {
+    return readCookieConsent() || readStorageConsent();
   }
 
   function saveConsent(consent) {
@@ -41,6 +58,8 @@
     } catch (error) {
       console.warn("[Atlas consent] Could not save consent preference.", error);
     }
+
+    document.cookie = `${COOKIE_NAME}=${value.analytics ? "1" : "0"}; ${cookieOptions(60 * 60 * 24 * 365)}`;
 
     return value;
   }
@@ -115,31 +134,42 @@
 
     document.body.appendChild(banner);
 
-    banner.addEventListener("click", (event) => {
-      const button = event.target.closest("[data-atlas-consent]");
-
-      if (!button) {
-        return;
-      }
-
-      const analytics = button.dataset.atlasConsent === "accept";
-      const consent = saveConsent({ analytics });
-
-      sendConsentUpdate(consent);
-      removeBanner();
+    banner.querySelectorAll("[data-atlas-consent]").forEach((button) => {
+      button.addEventListener("click", (event) => {
+        event.preventDefault();
+        const analytics = button.dataset.atlasConsent === "accept";
+        const consent = saveConsent({ analytics });
+        sendConsentUpdate(consent);
+        removeBanner();
+      });
     });
   }
 
-  function initialiseConsentBanner() {
-    const savedConsent = readConsent();
+  function isLegalPage() {
+    const page = document.body?.getAttribute("data-page") || "";
+    return page === "privacy" || page === "terms" || page === "delivery-returns";
+  }
 
-    if (savedConsent) {
-      sendConsentUpdate(savedConsent);
+  function applySavedChoice() {
+    const savedConsent = readConsent();
+    if (!savedConsent) {
+      return false;
+    }
+    sendConsentUpdate(savedConsent);
+    removeBanner();
+    return true;
+  }
+
+  function initialiseConsentBanner() {
+    if (applySavedChoice()) {
+      return;
+    }
+
+    if (isLegalPage()) {
       removeBanner();
       return;
     }
 
-    delete document.documentElement.dataset.atlasConsent;
     renderBanner();
   }
 
@@ -166,6 +196,7 @@
         console.warn("[Atlas consent] Could not reset consent preference.", error);
       }
 
+      document.cookie = `${COOKIE_NAME}=; ${cookieOptions(0)}`;
       delete document.documentElement.dataset.atlasConsent;
       renderBanner();
     }
@@ -179,9 +210,7 @@
     initialiseConsentBanner();
   }
 
-  window.addEventListener("pageshow", (event) => {
-    if (event.persisted) {
-      initialiseConsentBanner();
-    }
+  window.addEventListener("pageshow", () => {
+    applySavedChoice();
   });
 })();
