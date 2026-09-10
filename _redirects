@@ -1,3 +1,7 @@
 /shop/ /shop 301
-/shop/serra/ /shop/serra 301
-/shop/cajamarca/ /shop/cajamarca 301
+/shop/black-mountain/ /shop/black-mountain 301
+/shop/highlands/ /shop/highlands 301
+/shop/serra /shop/black-mountain 301
+/shop/serra/ /shop/black-mountain 301
+/shop/cajamarca /shop/highlands 301
+/shop/cajamarca/ /shop/highlands 301

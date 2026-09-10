@@ -81,7 +81,7 @@ function startShopPage() {
       image: "/assets/black-mountain-bag.png?v=20260905-9",
       fallbackImage: "/assets/black-mountain-bag.png?v=20260905-9",
       imageAlt: "Black Mountain coffee bag from Atlas Coffee",
-      link: "/shop/serra",
+      link: "/shop/black-mountain",
       otherCopy: "Bright, lifted, and clean. Panela sweetness, vanilla, cooked citrus, and a fresh-fruit finish."
     },
     {
@@ -94,7 +94,7 @@ function startShopPage() {
       image: "/assets/highlands-bag.png?v=20260905-9",
       fallbackImage: "/assets/highlands-bag.png?v=20260905-9",
       imageAlt: "Highlands coffee bag from Atlas Coffee",
-      link: "/shop/cajamarca",
+      link: "/shop/highlands",
       otherCopy: "Start with Black Mountain. Smooth, chocolate-led, and made for the cup you drink every morning."
     }
   ];

@@ -10,10 +10,10 @@
     <loc>https://www.atlascoffee.uk/shop</loc>
   </url>
   <url>
-    <loc>https://www.atlascoffee.uk/shop/serra</loc>
+    <loc>https://www.atlascoffee.uk/shop/black-mountain</loc>
   </url>
   <url>
-    <loc>https://www.atlascoffee.uk/shop/cajamarca</loc>
+    <loc>https://www.atlascoffee.uk/shop/highlands</loc>
   </url>
   <url>
     <loc>https://www.atlascoffee.uk/contact</loc>
@@ -26,8 +26,5 @@
   </url>
   <url>
     <loc>https://www.atlascoffee.uk/delivery-returns</loc>
-  </url>
-    <url>
-    <loc>https://www.atlascoffee.uk/success</loc>
   </url>
 </urlset>
