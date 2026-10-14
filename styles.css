@@ -7260,6 +7260,12 @@ body.grind-guide-open {
   font-size: var(--text-lg);
 }
 
+.home-hero__lead a {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 0.16em;
+}
+
 .home-feature {
   display: grid;
   gap: var(--space-6);
@@ -8395,6 +8401,74 @@ body.grind-guide-open {
   box-shadow:
     0 0 0 3px color-mix(in srgb, var(--primary) 24%, transparent),
     var(--shadow-md);
+}
+
+.wholesale-hero {
+  max-width: 40rem;
+}
+
+.wholesale-hero h1 {
+  margin: 0.35rem 0 0.75rem;
+}
+
+.wholesale-lead {
+  color: var(--muted);
+  font-size: var(--text-lg);
+  max-width: 38rem;
+}
+
+.wholesale-facts {
+  margin: 1rem 0 0;
+  color: var(--text);
+  font-weight: 600;
+  font-size: var(--text-sm);
+}
+
+.wholesale-split {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.wholesale-split .card {
+  padding: var(--space-8);
+}
+
+.wholesale-split h2 {
+  margin: 0.35rem 0 0.85rem;
+}
+
+.wholesale-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.25rem 0 1rem;
+  font-size: var(--text-sm);
+}
+
+.wholesale-table th,
+.wholesale-table td {
+  text-align: left;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
+}
+
+.wholesale-table th {
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.wholesale-table td:last-child {
+  font-weight: 700;
+  font-family: var(--font-display);
+  white-space: nowrap;
+}
+
+@media (min-width: 800px) {
+  .wholesale-split {
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: stretch;
+  }
 }
 
 

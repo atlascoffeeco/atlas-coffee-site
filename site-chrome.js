@@ -11,6 +11,7 @@
       '<a href="/"' + current("home") + ">Home</a>" +
       '<a href="/shop"' + current("shop") + ">Shop Coffee</a>" +
       '<a href="/why-atlas"' + current("why-atlas") + ">Why Atlas</a>" +
+      '<a href="/wholesale"' + current("wholesale") + ">Wholesale</a>" +
       '<a href="/contact"' + current("contact") + ">Contact Us</a>"
     );
   }
@@ -34,7 +35,7 @@
       '<header class="site-header">' +
         '<div class="container nav-shell">' +
           '<a class="brand" href="/" aria-label="Atlas Coffee home">' +
-            '<img src="/assets/logo.jpg" alt="Atlas Coffee logo" width="80" height="80" loading="eager" fetchpriority="high" decoding="async">' +
+            '<img src="/assets/logo.png?v=20261011-3" alt="Atlas Coffee logo" width="80" height="80" loading="eager" fetchpriority="high" decoding="async">' +
             '<span class="brand-lockup">' +
               "<span>Atlas Coffee Company</span>" +
               "<small>Independent coffee roasters</small>" +
@@ -155,10 +156,10 @@
         '<div class="container footer-grid">' +
           "<div>" +
             '<div class="brand">' +
-              '<img src="/assets/logo.jpg" alt="Atlas Coffee logo" width="80" height="80" loading="lazy" decoding="async">' +
+              '<img src="/assets/logo.png?v=20261011-3" alt="Atlas Coffee logo" width="80" height="80" loading="lazy" decoding="async">' +
               '<span class="brand-lockup">' +
                 "<span>Atlas Coffee</span>" +
-                "<small>Freshly roasted single-origin coffee.</small>" +
+                "<small>Coffee roasted in Redditch.</small>" +
               "</span>" +
             "</div>" +
           "</div>" +
@@ -168,6 +169,7 @@
               "<li><a href=\"/\"" + current("home") + ">Home</a></li>" +
               "<li><a href=\"/shop\"" + current("shop") + ">Shop Coffee</a></li>" +
               "<li><a href=\"/why-atlas\"" + current("why-atlas") + ">Why Atlas</a></li>" +
+              "<li><a href=\"/wholesale\"" + current("wholesale") + ">Wholesale</a></li>" +
               "<li><a href=\"/contact\"" + current("contact") + ">Contact Us</a></li>" +
             "</ul>" +
           "</div>" +
