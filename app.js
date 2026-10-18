@@ -1,16 +1,26 @@
 import {
+  OFFER_GRIND_CHOICE,
   amountToFreeDeliveryPounds,
   bagSizeSavingCopy,
   findCatalogProduct,
   formatPoundsCompact,
   fromPriceLabel,
+  DROPOFF_AREA_COPY,
   getDeliveryFeePoundsForBasket,
   getDeliveryPolicyCopy,
   getFreeDeliveryThresholdPounds,
   getUiProducts,
+  isDropoffPostcode,
   isFreeDeliveryBagSize,
+  normaliseUkPostcode,
+  resolveOrderGrind,
   weightGrams
-} from "./catalog.js?v=20260905-3";
+} from "./catalog.js?v=20261018-6";
+
+if (OFFER_GRIND_CHOICE) {
+  document.documentElement.classList.remove("whole-bean-only");
+  document.querySelectorAll("[data-grind-ui]").forEach((el) => el.removeAttribute("hidden"));
+}
 
 // Mark the document as JS-enabled for CSS hooks.
 document.documentElement.classList.add("js");
@@ -151,6 +161,13 @@ function startShopPage() {
   const mobileBasketBarToggle = document.getElementById("mobile-basket-bar-toggle");
   const fulfilmentInputs = document.querySelectorAll('input[name="basket-fulfilment"]');
   const fulfilmentNoteEl = document.getElementById("basket-fulfilment-note");
+  const fulfilmentScrollEl = document.querySelector(".shop-basket-fulfilment");
+  const fulfilmentScrollHintEl = document.querySelector(".shop-basket-scroll-hint");
+  const dropoffFieldsEl = document.getElementById("basket-dropoff");
+  const dropoffPostcodeEl = document.getElementById("basket-dropoff-postcode");
+  const dropoffAddressEl = document.getElementById("basket-dropoff-address");
+  const DROPOFF_POSTCODE_KEY = "atlas-dropoff-postcode";
+  const DROPOFF_ADDRESS_KEY = "atlas-dropoff-address";
 
 
   syncFulfilmentInputs();
@@ -190,9 +207,10 @@ function startShopPage() {
       const catalogProduct = findCatalogProduct(item.product);
       const catalogPrice = catalogProduct?.prices[String(item.weight)];
       const unitPrice = Number.isFinite(catalogPrice) ? catalogPrice : Number(item.unitPrice);
-      if (!item.product || !item.weight || !item.grind || !Number.isFinite(unitPrice) || unitPrice < 0) return;
+      const grind = resolveOrderGrind(item.grind);
+      if (!item.product || !item.weight || !grind || !Number.isFinite(unitPrice) || unitPrice < 0) return;
       const cleanItem = {
-        product: String(item.product), weight: String(item.weight), grind: String(item.grind),
+        product: String(item.product), weight: String(item.weight), grind,
         quantity, unitPrice, lineTotal: unitPrice * quantity
       };
       const key = getBasketItemKey(cleanItem);
@@ -238,8 +256,12 @@ function startShopPage() {
 
 
   function readFulfilment() {
-    try { return localStorage.getItem(FULFILMENT_STORAGE_KEY) === "collection" ? "collection" : "delivery"; }
-    catch { return "delivery"; }
+    try {
+      const value = localStorage.getItem(FULFILMENT_STORAGE_KEY);
+      return value === "collection" || value === "dropoff" ? value : "delivery";
+    } catch {
+      return "delivery";
+    }
   }
 
 
@@ -271,7 +293,42 @@ function startShopPage() {
 
 
   function prettyFulfilment(value) {
-    return value === "collection" ? "Local collection" : "Delivery";
+    if (value === "collection") return "Local collection";
+    if (value === "dropoff") return "Local drop-off";
+    return "Delivery";
+  }
+
+
+  function readDropoffPostcode() {
+    try { return localStorage.getItem(DROPOFF_POSTCODE_KEY) || ""; }
+    catch { return ""; }
+  }
+
+
+  function readDropoffAddress() {
+    try { return localStorage.getItem(DROPOFF_ADDRESS_KEY) || ""; }
+    catch { return ""; }
+  }
+
+
+  function dropoffPostcodeValue() {
+    return dropoffPostcodeEl ? dropoffPostcodeEl.value : readDropoffPostcode();
+  }
+
+
+  function dropoffAddressValue() {
+    return dropoffAddressEl ? dropoffAddressEl.value.trim() : readDropoffAddress().trim();
+  }
+
+
+  function isDropoffReady() {
+    return isDropoffPostcode(dropoffPostcodeValue()) && dropoffAddressValue().length >= 8;
+  }
+
+
+  function syncCheckoutButton() {
+    if (!checkoutButton || checkoutButton.getAttribute("aria-busy") === "true") return;
+    checkoutButton.disabled = basket.length === 0 || (fulfilment === "dropoff" && !isDropoffReady());
   }
 
   function productDisplayName(item) {
@@ -299,9 +356,27 @@ function startShopPage() {
     const deliveryFee = getBasketDeliveryFee();
     const remaining = amountToFreeDeliveryPounds(basket);
 
+    if (dropoffFieldsEl) dropoffFieldsEl.hidden = fulfilment !== "dropoff";
+
     if (fulfilmentNoteEl) {
+      let dropoffError = false;
       if (fulfilment === "collection") {
         fulfilmentNoteEl.textContent = "We’ll contact you after payment to arrange pickup in Redditch.";
+      } else if (fulfilment === "dropoff") {
+        const postcode = normaliseUkPostcode(dropoffPostcodeValue());
+        const typed = dropoffPostcodeValue().trim();
+        if (!typed) {
+          fulfilmentNoteEl.textContent = `Free in ${DROPOFF_AREA_COPY}. Enter your postcode.`;
+        } else if (!postcode) {
+          fulfilmentNoteEl.textContent = "Enter a full UK postcode.";
+        } else if (!isDropoffPostcode(postcode)) {
+          dropoffError = true;
+          fulfilmentNoteEl.textContent = "That postcode is outside the drop-off area. Choose delivery or collection.";
+        } else if (dropoffAddressValue().length < 8) {
+          fulfilmentNoteEl.textContent = "That postcode is in the drop-off area. Add the address and I’ll bring it to your door.";
+        } else {
+          fulfilmentNoteEl.textContent = "Free drop-off. I’ll email after roasting to agree a time.";
+        }
       } else if (!basket.length) {
         fulfilmentNoteEl.textContent = getDeliveryPolicyCopy();
       } else if (deliveryFee === 0) {
@@ -309,19 +384,34 @@ function startShopPage() {
       } else {
         fulfilmentNoteEl.textContent = `Add ${formatMoney(remaining)} more for free delivery, or choose 500g or 1kg.`;
       }
+      fulfilmentNoteEl.classList.toggle("shop-basket-note--error", dropoffError);
     }
     if (basketTotalLabelEl) {
-      basketTotalLabelEl.textContent = fulfilment === "collection" || deliveryFee === 0 ? "Total" : "Total incl. delivery";
+      basketTotalLabelEl.textContent = fulfilment === "collection" || fulfilment === "dropoff" || deliveryFee === 0 ? "Total" : "Total incl. delivery";
     }
     if (basketTotalNoteEl) {
       basketTotalNoteEl.textContent = basket.length
         ? fulfilment === "collection"
           ? "Collection selected. No delivery charge added."
-          : deliveryFee === 0
-            ? "UK delivery is free on this order."
-            : `Includes ${formatMoney(deliveryFee)} delivery.`
+          : fulfilment === "dropoff"
+            ? "Drop-off selected. No delivery charge added."
+            : deliveryFee === 0
+              ? "UK delivery is free on this order."
+              : `Includes ${formatMoney(deliveryFee)} delivery.`
         : "";
     }
+    syncCheckoutButton();
+    syncFulfilmentScrollHint();
+  }
+
+
+  function syncFulfilmentScrollHint() {
+    if (!fulfilmentScrollEl || !fulfilmentScrollHintEl) return;
+    const reveal = () => {
+      const leftover = fulfilmentScrollEl.scrollHeight - fulfilmentScrollEl.clientHeight - fulfilmentScrollEl.scrollTop;
+      fulfilmentScrollHintEl.hidden = leftover <= 16;
+    };
+    requestAnimationFrame(() => requestAnimationFrame(reveal));
   }
 
 
@@ -511,10 +601,34 @@ function startShopPage() {
 
 
   function setupFulfilmentSelector() {
+    if (dropoffPostcodeEl && !dropoffPostcodeEl.value) dropoffPostcodeEl.value = readDropoffPostcode();
+    if (dropoffAddressEl && !dropoffAddressEl.value) dropoffAddressEl.value = readDropoffAddress();
+
+    const saveDropoffDetails = () => {
+      try {
+        localStorage.setItem(DROPOFF_POSTCODE_KEY, dropoffPostcodeValue());
+        localStorage.setItem(DROPOFF_ADDRESS_KEY, dropoffAddressValue());
+      } catch { }
+      updateFulfilmentUI();
+    };
+
+    dropoffPostcodeEl?.addEventListener("input", saveDropoffDetails);
+    dropoffAddressEl?.addEventListener("input", saveDropoffDetails);
+
+    fulfilmentScrollEl?.addEventListener("scroll", syncFulfilmentScrollHint, { passive: true });
+    fulfilmentScrollHintEl?.addEventListener("click", () => {
+      fulfilmentScrollEl?.scrollBy({ top: Math.max(120, fulfilmentScrollEl.clientHeight * 0.55), behavior: "smooth" });
+    });
+    window.addEventListener("resize", syncFulfilmentScrollHint);
+    if (typeof ResizeObserver === "function") {
+      if (fulfilmentScrollEl) new ResizeObserver(syncFulfilmentScrollHint).observe(fulfilmentScrollEl);
+      if (dropoffFieldsEl) new ResizeObserver(syncFulfilmentScrollHint).observe(dropoffFieldsEl);
+    }
+
     updateFulfilmentUI();
     fulfilmentInputs.forEach((input) => input.addEventListener("change", () => {
       if (!input.checked) return;
-      fulfilment = input.value === "collection" ? "collection" : "delivery";
+      fulfilment = input.value === "collection" || input.value === "dropoff" ? input.value : "delivery";
       saveFulfilment(); syncFulfilmentInputs(); updateFulfilmentUI(); renderBasket();
     }));
   }
@@ -550,7 +664,7 @@ function startShopPage() {
   function renderBasket(options = {}) {
     const count = basket.reduce((sum, item) => sum + item.quantity, 0);
     const grandTotal = getBasketSubtotal() + getBasketDeliveryFee();
-    if (checkoutButton) checkoutButton.disabled = basket.length === 0;
+    syncCheckoutButton();
     const mobileBuyBar = document.querySelector(".mobile-buy-bar");
     if (mobileBuyBar) { mobileBuyBar.hidden = !basket.length; mobileBuyBar.setAttribute("aria-hidden", String(!basket.length)); }
     basketCountEls.forEach((el) => { el.textContent = String(count); });
@@ -661,7 +775,8 @@ function startShopPage() {
       const noteEl = document.getElementById(`${prefix}-note`);
 
 
-      if (!weightEl || !grindEl || !quantityEl || !summaryEl || !priceEl) return;
+      if (!weightEl || !quantityEl || !summaryEl || !priceEl) return;
+      if (OFFER_GRIND_CHOICE && !grindEl) return;
 
 
       const editing = document.activeElement === quantityEl && quantityEl.value === "";
@@ -680,7 +795,8 @@ function startShopPage() {
         valueEl.textContent = [per100Copy, saving ? `${saving}.` : "", weekly].filter(Boolean).join(" ");
       }
 
-      summaryEl.textContent = `${weightEl.value} · ${prettyGrind(grindEl.value)} · Quantity: ${quantity}`;
+      const grindValue = OFFER_GRIND_CHOICE ? grindEl.value : "whole_bean";
+      summaryEl.textContent = `${weightEl.value} · ${prettyGrind(grindValue)} · Quantity: ${quantity}`;
       priceEl.textContent = formatMoney(lineTotal);
       const hintEl = document.getElementById(`${prefix}-delivery-hint`);
       if (hintEl) {
@@ -689,7 +805,7 @@ function startShopPage() {
           ? "UK delivery is free on this selection."
           : getDeliveryPolicyCopy();
       }
-      if (noteEl) noteEl.textContent = "Choose delivery or local collection later in the basket before checkout.";
+      if (noteEl) noteEl.textContent = "Choose delivery, local drop-off or collection later in the basket.";
     }
 
     function setupQtyStepper(prefix, prices) {
@@ -731,6 +847,8 @@ function startShopPage() {
       });
     }
 
+    setupDuoForm();
+
     function setupDuoForm() {
       const button = document.querySelector("[data-add-duo]");
       if (!button) return;
@@ -744,8 +862,8 @@ function startShopPage() {
       if (priceEl) priceEl.textContent = formatMoney(duoPrice);
 
       button.addEventListener("click", () => {
-        const serraGrind = document.getElementById("duo-serra-grind")?.value || "whole_bean";
-        const peruGrind = document.getElementById("duo-peru-grind")?.value || "whole_bean";
+        const serraGrind = resolveOrderGrind(document.getElementById("duo-serra-grind")?.value);
+        const peruGrind = resolveOrderGrind(document.getElementById("duo-peru-grind")?.value);
 
         addBasketItem({
           product: serra.name,
@@ -787,8 +905,6 @@ function startShopPage() {
         updateProductPanel(prefix, prices);
       });
 
-      setupDuoForm();
-
       document.querySelectorAll("[data-add-to-basket]").forEach((button) => {
         button.addEventListener("click", () => {
           const key = button.getAttribute("data-add-to-basket");
@@ -800,7 +916,8 @@ function startShopPage() {
           const weightEl = document.getElementById(`${prefix}-weight`);
           const grindEl = document.getElementById(`${prefix}-grind`);
           const quantityEl = document.getElementById(`${prefix}-quantity`);
-          if (!weightEl || !grindEl || !quantityEl) return;
+          if (!weightEl || !quantityEl) return;
+          if (OFFER_GRIND_CHOICE && !grindEl) return;
 
 
           const quantity = clampQuantity(quantityEl.value);
@@ -810,7 +927,7 @@ function startShopPage() {
           addBasketItem({
             product: product.name,
             weight: weightEl.value,
-            grind: grindEl.value,
+            grind: resolveOrderGrind(grindEl?.value),
             quantity,
             unitPrice
           });
@@ -840,6 +957,11 @@ function startShopPage() {
             </div>
           `;
         }
+        return;
+      }
+
+      if (fulfilment === "dropoff" && !isDropoffReady()) {
+        updateFulfilmentUI();
         return;
       }
 
@@ -877,6 +999,11 @@ function startShopPage() {
             quantity: item.quantity
           }))
         };
+
+        if (fulfilment === "dropoff") {
+          payload.dropoffPostcode = normaliseUkPostcode(dropoffPostcodeValue());
+          payload.dropoffAddress = dropoffAddressValue();
+        }
 
 
         const response = await fetch("/api/create-checkout-session", {
@@ -931,10 +1058,10 @@ function startShopPage() {
         }
 
 
-        checkoutButton.disabled = false;
         checkoutButton.removeAttribute("aria-busy");
         if (checkoutLabel) checkoutLabel.textContent = originalText;
         else checkoutButton.textContent = originalText;
+        syncCheckoutButton();
       }
     });
   }

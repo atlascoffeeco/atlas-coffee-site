@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="js-disabled">
+<html lang="en" class="js-disabled whole-bean-only">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +8,7 @@
 
   <meta
     name="description"
-    content="Shop small-batch coffee roasted in Redditch. Black Mountain and Highlands, roasted for your order. Free UK delivery on 500g, 1kg, and orders of £25 or more, or collect free in Redditch."
+    content="Shop small-batch coffee roasted in Redditch. Black Mountain and Highlands, roasted for your order. Posted in the UK, dropped off locally, or collected in Redditch."
   >
 
   <meta name="robots" content="index,follow">
@@ -24,7 +24,7 @@
     rel="stylesheet"
   >
 
-  <link rel="stylesheet" href="/styles.css?v=20261014-1">
+  <link rel="stylesheet" href="/styles.css?v=20261018-17">
 
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -85,7 +85,7 @@
   <!-- End Google Tag Manager noscript -->
 
   <div data-site-header></div>
-  <script src="/site-chrome.js?v=20261014-1"></script>
+  <script src="/site-chrome.js?v=20261018-9"></script>
 
   <main id="content">
 
@@ -146,7 +146,7 @@
           </div>
 
           <div class="shop-duo__form">
-            <div class="shop-duo__grinds">
+            <div class="shop-duo__grinds" data-grind-ui hidden>
               <div class="field-group">
                 <label for="duo-serra-grind">Black Mountain grind</label>
                 <select id="duo-serra-grind" name="duo-serra-grind">
@@ -166,7 +166,7 @@
                 </select>
               </div>
             </div>
-            <p class="grind-hint">Unsure? Leave whole bean.</p>
+            <p class="grind-hint" data-grind-ui hidden>Unsure? Leave whole bean.</p>
             <button class="button" type="button" data-add-duo>Add the pair</button>
           </div>
         </div>
@@ -241,12 +241,6 @@
                   drinkers who prefer smooth, chocolatey coffee.
                 </p>
 
-                <p class="product-brew-start">
-                  <strong>Start here:</strong> Fine for espresso, coarse for
-                  cafetière. Filter: medium grind, 15g to 250ml water. Grind at
-                  home? Choose whole bean.
-                </p>
-
                 <ul class="product-taste-cues" aria-label="Black Mountain taste profile">
                   <li>Chocolatey &amp; nutty</li>
                   <li>Smooth &amp; rich</li>
@@ -267,6 +261,10 @@
                       cupped for praline, milk chocolate, nuttiness, a heavy
                       body, and a lemon-like lift. I bought it as the everyday
                       coffee in the range.
+                    </p>
+                    <p class="product-brew-start">
+                      <strong>Start here:</strong> Fine for espresso, coarse for
+                      cafetière. Filter: medium grind, 15g to 250ml water.
                     </p>
                   </div>
                 </details>
@@ -290,7 +288,7 @@
                 </select>
                 </div>
                 
-                <div class="field-group field-group--grind">
+                <div class="field-group field-group--grind" data-grind-ui hidden>
                   <div class="field-group__label-row">
                     <label for="serra-grind">Grind</label>
                 
@@ -334,7 +332,7 @@
                   </div>
               </div>
 
-              <p class="grind-hint">Unsure? Leave whole bean.</p>
+              <p class="grind-hint" data-grind-ui hidden>Unsure? Leave whole bean.</p>
 
               <div class="buy-box">
                 <p class="freshness-promise">
@@ -360,7 +358,7 @@
                 <p class="purchase-reassurance">
                   <span id="serra-delivery-hint">£4.50 UK delivery under £25 · Free on 500g, 1kg, and £25+</span>
                   <span aria-hidden="true">·</span>
-                  <span>Free collection in Redditch</span>
+                  <span>Free drop-off in Church Hill, Abbeydale, Riverside, St Georges, Lakeside, Winyates and the town centre, or collect in Redditch</span>
                 </p>
               </div>
             </form>
@@ -430,11 +428,6 @@
                   enjoys bright, fruity coffees.
                 </p>
 
-                <p class="product-brew-start">
-                  <strong>Start here:</strong> Medium grind. 15g coffee to 250ml
-                  water. If you grind at home, buy whole bean.
-                </p>
-
                 <ul class="product-taste-cues" aria-label="Highlands taste profile">
                   <li>Fruity &amp; floral</li>
                   <li>Light &amp; lively</li>
@@ -455,6 +448,10 @@
                       Coffees in Jaén. I chose it for the brighter side of the
                       range — panela, vanilla, cooked citrus, and a soft fruit
                       finish.
+                    </p>
+                    <p class="product-brew-start">
+                      <strong>Start here:</strong> Medium grind. 15g coffee to 250ml
+                      water.
                     </p>
                   </div>
                 </details>
@@ -478,7 +475,7 @@
                 </select>
                 </div>
                 
-                <div class="field-group field-group--grind">
+                <div class="field-group field-group--grind" data-grind-ui hidden>
                   <div class="field-group__label-row">
                     <label for="peru-grind">Grind</label>
                 
@@ -522,7 +519,7 @@
                   </div>
               </div>
 
-              <p class="grind-hint">Unsure? Leave whole bean.</p>
+              <p class="grind-hint" data-grind-ui hidden>Unsure? Leave whole bean.</p>
 
               <div class="buy-box">
                 <p class="freshness-promise">
@@ -548,7 +545,7 @@
                 <p class="purchase-reassurance">
                   <span id="peru-delivery-hint">£4.50 UK delivery under £25 · Free on 500g, 1kg, and £25+</span>
                   <span aria-hidden="true">·</span>
-                  <span>Free collection in Redditch</span>
+                  <span>Free drop-off in Church Hill, Abbeydale, Riverside, St Georges, Lakeside, Winyates and the town centre, or collect in Redditch</span>
                 </p>
               </div>
             </form>
@@ -567,8 +564,8 @@
           </article>
 
           <article class="shop-support-strip__item">
-            <strong>Delivery or collection</strong>
-            <p>Free UK delivery on 500g, 1kg, and orders of £25 or more. Or collect free in Redditch.</p>
+            <strong>Postage, drop-off or collection</strong>
+            <p>You can have coffee posted in the UK, dropped off in Church Hill, Abbeydale, Riverside, St Georges, Lakeside, Winyates and the town centre, or collected in Redditch.</p>
           </article>
 
           <article class="shop-support-strip__item">
@@ -714,8 +711,8 @@
   </div>
 
   <div data-site-footer></div>
-  <script src="/site-chrome.js?v=20261014-1"></script>
+  <script src="/site-chrome.js?v=20261018-9"></script>
 
-  <script type="module" src="/app.js?v=20260910-1"></script>
+  <script type="module" src="/app.js?v=20261018-11"></script>
 </body>
 </html>

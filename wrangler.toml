@@ -1,0 +1,51 @@
+# Pages project settings. Secrets such as Stripe and Resend stay in Cloudflare.
+name = "atlas-coffee-website"
+compatibility_date = "2026-05-19"
+pages_build_output_dir = "."
+
+[vars]
+CONTACT_FROM_EMAIL = "Atlas Coffee <orders@atlascoffee.uk>"
+CONTACT_TO_EMAIL = "atlascoffeecompany@gmail.com"
+STRIPE_PRICE_1KG = "price_1TYnoVV05Hz4tKEOqlTqBrtS"
+STRIPE_PRICE_250G = "price_1TYnoVV05Hz4tKEOfslu9sVa"
+STRIPE_PRICE_500G = "price_1TYnoVV05Hz4tKEO50pzG3v1"
+STRIPE_PRICE_PERU_CAJAMARCA_1KG = "price_1TxR5rV05Hz4tKEOYyP3I464"
+STRIPE_PRICE_PERU_CAJAMARCA_250G = "price_1TxR4MV05Hz4tKEO0MHsBSIi"
+STRIPE_PRICE_PERU_CAJAMARCA_500G = "price_1TxR59V05Hz4tKEOx5kLPOFT"
+STRIPE_PRICE_SERRA_NEGRA_1KG = "price_1TYnoVV05Hz4tKEOqlTqBrtS"
+STRIPE_PRICE_SERRA_NEGRA_250G = "price_1TYnoVV05Hz4tKEOfslu9sVa"
+STRIPE_PRICE_SERRA_NEGRA_500G = "price_1TYnoVV05Hz4tKEO50pzG3v1"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "DB"
+database_id = "d2b1c6c0-078c-4710-9fd5-2a9c2832291d"
+
+[[d1_databases]]
+binding = "ORDER_NUMBERS"
+database_name = "atlas-order-numbers"
+database_id = "385f29a0-7565-4901-a673-61108a135222"
+
+[env.production.vars]
+CONTACT_FROM_EMAIL = "Atlas Coffee <orders@atlascoffee.uk>"
+CONTACT_TO_EMAIL = "atlascoffeeroasters@gmail.com"
+PUBLIC_SITE_URL = "https://www.atlascoffee.uk"
+STRIPE_PRICE_1KG = "price_1TabMVV05Hz4tKEOR6TFwcis"
+STRIPE_PRICE_250G = "price_1TabMVV05Hz4tKEOZXCaS2A2"
+STRIPE_PRICE_500G = "price_1TabMVV05Hz4tKEOqxPerU0b"
+STRIPE_PRICE_PERU_CAJAMARCA_1KG = "price_1Tuxw6V05Hz4tKEO2gWbIRDZ"
+STRIPE_PRICE_PERU_CAJAMARCA_250G = "price_1TuxtjV05Hz4tKEOeP3wRMFO"
+STRIPE_PRICE_PERU_CAJAMARCA_500G = "price_1TuxvYV05Hz4tKEOiOH6MxYJ"
+STRIPE_PRICE_SERRA_NEGRA_1KG = "price_1TabMVV05Hz4tKEOR6TFwcis"
+STRIPE_PRICE_SERRA_NEGRA_250G = "price_1TabMVV05Hz4tKEOZXCaS2A2"
+STRIPE_PRICE_SERRA_NEGRA_500G = "price_1TabMVV05Hz4tKEOqxPerU0b"
+
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "DB"
+database_id = "f1045a35-ae98-40fd-8b0d-5add0f659a3c"
+
+[[env.production.d1_databases]]
+binding = "ORDER_NUMBERS"
+database_name = "atlas-order-numbers"
+database_id = "385f29a0-7565-4901-a673-61108a135222"

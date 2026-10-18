@@ -6,6 +6,7 @@
 
 import { isDeliveryLineName } from "../../catalog.js";
 import { buildMerchantOrderEmail, buildOrderConfirmationEmail } from "../../lib/order-confirmation-email.js";
+import { readOrderReference } from "../../lib/order-reference.js";
 import { verifyStripeWebhook } from "../../lib/stripe-webhook-signature.js";
 
 const SHOP_INBOX = "atlascoffeeroasters@gmail.com";
@@ -83,7 +84,11 @@ export async function onRequest(context) {
     }
 
     const origin = siteOrigin(env.PUBLIC_SITE_URL);
-    const fulfilment = session.metadata?.fulfilment === "collection" ? "collection" : "delivery";
+    const rawFulfilment = session.metadata?.fulfilment;
+    const fulfilment = rawFulfilment === "collection" || rawFulfilment === "dropoff" ? rawFulfilment : "delivery";
+    const dropoffPostcode = typeof session.metadata?.dropoff_postcode === "string" ? session.metadata.dropoff_postcode : "";
+    const dropoffAddress = typeof session.metadata?.dropoff_address === "string" ? session.metadata.dropoff_address : "";
+    const orderReference = readOrderReference(session.metadata);
     let items = (session.line_items?.data || []).map(mapLineItem);
 
     const coffeeItems = items.filter((item) => !isDeliveryLineName(item.name));
@@ -103,7 +108,10 @@ export async function onRequest(context) {
       customerName: session.customer_details?.name || "",
       fulfilment,
       items,
-      totalPence: Number(session.amount_total || 0)
+      totalPence: Number(session.amount_total || 0),
+      orderReference,
+      dropoffPostcode,
+      dropoffAddress
     });
 
     const customerEmail = session.customer_details?.email || session.customer_email;
@@ -151,7 +159,10 @@ export async function onRequest(context) {
         items,
         totalPence: Number(session.amount_total || 0),
         shippingName: shipping.name || "",
-        shippingAddress: shipping.address || null
+        shippingAddress: shipping.address || null,
+        orderReference,
+        dropoffPostcode,
+        dropoffAddress
       });
 
       const merchantResponse = await fetch("https://api.resend.com/emails", {

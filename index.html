@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="js-disabled">
+<html lang="en" class="js-disabled whole-bean-only">
 
 <head>
 
@@ -9,7 +9,7 @@
   <title>Coffee roaster in Redditch | Atlas Coffee</title>
 
   <meta name="description"
-    content="Coffee roaster in Redditch. Small-batch Black Mountain and Highlands, roasted for your order. Free UK delivery on 500g and 1kg, or collect locally.">
+    content="Coffee roaster in Redditch. Try both 250g bags together for £30, posted free. Black Mountain and Highlands, roasted for your order.">
 
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://www.atlascoffee.uk/">
@@ -18,14 +18,14 @@
   <meta property="og:url" content="https://www.atlascoffee.uk/">
   <meta property="og:title" content="Coffee roaster in Redditch | Atlas Coffee">
   <meta property="og:description"
-    content="Coffee roaster in Redditch. Small-batch Black Mountain and Highlands, roasted for your order. Free UK delivery on 500g and 1kg, or collect locally.">
+    content="Coffee roaster in Redditch. Try both 250g bags together for £30, posted free. Black Mountain and Highlands, roasted for your order.">
   <meta property="og:image" content="https://www.atlascoffee.uk/assets/atlas-coffee-social.jpg">
   <meta property="og:site_name" content="Atlas Coffee">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Coffee roaster in Redditch | Atlas Coffee">
   <meta name="twitter:description"
-    content="Coffee roaster in Redditch. Small-batch Black Mountain and Highlands, roasted for your order. Free UK delivery on 500g and 1kg, or collect locally.">
+    content="Coffee roaster in Redditch. Try both 250g bags together for £30, posted free. Black Mountain and Highlands, roasted for your order.">
   <meta name="twitter:image" content="https://www.atlascoffee.uk/assets/atlas-coffee-social.jpg">
 
   <link rel="icon" type="image/png" href="/assets/logo.png?v=20261011-3">
@@ -36,7 +36,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Work+Sans:wght@400;500;600;700&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="/styles.css?v=20261014-1">
+  <link rel="stylesheet" href="/styles.css?v=20261018-17">
 
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -126,7 +126,7 @@
   <!-- End Google Tag Manager noscript -->
 
   <div data-site-header></div>
-  <script src="/site-chrome.js?v=20261014-1"></script>
+  <script src="/site-chrome.js?v=20261018-9"></script>
 
   <main id="content">
 
@@ -139,16 +139,24 @@
           <h1>Coffee roaster in Redditch.</h1>
 
           <p class="home-hero__lead">
-            Atlas is a short range of single-origin coffee, roasted by hand in
-            small batches. Chosen for flavour, roasted for your order.
-            Cafés nearby can order through <a href="/wholesale">wholesale</a>.
+            Two single-origin coffees, roasted by hand for your order.
+            The usual first parcel is both bags. Cafés nearby can order through
+            <a href="/wholesale">wholesale</a>.
           </p>
         </div>
 
-        <article class="home-feature reveal" aria-labelledby="featured-coffee-title">
-          <div class="home-feature__media">
+        <article class="home-feature home-feature--pair reveal" aria-labelledby="home-pair-title">
+          <div class="home-feature__media home-feature__media--pair">
             <img
-              data-featured-image
+              class="home-feature__bag home-feature__bag--back"
+              src="/assets/highlands-bag.png?v=20260905-9"
+              alt="Highlands coffee bag from Atlas Coffee"
+              width="700"
+              height="875"
+              decoding="async"
+            >
+            <img
+              class="home-feature__bag home-feature__bag--front"
               src="/assets/black-mountain-bag.png?v=20260905-9"
               alt="Black Mountain coffee bag from Atlas Coffee"
               width="700"
@@ -159,34 +167,73 @@
             >
           </div>
 
-          <div class="home-feature__body" id="featured-coffee">
-            <p class="home-feature__origin" data-featured-origin>Serra Negra · Brazil · Natural</p>
+          <div class="home-feature__body">
+            <p class="home-feature__origin">The pair</p>
 
-            <h2 id="featured-coffee-title" data-featured-name>Black Mountain</h2>
+            <h2 id="home-pair-title">Try both. One parcel.</h2>
 
-            <p class="home-feature__copy" data-featured-copy>
-              Start with Black Mountain. Smooth, chocolate-led, and made for
-              the cup you drink every morning.
+            <p class="home-feature__copy">
+              250g Black Mountain and 250g Highlands. Chocolate and fruit,
+              roasted for your order, posted free.
             </p>
 
-            <p class="home-feature__notes">
-              <span>In the cup</span>
-              <strong data-featured-notes>Praline · Milk chocolate · Toasted nuts</strong>
-            </p>
+            <ul class="home-feature__tastes">
+              <li>
+                <span>Black Mountain</span>
+                <strong>Praline, milk chocolate, toasted nuts</strong>
+              </li>
+              <li>
+                <span>Highlands</span>
+                <strong>Panela, vanilla, cooked citrus, stone fruit</strong>
+              </li>
+            </ul>
 
             <div class="home-feature__buy">
-              <strong data-featured-price>From £13.50</strong>
-              <a class="button" data-featured-link href="/shop/black-mountain">
-                Shop Black Mountain
-              </a>
+              <strong id="duo-price">£30.00</strong>
+              <button class="button" type="button" data-add-duo>Add the pair</button>
             </div>
 
-            <p class="home-feature__fulfilment" data-featured-fulfilment>
-              Free UK delivery on 500g, 1kg, and orders of £25+ · Free collection in Redditch
+            <p class="home-feature__alt">
+              <a href="#home-range">I already know which I want</a>
+            </p>
+
+            <p class="home-feature__fulfilment">
+              Posted free in the UK. Local drop-off and collection are free too.
             </p>
           </div>
         </article>
 
+      </div>
+    </section>
+
+    <section class="home-range" id="home-range" aria-labelledby="home-range-title">
+      <div class="container">
+        <div class="home-range__head reveal">
+          <span class="eyebrow">Or choose one</span>
+          <h2 id="home-range-title">If you already know the cup you want.</h2>
+        </div>
+
+        <div class="home-range__grid">
+          <a class="home-range__card reveal" href="/shop/black-mountain">
+            <span class="home-range__origin">Serra Negra · Brazil</span>
+            <strong>Black Mountain</strong>
+            <span class="home-range__copy">Smooth, chocolate-led, and made for the morning cup.</span>
+            <span class="home-range__meta">
+              <span>From £13.50</span>
+              <span>Shop this coffee</span>
+            </span>
+          </a>
+
+          <a class="home-range__card reveal" href="/shop/highlands">
+            <span class="home-range__origin">Cajamarca · Peru</span>
+            <strong>Highlands</strong>
+            <span class="home-range__copy">Bright, lifted, and clean, with fruit and panela sweetness.</span>
+            <span class="home-range__meta">
+              <span>From £16.50</span>
+              <span>Shop this coffee</span>
+            </span>
+          </a>
+        </div>
       </div>
     </section>
 
@@ -218,32 +265,12 @@
       </div>
     </section>
 
-    <section class="home-other" aria-labelledby="home-other-title">
-      <div class="container">
-        <article class="home-other__card reveal">
-          <div>
-            <span class="eyebrow">Also in the range</span>
-            <h2 id="home-other-title" data-other-name>Highlands</h2>
-            <p data-other-copy>
-              Bright, lifted, and clean. Panela sweetness, vanilla, cooked
-              citrus, and a fresh-fruit finish.
-            </p>
-          </div>
-
-          <div class="home-other__actions">
-            <span data-other-price data-from-price="peru">From £16.50</span>
-            <a class="button" data-other-link href="/shop/highlands">Shop Highlands</a>
-          </div>
-        </article>
-      </div>
-    </section>
-
   </main>
 
   <div data-site-footer></div>
-  <script src="/site-chrome.js?v=20261014-1"></script>
+  <script src="/site-chrome.js?v=20261018-9"></script>
 
-  <script type="module" src="/app.js?v=20260910-1"></script>
+  <script type="module" src="/app.js?v=20261018-11"></script>
 </body>
 
 </html>

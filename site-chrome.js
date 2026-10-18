@@ -94,12 +94,17 @@
             "</div>" +
           "</div>" +
           '<div class="shop-basket-drawer__footer">' +
+            '<div class="shop-basket-fulfilment-wrap">' +
             '<div class="shop-basket-fulfilment" aria-labelledby="basket-fulfilment-label">' +
               '<span class="shop-basket-total-label" id="basket-fulfilment-label">Fulfilment</span>' +
               '<div class="shop-basket-fulfilment__options" role="radiogroup" aria-label="Choose fulfilment">' +
                 '<label class="shop-basket-fulfilment__option">' +
                   '<input type="radio" name="basket-fulfilment" id="basket-fulfilment-delivery" value="delivery" checked>' +
                   '<span><strong>Delivery</strong><small data-delivery-copy>£4.50 UK delivery under £25 · Free on 500g, 1kg, and £25+</small></span>' +
+                "</label>" +
+                '<label class="shop-basket-fulfilment__option">' +
+                  '<input type="radio" name="basket-fulfilment" id="basket-fulfilment-dropoff" value="dropoff">' +
+                  '<span><strong>Local drop-off</strong><small>Free if your postcode is in the area.</small></span>' +
                 "</label>" +
                 '<label class="shop-basket-fulfilment__option">' +
                   '<input type="radio" name="basket-fulfilment" id="basket-fulfilment-collection" value="collection">' +
@@ -112,21 +117,33 @@
                   "</span>" +
                 "</label>" +
               "</div>" +
+              '<div class="shop-basket-dropoff" id="basket-dropoff" hidden>' +
+                '<label class="shop-basket-dropoff__label" for="basket-dropoff-postcode">Postcode</label>' +
+                '<input class="shop-basket-dropoff__input" id="basket-dropoff-postcode" name="dropoff-postcode" type="text" inputmode="text" autocomplete="postal-code" autocapitalize="characters" spellcheck="false" maxlength="8" placeholder="Postcode">' +
+                '<label class="shop-basket-dropoff__label" for="basket-dropoff-address">Address</label>' +
+                '<input class="shop-basket-dropoff__input" id="basket-dropoff-address" name="dropoff-address" type="text" autocomplete="street-address" maxlength="120" placeholder="House number and street">' +
+              "</div>" +
               '<p class="shop-basket-note" id="basket-fulfilment-note">' +
                 "£4.50 UK delivery under £25 · Free on 500g, 1kg, and £25+" +
               "</p>" +
             "</div>" +
-            '<div class="shop-basket-total">' +
-              '<span class="shop-basket-total-label">Estimated total</span>' +
-              '<strong id="basket-total">£0.00</strong>' +
-            "</div>" +
-            '<button class="button shop-basket-checkout" type="button" id="checkout-button">' +
-              '<svg class="shop-basket-checkout__lock" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">' +
-                '<path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M7 11V8.2A5 5 0 0 1 17 8.2V11"/>' +
-                '<rect x="5" y="11" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/>' +
-              "</svg>" +
-              '<span class="shop-basket-checkout__label">Proceed to checkout</span>' +
+            '<button class="shop-basket-scroll-hint" type="button" hidden>' +
+              "More below" +
             "</button>" +
+            "</div>" +
+            '<div class="shop-basket-drawer__pay">' +
+              '<div class="shop-basket-total">' +
+                '<span class="shop-basket-total-label">Estimated total</span>' +
+                '<strong id="basket-total">£0.00</strong>' +
+              "</div>" +
+              '<button class="button shop-basket-checkout" type="button" id="checkout-button">' +
+                '<svg class="shop-basket-checkout__lock" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">' +
+                  '<path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M7 11V8.2A5 5 0 0 1 17 8.2V11"/>' +
+                  '<rect x="5" y="11" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/>' +
+                "</svg>" +
+                '<span class="shop-basket-checkout__label">Proceed to checkout</span>' +
+              "</button>" +
+            "</div>" +
           "</div>" +
         "</aside>" +
       "</div>" +

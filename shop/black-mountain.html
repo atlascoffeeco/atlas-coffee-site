@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="js-disabled">
+<html lang="en" class="js-disabled whole-bean-only">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -57,7 +57,7 @@
     rel="stylesheet"
   >
 
-  <link rel="stylesheet" href="/styles.css?v=20261014-1">
+  <link rel="stylesheet" href="/styles.css?v=20261018-17">
 
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -118,7 +118,7 @@
   <!-- End Google Tag Manager noscript -->
 
   <div data-site-header></div>
-  <script src="/site-chrome.js?v=20261014-1"></script>
+  <script src="/site-chrome.js?v=20261018-9"></script>
 
   <main id="content">
 
@@ -126,14 +126,14 @@
       <div class="container">
         <div class="shop-topbar__inner reveal">
           <div class="shop-topbar__copy">
-            <span class="eyebrow">Shop</span>
+            <span class="eyebrow">Black Mountain</span>
 
-            <h1>Small-batch coffee for your daily ritual.</h1>
+            <h1>Chocolatey, smooth, roasted for your order.</h1>
 
             <p>
-              Meet the current Atlas selection: a rich, comforting Brazilian
-              and a bright, lifted Peruvian. Two distinct single-origin
-              coffees, freshly roasted for you.
+              Serra Negra, Brazil. Praline, milk chocolate and toasted nuts.
+              The other coffee is <a href="/shop/highlands">Highlands</a>, or take
+              both in the pair below.
             </p>
           </div>
 
@@ -179,7 +179,7 @@
           </div>
 
           <div class="shop-duo__form">
-            <div class="shop-duo__grinds">
+            <div class="shop-duo__grinds" data-grind-ui hidden>
               <div class="field-group">
                 <label for="duo-serra-grind">Black Mountain grind</label>
                 <select id="duo-serra-grind" name="duo-serra-grind">
@@ -199,7 +199,7 @@
                 </select>
               </div>
             </div>
-            <p class="grind-hint">Unsure? Leave whole bean.</p>
+            <p class="grind-hint" data-grind-ui hidden>Unsure? Leave whole bean.</p>
             <button class="button" type="button" data-add-duo>Add the pair</button>
           </div>
         </div>
@@ -274,12 +274,6 @@
                   drinkers who prefer smooth, chocolatey coffee.
                 </p>
 
-                <p class="product-brew-start">
-                  <strong>Start here:</strong> Fine for espresso, coarse for
-                  cafetière. Filter: medium grind, 15g to 250ml water. Grind at
-                  home? Choose whole bean.
-                </p>
-
                 <ul class="product-taste-cues" aria-label="Black Mountain taste profile">
                   <li>Chocolatey &amp; nutty</li>
                   <li>Smooth &amp; rich</li>
@@ -300,6 +294,10 @@
                       cupped for praline, milk chocolate, nuttiness, a heavy
                       body, and a lemon-like lift. I bought it as the everyday
                       coffee in the range.
+                    </p>
+                    <p class="product-brew-start">
+                      <strong>Start here:</strong> Fine for espresso, coarse for
+                      cafetière. Filter: medium grind, 15g to 250ml water.
                     </p>
                   </div>
                 </details>
@@ -323,7 +321,7 @@
                 </select>
                 </div>
                 
-                <div class="field-group field-group--grind">
+                <div class="field-group field-group--grind" data-grind-ui hidden>
                   <div class="field-group__label-row">
                     <label for="serra-grind">Grind</label>
                 
@@ -367,7 +365,7 @@
                   </div>
               </div>
 
-              <p class="grind-hint">Unsure? Leave whole bean.</p>
+              <p class="grind-hint" data-grind-ui hidden>Unsure? Leave whole bean.</p>
 
               <div class="buy-box">
                 <p class="freshness-promise">
@@ -393,195 +391,7 @@
                 <p class="purchase-reassurance">
                   <span id="serra-delivery-hint">£4.50 UK delivery under £25 · Free on 500g, 1kg, and £25+</span>
                   <span aria-hidden="true">·</span>
-                  <span>Free collection in Redditch</span>
-                </p>
-              </div>
-            </form>
-          </article>
-
-          <!-- Peru Cajamarca -->
-          <article
-            class="product-card product-card--detailed reveal"
-            id="peru-product"
-            data-product-view="peru"
-          >
-            <div class="product-top">
-              <div class="meta">
-                <span class="product-tag">Peru</span>
-                <span>Regional Select</span>
-              </div>
-
-              <div class="price" data-from-price="peru">From £16.50</div>
-            </div>
-
-            <div class="featured-product-image-wrap">
-              <img
-                src="/assets/highlands-bag.png?v=20260905-9"
-                alt="Atlas Coffee Highlands 250g coffee bag"
-                class="featured-product-image"
-                width="900"
-                height="1125"
-                loading="lazy"
-                onerror="this.style.display='none'; this.parentNode.classList.add('is-fallback');"
-              >
-
-              <div class="shop-product-card__image-fallback">
-                <span>Atlas</span>
-                <strong>Highlands</strong>
-              </div>
-            </div>
-
-            <div class="product-card__content">
-              <div class="product-card__intro">
-                <h2 id="peru-title">Highlands</h2>
-
-                <p class="product-lot">Cajamarca · Peru</p>
-
-                <p class="featured-product-lead">
-                  A bright, lifted Peruvian with panela, vanilla, cooked citrus
-                  and soft fruit sweetness. Light, lively and gently winey,
-                  with hints of cocoa, almond, plum and sweet cherry.
-                </p>
-
-                <dl class="product-facts product-facts--on-card" aria-label="Highlands coffee details">
-                  <div class="product-fact">
-                    <dt>Process</dt>
-                    <dd>Washed</dd>
-                  </div>
-                  <div class="product-fact">
-                    <dt>Variety</dt>
-                    <dd>Catimor, Caturra, Bourbon, Typica</dd>
-                  </div>
-                  <div class="product-fact">
-                    <dt>Elevation</dt>
-                    <dd>1600–1900 MASL</dd>
-                  </div>
-                </dl>
-
-                <p class="product-best-for">
-                  <strong>Best for:</strong> Filter drinkers and anyone who
-                  enjoys bright, fruity coffees.
-                </p>
-
-                <p class="product-brew-start">
-                  <strong>Start here:</strong> Medium grind. 15g coffee to 250ml
-                  water. If you grind at home, buy whole bean.
-                </p>
-
-                <ul class="product-taste-cues" aria-label="Highlands taste profile">
-                  <li>Fruity &amp; floral</li>
-                  <li>Light &amp; lively</li>
-                  <li>Best for filter</li>
-                </ul>
-              </div>
-
-              <div class="product-accordion-group" aria-label="Highlands information">
-                <details class="product-disclosure">
-                  <summary>Coffee Details</summary>
-
-                  <div class="product-disclosure__content">
-                    <p class="product-disclosure__story">
-                      Highlands is a Regional Select lot from Cajamarca,
-                      in Peru’s northeastern highlands: washed coffee from
-                      smallholders, with regional traceability rather than a
-                      single farm or producer. It is sourced through Lima
-                      Coffees in Jaén. I chose it for the brighter side of the
-                      range — panela, vanilla, cooked citrus, and a soft fruit
-                      finish.
-                    </p>
-                  </div>
-                </details>
-              </div>
-            </div>
-
-            <h3 class="product-options-heading">Order this coffee</h3>
-
-            <form
-              class="coffee-form"
-              aria-labelledby="peru-title"
-              data-product="Highlands"
-            >
-              <div class="field-group">
-                <label for="peru-weight">Bag size</label>
-
-                <select id="peru-weight" name="weight" required>
-                  <option value="250g">250g</option>
-                  <option value="500g">500g</option>
-                  <option value="1kg">1kg</option>
-                </select>
-                </div>
-                
-                <div class="field-group field-group--grind">
-                  <div class="field-group__label-row">
-                    <label for="peru-grind">Grind</label>
-                
-                    <button class="grind-guide-trigger" type="button" data-grind-guide-trigger aria-label="Grind guide" aria-haspopup="dialog"
-                      aria-controls="grind-guide-dialog">
-                      <span>Grind guide</span>
-                      <span aria-hidden="true">✦</span>
-                    </button>
-                  </div>
-                
-                  <select id="peru-grind" name="grind" required>
-                    <option value="whole_bean">Whole bean</option>
-                    <option value="coarse">Coarse</option>
-                    <option value="medium">Medium</option>
-                    <option value="fine">Fine</option>
-                  </select>
-                </div>
-                
-                <div class="field-group field-group--quantity">
-                  <label for="peru-quantity">Quantity</label>
-
-                  <div class="shop-qty-stepper shop-basket-item__qty" role="group" aria-label="Quantity">
-                    <button type="button" class="shop-basket-item__qty-btn" data-qty-delta="-1" aria-label="Decrease quantity" disabled>−</button>
-                    <input
-                      id="peru-quantity"
-                      class="shop-qty-stepper__value shop-basket-item__qty-value"
-                      name="quantity"
-                      type="text"
-                      inputmode="numeric"
-                      pattern="[1-9]|10"
-                      autocomplete="off"
-                      maxlength="2"
-                      value="1"
-                      required
-                      role="spinbutton"
-                      aria-valuemin="1"
-                      aria-valuemax="10"
-                      aria-valuenow="1"
-                    >
-                    <button type="button" class="shop-basket-item__qty-btn" data-qty-delta="1" aria-label="Increase quantity">+</button>
-                  </div>
-              </div>
-
-              <p class="grind-hint">Unsure? Leave whole bean.</p>
-
-              <div class="buy-box">
-                <p class="freshness-promise">
-                  <strong>Roasted for your order.</strong>
-                  Packed, then posted within 2–4 working days.
-                </p>
-
-                <p class="buy-box-summary" id="peru-summary-line">
-                  250g · Whole bean · Qty: 1
-                </p>
-
-                <p class="bag-size-value" id="peru-bag-value"></p>
-
-                <div class="buy-box-price-row">
-                  <span>Subtotal</span>
-                  <strong id="peru-price">£16.50</strong>
-                </div>
-
-                <button class="button" type="button" data-add-to-basket="peru">
-                  Add to basket
-                </button>
-
-                <p class="purchase-reassurance">
-                  <span id="peru-delivery-hint">£4.50 UK delivery under £25 · Free on 500g, 1kg, and £25+</span>
-                  <span aria-hidden="true">·</span>
-                  <span>Free collection in Redditch</span>
+                  <span>Free drop-off in Church Hill, Abbeydale, Riverside, St Georges, Lakeside, Winyates and the town centre, or collect in Redditch</span>
                 </p>
               </div>
             </form>
@@ -600,8 +410,8 @@
           </article>
 
           <article class="shop-support-strip__item">
-            <strong>Delivery or collection</strong>
-            <p>Free UK delivery on 500g, 1kg, and orders of £25 or more. Or collect free in Redditch.</p>
+            <strong>Postage, drop-off or collection</strong>
+            <p>You can have coffee posted in the UK, dropped off in Church Hill, Abbeydale, Riverside, St Georges, Lakeside, Winyates and the town centre, or collected in Redditch.</p>
           </article>
 
           <article class="shop-support-strip__item">
@@ -747,8 +557,8 @@
   </div>
 
   <div data-site-footer></div>
-  <script src="/site-chrome.js?v=20261014-1"></script>
+  <script src="/site-chrome.js?v=20261018-9"></script>
 
-  <script type="module" src="/app.js?v=20260910-1"></script>
+  <script type="module" src="/app.js?v=20261018-11"></script>
 </body>
 </html>

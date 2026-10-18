@@ -7,7 +7,8 @@
 // - Create a Stripe Checkout Session
 // - Return the Stripe-hosted checkout URL
 
-import { DELIVERY_LINE_DESCRIPTION, DELIVERY_LINE_NAME, getDeliveryFeePenceForBasket, getStripePriceMap, stripeLineName } from "../../catalog.js";
+import { DELIVERY_LINE_DESCRIPTION, DELIVERY_LINE_NAME, getDeliveryFeePenceForBasket, getStripePriceMap, isDropoffPostcode, normaliseUkPostcode, orderGrindLabel, resolveOrderGrind, stripeLineName } from "../../catalog.js";
+import { allocateOrderReference } from "../../lib/order-reference.js";
 
 export async function onRequest(context) {
   const { request, env } = context;
@@ -54,29 +55,32 @@ export async function onRequest(context) {
   }
 
   // Only allow supported fulfilment values
-  if (!["delivery", "collection"].includes(fulfilment)) {
+  if (!["delivery", "collection", "dropoff"].includes(fulfilment)) {
     return json({ error: "Invalid fulfilment option." }, 400);
+  }
+
+  let dropoffPostcode = "";
+  let dropoffAddress = "";
+  if (fulfilment === "dropoff") {
+    dropoffPostcode = normaliseUkPostcode(body.dropoffPostcode);
+    dropoffAddress = String(body.dropoffAddress || "").replace(/\s+/g, " ").trim();
+    if (!isDropoffPostcode(dropoffPostcode)) {
+      return json({ error: "That postcode is outside the local drop-off area." }, 400);
+    }
+    if (dropoffAddress.length < 8 || dropoffAddress.length > 120) {
+      return json({ error: "Add the drop-off address." }, 400);
+    }
   }
 
   // Server-side price map in pence (from catalog.js)
   // Never trust prices from the browser
   const PRICE_MAP = getStripePriceMap();
 
-  // Normalise grind values from the frontend into readable labels
-  const GRIND_LABELS = {
-    whole_bean: "Whole bean",
-    wholebean: "Whole bean",
-    coarse: "Coarse",
-    medium: "Medium",
-    fine: "Fine"
-  };
-
   try {
     const validatedItems = items.map((item) => {
       const product = typeof item?.product === "string" ? item.product.trim() : "";
       const weight = typeof item?.weight === "string" ? item.weight.trim() : "";
-      const rawGrind = typeof item?.grind === "string" ? item.grind.trim() : "";
-      const grind = rawGrind.toLowerCase();
+      const grind = resolveOrderGrind(item?.grind);
       const quantity = Math.max(1, Math.min(10, Number(item?.quantity) || 1));
 
       const unitAmount = PRICE_MAP[product]?.[weight];
@@ -87,7 +91,7 @@ export async function onRequest(context) {
         );
       }
 
-      return { product, weight, grind, rawGrind, quantity, unitAmount };
+      return { product, weight, grind, quantity, unitAmount };
     });
 
     const lineItems = validatedItems.map((item) => ({
@@ -95,7 +99,7 @@ export async function onRequest(context) {
         currency: "gbp",
         product_data: {
           name: stripeLineName(item.product, item.weight),
-          description: `Grind: ${GRIND_LABELS[item.grind] || item.rawGrind || "Not specified"}`
+          description: `Grind: ${orderGrindLabel(item.grind)}`
         },
         unit_amount: item.unitAmount
       },
@@ -125,10 +129,23 @@ export async function onRequest(context) {
     formData.set("success_url", `${origin}/success.html?session_id={CHECKOUT_SESSION_ID}`);
     formData.set("cancel_url", `${origin}/shop`);
 
-    formData.set("payment_intent_data[metadata][fulfilment]", fulfilment);
-    formData.set("metadata[fulfilment]", fulfilment);
+    const orderReference = await allocateOrderReference(env.ORDER_NUMBERS);
 
-    if (fulfilment === "collection") {
+    formData.set("client_reference_id", orderReference);
+    formData.set("metadata[order_reference]", orderReference);
+    formData.set("metadata[fulfilment]", fulfilment);
+    formData.set("payment_intent_data[metadata][order_reference]", orderReference);
+    formData.set("payment_intent_data[metadata][fulfilment]", fulfilment);
+    formData.set("payment_intent_data[description]", `Atlas Coffee ${orderReference}`);
+
+    if (fulfilment === "dropoff") {
+      formData.set("metadata[dropoff_postcode]", dropoffPostcode);
+      formData.set("metadata[dropoff_address]", dropoffAddress);
+      formData.set("payment_intent_data[metadata][dropoff_postcode]", dropoffPostcode);
+      formData.set("payment_intent_data[metadata][dropoff_address]", dropoffAddress);
+    }
+
+    if (fulfilment === "collection" || fulfilment === "dropoff") {
       formData.set("phone_number_collection[enabled]", "true");
       formData.set("name_collection[individual][enabled]", "true");
       formData.set("billing_address_collection", "auto");

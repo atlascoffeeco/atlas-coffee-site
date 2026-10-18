@@ -58,7 +58,7 @@
 
 
   <!-- Shared site stylesheet -->
-  <link rel="stylesheet" href="/styles.css?v=20261014-1">
+  <link rel="stylesheet" href="/styles.css?v=20261018-17">
   
   <!-- Global site bootstrapping -->
   <script>
@@ -82,7 +82,7 @@
 
 
   <div data-site-header></div>
-  <script src="/site-chrome.js?v=20261014-1"></script>
+  <script src="/site-chrome.js?v=20261018-9"></script>
 
 
   <!-- Main content -->
@@ -180,7 +180,7 @@
               <li>
                 <strong>Roasting and packing</strong>
                 <span>
-                  Coffee is prepared according to your selected coffee, grind, and fulfilment option.
+                  Coffee is roasted whole bean for your order, then packed for delivery or collection.
                 </span>
               </li>
               <li id="fulfilment-step">
@@ -203,7 +203,7 @@
 
 
   <div data-site-footer></div>
-  <script src="/site-chrome.js?v=20261014-1"></script>
+  <script src="/site-chrome.js?v=20261018-9"></script>
 
 
   <!-- Shared page interactions -->
@@ -272,7 +272,9 @@
 
 
       const formatFulfilment = (value) => {
-        return value === "collection" ? "Local collection" : "Delivery";
+        if (value === "collection") return "Local collection";
+        if (value === "dropoff") return "Local drop-off";
+        return "Delivery";
       };
 
 
@@ -293,26 +295,33 @@
 
       const applyFulfilmentCopy = (fulfilment) => {
         const isCollection = fulfilment === "collection";
+        const isDropoff = fulfilment === "dropoff";
 
 
         if (confirmationLeadEl) {
           confirmationLeadEl.textContent = isCollection
             ? "A confirmation is on its way to your email. We’ll prepare the coffee and contact you to arrange collection."
-            : "A confirmation is on its way to your email. We’ll prepare the coffee for roasting, packing, and delivery.";
+            : isDropoff
+              ? "A confirmation is on its way to your email. We’ll prepare the coffee and contact you to arrange the drop-off."
+              : "A confirmation is on its way to your email. We’ll prepare the coffee for roasting, packing, and delivery.";
         }
 
 
         if (summaryNoteEl) {
           summaryNoteEl.textContent = isCollection
             ? "Collection is free. We’ll contact you after payment to arrange pickup in Redditch."
-            : "Delivery charges, if applicable, were applied during checkout and are reflected in your final order total.";
+            : isDropoff
+              ? "Local drop-off is free. We’ll email to agree a time, then bring the coffee to the address you gave."
+              : "Delivery charges, if applicable, were applied during checkout and are reflected in your final order total.";
         }
 
 
         if (nextStepsIntroEl) {
           nextStepsIntroEl.textContent = isCollection
             ? "Everything has gone through correctly. We’ll review your order, prepare your coffee, and contact you to arrange collection."
-            : "Everything has gone through correctly. We’ll review your order, prepare your coffee, and get it ready for dispatch.";
+            : isDropoff
+              ? "Everything has gone through correctly. We’ll review your order, prepare your coffee, and contact you to arrange the drop-off."
+              : "Everything has gone through correctly. We’ll review your order, prepare your coffee, and get it ready for dispatch.";
         }
 
 
@@ -324,7 +333,14 @@
                 You chose local collection. We’ll contact you after payment to arrange pickup in Redditch once your order is ready.
               </span>
             `
-            : `
+            : isDropoff
+              ? `
+              <strong>Local drop-off</strong>
+              <span>
+                You chose local drop-off. We’ll email to agree a time, then bring the coffee to your address.
+              </span>
+            `
+              : `
               <strong>Delivery</strong>
               <span>
                 You chose delivery. We’ll aim to post your order within 2–4 working days, excluding weekends and bank holidays.
@@ -363,7 +379,9 @@
         }
 
 
-        const fulfilment = order.fulfilment === "collection" ? "collection" : "delivery";
+        const fulfilment = order.fulfilment === "collection" || order.fulfilment === "dropoff"
+          ? order.fulfilment
+          : "delivery";
 
 
         if (isPaidCheckout(order.paymentStatus)) {
@@ -374,7 +392,7 @@
         paymentStatusEl.textContent = formatPaymentStatus(order.paymentStatus || "confirmed");
         fulfilmentEl.textContent = formatFulfilment(fulfilment);
         totalEl.textContent = formatMoney(order.value || 0, order.currency || "GBP");
-        referenceEl.textContent = order.transactionId || sessionId;
+        referenceEl.textContent = order.orderReference || order.transactionId || sessionId;
 
 
         applyFulfilmentCopy(fulfilment);
@@ -385,8 +403,7 @@
             <li>
               <strong>${escapeHtml(item.item_name || "Atlas Coffee item")}</strong>
               <span>
-                Qty ${Number(item.quantity) || 1}
-                ${item.item_variant ? ` · ${escapeHtml(item.item_variant)}` : ""}
+                Quantity ${Number(item.quantity) || 1}
                 ${typeof item.price === "number" ? ` · ${formatMoney(item.price, order.currency || "GBP")} each` : ""}
               </span>
             </li>

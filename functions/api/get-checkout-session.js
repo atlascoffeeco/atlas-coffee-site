@@ -1,4 +1,5 @@
 import { isDeliveryLineName } from "../../catalog.js";
+import { readOrderReference } from "../../lib/order-reference.js";
 
 export async function onRequest(context) {
   const { request, env } = context;
@@ -39,10 +40,10 @@ export async function onRequest(context) {
       ? session.payment_intent
       : null;
 
-    const fulfilment =
-      paymentIntent?.metadata?.fulfilment === "collection"
-        ? "collection"
-        : "delivery";
+    const rawFulfilment = paymentIntent?.metadata?.fulfilment || session.metadata?.fulfilment;
+    const fulfilment = rawFulfilment === "collection" || rawFulfilment === "dropoff"
+      ? rawFulfilment
+      : "delivery";
 
     const stripeShippingPence = Number(session.total_details?.amount_shipping || 0);
     let deliveryLinePence = 0;
@@ -71,6 +72,7 @@ export async function onRequest(context) {
 
     return json({
       transactionId: paymentIntent?.id || session.payment_intent || session.id,
+      orderReference: readOrderReference(session.metadata) || readOrderReference(paymentIntent?.metadata),
       paymentStatus: session.payment_status || "paid",
       fulfilment,
       currency: (session.currency || "gbp").toUpperCase(),

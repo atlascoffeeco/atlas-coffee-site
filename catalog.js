@@ -1,6 +1,31 @@
 // Single source of truth for Atlas products and UK delivery.
 // Amounts are integer pence. The shop UI converts to pounds; Stripe charges these values.
 
+// Ground coffee is switched off until there is a grinder for it.
+// To sell coarse, medium and fine again, set this to true.
+// The shop pages keep the grind controls; they are hidden while this is false.
+export const OFFER_GRIND_CHOICE = false;
+
+const GRIND_LABELS = {
+  whole_bean: "Whole bean",
+  wholebean: "Whole bean",
+  coarse: "Coarse",
+  medium: "Medium",
+  fine: "Fine"
+};
+
+export function resolveOrderGrind(raw) {
+  const grind = String(raw || "").trim().toLowerCase();
+  if (!OFFER_GRIND_CHOICE) return "whole_bean";
+  if (grind === "wholebean") return "whole_bean";
+  if (GRIND_LABELS[grind]) return grind;
+  return "whole_bean";
+}
+
+export function orderGrindLabel(raw) {
+  return GRIND_LABELS[resolveOrderGrind(raw)] || "Whole bean";
+}
+
 export const DELIVERY_FEE_PENCE = 450;
 export const DELIVERY_LINE_NAME = "UK delivery";
 export const DELIVERY_LINE_DESCRIPTION = "Flat postage and packaging";
@@ -99,6 +124,29 @@ export function basketCoffeeSubtotalPence(items) {
     const unit = priceMap[product]?.[weight] || 0;
     return sum + unit * quantity;
   }, 0);
+}
+
+// Local drop-off sectors around Church Hill.
+// B98 0 is Winyates, and also Ipsley and Matchborough.
+// B98 8 is Church Hill, Abbeydale, Riverside, St Georges, Lakeside and the town centre.
+// B98 9 is Moon's Moat and the north edge of Church Hill.
+// B98 7 is Woodrow and Greenlands. B97 is Batchley and the west of town.
+const DROPOFF_SECTORS = new Set(["B980", "B988", "B989"]);
+
+export const DROPOFF_AREA_COPY = "Church Hill, Abbeydale, Riverside, St Georges, Lakeside, Winyates and the town centre";
+
+export function normaliseUkPostcode(raw) {
+  const compact = String(raw || "").toUpperCase().replace(/[^A-Z0-9]/g, "");
+  const match = compact.match(/^([A-Z]{1,2}\d[A-Z\d]?)(\d[A-Z]{2})$/);
+  if (!match) return "";
+  return `${match[1]} ${match[2]}`;
+}
+
+export function isDropoffPostcode(raw) {
+  const postcode = normaliseUkPostcode(raw);
+  if (!postcode) return false;
+  const compact = postcode.replace(/\s/g, "");
+  return DROPOFF_SECTORS.has(compact.slice(0, -2));
 }
 
 export function getDeliveryFeePenceForBasket(items, fulfilment) {
