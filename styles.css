@@ -7607,6 +7607,101 @@ body.grind-guide-open {
   color: var(--primary-strong);
 }
 
+.home-reviews__head {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+
+.home-reviews__head h2 {
+  max-width: 16ch;
+}
+
+.home-reviews__list {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-reviews__list li {
+  display: grid;
+  align-content: start;
+  gap: var(--space-5);
+  margin: 0;
+  padding: clamp(var(--space-5), 3vw, var(--space-6));
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--text) 8%, transparent);
+}
+
+.home-reviews__list blockquote {
+  margin: 0;
+}
+
+.home-reviews__list blockquote p {
+  margin: 0;
+  font-size: var(--text-lg);
+  line-height: 1.45;
+  letter-spacing: -0.02em;
+}
+
+.home-reviews__list blockquote p::before,
+.home-reviews__list blockquote p::after {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.35em;
+  line-height: 0;
+  vertical-align: -0.08em;
+  color: var(--primary);
+}
+
+.home-reviews__list blockquote p::before {
+  content: "“";
+  margin-right: 0.08em;
+}
+
+.home-reviews__list blockquote p::after {
+  content: "”";
+}
+
+.home-reviews__list footer strong {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  letter-spacing: -0.02em;
+}
+
+.home-reviews__link {
+  margin: var(--space-8) 0 0;
+}
+
+@media (max-width: 899px) {
+  .home-reviews__head {
+    gap: var(--space-3);
+    margin-bottom: var(--space-5);
+  }
+
+  .home-reviews__list {
+    gap: var(--space-3);
+  }
+
+  .home-reviews__list li {
+    gap: var(--space-3);
+    padding: var(--space-4);
+  }
+
+  .home-reviews__list blockquote p {
+    font-size: var(--text-base);
+    line-height: 1.35;
+  }
+
+  .home-reviews__link {
+    margin-top: var(--space-5);
+  }
+}
+
 .home-reasons__head {
   display: grid;
   justify-items: start;
@@ -7729,6 +7824,10 @@ body.grind-guide-open {
 
   .home-range__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .home-reviews__list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .home-reasons__list {
